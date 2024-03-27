@@ -40,12 +40,6 @@ namespace ponomarev
     std::string &ref;
   };
 
-  struct LabelIO
-  {
-    std::string exp;
-  };
-
-  // scope guard для возврата состояния потока в первоначальное состояние
   class iofmtguard
   {
   public:
@@ -62,7 +56,6 @@ namespace ponomarev
   std::istream &operator>>(std::istream &in, DoubleIO &&dest);
   std::istream &operator>>(std::istream &in, LongLongIO &&dest);
   std::istream &operator>>(std::istream &in, StringIO &&dest);
-  std::istream &operator>>(std::istream &in, LabelIO &&dest);
   std::istream &operator>>(std::istream &in, Data &dest);
   std::ostream &operator<<(std::ostream &out, const Data &dest);
 }
@@ -147,22 +140,6 @@ namespace ponomarev
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
 
-  std::istream &operator>>(std::istream &in, LabelIO &&dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    std::string data;
-    std::getline(in >> DelimiterIO{ ':' }, data, ' ');
-    if (data != dest.exp)
-    {
-      in.setstate(std::ios::failbit);
-    }
-    return in;
-  }
-
   std::istream &operator>>(std::istream &in, Data &dest)
   {
     std::istream::sentry sentry(in);
@@ -173,14 +150,32 @@ namespace ponomarev
     Data input;
     {
       using sep = DelimiterIO;
-      using label = LabelIO;
       using dbl = DoubleIO;
       using lolo = LongLongIO;
       using str = StringIO;
+      std::string typeOfKey;
       in >> sep{ '(' };
-      in >> label{ "key1" } >> dbl{ input.key1 };
-      in >> label{ "key2" } >> lolo{ input.key2 };
-      in >> label{ "key3" } >> str{ input.key3 };
+      for (size_t i = 0; i < 3; i++)
+      {
+        std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
+        if (typeOfKey == "key1")
+        {
+          in >> dbl{ input.key1 };
+        }
+        else if (typeOfKey == "key2")
+        {
+          in >> lolo{ input.key2 };
+        }
+        else if (typeOfKey == "key3")
+        {
+          in >> str{ input.key3 };
+        }
+        else
+        {
+          in.setstate(std::ios::failbit);
+          break;
+        }
+      }
       in >> sep{ ':' };
       in >> sep{ ')' };
     }
