@@ -1,3 +1,5 @@
+#include <cstring>
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -5,6 +7,7 @@
 #include <iterator>
 #include <vector>
 #include <iomanip>
+#include <limits>
 
 namespace ponomarev
 {
@@ -64,6 +67,19 @@ namespace ponomarev
   std::ostream &operator<<(std::ostream &out, const Data &dest);
 }
 
+bool compare_entry(const ponomarev::Data &e1, const ponomarev::Data &e2)
+{
+  if (e1.key1 != e2.key1)
+  {
+    return (e1.key1 < e2.key1);
+  }
+  else if (e1.key2 != e2.key2)
+  {
+    return (e1.key2 < e2.key2);
+  }
+  return (e1.key3.length() < e2.key3.length());
+};
+
 int main()
 {
   using ponomarev::Data;
@@ -73,8 +89,7 @@ int main()
     std::istream_iterator< Data >(),
     std::back_inserter(data)
   );
-
-  std::cout << "Data:\n";
+  std::sort(data.begin(), data.end(), compare_entry);
   std::copy(
     std::begin(data),
     std::end(data),
@@ -185,7 +200,7 @@ namespace ponomarev
     }
     iofmtguard fmtguard(out);
     out << "(:";
-    out << "key1 " << std::setprecision(10) << std::scientific << src.key1 << ":";
+    out << "key1 " << std::setprecision(1) << std::scientific << src.key1 << ":";
     out << "key2 " << "0b" << src.key2 << ":";
     out << "key3 " << '"' << src.key3 << '"';
     out << ":)";
