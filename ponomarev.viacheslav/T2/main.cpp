@@ -1,9 +1,3 @@
-// Пример перегрузки ввода/вывода для пользовательского типа Data.
-// Похожим образом можно организовать ввод/вывод в работе 1,
-// но в этом примере имеется ряд упрощений:
-// 1) не поддерживается произвольный порядок полей
-// 2) не поддерживаются строки некорректного формата
-
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -63,6 +57,7 @@ namespace ponomarev
 
   std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
   std::istream &operator>>(std::istream &in, DoubleIO &&dest);
+  std::istream &operator>>(std::istream &in, LongLongIO &&dest);
   std::istream &operator>>(std::istream &in, StringIO &&dest);
   std::istream &operator>>(std::istream &in, LabelIO &&dest);
   std::istream &operator>>(std::istream &in, Data &dest);
@@ -93,7 +88,6 @@ namespace ponomarev
 {
   std::istream &operator>>(std::istream &in, DelimiterIO &&dest)
   {
-    // все перегрузки операторов ввода/вывода должны начинаться с проверки экземпляра класса sentry
     std::istream::sentry sentry(in);
     if (!sentry)
     {
@@ -106,6 +100,16 @@ namespace ponomarev
       in.setstate(std::ios::failbit);
     }
     return in;
+  }
+
+  std::istream &operator>>(std::istream &in, LongLongIO &&dest)
+  {
+    std::istream::sentry sentry(in);
+    if (!sentry)
+    {
+      return in;
+    }
+    return in >> DelimiterIO{ '0' } >> DelimiterIO{ 'b' } >> dest.ref;
   }
 
   std::istream &operator>>(std::istream &in, DoubleIO &&dest)
@@ -156,9 +160,11 @@ namespace ponomarev
       using sep = DelimiterIO;
       using label = LabelIO;
       using dbl = DoubleIO;
+      using lolo = LongLongIO;
       using str = StringIO;
       in >> sep{ '(' };
       in >> label{ "key1" } >> dbl{ input.key1 };
+      in >> label{ "key2" } >> lolo{ input.key2 };
       in >> label{ "key3" } >> str{ input.key3 };
       in >> sep{ ':' };
       in >> sep{ ')' };
@@ -180,6 +186,7 @@ namespace ponomarev
     iofmtguard fmtguard(out);
     out << "(:";
     out << "key1 " << std::setprecision(10) << std::scientific << src.key1 << ":";
+    out << "key2 " << "0b" << src.key2 << ":";
     out << "key3 " << '"' << src.key3 << '"';
     out << ":)";
     return out;
