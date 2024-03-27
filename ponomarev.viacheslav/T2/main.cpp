@@ -1,12 +1,10 @@
+#include <iomanip>
 #include <cstring>
 #include <algorithm>
 #include <iostream>
-#include <sstream>
 #include <string>
-#include <cassert>
 #include <iterator>
 #include <vector>
-#include <iomanip>
 #include <limits>
 
 namespace ponomarev
@@ -76,12 +74,25 @@ bool compare_entry(const ponomarev::Data &e1, const ponomarev::Data &e2)
 int main()
 {
   using ponomarev::Data;
+  size_t temp = 0;
   std::vector< Data > data;
-  std::copy(
-    std::istream_iterator< Data >(std::cin),
-    std::istream_iterator< Data >(),
-    std::back_inserter(data)
-  );
+  while (temp == 0)
+  {
+    std::copy(
+      std::istream_iterator< Data >(std::cin),
+      std::istream_iterator< Data >(),
+      std::back_inserter(data)
+    );
+    if (!std::cin)
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    else
+    {
+      temp += 1;
+    }
+  }
   std::sort(data.begin(), data.end(), compare_entry);
   std::copy(
     std::begin(data),
