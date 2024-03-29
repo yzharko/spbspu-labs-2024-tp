@@ -24,9 +24,13 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   {
     return is;
   }
-  long long a;
-  miheev::real b;
-  std::string c;
+  using del = miheev::DelimiterI;
+  long long key1;
+  miheev::real key2;
+  std::string key3;
+  std::string curKey;
+  is >> del{'('} >> del{':'} >> curKey;
+  if (curKey == "key1")
 }
 
 std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value)

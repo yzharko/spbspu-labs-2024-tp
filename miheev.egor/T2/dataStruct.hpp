@@ -18,9 +18,10 @@ namespace miheev
   {
     char expected;
   };
-  std::ostream& operator>>(std::istream& is, DelimiterI&& exp);
-  std::istream& operator>>(std::istream& is, DataStruct& value);
-  std::ostream& operator<<(std::ostream& out, const DataStruct& value);
 }
+
+std::istream& operator>>(std::istream& is, miheev::DelimiterI&& exp);
+std::istream& operator>>(std::istream& is, miheev::DataStruct& value);
+std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value);
 
 #endif
