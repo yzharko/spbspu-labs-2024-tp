@@ -75,7 +75,7 @@ int main()
 {
   using ponomarev::Data;
   std::vector< Data > data;
-  while (true)
+  while (std::cin.peek() != '\n')
   {
     std::copy(
       std::istream_iterator< Data >(std::cin),
