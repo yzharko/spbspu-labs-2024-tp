@@ -3,6 +3,7 @@
 
 #include<string>
 #include<iostream>
+#include<iterator>
 
 namespace doroshenko
 {

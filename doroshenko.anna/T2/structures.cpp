@@ -53,7 +53,6 @@ std::istream& doroshenko::operator>>(std::istream& input, CharIO&& dest)
     return input;
   }
   using separator = DelimiterIO;
-  char c = ' ';
   input >> separator{ '\'' } >> dest.ref >> separator{ '\'' };
   if (input && !std::isalpha(dest.ref))
   {
