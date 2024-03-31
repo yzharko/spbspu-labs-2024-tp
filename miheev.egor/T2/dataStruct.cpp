@@ -30,8 +30,8 @@ std::istream& operator>>(std::istream& is, miheev::real& value)
   long long N = 0;
   unsigned long long D = 0;
   is >> del{'('} >> del{':'};
-  is >> del{'N'} >> del{' '} >> N >> del{':'};
-  is >> del{'D'} >> del{' '} >> D;
+  is >> del{'N'} >> N >> del{':'};
+  is >> del{'D'} >> D;
   is >> del{':'} >> del{')'};
   if (is.good())
   {
@@ -52,22 +52,29 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   long long key1;
   miheev::real key2;
   std::string key3;
-  std::string curKey;
   is >> del{'('};
   do
   {
+    std::string curKey = "";
     is >> del{':'} >> curKey;
+    std::cout << curKey << '\n';
     if (curKey == "key1")
     {
       is >> key1;
+      is >> del{'l'} >> del{'l'};
+      value.key1 = key1;
     }
     else if (curKey == "key2")
     {
       is >> key2;
+      std::cout << "key2 = " << key2 << '\n';
+      value.key2 = key2;
     }
     else if (curKey == "key3")
     {
-      is >> key3;
+      is >> del{'"'};
+      std::getline(is, key3, '"');
+      std::cout << key3 << '\n';
     }
   } while (is);
   is >> del{')'};
