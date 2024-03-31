@@ -9,6 +9,7 @@ int main()
   // std::vector< miheev::DataStruct > structs(input_it_t{std::cin}, input_it_t{});
   miheev::DataStruct example;
   std::cin >> example;
-  miheev::printDS(example);
+  std::cout << example;
+
   return 0;
 }

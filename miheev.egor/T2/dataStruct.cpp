@@ -1,13 +1,6 @@
 #include <utility>
 #include "dataStruct.hpp"
 
-void miheev::printDS(const DataStruct& ds)
-{
-  std::cout << "key1 : " << ds.key1 << '\n';
-  std::cout << "key2 : " << ds.key2 << '\n';
-  std::cout << "key3 : " << ds.key3 << '\n';
-}
-
 std::istream& operator>>(std::istream& is, miheev::DelimiterI&& exp)
 {
   std::istream::sentry guard(is);
@@ -57,7 +50,7 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   {
     std::string curKey = "";
     is >> del{':'} >> curKey;
-    std::cout << curKey << '\n';
+    // std::cout << curKey << '\n';
     if (curKey == "key1")
     {
       is >> key1;
@@ -67,14 +60,15 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
     else if (curKey == "key2")
     {
       is >> key2;
-      std::cout << "key2 = " << key2 << '\n';
+      // std::cout << "key2 = " << key2 << '\n';
       value.key2 = key2;
     }
     else if (curKey == "key3")
     {
       is >> del{'"'};
       std::getline(is, key3, '"');
-      std::cout << key3 << '\n';
+      // std::cout << "key3 = " << key3 << '\n';
+      value.key3 = key3;
     }
   } while (is);
   is >> del{')'};
@@ -83,11 +77,14 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
 
 std::ostream& operator<<(std::ostream& out, const miheev::real& value)
 {
-  std::cout << value.first << " / " << value.second << '\n';
+  std::cout << value.first << " / " << value.second;
   return out;
 }
 
 std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value)
 {
+  std::cout << "key1 : " << value.key1 << '\n';
+  std::cout << "key2 : " << value.key2 << '\n';
+  std::cout << "key3 : " << value.key3 << '\n';
   return out;
 }
