@@ -1,7 +1,7 @@
 #include <utility>
 #include "dataStruct.hpp"
 
-std::istream& operator>>(std::istream& is, miheev::DelimiterI&& exp)
+std::istream& operator>>(std::istream& is, miheev::DelimiterIO&& exp)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -17,19 +17,58 @@ std::istream& operator>>(std::istream& is, miheev::DelimiterI&& exp)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::real& value)
+std::istream& operator>>(std::istream& is, miheev::LongLongIO&& value)
 {
-  using del = miheev::DelimiterI;
-  long long N = 0;
-  unsigned long long D = 0;
-  is >> del{'('} >> del{':'};
-  is >> del{'N'} >> N >> del{':'};
-  is >> del{'D'} >> D;
-  is >> del{':'} >> del{')'};
-  if (is.good())
+  using del = miheev::DelimiterIO;
+  std::istream::sentry sentry(is);
+  if (!sentry)
   {
-    value.first = N;
-    value.second = D;
+    return is;
+  }
+  is >> value.ref >> del{'l'} >> del{'l'};
+  return is;
+}
+
+std::istream& operator>>(std::istream& is, miheev::RealIO&& value)
+{
+  using del = miheev::DelimiterIO;
+  using lab = miheev::labelIO;
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  is >> del{'('} >> del{':'} >> lab{"N"};
+  is >> value.ref.first;
+  is >> del{':'} >> lab{"D"};
+  is >> value.ref.second;
+  is >> del{':'} >> del{')'};
+  return is;
+}
+
+std::istream& operator>>(std::istream& is, miheev::StringIO&& value)
+{
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  return std::getline(is >> miheev::DelimiterIO{'"'}, value.ref, '"');
+}
+
+std::istream& operator>>(std::istream& is, miheev::labelIO&& value)
+{
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  std::string data = "";
+  is >> data;
+  bool cmp = data != value.exp;
+  if (is and cmp)
+  {
+    is.setstate(std::ios::failbit);
   }
   return is;
 }
@@ -41,10 +80,12 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   {
     return is;
   }
-  using del = miheev::DelimiterI;
-  long long key1;
-  miheev::real key2;
-  std::string key3;
+  miheev::DataStruct input; // input format: (:key1 10ll:key2 (:N -2:D 3:):key3 "DATA":)
+  using del = miheev::DelimiterIO;
+  using lab = miheev::labelIO;
+  using rl = miheev::RealIO;
+  using ll = miheev::LongLongIO;
+  using str = miheev::StringIO;
   is >> del{'('};
   do
   {
@@ -52,23 +93,20 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
     is >> del{':'} >> curKey;
     if (curKey == "key1")
     {
-      is >> key1;
-      is >> del{'l'} >> del{'l'};
-      value.key1 = key1;
+      is >> ll{input.key1};
     }
     else if (curKey == "key2")
     {
-      is >> key2;
-      value.key2 = key2;
+      is >> rl{input.key2};
+
     }
     else if (curKey == "key3")
     {
-      is >> del{'"'};
-      std::getline(is, key3, '"');
-      value.key3 = key3;
+      is >> str{input.key3};
     }
   } while (is);
   is >> del{')'};
+  value = input;
   return is;
 }
 
@@ -80,6 +118,6 @@ std::ostream& operator<<(std::ostream& out, const miheev::real& value)
 
 std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value)
 {
-  out << "(:key1 " << value.key1 << "ll:key2 " << value.key2 << ":key3 \"" << value.key3 << "\":)\n";
+  out << "(:key1 " << value.key1 << "ll:key2 " << value.key2 << ":key3 \"" << value.key3 << "\":)";
   return out;
 }

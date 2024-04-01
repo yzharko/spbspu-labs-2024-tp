@@ -14,14 +14,33 @@ namespace miheev
     real key2;
     std::string key3;
   };
-  struct DelimiterI
+  struct DelimiterIO
   {
     char expected;
   };
-  void printDS(const DataStruct&);
+  struct LongLongIO
+  {
+    long long& ref;
+  };
+  struct RealIO
+  {
+    real& ref;
+  };
+  struct StringIO
+  {
+    std::string& ref;
+  };
+  struct labelIO
+  {
+    std::string exp;
+  };
 }
 
-std::istream& operator>>(std::istream& is, miheev::DelimiterI&& exp);
+std::istream& operator>>(std::istream& is, miheev::DelimiterIO&& exp);
+std::istream &operator>>(std::istream &in, miheev::LongLongIO&& exp);
+std::istream &operator>>(std::istream &in, miheev::RealIO&& exp);
+std::istream &operator>>(std::istream &in, miheev::labelIO&& exp );
+std::istream &operator>>(std::istream &in, miheev::StringIO&& exp );
 std::istream& operator>>(std::istream& is, miheev::DataStruct& value);
 std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value);
 std::ostream& operator<<(std::ostream& out, const miheev::real&);
