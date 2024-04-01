@@ -10,7 +10,7 @@ int main()
   using namespace khoroshkin;
 
   std::vector< DataStruct > data;
-  
+
   while (!std::cin.eof())
   {
     std::copy(
