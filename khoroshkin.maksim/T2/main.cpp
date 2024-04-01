@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <limits>
+#include <algorithm>
 #include <iterator>
 #include "datastruct.hpp"
 #include "delimiter.hpp"
