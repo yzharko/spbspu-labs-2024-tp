@@ -111,7 +111,7 @@ std::ostream & khoroshkin::operator<<(std::ostream & out, const DataStruct & src
   iofmtguard fmtguard(out);
   out << "(:";
   out << "key1 " << std::fixed << std::setprecision(1) << src.key1 << "d:";
-  out << "key2" << src.key2 << "ull:";
+  out << "key2 " << src.key2 << "ull:";
   out << "key3 " << std::quoted(src.key3) << ":)";
   return out;
 }
