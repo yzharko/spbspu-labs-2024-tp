@@ -96,15 +96,16 @@ std::istream& miheev::operator>>(std::istream& is, miheev::DataStruct& value)
     return is;
   }
   miheev::DataStruct input; // input format: (:key1 10ll:key2 (:N -2:D 3:):key3 "DATA":)
+  size_t counter = 0;
   using del = miheev::DelimiterIO;
   using rl = miheev::RealIO;
   using ll = miheev::LongLongIO;
   using str = miheev::StringIO;
-  is >> del{'('};
-  do
+  is >> del{'('} >> del{':'};
+  for (size_t i = 0; i < 3 && is; i++)
   {
     std::string curKey = "";
-    is >> del{':'} >> miheev::KeyIO{curKey};
+    is >> miheev::KeyIO{curKey};
     if (curKey == "key1")
     {
       is >> ll{input.key1};
@@ -118,7 +119,8 @@ std::istream& miheev::operator>>(std::istream& is, miheev::DataStruct& value)
     {
       is >> str{input.key3};
     }
-  } while (is);
+    is >> del{':'};
+  }
   is >> del{')'};
   value = input;
   return is;
