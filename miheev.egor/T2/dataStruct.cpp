@@ -95,6 +95,7 @@ std::istream& miheev::operator>>(std::istream& is, miheev::DataStruct& value)
   {
     return is;
   }
+  iofmtguard fguard(is);
   miheev::DataStruct input;
   using del = miheev::DelimiterIO;
   using rl = miheev::RealIO;
@@ -133,6 +134,7 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::real& value)
 
 std::ostream& miheev::operator<<(std::ostream& out, const miheev::DataStruct& value)
 {
+  iofmtguard fguard(out);
   out << "(:key1 " << value.key1 << "ll:key2 " << value.key2 << ":key3 \"" << value.key3 << "\":)";
   return out;
 }
