@@ -13,37 +13,54 @@ namespace mihalchenko
 	struct DataStruct
 	{
 		// DataStruct(int key1, std::complex<double> key2, std::string key3) : key1_(key1), key2_(key2), key3_(key3){};
-		DataStruct(int key1, int key2, std::string key3) : key1_(5), key2_(5), key3_("key3"){};
+		// DataStruct(int key1, int key2, std::string key3) : key1_(5), key2_(5), key3_("key3"){};
 		int key1_;
-		// std::complex<double> key2_;
-		int key2_;
+		std::complex<double> key2_;
+		// int key2_;
 		std::string key3_;
 	};
 
-	struct DelimiterIO // сепарэйтер в буквальном смысле
+	struct DelimiterIO
 	{
 		char expected;
 	};
 
-	struct UllBinIO // интовое число в двоичной записи
+	struct UllBinIO
 	{
 		int &ref;
 	};
 
-	struct ComplexIO // интовое число в двоичной записи
+	struct ComplexIO
 	{
 		std::complex<double> &ref;
 	};
 
-	struct StringIO // строка
+	struct StringIO
 	{
 		std::string &ref;
 	};
 
-	struct LabelIO // названия полей структуры, этих самых ключей
+	struct LabelIO
 	{
 		std::string expected;
 	};
+
+	struct KeyIO
+	{
+		std::string &ref;
+	};
+
+	class iofmtguard
+  {
+  public:
+    iofmtguard(std::basic_ios< char > &s);
+    ~iofmtguard();
+  private:
+    std::basic_ios< char > &s_;
+    char fill_;
+    std::streamsize precision_;
+    std::basic_ios< char >::fmtflags fmt_;
+  };
 
 	std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
 	std::istream &operator>>(std::istream &in, UllBinIO &&dest);
@@ -53,8 +70,6 @@ namespace mihalchenko
 	std::istream &operator>>(std::istream &in, DataStruct &dest);
 	std::ostream &operator<<(std::ostream &out, const DataStruct &dest);
 }
-
-// тут я поделил namespace, так как впоследствие эти куски придется растаскивать по разным файлам
 
 namespace mihalchenko
 {
@@ -108,8 +123,17 @@ namespace mihalchenko
 		{
 			return in;
 		}
-		return std::getline(in >> DelimiterIO{'"'}, dest.ref, '"'); // считываем поток в dest.ref,
-																																// считав сначала через DelimiterIO скобочки, указывающие на начало строки, и до последних скобочек - символ хавершения строки
+		return std::getline(in >> DelimiterIO{'"'}, dest.ref, '"');
+	}
+
+	std::istream &operator>>(std::istream &in, KeyIO &&dest)
+	{
+		std::istream::sentry sentry(in);
+		if (!sentry)
+		{
+			return in;
+		}
+		return std::getline(in, dest.ref, ' ');
 	}
 
 	std::istream &operator>>(std::istream &in, LabelIO &&dest)
@@ -120,7 +144,7 @@ namespace mihalchenko
 			return in;
 		}
 		std::string data = "";
-		if ((in >> StringIO{data}) && (data != dest.expected))
+		if ((in >> KeyIO{data}) && (data != dest.expected))
 		{
 			in.setstate(std::ios::failbit);
 		}
@@ -139,27 +163,28 @@ namespace mihalchenko
 		std::string strKey2 = "key2";
 		std::string strKey3 = "key3";*/
 
-		// DataStruct input(0b000000, (.1, .2), "phahaha"); // не понятно, как и внизу, вроде все ок, но компилятору нужны дефолтные значения структуры...
-		DataStruct inputDS(0, 0, ""); // не понятно, как и внизу, вроде все ок, но компилятору нужны дефолтные значения структуры...
+		// DataStruct input(0b000000, (.1, .2), "phahaha");
+		DataStruct inputDS;
 		{
 			using sep = DelimiterIO;
-			using label = LabelIO;
 			using ull2 = UllBinIO;
 			using complex = ComplexIO;
+			// using key = KeyIO;
 			using str = StringIO;
+			using label = LabelIO;
 			// is >> sep{'('} >> sep{':'} >> label{"key1"} >> sep{' '} >> ull2{inputDS.key1_};
-			is >> sep{'('} >> sep{':'} >> sep{'k'} >> sep{'e'} >> sep{'y'} >> sep{'1'} >> ull2{inputDS.key1_} >> sep{':'};
+			is >> sep{'('} >> sep{':'} >> label{"key1"} >> ull2{inputDS.key1_} >> sep{':'};
 			// is >> label{"key2"} >> sep{' '} >> complex{input.key2_};
-			is >> sep{'k'} >> sep{'e'} >> sep{'y'} >> sep{'2'} >> ull2{inputDS.key2_};
+			is >> label{"key2"} >> complex{inputDS.key2_};
 			is >> sep{':'};
 			// is >> label{"key3"} >> sep{' '} >> str{inputDS.key3_};
-			is >> sep{'k'} >> sep{'e'} >> sep{'y'} >> sep{'3'} >> str{inputDS.key3_};
+			is >> label{"key3"} >> str{inputDS.key3_};
 			is >> sep{':'} >> sep{')'};
 		}
 
 		// using del = DelimiterIO;
 		/*int key1 = 0b000'000;
-		std::complex<double> key2 = (.1, 0.); // не уверен, что нужно именно тут
+		std::complex<double> key2 = (.1, 0.);
 		std::string key3 = "";*/
 		// is >> del{'('} >> del{':'} >> del{' '} >> key1 >> del{':'} >> del{' '} >> key2 >> del{':'} >> del{' '} >> key3 >> del{':'} >> del{')'};
 		/*if (is)
@@ -182,11 +207,23 @@ namespace mihalchenko
 		{
 			return out;
 		}
-		out << "("
-				<< ":" << value.key1_ << ":" << value.key2_ << ":" << value.key3_ << ":"
-				<< ")";
+		out << "(" << ":key1 " << value.key1_ << ":key2 " << value.key2_ << ":key3 " << value.key3_ << ":" << ")";
 		return out;
 	}
+
+	iofmtguard::iofmtguard(std::basic_ios< char > &s) :
+    s_(s),
+    fill_(s.fill()),
+    precision_(s.precision()),
+    fmt_(s.flags())
+  {}
+
+  iofmtguard::~iofmtguard()
+  {
+    s_.fill(fill_);
+    s_.precision(precision_);
+    s_.flags(fmt_);
+  }
 }
 
 int main()
@@ -202,8 +239,8 @@ int main()
 	std::cout << str << std::endl;
 	*/
 
-	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha"); // по дефолту, если не все параметры передадутся
-	mihalchenko::DataStruct newStruct(0b000000, 0b000000, "phahaha"); // по дефолту, если не все параметры передадутся
+	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha");
+	mihalchenko::DataStruct newStruct;
 	if (!(std::cin >> newStruct))
 	{
 		/*std::string str;
@@ -212,8 +249,8 @@ int main()
 		*/
 		std::cout << newStruct << "\n";
 
-		std::cin.clear();																										// не понятно
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // не ясно
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		if (!(std::cin >> newStruct))
 		{
 			std::cerr << "Error\n";
