@@ -49,16 +49,16 @@ namespace miheev
     std::streamsize precision_;
     std::basic_ios< char >::fmtflags fmt_;
   };
+  std::istream& operator>>(std::istream& is, DelimiterIO&&);
+  std::istream& operator>>(std::istream &in, LongLongIO&&);
+  std::istream& operator>>(std::istream &in, RealIO&&);
+  std::istream& operator>>(std::istream &in, LabelIO&&);
+  std::istream& operator>>(std::istream &in, StringIO&&);
+  std::istream& operator>>(std::istream &in, KeyIO&&);
+  std::istream& operator>>(std::istream& is, DataStruct& value);
+  std::ostream& operator<<(std::ostream& out, const DataStruct& value);
+  std::ostream& operator<<(std::ostream& out, const real&);
 }
 
-std::istream& operator>>(std::istream& is, miheev::DelimiterIO&&);
-std::istream &operator>>(std::istream &in, miheev::LongLongIO&&);
-std::istream &operator>>(std::istream &in, miheev::RealIO&&);
-std::istream &operator>>(std::istream &in, miheev::LabelIO&&);
-std::istream &operator>>(std::istream &in, miheev::StringIO&&);
-std::istream &operator>>(std::istream &in, miheev::KeyIO&&);
-std::istream& operator>>(std::istream& is, miheev::DataStruct& value);
-std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value);
-std::ostream& operator<<(std::ostream& out, const miheev::real&);
 
 #endif

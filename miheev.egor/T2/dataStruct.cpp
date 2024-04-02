@@ -1,7 +1,7 @@
 #include <utility>
 #include "dataStruct.hpp"
 
-std::istream& operator>>(std::istream& is, miheev::DelimiterIO&& exp)
+std::istream& miheev::operator>>(std::istream& is, miheev::DelimiterIO&& exp)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -17,7 +17,7 @@ std::istream& operator>>(std::istream& is, miheev::DelimiterIO&& exp)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::LongLongIO&& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::LongLongIO&& value)
 {
   using del = miheev::DelimiterIO;
   std::istream::sentry sentry(is);
@@ -29,7 +29,7 @@ std::istream& operator>>(std::istream& is, miheev::LongLongIO&& value)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::RealIO&& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::RealIO&& value)
 {
   using del = miheev::DelimiterIO;
   using lab = miheev::LabelIO;
@@ -46,7 +46,7 @@ std::istream& operator>>(std::istream& is, miheev::RealIO&& value)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::StringIO&& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::StringIO&& value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -56,7 +56,7 @@ std::istream& operator>>(std::istream& is, miheev::StringIO&& value)
   return std::getline(is >> miheev::DelimiterIO{'"'}, value.ref, '"');
 }
 
-std::istream& operator>>(std::istream& is, miheev::LabelIO&& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::LabelIO&& value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -73,7 +73,7 @@ std::istream& operator>>(std::istream& is, miheev::LabelIO&& value)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::KeyIO&& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::KeyIO&& value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -88,7 +88,7 @@ std::istream& operator>>(std::istream& is, miheev::KeyIO&& value)
   return is;
 }
 
-std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
+std::istream& miheev::operator>>(std::istream& is, miheev::DataStruct& value)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -124,13 +124,13 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   return is;
 }
 
-std::ostream& operator<<(std::ostream& out, const miheev::real& value)
+std::ostream& miheev::operator<<(std::ostream& out, const miheev::real& value)
 {
   std::cout << "(:N " << value.first << ":D " << value.second << ":)";
   return out;
 }
 
-std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value)
+std::ostream& miheev::operator<<(std::ostream& out, const miheev::DataStruct& value)
 {
   out << "(:key1 " << value.key1 << "ll:key2 " << value.key2 << ":key3 \"" << value.key3 << "\":)";
   return out;
