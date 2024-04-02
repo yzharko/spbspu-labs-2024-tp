@@ -138,6 +138,25 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::DataStruct& va
   return out;
 }
 
+bool miheev::operator<(const miheev::real& lhs, const miheev::real& rhs)
+{
+  long long difference = lhs.first*rhs.second - rhs.first*lhs.second;
+  if (difference < 0)
+  {
+    return true;
+  }
+  return false;
+}
+
+bool miheev::operator<(const miheev::DataStruct& lhs, const miheev::DataStruct& rhs)
+{
+  if (lhs.key1 < rhs.key1 or lhs.key2 < rhs.key2 or lhs.key3.size() < lhs.key3.size())
+  {
+    return true;
+  }
+  return false;
+}
+
 miheev::iofmtguard::iofmtguard(std::basic_ios< char >& s):
   s_(s),
   fill_(s.fill()),

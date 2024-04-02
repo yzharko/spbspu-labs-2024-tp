@@ -58,6 +58,8 @@ namespace miheev
   std::istream& operator>>(std::istream& is, DataStruct& value);
   std::ostream& operator<<(std::ostream& out, const DataStruct& value);
   std::ostream& operator<<(std::ostream& out, const real&);
+  bool operator<(const DataStruct& lhs, const DataStruct& rhs);
+  bool operator<(const miheev::real& lhs, const miheev::real& rhs);
 }
 
 
