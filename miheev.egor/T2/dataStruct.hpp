@@ -30,17 +30,33 @@ namespace miheev
   {
     std::string& ref;
   };
-  struct labelIO
+  struct LabelIO
   {
     std::string exp;
   };
+  struct KeyIO
+  {
+    std::string& ref;
+  };
+  class iofmtguard
+  {
+  public:
+    iofmtguard(std::basic_ios< char >& s);
+    ~iofmtguard();
+  private:
+    std::basic_ios< char >& s_;
+    char fill_;
+    std::streamsize precision_;
+    std::basic_ios< char >::fmtflags fmt_;
+  };
 }
 
-std::istream& operator>>(std::istream& is, miheev::DelimiterIO&& exp);
-std::istream &operator>>(std::istream &in, miheev::LongLongIO&& exp);
-std::istream &operator>>(std::istream &in, miheev::RealIO&& exp);
-std::istream &operator>>(std::istream &in, miheev::labelIO&& exp );
-std::istream &operator>>(std::istream &in, miheev::StringIO&& exp );
+std::istream& operator>>(std::istream& is, miheev::DelimiterIO&&);
+std::istream &operator>>(std::istream &in, miheev::LongLongIO&&);
+std::istream &operator>>(std::istream &in, miheev::RealIO&&);
+std::istream &operator>>(std::istream &in, miheev::LabelIO&&);
+std::istream &operator>>(std::istream &in, miheev::StringIO&&);
+std::istream &operator>>(std::istream &in, miheev::KeyIO&&);
 std::istream& operator>>(std::istream& is, miheev::DataStruct& value);
 std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value);
 std::ostream& operator<<(std::ostream& out, const miheev::real&);

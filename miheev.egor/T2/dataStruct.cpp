@@ -32,7 +32,7 @@ std::istream& operator>>(std::istream& is, miheev::LongLongIO&& value)
 std::istream& operator>>(std::istream& is, miheev::RealIO&& value)
 {
   using del = miheev::DelimiterIO;
-  using lab = miheev::labelIO;
+  using lab = miheev::LabelIO;
   std::istream::sentry sentry(is);
   if (!sentry)
   {
@@ -56,7 +56,7 @@ std::istream& operator>>(std::istream& is, miheev::StringIO&& value)
   return std::getline(is >> miheev::DelimiterIO{'"'}, value.ref, '"');
 }
 
-std::istream& operator>>(std::istream& is, miheev::labelIO&& value)
+std::istream& operator>>(std::istream& is, miheev::LabelIO&& value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -73,6 +73,21 @@ std::istream& operator>>(std::istream& is, miheev::labelIO&& value)
   return is;
 }
 
+std::istream& operator>>(std::istream& is, miheev::KeyIO&& value)
+{
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  is >> value.ref;
+  if (value.ref != "key1" and value.ref != "key2" and value.ref != "key3")
+  {
+    is.setstate(std::ios::failbit);
+  }
+  return is;
+}
+
 std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
 {
   std::istream::sentry guard(is);
@@ -82,7 +97,6 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   }
   miheev::DataStruct input; // input format: (:key1 10ll:key2 (:N -2:D 3:):key3 "DATA":)
   using del = miheev::DelimiterIO;
-  using lab = miheev::labelIO;
   using rl = miheev::RealIO;
   using ll = miheev::LongLongIO;
   using str = miheev::StringIO;
@@ -90,7 +104,7 @@ std::istream& operator>>(std::istream& is, miheev::DataStruct& value)
   do
   {
     std::string curKey = "";
-    is >> del{':'} >> curKey;
+    is >> del{':'} >> miheev::KeyIO{curKey};
     if (curKey == "key1")
     {
       is >> ll{input.key1};
@@ -120,4 +134,18 @@ std::ostream& operator<<(std::ostream& out, const miheev::DataStruct& value)
 {
   out << "(:key1 " << value.key1 << "ll:key2 " << value.key2 << ":key3 \"" << value.key3 << "\":)";
   return out;
+}
+
+miheev::iofmtguard::iofmtguard(std::basic_ios< char >& s):
+  s_(s),
+  fill_(s.fill()),
+  precision_(s.precision()),
+  fmt_(s.flags())
+{}
+
+miheev::iofmtguard::~iofmtguard()
+{
+  s_.fill(fill_);
+  s_.precision(precision_);
+  s_.flags(fmt_);
 }
