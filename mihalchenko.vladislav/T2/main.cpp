@@ -1,10 +1,12 @@
 #include <iostream>
 // #include <sstream>
 #include <vector>
+// #include <cctype>
+#include <algorithm>
 #include <limits>
 #include <complex>
-// #include <iterator>
-// #include <string>
+#include <iterator>
+#include <string>
 // #include <bitset>
 // #include <iomanip>
 
@@ -51,16 +53,17 @@ namespace mihalchenko
 	};
 
 	class iofmtguard
-  {
-  public:
-    iofmtguard(std::basic_ios< char > &s);
-    ~iofmtguard();
-  private:
-    std::basic_ios< char > &s_;
-    char fill_;
-    std::streamsize precision_;
-    std::basic_ios< char >::fmtflags fmt_;
-  };
+	{
+	public:
+		iofmtguard(std::basic_ios<char> &s);
+		~iofmtguard();
+
+	private:
+		std::basic_ios<char> &s_;
+		char fill_;
+		std::streamsize precision_;
+		std::basic_ios<char>::fmtflags fmt_;
+	};
 
 	std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
 	std::istream &operator>>(std::istream &in, UllBinIO &&dest);
@@ -69,6 +72,8 @@ namespace mihalchenko
 	std::istream &operator>>(std::istream &in, LabelIO &&dest);
 	std::istream &operator>>(std::istream &in, DataStruct &dest);
 	std::ostream &operator<<(std::ostream &out, const DataStruct &dest);
+
+	bool operator<(const DataStruct &lhs, const DataStruct &rhs);
 }
 
 namespace mihalchenko
@@ -172,14 +177,37 @@ namespace mihalchenko
 			// using key = KeyIO;
 			using str = StringIO;
 			using label = LabelIO;
-			// is >> sep{'('} >> sep{':'} >> label{"key1"} >> sep{' '} >> ull2{inputDS.key1_};
+
+			is >> sep{'('} >> sep{':'};
+			for (size_t i = 0; i < 3 && is; ++i)
+			{
+				std::string key = "";
+				is >> label{key};
+				if (key == "key1")
+				{
+					is >> ull2{inputDS.key1_};
+				}
+				else if (key == "key2")
+				{
+					is >> complex{inputDS.key2_};
+				}
+				else if (key == "key3")
+				{
+					is >> str{inputDS.key3_};
+				}
+				else
+				{
+					is.setstate(std::ios::failbit);
+				}
+				is >> sep{':'} >> sep{')'};
+			}
+			is >> sep{':'} >> sep{')'};
+			/*
 			is >> sep{'('} >> sep{':'} >> label{"key1"} >> ull2{inputDS.key1_} >> sep{':'};
-			// is >> label{"key2"} >> sep{' '} >> complex{input.key2_};
 			is >> label{"key2"} >> complex{inputDS.key2_};
 			is >> sep{':'};
-			// is >> label{"key3"} >> sep{' '} >> str{inputDS.key3_};
 			is >> label{"key3"} >> str{inputDS.key3_};
-			is >> sep{':'} >> sep{')'};
+			is >> sep{':'} >> sep{')'};*/
 		}
 
 		// using del = DelimiterIO;
@@ -207,46 +235,106 @@ namespace mihalchenko
 		{
 			return out;
 		}
-		out << "(" << ":key1 " << value.key1_ << ":key2 " << value.key2_ << ":key3 " << value.key3_ << ":" << ")";
+		iofmtguard fmtguard(out);
+		out << "("
+				<< ":key1 "
+				<< "0b" << value.key1_ << ":key2 " << value.key2_ << ":key3 " << '"' << value.key3_ << '"' << ":"
+				<< ")";
 		return out;
 	}
 
-	iofmtguard::iofmtguard(std::basic_ios< char > &s) :
-    s_(s),
-    fill_(s.fill()),
-    precision_(s.precision()),
-    fmt_(s.flags())
-  {}
+	iofmtguard::iofmtguard(std::basic_ios<char> &s) : s_(s),
+																										fill_(s.fill()),
+																										precision_(s.precision()),
+																										fmt_(s.flags())
+	{
+	}
 
-  iofmtguard::~iofmtguard()
-  {
-    s_.fill(fill_);
-    s_.precision(precision_);
-    s_.flags(fmt_);
-  }
+	iofmtguard::~iofmtguard()
+	{
+		s_.fill(fill_);
+		s_.precision(precision_);
+		s_.flags(fmt_);
+	}
+}
+
+bool mihalchenko::operator<(const DataStruct &lhs, const DataStruct &rhs)
+{
+	if (lhs.key1_ != rhs.key1_)
+	{
+		if (lhs.key1_ < rhs.key1_)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else if (lhs.key2_ != rhs.key2_)
+	{
+		if (abs(lhs.key2_) < abs(rhs.key2_))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		if (lhs.key3_.size() < rhs.key3_.size())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
 
 int main()
 {
-	/*std::string str;
-	std::cin >> str;
-	std::cout << str << std::endl;
-	std::cin >> str;
-	std::cout << str << std::endl;
-	std::cin >> str;
-	std::cout << str << std::endl;
-	std::cin >> str;
-	std::cout << str << std::endl;
-	*/
-
 	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha");
-	mihalchenko::DataStruct newStruct;
+
+	/*std::vector<mihalchenko::DataStruct> data;
+
+	std::copy(
+			std::istream_iterator< mihalchenko::DataStruct >{std::cin},
+			std::istream_iterator<mihalchenko::DataStruct >{},
+			std::back_inserter(data));*/
+
+	using mihalchenko::DataStruct;
+
+	std::vector<DataStruct> dataStruct;
+
+	while (!std::cin.eof())
+	{
+		std::copy(
+				std::istream_iterator<DataStruct>{std::cin},
+				std::istream_iterator<DataStruct>{},
+				std::back_inserter(dataStruct));
+		if (std::cin.fail())
+		{
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+	}
+
+	std::sort(dataStruct.begin(), dataStruct.end());
+	std::copy(
+			std::begin(dataStruct),
+			std::end(dataStruct),
+			std::ostream_iterator<DataStruct>(std::cout, "\n"));
+
+	/*mihalchenko::DataStruct newStruct;
 	if (!(std::cin >> newStruct))
 	{
-		/*std::string str;
+		std::string str;
 		std::cin >> str;
 		std::cout << str << "!" << std::endl;
-		*/
 		std::cout << newStruct << "\n";
 
 		std::cin.clear();
@@ -258,6 +346,6 @@ int main()
 			return 1;
 		}
 	}
-	std::cout << newStruct << "\n";
+	std::cout << newStruct << "\n";*/
 	return 0;
 }
