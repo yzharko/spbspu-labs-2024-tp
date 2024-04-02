@@ -214,7 +214,7 @@ void setStruct(std::vector<DataStruct>  &myVector){
 
 
 bool isBinary(std::string str) {
-  for (int i = 0; i < str.size(); i++) {
+  for (size_t i = 0; i < str.size(); i++) {
     if (str[i] != '0' and str[i] != '1') {
       return false;
     }
@@ -222,7 +222,7 @@ bool isBinary(std::string str) {
   return true;
 }
 bool isHex(std::string str) {
-  for (int i = 0; i < str.size(); i++) {
+  for (size_t i = 0; i < str.size(); i++) {
     if (!isdigit(str[i]) and !(str[i] >= 'a' and str[i] <= 'f') and !(str[i] >= 'A' and str[i] <= 'F')) {
       return false;
     }
@@ -238,7 +238,7 @@ void printVector(const std::vector<DataStruct>&  myVector){
 
 int main() {
   std::vector<DataStruct>  myVector;
-  etStruct(myVector);
+  setStruct(myVector);
   Quicksort(myVector, 0, myVector.size() -1);
   printVector(myVector);
   return 0;
