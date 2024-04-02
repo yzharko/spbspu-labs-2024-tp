@@ -92,7 +92,8 @@ bool operator >=(const DataStruct& left,const  DataStruct& right) {
 }
 
 std::ostream& operator<<(std::ostream& os,const DataStruct& myStruct){
-  os << "(:key1 0b" << std::bitset<8> {myStruct.key1} << ":key2 0x" << std::hex << std::uppercase << myStruct.key2 << ":key3 \"" << myStruct.key3 << "\":)";
+  os << "(:key1 0b" << std::bitset<8> {myStruct.key1} << ":key2 0x" << std::hex << std::uppercase << myStruct.key2 <<
+      ":key3 \"" << myStruct.key3 << "\":)";
   return os;
 }
 std::istream& operator>>(std::istream& is,DataStruct& myStruct) {
@@ -225,7 +226,7 @@ bool isHex(std::string str) {
     if (!isdigit(str[i]) and !(str[i] >= 'a' and str[i] <= 'f') and !(str[i] >= 'A' and str[i] <= 'F')) {
       return false;
     }
-  } 
+  }
   return true;
 }
 
