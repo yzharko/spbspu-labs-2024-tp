@@ -95,7 +95,7 @@ std::istream& miheev::operator>>(std::istream& is, miheev::DataStruct& value)
   {
     return is;
   }
-  miheev::DataStruct input; 
+  miheev::DataStruct input;
   using del = miheev::DelimiterIO;
   using rl = miheev::RealIO;
   using ll = miheev::LongLongIO;
