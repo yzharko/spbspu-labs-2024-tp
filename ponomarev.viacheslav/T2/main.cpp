@@ -204,8 +204,15 @@ namespace ponomarev
       return out;
     }
     iofmtguard fmtguard(out);
+    double mantis = src.key1;
+    int degree = 0;
+    while (mantis < 1)
+    {
+      mantis *= 10;
+      degree += 1;
+    }
     out << "(:";
-    out << "key1 " << std::setprecision(1) << std::scientific << src.key1 << ":";
+    out << "key1 " << mantis << "e-" << degree << ":";
     out << "key2 " << "0b" << src.key2 << ":";
     out << "key3 " << '"' << src.key3 << '"';
     out << ":)";
