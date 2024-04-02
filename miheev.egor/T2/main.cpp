@@ -30,7 +30,6 @@ int main()
     std::end(data),
     std::ostream_iterator< DataStruct >(std::cout, "\n")
   );
-  // std::cout << data[0] << '\n' << data[1] << '\n';
 
   return 0;
 }
