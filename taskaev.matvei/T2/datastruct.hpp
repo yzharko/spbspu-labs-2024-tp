@@ -25,5 +25,6 @@ private:
 
 std::istream& operator >> (std::istream& is, DataStruct& dest);
 std::ostream& operator << (std::ostream& out, const DataStruct& dest);
+bool operator<(const DataStruct& left, const DataStruct& right);
 
 #endif
