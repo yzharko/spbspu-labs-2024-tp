@@ -83,15 +83,25 @@ namespace zheleznyakov
       return in;
     }
     Data input;
+    std::string currentKey = "";
+    in >> sep{'('};
+    for (size_t i = 0; i < 3; i++)
     {
-      in >> sep{'('} >> sep{':'};
-      in >> label{"key1"} >> dbl{input.key1};
-      in >> sep{':'};
-      in >> label{"key2"} >> rl{input.key2};
-      in >> sep{':'};
-      in >> label{"key3"} >> str{input.key3};
-      in >> sep{':'} >> sep{')'};
+      in >> sep{':'} >> currentKey;
+      if (currentKey == "key1")
+      {
+        in >> dbl{input.key1};
+      }
+      else if (currentKey == "key2")
+      {
+        in  >> rl{input.key2};
+      }
+      else if (currentKey == "key3")
+      {
+        in >> str{input.key3};
+      }
     }
+    in >> sep{':'} >> sep{')'};
     if (in)
     {
       dest = input;
