@@ -42,18 +42,6 @@ namespace zheleznyakov
     std::string exp;
   };
 
-  class iofmtguard
-  {
-  public:
-    iofmtguard(std::basic_ios< char > &s);
-    ~iofmtguard();
-  private:
-    std::basic_ios< char > &s_;
-    char fill_;
-    std::streamsize precision_;
-    std::basic_ios< char >::fmtflags fmt_;
-  };
-
   std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
   std::istream &operator>>(std::istream &in, DoubleIO &&dest);
   std::istream &operator>>(std::istream &in, RealIO &&dest);
