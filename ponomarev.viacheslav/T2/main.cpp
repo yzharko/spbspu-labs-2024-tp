@@ -212,7 +212,7 @@ namespace ponomarev
       degree += 1;
     }
     out << "(:";
-    out << "key1 " << mantis << "e-" << degree << ":";
+    out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e-" << degree << ":";
     out << "key2 " << "0b" << src.key2 << ":";
     out << "key3 " << '"' << src.key3 << '"';
     out << ":)";
