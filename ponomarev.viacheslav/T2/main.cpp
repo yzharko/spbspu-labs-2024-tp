@@ -82,14 +82,10 @@ int main()
       std::istream_iterator< Data >(),
       std::back_inserter(data)
     );
-    if (data.empty())
+    if (std::cin.fail() && !std::cin.eof())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-    else
-    {
-      break;
     }
   }
   std::sort(data.begin(), data.end(), compare_entry);
@@ -206,13 +202,25 @@ namespace ponomarev
     iofmtguard fmtguard(out);
     double mantis = src.key1;
     int degree = 0;
-    while (mantis < 1)
-    {
-      mantis *= 10;
-      degree += 1;
-    }
     out << "(:";
-    out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e-" << degree << ":";
+    if (mantis < 10)
+    {
+      while (mantis < 1)
+      {
+        mantis *= 10;
+        degree += 1;
+      }
+      out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e-" << degree << ":";
+    }
+    else
+    {
+      while (mantis > 9)
+      {
+        mantis /= 10;
+        degree += 1;
+      }
+      out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e+" << degree << ":";
+    }
     out << "key2 " << "0b" << src.key2 << ":";
     out << "key3 " << '"' << src.key3 << '"';
     out << ":)";
