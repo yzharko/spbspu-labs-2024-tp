@@ -5,7 +5,7 @@
 
 namespace khoroshkin
 {
-   struct DelimiterIO
+  struct DelimiterIO
   {
     char exp;
   };
