@@ -94,7 +94,7 @@ namespace zheleznyakov
       }
       else if (currentKey == "key2")
       {
-        in  >> rl{input.key2};
+        in >> rl{input.key2};
       }
       else if (currentKey == "key3")
       {
@@ -126,5 +126,15 @@ namespace zheleznyakov
     out << "key3 \"" << src.key3 << "\"";
     out << ":)";
     return out;
+  }
+
+  bool operator<(const Data &left, const Data &right)
+  {
+    return (left.key1 < right.key1 || left.key2 < right.key2 || left.key3.size() < right.key3.size());
+  }
+
+  bool operator<(const real &leftReal, const real &rightReal)
+  {
+    return (double)(leftReal.first / leftReal.second) < (double)(rightReal.first / rightReal.second);
   }
 }

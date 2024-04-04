@@ -49,4 +49,7 @@ namespace zheleznyakov
   std::istream &operator>>(std::istream &in, LabelIO &&dest);
   std::istream &operator>>(std::istream &in, Data &dest);
   std::ostream &operator<<(std::ostream &out, const Data &dest);
+
+  bool operator<(const Data& left, const Data& right);
+  bool operator<(const real &leftReal, const real &rightReal);
 }
