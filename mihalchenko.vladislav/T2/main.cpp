@@ -16,6 +16,7 @@
 // #include <ctype.h>
 
 static std::vector<int> countNull;
+static int mainCounter = 0;
 
 namespace mihalchenko
 {
@@ -53,12 +54,12 @@ namespace mihalchenko
 
 	/*struct LabelIO
 	{
-		std::string expected;
+			std::string expected;
 	};
 
 	struct KeyIO
 	{
-		std::string &ref;
+			std::string &ref;
 	};*/
 
 	class iofmtguard
@@ -117,13 +118,13 @@ namespace mihalchenko
 		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
 		std::string strForBinUllIO = "";
 		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
-		/*flg = false;*/
+
 		char c = '1';
-		int i = 0;
-		int counter = 0;
-		std::string strItog = "";
+		size_t i = 0;
+		size_t counter = 0;
+		/// std::string strItog = "";
 		std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
-		std::cout << strForBinUllIO << "\n";
+		// std::cout << strForBinUllIO << "\n";
 		while (i != strForBinUllIO.length())
 		{
 			c = strForBinUllIO[i];
@@ -138,26 +139,32 @@ namespace mihalchenko
 			}
 		}
 		countNull.push_back(counter);
+		dest.ref = stoi(strForBinUllIO);
+		// std::cout << dest.ref << "\n";
+
+		// std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
+		// std::cout << strForBinUllIO << "\n";
+		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
 		// dest.ref = static_cast<int>(strForBinUllIO);
 		/*long n = 0;
 		for (unsigned i = 0; strForBinUllIO[i] >= '0' && strForBinUllIO[i] <= '1'; ++i)
 		{
-			n = 2 * n + (strForBinUllIO[i] - '0');
+				n = 2 * n + (strForBinUllIO[i] - '0');
 		}*/
 		// std::cout << strForBinUllIO << "\n";
 		// return strForBinUllIO;
 		/*while (i != strForBinUllIO.length())
 		{
-			c = strForBinUllIO[i];
-			if (c == '0')
-			{
-				flg = true;
-				i++;
-			}
-			else
-			{
-				strItog += c;
-			}
+				c = strForBinUllIO[i];
+				if (c == '0')
+				{
+						flg = true;
+						i++;
+				}
+				else
+				{
+						strItog += c;
+				}
 		}
 		dest.ref = static_cast<int>(strItog);*/
 		// dest.ref = std::stoi(strForBinUllIO);
@@ -172,12 +179,12 @@ namespace mihalchenko
 
 		/*while (in>>c && (c != ':') && (!std::cin.eof()))
 		{
-			dest.ref *= 2;
-			dest.ref += c - 42; // или как-то так из чаров в инты переводят
-			// dest.ref += int(c) - 48;
+				dest.ref *= 2;
+				dest.ref += c - 42; // или как-то так из чаров в инты переводят
+				// dest.ref += int(c) - 48;
 		}*/
 		// std::cout << dest.ref << "\n";
-		// return in;
+		return in;
 	}
 
 	std::istream &operator>>(std::istream &in, ComplexIO &&dest)
@@ -210,27 +217,27 @@ namespace mihalchenko
 
 	/*std::istream &operator>>(std::istream &in, KeyIO &&dest)
 	{
-		std::istream::sentry sentry(in);
-		if (!sentry)
-		{
-			return in;
-		}
-		return std::getline(in, dest.ref, ' ');
+			std::istream::sentry sentry(in);
+			if (!sentry)
+			{
+					return in;
+			}
+			return std::getline(in, dest.ref, ' ');
 	}
 
 	std::istream &operator>>(std::istream &in, LabelIO &&dest)
 	{
-		std::istream::sentry sentry(in);
-		if (!sentry)
-		{
+			std::istream::sentry sentry(in);
+			if (!sentry)
+			{
+					return in;
+			}
+			std::string data = "";
+			if ((in >> KeyIO{data}) && (data != dest.expected))
+			{
+					in.setstate(std::ios::failbit);
+			}
 			return in;
-		}
-		std::string data = "";
-		if ((in >> KeyIO{data}) && (data != dest.expected))
-		{
-			in.setstate(std::ios::failbit);
-		}
-		return in;
 	}*/
 
 	std::istream &operator>>(std::istream &is, DataStruct &value)
@@ -255,16 +262,27 @@ namespace mihalchenko
 			using str = StringIO;
 			// using label = LabelIO;
 			// std::string key = "";
+			bool flag11 = false;
 			is >> sep{'('};
+			std::string key = "";
 			for (size_t i = 0; i < 3; ++i)
 			{
-				is >> sep{':'};
-				std::string key = "";
-				// is >> label{key};
+				if (flag11 == true)
+				{
+					flag11 = false;
+					// std::cout << "уже встречали key1 в строке" << std::endl;
+				}
+				else
+				{
+					is >> sep{':'};
+				}
+				// std::string key = "";
+				//  is >> label{key};
 				is >> key;
 				if (key == "key1")
 				{
 					is >> ull2{inputDS.key1_};
+					flag11 = true;
 				}
 				else if (key == "key2")
 				{
@@ -295,7 +313,7 @@ namespace mihalchenko
 		// is >> del{'('} >> del{':'} >> del{' '} >> key1 >> del{':'} >> del{' '} >> key2 >> del{':'} >> del{' '} >> key3 >> del{':'} >> del{')'};
 		/*if (is)
 		{
-			value = DataStruct(key1, key2, key3);
+				value = DataStruct(key1, key2, key3);
 		}
 		return is;*/
 
@@ -315,12 +333,20 @@ namespace mihalchenko
 		}
 		iofmtguard fmtguard(out);
 		// std::cout << value.key1_ << value.key2_.real() << value.key3_ << "\n";
+		std::string sss = "";
+		for (int s = 0; s < countNull[mainCounter]; s++)
+		{
+			sss = sss + "0";
+		}
+
 		out << "("
 				<< ":key1 "
-				<< "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
+				<< "0b" << sss << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
+				//<< "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
 				<< value.key2_.real() << " " << value.key2_.imag() << ")"
 				<< ":key3 \"" << value.key3_ << "\":"
 				<< ")";
+		mainCounter++;
 		return out;
 	}
 
@@ -381,9 +407,9 @@ int main()
 	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha");
 
 	/*std::copy(
-			std::istream_iterator< mihalchenko::DataStruct >{std::cin},
-			std::istream_iterator<mihalchenko::DataStruct >{},
-			std::back_inserter(data));*/
+					std::istream_iterator< mihalchenko::DataStruct >{std::cin},
+					std::istream_iterator<mihalchenko::DataStruct >{},
+					std::back_inserter(data));*/
 
 	using mihalchenko::DataStruct;
 
@@ -397,12 +423,17 @@ int main()
 				std::back_inserter(dataStruct));
 		if (std::cin.fail() && !std::cin.eof())
 		{
+			// std::cout << "kjvkghvh" << "\n";
 			std::cin.clear();
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
 
 	// std::cout << countNull.size() << "\n";
+	/*for (int i = 0; i < 3; i++)
+	{
+		std::cout << countNull[i] << "\n";
+	}*/
 
 	std::sort(dataStruct.begin(), dataStruct.end());
 	std::copy(
@@ -413,19 +444,19 @@ int main()
 	/*mihalchenko::DataStruct newStruct;
 	if (!(std::cin >> newStruct))
 	{
-		std::string str;
-		std::cin >> str;
-		std::cout << str << "!" << std::endl;
-		std::cout << newStruct << "\n";
-
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if (!(std::cin >> newStruct))
-		{
-			std::cerr << "Error\n";
+			std::string str;
+			std::cin >> str;
+			std::cout << str << "!" << std::endl;
 			std::cout << newStruct << "\n";
-			return 1;
-		}
+
+			std::cin.clear();
+			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			if (!(std::cin >> newStruct))
+			{
+					std::cerr << "Error\n";
+					std::cout << newStruct << "\n";
+					return 1;
+			}
 	}
 	std::cout << newStruct << "\n";*/
 	return 0;
