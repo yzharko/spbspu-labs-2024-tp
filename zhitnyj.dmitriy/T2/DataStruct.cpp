@@ -1,6 +1,6 @@
-#include "DataStruct.h"
 #include <sstream>
 #include <iomanip>
+#include "DataStruct.h"
 
 std::istream& operator>>(std::istream& is, DataStruct& data)
 {
