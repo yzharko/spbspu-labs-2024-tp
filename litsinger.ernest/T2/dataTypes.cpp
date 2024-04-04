@@ -35,4 +35,3 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::StringIO&& valu
   }
   return std::getline(is >> litsinger::DelimiterIO{'"'}, value.ref, '"');
 }
-
