@@ -1,5 +1,5 @@
-#ifndef LIST2_0_SCOPEGUARD_HPP
-#define LIST2_0_SCOPEGUARD_HPP
+#ifndef SCOPEGUARD_HPP
+#define SCOPEGUARD_HPP
 #include <iostream>
 
 namespace litsinger
