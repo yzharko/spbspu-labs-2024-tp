@@ -1,4 +1,3 @@
-#include <bitset>
 #include "datastruct.hpp"
 #include "dataTypes.hpp"
 #include "delimiters.hpp"
@@ -46,7 +45,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& val
 std::ostream& litsinger::operator<<(std::ostream& os, const litsinger::DataStruct& myStruct)
 {
   iofmtguard fguard(os);
-  os << "(:key1 0b" << std::bitset<8> {myStruct.key1} << ":key2 0x" << std::hex
+  os << "(:key1 0b" << myStruct.key1 << ":key2 0x" << std::hex
       << std::uppercase << myStruct.key2 << ":key3 \"" << myStruct.key3 << "\":)";
   return os;
 }
