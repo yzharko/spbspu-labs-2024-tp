@@ -1,5 +1,5 @@
-#ifndef LIST2_0_DATATYPES_HPP
-#define LIST2_0_DATATYPES_HPP
+#ifndef DATATYPES_HPP
+#define DATATYPES_HPP
 #include <utility>
 #include <string>
 

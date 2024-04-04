@@ -7,7 +7,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DelimiterIO&& e
   {
     return is;
   }
-  char c = 0;
+  int c = 0;
   is >> c;
   if (towlower(c) != exp.expected)
   {

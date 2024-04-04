@@ -1,8 +1,8 @@
-#ifndef LIST2_0_DATASTRUCT_HPP
-#define LIST2_0_DATASTRUCT_HPP
+#ifndef DATASTRUCT_HPP
+#define DATASTRUCT_HPP
 #include <string>
 #include <iostream>
-#include "dataTypes.h"
+#include "dataTypes.hpp"
 
 namespace litsinger
 {

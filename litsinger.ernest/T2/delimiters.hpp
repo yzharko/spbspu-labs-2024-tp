@@ -1,5 +1,5 @@
-#ifndef LIST2_0_DELIMITERS_HPP
-#define LIST2_0_DELIMITERS_HPP
+#ifndef DELIMITERS_HPP
+#define DELIMITERS_HPP
 #include <iostream>
 
 namespace litsinger
