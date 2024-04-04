@@ -40,6 +40,10 @@ namespace taskaev
           is >> str{data.key3};
           is >> del{ ':' };
         }
+        else
+        {
+          is.setstate(std::ios::failbit);
+        }
         countKey++;
       }
       is >> del{ ')' };
@@ -59,10 +63,10 @@ namespace taskaev
       return out;
     }
     iofmtguard fmtguard(out);
-    out << "(:";
-    out << "key1 0x" << std::uppercase << std::hex << dest.key1 << ":";
-    out << "key2" << "#c(" << dest.key2.real() << " " << dest.key2.imag() << ")" << ":";
-    out << "key3 \"" << dest.key3 << '\"';
+    out << "(";
+    out << ":key1 0x" << std::uppercase << std::hex << dest.key1;
+    out << ":key2" << "#c(" << dest.key2.real() << " " << dest.key2.imag() << ")";
+    out << ":key3 \"" << dest.key3 << '\"';
     out << ":)";
     return out;
   }
