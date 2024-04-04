@@ -1,5 +1,5 @@
 #include <bitset>
-#include "dataStruct.hpp"
+#include "datastruct.hpp"
 #include "dataTypes.hpp"
 #include "delimiters.hpp"
 #include "scopeguard.hpp"
