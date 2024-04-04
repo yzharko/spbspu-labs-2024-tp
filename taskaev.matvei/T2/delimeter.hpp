@@ -2,10 +2,13 @@
 #define DELIMETER_HPP
 #include <iostream>
 
-struct DelimeterI
+namespace taskaev
 {
-  char expected;
-};
+  struct DelimeterI
+  {
+    char expected;
+  };
 
-std::istream& operator >> (std::istream& is, DelimeterI&& exp);
+  std::istream& operator>>(std::istream& is, DelimeterI&& exp);
+}
 #endif
