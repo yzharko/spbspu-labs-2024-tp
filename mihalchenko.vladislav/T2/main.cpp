@@ -7,8 +7,15 @@
 #include <complex>
 #include <iterator>
 #include <string>
-// #include <bitset>
+#include <bitset>
 #include <iomanip> // setpresition()
+#include <stdlib.h>
+#include <stdio.h>
+// #include <stdio.h>
+// #include <locale.h>
+// #include <ctype.h>
+
+static std::vector<int> countNull;
 
 namespace mihalchenko
 {
@@ -21,6 +28,8 @@ namespace mihalchenko
 		// int key2_;
 		std::string key3_;
 	};
+
+	bool flg = false;
 
 	struct DelimiterIO
 	{
@@ -106,8 +115,68 @@ namespace mihalchenko
 		// std::cout << "число" << dest.ref << std::endl;
 		// return
 		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
-		return in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
+		std::string strForBinUllIO = "";
+		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
+		/*flg = false;*/
+		char c = '1';
+		int i = 0;
+		int counter = 0;
+		std::string strItog = "";
+		std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
+		std::cout << strForBinUllIO << "\n";
+		while (i != strForBinUllIO.length())
+		{
+			c = strForBinUllIO[i];
+			if (c == '0')
+			{
+				i++;
+				counter++;
+			}
+			else
+			{
+				break;
+			}
+		}
+		countNull.push_back(counter);
+		// dest.ref = static_cast<int>(strForBinUllIO);
+		/*long n = 0;
+		for (unsigned i = 0; strForBinUllIO[i] >= '0' && strForBinUllIO[i] <= '1'; ++i)
+		{
+			n = 2 * n + (strForBinUllIO[i] - '0');
+		}*/
+		// std::cout << strForBinUllIO << "\n";
+		// return strForBinUllIO;
+		/*while (i != strForBinUllIO.length())
+		{
+			c = strForBinUllIO[i];
+			if (c == '0')
+			{
+				flg = true;
+				i++;
+			}
+			else
+			{
+				strItog += c;
+			}
+		}
+		dest.ref = static_cast<int>(strItog);*/
+		// dest.ref = std::stoi(strForBinUllIO);
+		// in >> strForBinUllIO;
+		// std::cout << strForBinUllIO << "\n";
+		// flg = false;
+		// itoa(in.peek(), buffer, 10);
+		// return in;
 		// std::cout << "число" << dest.ref << std::endl;
+		// std::string temp = "";
+		// char c = 0;
+
+		/*while (in>>c && (c != ':') && (!std::cin.eof()))
+		{
+			dest.ref *= 2;
+			dest.ref += c - 42; // или как-то так из чаров в инты переводят
+			// dest.ref += int(c) - 48;
+		}*/
+		// std::cout << dest.ref << "\n";
 		// return in;
 	}
 
@@ -245,10 +314,10 @@ namespace mihalchenko
 			return out;
 		}
 		iofmtguard fmtguard(out);
+		// std::cout << value.key1_ << value.key2_.real() << value.key3_ << "\n";
 		out << "("
 				<< ":key1 "
-				<< "0b" << value.key1_
-				<< ":key2 #c(" << std::fixed << std::setprecision(1)
+				<< "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
 				<< value.key2_.real() << " " << value.key2_.imag() << ")"
 				<< ":key3 \"" << value.key3_ << "\":"
 				<< ")";
@@ -311,9 +380,7 @@ int main()
 {
 	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha");
 
-	/*std::vector<mihalchenko::DataStruct> data;
-
-	std::copy(
+	/*std::copy(
 			std::istream_iterator< mihalchenko::DataStruct >{std::cin},
 			std::istream_iterator<mihalchenko::DataStruct >{},
 			std::back_inserter(data));*/
@@ -334,6 +401,8 @@ int main()
 			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 		}
 	}
+
+	// std::cout << countNull.size() << "\n";
 
 	std::sort(dataStruct.begin(), dataStruct.end());
 	std::copy(
