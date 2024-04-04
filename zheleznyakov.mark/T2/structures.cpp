@@ -135,6 +135,8 @@ namespace zheleznyakov
 
   bool operator<(const real &leftReal, const real &rightReal)
   {
-    return (double)(leftReal.first / leftReal.second) < (double)(rightReal.first / rightReal.second);
+    const double val1 = static_cast<double>(leftReal.first) / leftReal.second;
+    const double val2 = static_cast<double>(rightReal.first) / rightReal.second;
+    return val1 < val2;
   }
 }
