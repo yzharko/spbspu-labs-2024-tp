@@ -8,7 +8,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DelimiterIO&& e
     return is;
   }
   char symbol = 0;
-  is >> c;
+  is >> symbol;
   if (static_cast<char> (tolower(symbol)) != exp.expected)
   {
     is.setstate(std::ios::failbit);
