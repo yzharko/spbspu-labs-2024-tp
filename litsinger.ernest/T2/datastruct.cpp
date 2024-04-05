@@ -25,17 +25,22 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& val
 
     if (curKey == "key1")
     {
-      is >> bin{input.key1};
+      is >> bin{input.key1_str};
+      if (!input.key1_str.empty())
+      {
+        input.key1_bin = std::stoll(str.input.key1_str);
+      }
     }
     else if (curKey == "key2")
     {
       is >> hex{input.key2};
+      is >> del{ ':' };
     }
     else if (curKey == "key3")
     {
       is >> str{input.key3};
+      is >> del{ ':' };
     }
-    is >> del{':'};
   }
   is >> del{')'};
   value = input;
@@ -45,7 +50,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& val
 std::ostream& litsinger::operator<<(std::ostream& os, const litsinger::DataStruct& myStruct)
 {
   iofmtguard fguard(os);
-  os << "(:key1 0b" << myStruct.key1 << ":key2 0x" << std::hex
+  os << "(:key1 0b" << myStruct.key1_str << ":key2 0x" << std::hex
       << std::uppercase << myStruct.key2 << ":key3 \"" << myStruct.key3 << "\":)";
   return os;
 }
@@ -53,11 +58,11 @@ std::ostream& litsinger::operator<<(std::ostream& os, const litsinger::DataStruc
 
 bool litsinger::operator<(const litsinger::DataStruct& left, const litsinger::DataStruct& right)
 {
-  if (left.key1 < right.key1)
+  if (left.key1_bin < right.key1_bin)
   {
     return true;
   }
-  else if (left.key1 == right.key1)
+  else if (left.key1_bin == right.key1_bin)
   {
     if (left.key2 < right.key2)
     {

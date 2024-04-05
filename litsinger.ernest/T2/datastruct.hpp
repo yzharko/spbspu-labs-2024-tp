@@ -8,7 +8,8 @@ namespace litsinger
 {
   struct DataStruct
   {
-    unsigned long long key1;
+    unsigned long long key1_bin;
+    std::string key1_str;
     unsigned long long key2;
     std::string key3;
   };

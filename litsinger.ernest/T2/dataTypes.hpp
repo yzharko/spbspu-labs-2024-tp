@@ -7,7 +7,7 @@ namespace litsinger
 {
   struct BinULongLongIO
   {
-    unsigned long long& ref;
+    std::string& ref;
   };
   struct HexULongLongIO
   {

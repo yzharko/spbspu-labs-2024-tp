@@ -21,8 +21,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::BinULongLongIO&
   {
     return is;
   }
-  is >> del{'0'} >> del{'b'} >> value.ref;
-  return is;
+  return std:getline(&: is >> del{ .expected: '0' } >> del{ .expected: 'b' }, &: value.ref, delim : ':');
 }
 
 
