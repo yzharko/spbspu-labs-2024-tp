@@ -11,8 +11,8 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::Delimitr &&
   in >> c;
   if (c != exp.expected)
   {
-    in.setstate(std::ios::failbit);
     std::cout << "delim\n";
+    in.setstate(std::ios::failbit);
   }
   return in;
 }
