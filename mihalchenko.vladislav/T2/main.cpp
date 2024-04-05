@@ -24,7 +24,7 @@ namespace mihalchenko
 	{
 		// DataStruct(int key1, std::complex<double> key2, std::string key3) : key1_(key1), key2_(key2), key3_(key3){};
 		// DataStruct(int key1, int key2, std::string key3) : key1_(5), key2_(5), key3_("key3"){};
-		int key1_;
+		std::string key1_;
 		std::complex<double> key2_;
 		// int key2_;
 		std::string key3_;
@@ -39,7 +39,7 @@ namespace mihalchenko
 
 	struct UllBinIO
 	{
-		int &ref;
+		std::string &ref;
 	};
 
 	struct ComplexIO
@@ -125,6 +125,7 @@ namespace mihalchenko
 		/// std::string strItog = "";
 		std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
 		// std::cout << strForBinUllIO << "\n";
+		// bool flag = false;
 		while (i != strForBinUllIO.length())
 		{
 			c = strForBinUllIO[i];
@@ -139,7 +140,19 @@ namespace mihalchenko
 			}
 		}
 		countNull.push_back(counter);
-		dest.ref = stoi(strForBinUllIO);
+		dest.ref = strForBinUllIO;
+		/*try
+		{
+			if (counter != 1)
+			{
+				// dest.ref = stoull(strForBinUllIO);
+			}
+		}
+		catch (const std::exception &e)
+		{
+			// std::cerr << e.what() << '\n';
+		}*/
+		return in;
 		// std::cout << dest.ref << "\n";
 
 		// std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
@@ -184,7 +197,6 @@ namespace mihalchenko
 				// dest.ref += int(c) - 48;
 		}*/
 		// std::cout << dest.ref << "\n";
-		return in;
 	}
 
 	std::istream &operator>>(std::istream &in, ComplexIO &&dest)
@@ -265,8 +277,10 @@ namespace mihalchenko
 			bool flag11 = false;
 			is >> sep{'('};
 			std::string key = "";
-			for (size_t i = 0; i < 3; ++i)
+			int c = 0;
+			for (size_t i = 0; i < 3; i++)
 			{
+				c = i;
 				if (flag11 == true)
 				{
 					flag11 = false;
@@ -278,6 +292,7 @@ namespace mihalchenko
 				}
 				// std::string key = "";
 				//  is >> label{key};
+				// is >> sep{':'};
 				is >> key;
 				if (key == "key1")
 				{
@@ -297,7 +312,14 @@ namespace mihalchenko
 					is.setstate(std::ios::failbit);
 				}
 			}
-			is >> sep{':'} >> sep{')'};
+			if (key == "key1" && c == 2)
+			{
+				is >> sep{')'};
+			}
+			else
+			{
+				is >> sep{':'} >> sep{')'};
+			}
 			/*
 			is >> sep{'('} >> sep{':'} >> label{"key1"} >> ull2{inputDS.key1_} >> sep{':'};
 			is >> label{"key2"} >> complex{inputDS.key2_};
@@ -313,7 +335,7 @@ namespace mihalchenko
 		// is >> del{'('} >> del{':'} >> del{' '} >> key1 >> del{':'} >> del{' '} >> key2 >> del{':'} >> del{' '} >> key3 >> del{':'} >> del{')'};
 		/*if (is)
 		{
-				value = DataStruct(key1, key2, key3);
+			value = DataStruct(key1, key2, key3);
 		}
 		return is;*/
 
@@ -336,13 +358,13 @@ namespace mihalchenko
 		std::string sss = "";
 		for (int s = 0; s < countNull[mainCounter]; s++)
 		{
-			sss = sss + "0";
+			sss += "0";
 		}
 
 		out << "("
 				<< ":key1 "
-				<< "0b" << sss << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
-				//<< "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
+				// << "0b" << sss << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
+				<< "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
 				<< value.key2_.real() << " " << value.key2_.imag() << ")"
 				<< ":key3 \"" << value.key3_ << "\":"
 				<< ")";
