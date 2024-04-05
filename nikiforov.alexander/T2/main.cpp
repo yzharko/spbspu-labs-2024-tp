@@ -57,21 +57,27 @@ namespace nikiforov
 
 int main()
 {
-  using nikiforov::Data;
+  using structData = nikiforov::Data;
 
-  std::vector< Data > data;
-  std::istringstream iss("(:key1 00:key2 'a':key3 \"Data\":)");
-
-  std::copy(
-    std::istream_iterator< Data >(iss),
-    std::istream_iterator< Data >(),
-    std::back_inserter(data)
-  );
+  std::vector< structData > data;
+  while (!std::cin.eof()) 
+  {
+    std::copy(
+      std::istream_iterator< structData >(std::cin),
+      std::istream_iterator< structData >(),
+      std::back_inserter(data)
+    );
+    if (std::cin.fail() && !std::cin.eof())
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 
   std::copy(
     std::begin(data),
     std::end(data),
-    std::ostream_iterator< Data >(std::cout, "\n")
+    std::ostream_iterator< structData >(std::cout, "\n")
   );
 
   return 0;
