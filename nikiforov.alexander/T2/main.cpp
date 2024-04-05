@@ -189,7 +189,7 @@ namespace nikiforov
     out << "(:";
     out << "key1 " << "0" << src.key1 << ":";
     out << "key2 " << "'" << src.key2 << "'" << ":";
-    out << "key3 " << src.key3 << ":";
+    out << "key3 " << std::quoted(src.key3) << ":";
     out << ")";
     return out;
   }
