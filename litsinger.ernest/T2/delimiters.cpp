@@ -9,7 +9,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DelimiterIO&& e
   }
   char c = 0;
   is >> c;
-  if ((char)tolower(c) != exp.expected)
+  if (static_cast<char> (tolower(c)) != exp.expected)
   {
     is.setstate(std::ios::failbit);
   }
