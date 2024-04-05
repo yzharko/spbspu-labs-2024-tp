@@ -60,7 +60,7 @@ int main()
   using structData = nikiforov::Data;
 
   std::vector< structData > data;
-  while (!std::cin.eof()) 
+  while (!std::cin.eof())
   {
     std::copy(
       std::istream_iterator< structData >(std::cin),
