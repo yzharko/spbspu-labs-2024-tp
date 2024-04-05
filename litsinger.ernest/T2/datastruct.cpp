@@ -28,7 +28,7 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& val
       is >> bin{input.key1_str};
       if (!input.key1_str.empty())
       {
-        input.key1_bin = std::stoll(str.input.key1_str);
+        input.key1_bin = std::stoull(input.key1_str);
       }
     }
     else if (curKey == "key2")
