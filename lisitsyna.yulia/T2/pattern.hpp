@@ -14,7 +14,7 @@ namespace lisitsyna
   {
     char& value;
   };
-  std::istream& operator>>(std::istream& in, ChtLit&& num);
+  std::istream& operator>>(std::istream& in, ChrLit&& num);
   struct StringKey
   {
     std::string& value;
