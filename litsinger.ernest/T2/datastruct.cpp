@@ -3,7 +3,6 @@
 #include "delimiters.hpp"
 #include "scopeguard.hpp"
 
-
 std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& value)
 {
   std::istream::sentry guard(is);
@@ -54,7 +53,6 @@ std::ostream& litsinger::operator<<(std::ostream& os, const litsinger::DataStruc
       << std::uppercase << myStruct.key2 << ":key3 \"" << myStruct.key3 << "\":)";
   return os;
 }
-
 
 bool litsinger::operator<(const litsinger::DataStruct& left, const litsinger::DataStruct& right)
 {

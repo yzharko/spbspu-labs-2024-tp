@@ -16,7 +16,6 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::DelimiterIO&& e
   return is;
 }
 
-
 std::istream& litsinger::operator>>(std::istream& is, litsinger::LabelIO&& value)
 {
   std::istream::sentry sentry(is);

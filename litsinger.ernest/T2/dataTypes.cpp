@@ -24,7 +24,6 @@ std::istream& litsinger::operator>>(std::istream& is, litsinger::BinULongLongIO&
   return std::getline(is >> del{ '0' } >> del{ 'b' },value.ref, ':');
 }
 
-
 std::istream& litsinger::operator>>(std::istream& is, litsinger::StringIO&& value)
 {
   std::istream::sentry sentry(is);
