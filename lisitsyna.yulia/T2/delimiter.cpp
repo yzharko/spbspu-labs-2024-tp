@@ -1,4 +1,4 @@
-#include "delimeter.hpp"
+#include "delimiter.hpp"
 
 std::istream & lisitsyna::operator>>(std::istream & in, Separator && exp)
 {
