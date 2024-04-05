@@ -9,8 +9,8 @@
 int main()
 {
   std::vector< sobolevsky::DataStruct > vec;
-  std::string test = "biba";
-  sobolevsky::DataStruct struc(0.0, 'a', test);
+  sobolevsky::DataStruct struc;
+  std::cin >> struc;
   std::cout << struc;
   return 0;
 }

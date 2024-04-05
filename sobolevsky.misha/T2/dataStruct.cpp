@@ -5,13 +5,15 @@ sobolevsky::DataStruct::DataStruct()
   key1 = 0;
   key2 = 0;
   key3 = "";
+  Dd = 0;
 }
 
-sobolevsky::DataStruct::DataStruct(double a_, char b_, std::string c_)
+sobolevsky::DataStruct::DataStruct(double a_, char b_, std::string c_, char Dd_)
 {
   key1 = a_;
   key2 = b_;
   key3 = c_;
+  Dd = Dd_;
 }
 
 double sobolevsky::DataStruct::get1() const
@@ -29,6 +31,11 @@ std::string sobolevsky::DataStruct::get3() const
   return key3;
 }
 
+char sobolevsky::DataStruct::getD() const
+{
+  return Dd;
+}
+
 std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct & value)
 {
   std::istream::sentry guard(in);
@@ -39,18 +46,19 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
   double a = 0;
   char b = 0;
   char helpChar = 0;
-  std::string c = 0;
+  std::string c = "";
   using del = sobolevsky::Delimitr;
   in >> del{'('};
   std::string keyX;
   for (int i = 0; i < 3; i++)
   {
     in >> del{':'} >> keyX;
+    std::cout << keyX << "\n";
     if (keyX == "key1")
     {
-      in >> a;
-      in >> helpChar;
-      if (helpChar != 'd' || helpChar != 'D')
+      in >> a >> helpChar;
+      std::cout << a << " " << helpChar << "\n";
+      if (helpChar == 'd' || helpChar == 'D')
       {
         in.setstate(std::ios::failbit);
       }
@@ -65,10 +73,7 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
     }
   }
   in >> del{':'} >> del{')'};
-  if (in)
-  {
-    value = sobolevsky::DataStruct(a, b, c);
-  }
+  value = sobolevsky::DataStruct(a, b, c, helpChar);
   return in;
 }
 
@@ -79,6 +84,6 @@ std::ostream & sobolevsky::operator<<(std::ostream & out, const sobolevsky::Data
   {
     return out;
   }
-  out << "(:key1 "  << value.get1() << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":";
+  out << "(:key1 "  << value.get1() << value.getD() << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)\n";
   return out;
 }

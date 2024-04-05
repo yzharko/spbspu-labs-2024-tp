@@ -11,17 +11,17 @@ namespace sobolevsky
     char expected = 0;
   };
 
-  struct Double
+  struct Double_
   {
     double dbl;
   };
 
-  struct Char
+  struct Char_
   {
     char ch;
   };
 
-  struct String
+  struct String_
   {
     std::string str;
   };
