@@ -9,7 +9,7 @@ namespace psarev
     double& ref;
   };
 
-  struct UnsignedLongLongIO
+  struct UllHexIO
   {
     unsigned long long& ref;
   };
@@ -20,7 +20,7 @@ namespace psarev
   };
 
   std::istream& operator>>(std::istream& in, DoubleIO&& dest);
-  std::istream& operator>>(std::istream& in, UnsignedLongLongIO&& dest);
+  std::istream& operator>>(std::istream& in, UllHexIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
 }
 

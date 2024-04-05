@@ -1,6 +1,6 @@
 #ifndef DELIM_HPP
 #define DELIM_HPP
-#include <iostream>
+#include <iomanip>
 
 namespace psarev
 {
