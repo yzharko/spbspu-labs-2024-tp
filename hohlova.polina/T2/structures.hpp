@@ -62,13 +62,13 @@ namespace hohlova
     long long& ref;
   };
 
-  struct ULLLitIO
+  struct ULLHexIO
   {
     unsigned long long& ref;
   };
 
   std::istream& operator>>(std::istream& in, SLLLitIO&& dest);
-  std::istream& operator>>(std::istream& in, ULLLitIO&& dest);
+  std::istream& operator>>(std::istream& in, ULLHexIO&& dest);
 }
 
 #endif
