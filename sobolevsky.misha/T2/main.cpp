@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
+#include <limits>
 #include <string>
 #include "dataStruct.hpp"
 #include "helpStructs.hpp"
@@ -16,6 +17,11 @@ int main()
       std::istream_iterator< sobolevsky::DataStruct >{},
       std::back_inserter(vec)
     );
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
   }
 
   std::copy(
