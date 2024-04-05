@@ -5,6 +5,7 @@
 #include <iterator>
 #include <vector>
 #include <iomanip>
+#include <limits>
 
 namespace nikiforov
 {
