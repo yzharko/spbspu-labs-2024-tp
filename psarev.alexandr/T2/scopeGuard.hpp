@@ -1,6 +1,5 @@
 #ifndef SCOPEGUARD_HPP
 #define SCOPEGUARD_HPP
-
 #include <iostream>
 
 namespace psarev

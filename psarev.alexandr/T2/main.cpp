@@ -23,7 +23,6 @@ int main()
   }
 
   std::sort(dataVec.begin(), dataVec.end());
-
   std::copy(
     std::begin(dataVec),
     std::end(dataVec),
