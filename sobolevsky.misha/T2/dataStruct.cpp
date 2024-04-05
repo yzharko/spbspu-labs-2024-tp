@@ -58,7 +58,6 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
       in >> a >> helpChar;
       if (!(helpChar == 'd' || helpChar == 'D'))
       {
-        std::cout << "f\n";
         in.setstate(std::ios::failbit);
       }
     }
