@@ -35,11 +35,6 @@ namespace nikiforov
     std::string& ref;
   };
 
-  struct LabelIO
-  {
-    std::string exp;
-  };
-
   class iofmtguard
   {
   public:
@@ -56,7 +51,6 @@ namespace nikiforov
   std::istream& operator>>(std::istream& in, UnsignedLongLongIO&& dest);
   std::istream& operator>>(std::istream& in, CharIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
-  std::istream& operator>>(std::istream& in, LabelIO&& dest);
   std::istream& operator>>(std::istream& in, Data& dest);
   std::ostream& operator<<(std::ostream& out, const Data& dest);
 }
@@ -131,21 +125,6 @@ namespace nikiforov
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
 
-  std::istream& operator>>(std::istream& in, LabelIO&& dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    std::string data = "";
-    if ((in >> StringIO{ data }) && (data != dest.exp))
-    {
-      in.setstate(std::ios::failbit);
-    }
-    return in;
-  }
-
   std::istream& operator>>(std::istream& in, Data& dest)
   {
     std::istream::sentry sentry(in);
@@ -156,7 +135,6 @@ namespace nikiforov
     Data input;
     {
       using sep = DelimiterIO;
-      using label = LabelIO;
       using ull = UnsignedLongLongIO;
       using chr = CharIO;
       using str = StringIO;
