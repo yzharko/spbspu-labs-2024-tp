@@ -9,8 +9,20 @@
 int main()
 {
   std::vector< sobolevsky::DataStruct > vec;
-  sobolevsky::DataStruct struc;
-  std::cin >> struc;
-  std::cout << struc;
+  while (!std::cin.eof())
+  {
+    std::copy(
+      std::istream_iterator< sobolevsky::DataStruct >{std::cin},
+      std::istream_iterator< sobolevsky::DataStruct >{},
+      std::back_inserter(vec)
+    );
+  }
+
+  std::copy(
+    vec.cbegin(),
+    vec.cend(),
+    std::ostream_iterator< sobolevsky::DataStruct >(std::cout, "\n")
+  );
+
   return 0;
 }
