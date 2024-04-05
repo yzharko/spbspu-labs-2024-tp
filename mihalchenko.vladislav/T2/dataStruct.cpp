@@ -1,7 +1,7 @@
 #include "dataStruct.hpp"
 // #include <iostream>
-// #include "delimiters.hpp"
-// #include "scopeGuard.hpp"
+#include "delimiters.hpp"
+#include "scopeGuard.hpp"
 
 std::istream &mihalchenko::operator>>(std::istream &is, DataStruct &value)
 {

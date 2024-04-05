@@ -2,7 +2,7 @@
 #define DATASTRUCT_HPP
 
 #include <iostream>
-// #include <string>
+#include <string>
 // #include <complex>
 #include <iomanip> // setpresition()
 #include "delimiters.hpp"
