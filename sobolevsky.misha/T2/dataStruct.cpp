@@ -53,11 +53,9 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
   for (int i = 0; i < 3; i++)
   {
     in >> del{':'} >> keyX;
-    std::cout << keyX << " " << i << "\n";
     if (keyX == "key1")
     {
       in >> a >> helpChar;
-      std::cout << a << " " << helpChar << "\n";
       if (!(helpChar == 'd' || helpChar == 'D'))
       {
         std::cout << "f\n";
@@ -75,7 +73,10 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
     }
   }
   in >> del{':'} >> del{')'};
-  value = sobolevsky::DataStruct(a, b, c, helpChar);
+  if (in)
+  {
+    value = sobolevsky::DataStruct(a, b, c, helpChar);
+  }
   return in;
 }
 
@@ -86,6 +87,7 @@ std::ostream & sobolevsky::operator<<(std::ostream & out, const sobolevsky::Data
   {
     return out;
   }
-  out << "(:key1 " << std::fixed << std::setprecision(1) << value.get1() << value.getD() << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)\n";
+  out << "(:key1 " << std::fixed << std::setprecision(1) << value.get1() << value.getD();
+  out << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)\n";
   return out;
 }
