@@ -1,3 +1,5 @@
+#ifndef IOFMTGUERD_HPP
+#define IOFMTGUARD_HPP
 #include <sstream>
 
 namespace hohlova
@@ -14,3 +16,5 @@ namespace hohlova
     std::basic_ios< char >::fmtflags fmt_;
   };
 };
+
+#endif

@@ -1,3 +1,5 @@
+#ifndef STRUCTURES_HPP
+#define STRUCTURES_HPP
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -68,3 +70,5 @@ namespace hohlova
   std::istream& operator>>(std::istream& in, SLLLitIO&& dest);
   std::istream& operator>>(std::istream& in, ULLLitIO&& dest);
 }
+
+#endif
