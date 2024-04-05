@@ -9,16 +9,16 @@ namespace lisitsyna
   {
     long long& value;
   };
-  std::istream& operator>>(std::istream& in, BinUll&& num);
+  std::istream& operator>>(std::istream& in, SllLit&& num);
   struct ChrLit
   {
     char& value;
   };
-  std::istream& operator>>(std::istream& in, HexUll&& num);
+  std::istream& operator>>(std::istream& in, ChtLit&& num);
   struct StringKey
   {
     std::string& value;
   };
-  std::istream& operator>>(std::istream& in, StrKey&& value);
+  std::istream& operator>>(std::istream& in, StringKey&& value);
 }
 #endif
