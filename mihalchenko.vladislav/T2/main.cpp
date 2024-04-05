@@ -15,8 +15,8 @@
 // #include <locale.h>
 // #include <ctype.h>
 
-static std::vector<int> countNull;
-static int mainCounter = 0;
+// static std::vector<int> countNull;
+// static int mainCounter = 0;
 
 namespace mihalchenko
 {
@@ -119,14 +119,14 @@ namespace mihalchenko
 		std::string strForBinUllIO = "";
 		// in >> DelimiterIO{'0'} >> DelimiterIO{'b'} >> dest.ref;
 
-		char c = '1';
-		size_t i = 0;
-		size_t counter = 0;
+		// char c = '1';
+		// size_t i = 0;
+		// size_t counter = 0;
 		/// std::string strItog = "";
 		std::getline(in >> DelimiterIO{'0'} >> DelimiterIO{'b'}, strForBinUllIO, ':');
 		// std::cout << strForBinUllIO << "\n";
 		// bool flag = false;
-		while (i != strForBinUllIO.length())
+		/*while (i != strForBinUllIO.length())
 		{
 			c = strForBinUllIO[i];
 			if (c == '0')
@@ -139,7 +139,7 @@ namespace mihalchenko
 				break;
 			}
 		}
-		countNull.push_back(counter);
+		countNull.push_back(counter);*/
 		dest.ref = strForBinUllIO;
 		/*try
 		{
@@ -355,11 +355,11 @@ namespace mihalchenko
 		}
 		iofmtguard fmtguard(out);
 		// std::cout << value.key1_ << value.key2_.real() << value.key3_ << "\n";
-		std::string sss = "";
+		/*std::string sss = "";
 		for (int s = 0; s < countNull[mainCounter]; s++)
 		{
 			sss += "0";
-		}
+		}*/
 
 		out << "("
 				<< ":key1 "
@@ -368,16 +368,15 @@ namespace mihalchenko
 				<< value.key2_.real() << " " << value.key2_.imag() << ")"
 				<< ":key3 \"" << value.key3_ << "\":"
 				<< ")";
-		mainCounter++;
+		// mainCounter++;
 		return out;
 	}
 
 	iofmtguard::iofmtguard(std::basic_ios<char> &s) : s_(s),
-																										fill_(s.fill()),
-																										precision_(s.precision()),
-																										fmt_(s.flags())
-	{
-	}
+		fill_(s.fill()),
+		precision_(s.precision()),
+		fmt_(s.flags())
+	{}
 
 	iofmtguard::~iofmtguard()
 	{
@@ -429,9 +428,9 @@ int main()
 	// mihalchenko::DataStruct newStruct(0b000000, (.1, .2), "phahaha");
 
 	/*std::copy(
-					std::istream_iterator< mihalchenko::DataStruct >{std::cin},
-					std::istream_iterator<mihalchenko::DataStruct >{},
-					std::back_inserter(data));*/
+		std::istream_iterator< mihalchenko::DataStruct >{std::cin},
+		std::istream_iterator<mihalchenko::DataStruct >{},
+		std::back_inserter(data));*/
 
 	using mihalchenko::DataStruct;
 
@@ -440,9 +439,9 @@ int main()
 	while (!std::cin.eof())
 	{
 		std::copy(
-				std::istream_iterator<mihalchenko::DataStruct>{std::cin},
-				std::istream_iterator<mihalchenko::DataStruct>{},
-				std::back_inserter(dataStruct));
+			std::istream_iterator<mihalchenko::DataStruct>{std::cin},
+			std::istream_iterator<mihalchenko::DataStruct>{},
+			std::back_inserter(dataStruct));
 		if (std::cin.fail() && !std::cin.eof())
 		{
 			// std::cout << "kjvkghvh" << "\n";
@@ -459,26 +458,26 @@ int main()
 
 	std::sort(dataStruct.begin(), dataStruct.end());
 	std::copy(
-			std::begin(dataStruct),
-			std::end(dataStruct),
-			std::ostream_iterator<mihalchenko::DataStruct>(std::cout, "\n"));
+		std::begin(dataStruct),
+		std::end(dataStruct),
+		std::ostream_iterator<mihalchenko::DataStruct>(std::cout, "\n"));
 
 	/*mihalchenko::DataStruct newStruct;
 	if (!(std::cin >> newStruct))
 	{
-			std::string str;
-			std::cin >> str;
-			std::cout << str << "!" << std::endl;
-			std::cout << newStruct << "\n";
+		std::string str;
+		std::cin >> str;
+		std::cout << str << "!" << std::endl;
+		std::cout << newStruct << "\n";
 
-			std::cin.clear();
-			std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-			if (!(std::cin >> newStruct))
-			{
-					std::cerr << "Error\n";
-					std::cout << newStruct << "\n";
-					return 1;
-			}
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		if (!(std::cin >> newStruct))
+		{
+				std::cerr << "Error\n";
+				std::cout << newStruct << "\n";
+				return 1;
+		}
 	}
 	std::cout << newStruct << "\n";*/
 	return 0;
