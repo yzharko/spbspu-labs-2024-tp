@@ -8,8 +8,8 @@
 #include <iterator>
 // #include <string>
 // #include <iomanip> // setpresition()
-#include <stdlib.h>
-#include <stdio.h>
+// #include <stdlib.h>
+// #include <stdio.h>
 #include "dataStruct.hpp"
 
 int main()

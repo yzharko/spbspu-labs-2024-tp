@@ -4,7 +4,7 @@
 #include <iostream>
 #include <complex>
 // #include <utility>
-// #include <string>
+#include <string>
 
 namespace mihalchenko
 {
