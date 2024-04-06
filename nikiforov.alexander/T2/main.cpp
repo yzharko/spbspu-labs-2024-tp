@@ -6,6 +6,7 @@
 #include <vector>
 #include <iomanip>
 #include <limits>
+#include <algorithm>
 
 namespace nikiforov
 {
@@ -39,7 +40,7 @@ namespace nikiforov
   class iofmtguard
   {
   public:
-    iofmtguard(std::basic_ios< char >& s);
+    explicit iofmtguard(std::basic_ios< char >& s) noexcept;
     ~iofmtguard();
   private:
     std::basic_ios< char >& s_;
@@ -54,6 +55,7 @@ namespace nikiforov
   std::istream& operator>>(std::istream& in, StringIO&& dest);
   std::istream& operator>>(std::istream& in, Data& dest);
   std::ostream& operator<<(std::ostream& out, const Data& dest);
+  bool operator<(const Data& first, const Data& second) noexcept;
 }
 
 int main()
@@ -74,6 +76,8 @@ int main()
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
+  std::sort(data.begin(), data.end());
 
   std::copy(
     std::begin(data),
@@ -194,7 +198,23 @@ namespace nikiforov
     return out;
   }
 
-  iofmtguard::iofmtguard(std::basic_ios< char >& s) :
+  bool nikiforov::operator<(const Data& first, const Data& second) noexcept
+  {
+    if (first.key1 != second.key1)
+    {
+      return first.key1 < second.key1;
+    }
+    else if (first.key2 != second.key2)
+    {
+      return first.key2 < second.key2;
+    }
+    else
+    {
+      return first.key3.size() < second.key3.size();
+    }
+  }
+
+  iofmtguard::iofmtguard(std::basic_ios< char >& s) noexcept :
     s_(s),
     fill_(s.fill()),
     precision_(s.precision()),
