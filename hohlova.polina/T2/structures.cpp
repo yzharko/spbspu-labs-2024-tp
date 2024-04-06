@@ -89,7 +89,7 @@ namespace hohlova
         std::string key2_str;
         in >> key2_str;
         size_t colon_pos = key2_str.find(':');
-        if (colon_pos != std::string::npos) 
+        if (colon_pos != std::string::npos)
         {
           std::string ll_part_str = key2_str.substr(0, colon_pos);
           std::string ull_part_str = key2_str.substr(colon_pos + 1);
