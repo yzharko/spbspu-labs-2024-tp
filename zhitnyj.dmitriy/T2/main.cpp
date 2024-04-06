@@ -8,7 +8,16 @@ int main()
 {
   std::vector<DataStruct> dataVector;
 
-  std::copy(std::istream_iterator<DataStruct>(std::cin), std::istream_iterator<DataStruct>(), std::back_inserter(dataVector));
+  std::copy(std::istream_iterator<DataStruct>(std::cin),
+      std::istream_iterator<DataStruct>(),
+      std::back_inserter(dataVector));
+
+  if (dataVector.empty())
+  {
+    std::cout << "Looks like there is no supported record. Cannot determine input. Test skipped\n";
+
+    return 0;
+  }
 
   std::sort(dataVector.begin(), dataVector.end(), [](const DataStruct& a, const DataStruct& b)
   {
