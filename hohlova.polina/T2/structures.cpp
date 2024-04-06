@@ -5,9 +5,20 @@ namespace hohlova
 {
   using sep = DelimiterIO;
   using label = LabelIO;
-  using rl = RealIO;
-  using dbl = DoubleIO;
   using str = StringIO;
+
+  std::istream& operator>>(std::istream& in, SLLLitIO&& dest)
+  {
+    std::istream::sentry sentry(in);
+    if (!sentry)
+    {
+      return in;
+    }
+    long long temp;
+    in >> temp;
+    dest.ref = temp;
+    return in;
+  }
 
   std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
   {
@@ -24,30 +35,11 @@ namespace hohlova
     }
     return in;
   }
-
-  std::istream& operator>>(std::istream& in, DoubleIO&& dest)
+  bool operator<(const std::pair<long long, unsigned long long>& left, const std::pair<long long, unsigned long long>& right)
   {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    return in >> dest.ref >> DelimiterIO{ 'd' };
-  }
-
-  std::istream& operator>>(std::istream& in, RealIO&& dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    in >> sep{ '(' } >> sep{ ':' } >> label{ "N" };
-    in >> dest.ref.first;
-    in >> sep{ ':' } >> label{ "D" };
-    in >> dest.ref.second;
-    in >> sep{ ':' } >> sep{ ')' };
-    return in;
+    const double val1 = static_cast<double>(left.first) / left.second;
+    const double val2 = static_cast<double>(right.first) / right.second;
+    return val1 < val2;
   }
 
   std::istream& operator>>(std::istream& in, StringIO&& dest)
@@ -90,11 +82,21 @@ namespace hohlova
       in >> sep{ ':' } >> currentKey;
       if (currentKey == "key1")
       {
-        in >> dbl{ input.key1 };
+        in >> SLLLitIO{ input.key1 };
       }
       else if (currentKey == "key2")
       {
-        in >> rl{ input.key2 };
+        std::string key2_str;
+        in >> key2_str;
+        size_t colon_pos = key2_str.find(':');
+        if (colon_pos != std::string::npos) 
+        {
+          std::string ll_part_str = key2_str.substr(0, colon_pos);
+          std::string ull_part_str = key2_str.substr(colon_pos + 1);
+          long long ll_part = std::stoll(ll_part_str);
+          unsigned long long ull_part = std::stoull(ull_part_str);
+          input.key2 = std::make_pair(ll_part, ull_part);
+        }
       }
       else if (currentKey == "key3")
       {
@@ -131,12 +133,5 @@ namespace hohlova
   bool operator<(const Data& left, const Data& right)
   {
     return (left.key1 < right.key1 || left.key2 < right.key2 || left.key3.size() < right.key3.size());
-  }
-
-  bool operator<(const std::pair<sll, ull>& leftReal, const std::pair<sll, ull>& rightReal)
-  {
-    const double val1 = static_cast<double>(leftReal.first) / leftReal.second;
-    const double val2 = static_cast<double>(rightReal.first) / rightReal.second;
-    return val1 < val2;
   }
 }
