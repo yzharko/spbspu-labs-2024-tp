@@ -198,7 +198,7 @@ namespace nikiforov
     return out;
   }
 
-  bool nikiforov::operator<(const Data& first, const Data& second) noexcept
+  bool operator<(const Data& first, const Data& second) noexcept
   {
     if (first.key1 != second.key1)
     {
