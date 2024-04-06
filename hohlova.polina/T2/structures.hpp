@@ -16,14 +16,24 @@ namespace hohlova
 
   struct Data
   {
-    sll key1;
-    std::pair<sll, ull> key2;
+    double key1;
+    real key2;
     std::string key3;
   };
 
   struct DelimiterIO
   {
     char exp;
+  };
+
+  struct DoubleIO
+  {
+    double& ref;
+  };
+
+  struct RealIO
+  {
+    real& ref;
   };
 
   struct StringIO
@@ -35,24 +45,30 @@ namespace hohlova
   {
     std::string exp;
   };
+
+  std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
+  std::istream& operator>>(std::istream& in, DoubleIO&& dest);
+  std::istream& operator>>(std::istream& in, RealIO&& dest);
+  std::istream& operator>>(std::istream& in, StringIO&& dest);
+  std::istream& operator>>(std::istream& in, LabelIO&& dest);
+  std::istream& operator>>(std::istream& in, Data& dest);
+  std::ostream& operator<<(std::ostream& out, const Data& dest);
+
+  bool operator<(const Data& left, const Data& right);
+  bool operator<(const real& leftReal, const real& rightReal);
+
   struct SLLLitIO
   {
     long long& ref;
   };
-  struct ULLLitIO
+
+  struct ULLHexIO
   {
     unsigned long long& ref;
   };
 
-  std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
-  std::istream& operator>>(std::istream& in, StringIO&& dest);
-  std::istream& operator>>(std::istream& in, LabelIO&& dest);
-  std::istream& operator>>(std::istream& in, Data& dest);
   std::istream& operator>>(std::istream& in, SLLLitIO&& dest);
-  std::istream& operator>>(std::istream& in, ULLLitIO&& dest);
-  std::ostream& operator<<(std::ostream& out, const Data& dest);
-
-  bool operator<(const Data& left, const Data& right);
+  std::istream& operator>>(std::istream& in, ULLHexIO&& dest);
 }
 
 #endif
