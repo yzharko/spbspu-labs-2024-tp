@@ -2,7 +2,7 @@
 #include "iofmtguard.hpp"
 #include "delimiter.hpp"
 
-std::istream & gorbunova::operator>>(std::istream &in, DataStruct &data)
+std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
 {
   std::istream::sentry guard(in);
   if (!guard)
@@ -37,7 +37,7 @@ std::istream & gorbunova::operator>>(std::istream &in, DataStruct &data)
   }
   return in;
 }
-std::ostream & gorbunova::operator<<(std::ostream &out, const DataStruct &data)
+std::ostream &gorbunova::operator<<(std::ostream &out, const DataStruct &data)
 {
   std::ostream::sentry sentry(out);
   if (!sentry)
@@ -54,18 +54,20 @@ bool gorbunova::operator<(const DataStruct &lhs, const DataStruct &rhs)
 {
   if (lhs.key1 != rhs.key1)
   {
-    return std::real(lhs.key1) < std::real(rhs.key1) || (std::real(lhs.key1) == std::real(rhs.key1) && std::imag(lhs.key1) < std::imag(rhs.key1));
+    return std::real(lhs.key1) < std::real(rhs.key1) ||
+           (std::real(lhs.key1) == std::real(rhs.key1) && std::imag(lhs.key1) < std::imag(rhs.key1));
   }
   else if (lhs.key2 != rhs.key2)
   {
-    return lhs.key2.first < rhs.key2.first || (lhs.key2.first == rhs.key2.first && lhs.key2.second < rhs.key2.second);
+    return lhs.key2.first < rhs.key2.first ||
+           (lhs.key2.first == rhs.key2.first && lhs.key2.second < rhs.key2.second);
   }
   else
   {
     return lhs.key3.length() < rhs.key3.length();
   }
 }
-std::istream & gorbunova::operator>>(std::istream &in, complexx &&dest)
+std::istream &gorbunova::operator>>(std::istream &in, complexx &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
@@ -82,7 +84,7 @@ std::istream & gorbunova::operator>>(std::istream &in, complexx &&dest)
   }
   return in;
 }
-std::istream & gorbunova::operator>>(std::istream &is, ratio &&value)
+std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -104,7 +106,7 @@ std::istream & gorbunova::operator>>(std::istream &is, ratio &&value)
   is >> delimiter{':'} >> delimiter{')'};
   return is;
 }
-std::istream & gorbunova::operator>>(std::istream &in, str &&dest)
+std::istream &gorbunova::operator>>(std::istream &in, str &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
