@@ -12,8 +12,8 @@ namespace lisitsyna
     char key2;
     std::string key3;
   };
-  bool operator<(DataStruct& rh, DataStruct& lh);
-  std::istream& operator>>(std::istream& in, DataStruct& data);
-  std::ostream& operator<<(std::ostream& out, const DataStruct& data);
+  bool compare(const DataStruct& rh, const DataStruct& lh);
+  std::istream& operator>>(std::istream& in, DataStruct& dest);
+  std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
 }
 #endif
