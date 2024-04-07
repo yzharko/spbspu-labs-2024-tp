@@ -1,3 +1,4 @@
+#include <iomanip>
 #include "datastruct.hpp"
 #include "delimiter.hpp"
 #include "guard.hpp"
@@ -120,8 +121,8 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(key1" << std::scientific << src.key1;
-  out << ":key0x" << " " << std::hex << std::uppercase << src.key2 << " ";
-  out << ":key3" << " " << src.key3 << " ";
+  out << "(:key1" << std::scientific << std::setprecision(1) << src.key1;
+  out << ":key0x" << " " << std::hex << std::uppercase << src.key2;
+  out << ":key3" << " " << src.key3 << ":)";
   return out;
 }
