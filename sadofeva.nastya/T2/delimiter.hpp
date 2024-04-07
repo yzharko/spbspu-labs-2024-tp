@@ -21,3 +21,5 @@ namespace sadofeva
     std::string & ref;
   };
 }
+
+#endif

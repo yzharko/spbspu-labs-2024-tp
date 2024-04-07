@@ -1,5 +1,5 @@
 #include "datastruct.hpp"
-#include "delimiters.hpp"
+#include "delimiter.hpp"
 
 std::istream & sadofeva::operator>>(std::istream & is, DelimiterIO && dest)
 {

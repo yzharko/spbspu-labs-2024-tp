@@ -1,5 +1,7 @@
 #ifndef GUARD_HPP
 #define GUARD_HPP
+#include <iostream>
+#include <limits>
 
 namespace sadofeva
 {
@@ -15,3 +17,5 @@ namespace sadofeva
     std::basic_ios<char>::fmtdlags fmt_;
   };
 }
+
+#endif
