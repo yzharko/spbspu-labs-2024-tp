@@ -1,6 +1,6 @@
 #include "delimiter.hpp"
 
-std::istream &gorbunova::operator>>(std::istream &in, delimiter &&dest)
+std::istream & gorbunova::operator>>(std::istream &in, delimiter &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
