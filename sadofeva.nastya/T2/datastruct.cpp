@@ -1,14 +1,14 @@
 #include "datastruct.hpp"
 #include "delimiter.hpp"
 
-std::istream & sadofeva::operator>>(std::istream & is, DelimiterIO && dest)
+std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DelimiterIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
   {
     return is;
   }
-  char c = "0";
+  char c = 0;
   is >> c;
   if (is && (c != dest.exp))
   {
@@ -17,7 +17,7 @@ std::istream & sadofeva::operator>>(std::istream & is, DelimiterIO && dest)
   return is;
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, DoubleIO && dest)
+std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DoubleIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -27,18 +27,18 @@ std::istream & sadofeva::operator >> (std::istream & is, DoubleIO && dest)
   return is >> dest.ref;
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, UnsignedLongLongIO && dest)
+std::istream & sadofeva::operator >> (std::istream & is, sadofeva::UnsignedLongLongIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
   {
     return is;
   }
-  is >> sadofeva::DelimiterIO{"0"} >> sadofeva::Delimiter{"x"} >> std::hex >> dest.ref;
+  is >> sadofeva::DelimiterIO{'0'} >> sadofeva::DelimiterIO{'x'} >> std::hex >> dest.ref;
   return is;
 }
 
-std::istream & sadofeva::operator>> (std::istream & is, StringIO && dest)
+std::istream & sadofeva::operator>> (std::istream & is, sadofeva::StringIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -48,7 +48,7 @@ std::istream & sadofeva::operator>> (std::istream & is, StringIO && dest)
   return std::getline(is >> DelimiterIO{'"'}, dest.ref,'"');
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, DataStruct & dest)
+std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DataStruct & dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -88,7 +88,7 @@ std::istream & sadofeva::operator >> (std::istream & is, DataStruct & dest)
   return is;
 }
 
-bool sadofeva::operator < (const DataStruct & one, const DataStruct & two)
+bool sadofeva::operator < (const DataStruct & one, const sadofeva::DataStruct & two)
 {
   if (one.key1 < two.key1)
   {
@@ -110,7 +110,7 @@ bool sadofeva::operator < (const DataStruct & one, const DataStruct & two)
   }
 }
 
-std::ostream & sadofeva::operator << (std::ostream & out, const DataStruct & src)
+std::ostream & sadofeva::operator << (std::ostream & out, const sadofeva::DataStruct & src)
 {
   std::ostream::sentry guard(out);
   if (!guard)
@@ -118,8 +118,8 @@ std::ostream & sadofeva::operator << (std::ostream & out, const DataStruct & src
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(key1" << std::scientidic << std::setprecision(1) << src.key1;
+  out << "(key1" << std::scientific << std::setprecision(1) << src.key1;
   out << ":key0x" << " " << std::hex << std::uppercase << src.key2 << " ";
   out << ":key3" << " " << src.key3 << " ";
-  return out:
+  return out;
 }
