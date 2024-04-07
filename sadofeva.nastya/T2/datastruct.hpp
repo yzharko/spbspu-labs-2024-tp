@@ -2,6 +2,7 @@
 #define DATASTRUST_HPP
 #include <string>
 #include <iostream>
+#include "delimiter.hpp"
 
 namespace sadofeva
 {
