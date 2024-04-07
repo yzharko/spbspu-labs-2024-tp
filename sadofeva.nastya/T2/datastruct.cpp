@@ -38,7 +38,7 @@ std::istream & sadofeva::operator >> (std::istream & is, UnsignedLongLongIO && d
   return is;
 }
 
-std::istream & sadofeva::operator>> (std::istream & is, StringIo && dest_
+std::istream & sadofeva::operator>> (std::istream & is, StringIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
