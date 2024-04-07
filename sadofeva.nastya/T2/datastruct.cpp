@@ -1,6 +1,6 @@
 #include "datastruct.hpp"
 #include "delimiter.hpp"
-
+#include "guard.hpp"
 std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DelimiterIO && dest)
 {
   std::istream::sentry guard(is);
