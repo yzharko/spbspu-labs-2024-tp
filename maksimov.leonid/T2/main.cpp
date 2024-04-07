@@ -87,12 +87,6 @@ namespace maksimov
       }
     };
 
-    MyStruct(int a, int b, int c) :
-      key1(0),
-      key2(0),
-      key3("")
-    {};
-
     MyStruct() = default;
 
     double getKey1() const
