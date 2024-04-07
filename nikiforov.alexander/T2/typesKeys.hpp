@@ -4,11 +4,6 @@
 
 namespace nikiforov
 {
-  struct DelimiterIO
-  {
-    char exp;
-  };
-
   struct UnsignedLongLongIO
   {
     unsigned long long& ref;
@@ -24,7 +19,6 @@ namespace nikiforov
     std::string& ref;
   };
 
-  std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
   std::istream& operator>>(std::istream& in, UnsignedLongLongIO&& dest);
   std::istream& operator>>(std::istream& in, CharIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
