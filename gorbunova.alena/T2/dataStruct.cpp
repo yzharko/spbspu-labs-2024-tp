@@ -12,7 +12,7 @@ std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
   DataStruct input;
   {
     std::string key = "";
-    in >> delimeter{'('};
+    in >> delimiter{'('};
     for (size_t i = 0; i < 3; i++)
     {
       in >> delimiter{':'} >> key;
@@ -45,8 +45,8 @@ std::ostream &gorbunova::operator<<(std::ostream &out, const DataStruct &data)
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(" << ":key1 #c(" << data.key1.real() << " " << data.key1.imag() << ")"
-  out << ":key2 " << "(:N " << data.key2.first << ":D " << data.key2.second << ":)"
+  out << "(" << ":key1 #c(" << data.key1.real() << " " << data.key1.imag() << ")";
+  out << ":key2 " << "(:N " << data.key2.first << ":D " << data.key2.second << ":)";
   out << ":key3 \"" << data.key3 << "\":)";
   return out;
 }
