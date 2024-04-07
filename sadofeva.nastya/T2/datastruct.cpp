@@ -1,5 +1,5 @@
 #include "datastruct.hpp"
-
+#include "delimiters.hpp"
 
 std::istream & sadofeva::operator>>(std::istream & is, DelimiterIO && dest)
 {
@@ -118,8 +118,8 @@ std::ostream & sadofeva::operator << (std::ostream & out, const DataStruct & src
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "key1" << std::scientidic << std::setprecision(1) << src.key1;
-  out << ":key0x" << " " << std::hex << src.key2 << " ";
+  out << "(key1" << std::scientidic << std::setprecision(1) << src.key1;
+  out << ":key0x" << " " << std::hex << std::uppercase << src.key2 << " ";
   out << ":key3" << " " << src.key3 << " ";
   return out:
 }
