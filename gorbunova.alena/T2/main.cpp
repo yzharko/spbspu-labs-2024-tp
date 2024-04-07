@@ -6,7 +6,7 @@
 
 int main()
 {
-  std::vector<gorbunova::DataDtruct> data;
+  std::vector<gorbunova::DataStruct> data;
   while (!std::cin.eof())
   {
     std::copy(
