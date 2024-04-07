@@ -109,6 +109,7 @@ bool sadofeva::operator<(const DataStruct & one, const sadofeva::DataStruct & tw
       }
     }
   }
+  return false;
 }
 
 std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStruct & src)
@@ -119,7 +120,7 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(key1" << std::scientific << std::setprecision(1) << src.key1;
+  out << "(key1" << std::scientific << src.key1;
   out << ":key0x" << " " << std::hex << std::uppercase << src.key2 << " ";
   out << ":key3" << " " << src.key3 << " ";
   return out;
