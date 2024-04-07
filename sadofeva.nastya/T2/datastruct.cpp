@@ -12,12 +12,12 @@ std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DelimiterIO && 
   is >> c;
   if (is && (c != dest.exp))
   {
-    is.setctate(std::ios::failbit);
+    is.setstate(std::ios::failbit);
   }
   return is;
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DoubleIO && dest)
+std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DoubleIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -27,7 +27,7 @@ std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DoubleIO && d
   return is >> dest.ref;
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, sadofeva::UnsignedLongLongIO && dest)
+std::istream & sadofeva::operator>>(std::istream & is, sadofeva::UnsignedLongLongIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -38,7 +38,7 @@ std::istream & sadofeva::operator >> (std::istream & is, sadofeva::UnsignedLongL
   return is;
 }
 
-std::istream & sadofeva::operator>> (std::istream & is, sadofeva::StringIO && dest)
+std::istream & sadofeva::operator>>(std::istream & is, sadofeva::StringIO && dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -48,7 +48,7 @@ std::istream & sadofeva::operator>> (std::istream & is, sadofeva::StringIO && de
   return std::getline(is >> DelimiterIO{'"'}, dest.ref,'"');
 }
 
-std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DataStruct & dest)
+std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DataStruct & dest)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -88,7 +88,7 @@ std::istream & sadofeva::operator >> (std::istream & is, sadofeva::DataStruct & 
   return is;
 }
 
-bool sadofeva::operator < (const DataStruct & one, const sadofeva::DataStruct & two)
+bool sadofeva::operator<(const DataStruct & one, const sadofeva::DataStruct & two)
 {
   if (one.key1 < two.key1)
   {
@@ -110,7 +110,7 @@ bool sadofeva::operator < (const DataStruct & one, const sadofeva::DataStruct & 
   }
 }
 
-std::ostream & sadofeva::operator << (std::ostream & out, const sadofeva::DataStruct & src)
+std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStruct & src)
 {
   std::ostream::sentry guard(out);
   if (!guard)

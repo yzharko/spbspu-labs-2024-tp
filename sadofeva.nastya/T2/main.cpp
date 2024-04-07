@@ -10,7 +10,7 @@
 int main()
 {
   std::vector< sadofeva::DataStruct> data;
-  while (!std::sin.eof())
+  while (!std::cin.eof())
   {
     std::copy(
       std::istream_iterator< sadofeva::DataStruct>{std::cin},
@@ -20,7 +20,7 @@ int main()
     if (!std::cin.good())
     {
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),"\n");
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
     }
   }
   std::sort(data.begin(),data.end());
