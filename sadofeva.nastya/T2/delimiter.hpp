@@ -1,5 +1,5 @@
 #ifndef DELIMITER_HPP
-#define DELIMIER_HPP
+#define DELIMITER_HPP
 #include <string>
 
 namespace sadofeva

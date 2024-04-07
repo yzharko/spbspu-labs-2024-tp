@@ -14,7 +14,7 @@ namespace sadofeva
     std::basic_ios<char> & s_;
     char fill_;
     std::streamsize precision_;
-    std::basic_ios<char>::fmtdlags fmt_;
+    std::basic_ios<char>::fmtflags fmt_;
   };
 }
 
