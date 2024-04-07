@@ -46,8 +46,8 @@ std::ostream & gorbunova::operator<<(std::ostream &out, const DataStruct &data)
   }
   iofmtguard fmtguard(out);
   out << "(" << ":key1 #c(" << data.key1.real() << " " << data.key1.imag() << ")"
-      << ":key2 " << "(:N " << data.key2.first << ":D " << data.key2.second << ":)"
-      << ":key3 \"" << data.key3 << "\":)";
+  out << ":key2 " << "(:N " << data.key2.first << ":D " << data.key2.second << ":)"
+  out << ":key3 \"" << data.key3 << "\":)";
   return out;
 }
 bool gorbunova::operator<(const DataStruct &lhs, const DataStruct &rhs)
