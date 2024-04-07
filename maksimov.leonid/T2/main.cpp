@@ -1,5 +1,10 @@
 #include <iostream>
 #include <string>
+#include <vector>
+#include <iomanip>
+#include <limits>
+#include <algorithm>
+#include <iterator>
 
 namespace maksimov
 {
@@ -60,10 +65,36 @@ namespace maksimov
   struct MyStruct
   {
   public:
-    MyStruct(int a, int b) :
-      key1(a),
-      key2(b)
+    MyStruct(ElementI a, ElementI b, ElementI c)
+    {
+      std::vector <ElementI> arr = {a, b, c};
+      for (size_t i = 0; i < 3; ++i)
+      {
+        switch (arr[i].key)
+        {
+          case 1:
+            key1 = stod(arr[i].elem);
+            break;
+          case 2:
+            key2 = stol(arr[i].elem);
+            break;
+          case 3:
+            key3 = arr[i].elem.substr(1, arr[i].elem.length() - 2);
+            break;
+        default:
+          break;
+        }
+      }
+    };
+    
+    MyStruct(int a, int b, int c) :
+      key1(0),
+      key2(0),
+      key3("")
     {};
+
+    MyStruct() = default;
+
     double getKey1() const
     {
       return key1;
@@ -99,9 +130,7 @@ namespace maksimov
     is >> del{ ':' } >> c >> del{ ')' };
     if (is)
     {
-      std::cout << "(:key" << a.key << ' ' << a.elem;
-      std::cout << ":key" << b.key << ' ' << b.elem;
-      std::cout << ":key" << c.key << ' ' << c.elem << ")\n";
+      value = MyStruct{ a, b, c };
     }
     return is;
   }
@@ -113,23 +142,33 @@ namespace maksimov
     {
       return out;
     }
-    out << "(" << value.getKey1() << ";" << value.getKey2() << ")";
+    out << "(:key1 " << std::setprecision(2) << std::scientific << value.getKey1();
+    out << ":key2 0" << value.getKey2();
+    out << ":key3 \"" << value.getKey3() << "\")";
     return out;
   }
 }
 
 int main()
 {
-  maksimov::MyStruct newStruct(0, 0);
-  if (!(std::cin >> newStruct))
+  std::vector< maksimov::MyStruct > data;
+  if (!std::cin.eof())
   {
-    std::cin.clear();
-    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    if (!(std::cin >> newStruct))
+    std::copy(
+      std::istream_iterator< maksimov::MyStruct >{std::cin},
+      std::istream_iterator< maksimov::MyStruct >{},
+      std::back_inserter(data)
+    );
+    if (std::cin.fail())
     {
-      std::cerr << "Error\n";
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-  std::cout << newStruct << "\n";
+  std::copy(
+    std::begin(data),
+    std::end(data),
+    std::ostream_iterator<maksimov::MyStruct>(std::cout, "\n")
+  );
   return 0;
 }
