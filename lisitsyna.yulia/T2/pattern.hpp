@@ -7,18 +7,18 @@ namespace lisitsyna
 {
   struct SllLit
   {
-    long long& value;
+    long long& ref;
   };
-  std::istream& operator>>(std::istream& in, SllLit&& num);
+  std::istream& operator>>(std::istream& in, SllLit&& dest);
   struct ChrLit
   {
-    char& value;
+    char& ref;
   };
-  std::istream& operator>>(std::istream& in, ChrLit&& num);
+  std::istream& operator>>(std::istream& in, ChrLit&& dest);
   struct StringKey
   {
-    std::string& value;
+    std::string& ref;
   };
-  std::istream& operator>>(std::istream& in, StringKey&& value);
+  std::istream& operator>>(std::istream& in, StringKey&& dest);
 }
 #endif

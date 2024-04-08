@@ -1,33 +1,34 @@
 #include "pattern.hpp"
 #include "delimiter.hpp"
 #include "ScopeGuard.hpp"
+#include <iostream>
 
-std::istream& lisitsyna::operator>>(std::istream& in, SllLit&& exp)
+std::istream& lisitsyna::operator>>(std::istream& in, SllLit&& dest)
 {
     std::istream::sentry guard(in);
     if (!guard)
     {
         return in;
     }
-    return in >> exp.ref >> Separator{ 'l' } >> Separator{ 'l' };
+    return in >> dest.ref >> Separator{ 'l' } >> Separator{ 'l' };
 }
-std::istream& lisitsyna::operator>>(std::istream& in, ChrLit&& exp)
+std::istream& lisitsyna::operator>>(std::istream& in, ChrLit&& dest)
 {
     std::istream::sentry guard(in);
     if (!guard)
     {
         return in;
     }
-    in >> Separator{ '\'' } >> exp.ref >> Separator{ '\'' };
+    in >> Separator{ '\'' } >> dest.ref >> Separator{ '\'' };
     return in;
 }
-std::istream& lisitsyna::operator>>(std::istream& in, String&& exp)
+std::istream& lisitsyna::operator>>(std::istream& in, StringKey&& dest)
 {
     std::istream::sentry guard(in);
     if (!guard)
     {
         return in;
     }
-    std::getline(in >> Separator{ '"' }, exp.ref, '"');
+    std::getline(in >> Separator{ '"' }, dest.ref, '"');
     return in;
 }
