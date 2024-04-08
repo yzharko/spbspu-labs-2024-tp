@@ -10,8 +10,7 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::Delimitr_ &
   }
   char c = 0;
   in >> c;
-  tolower(c);
-  if (c != exp.expected)
+  if (tolower(c) != exp.expected)
   {
     in.setstate(std::ios::failbit);
   }

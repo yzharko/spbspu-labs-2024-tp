@@ -9,7 +9,6 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
   {
     return in;
   }
-  char helpChar;
   using del = sobolevsky::Delimitr_;
   DataStruct data;
   {
