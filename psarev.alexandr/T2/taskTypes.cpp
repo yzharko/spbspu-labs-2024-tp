@@ -21,7 +21,9 @@ std::istream& psarev::operator>>(std::istream& in, UllHexIO&& dest)
   {
     return in;
   }
-  return in >> dest.ref;
+  std::string strHexPart = "";
+  in >> delim{ '0' } >> delim{ 'x' } >> std::hex >> dest.ref;
+  return in;
 }
 
 std::istream& psarev::operator>>(std::istream& in, StringIO&& dest)
