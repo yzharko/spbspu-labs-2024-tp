@@ -1,41 +1,62 @@
+#include "DataStruct.h"
 #include <sstream>
 #include <iomanip>
-#include "DataStruct.h"
 
-std::istream& operator>>(std::istream& is, DataStruct& data)
+std::istream& operator>>(std::istream& is, DataStruct& ds)
 {
-  std::string input, part;
-  if (std::getline(is, input, ')'))
+  bool k1 = 0;
+  bool k2 = 0;
+
+  std::string line;
+  if (!getline(is, line, ')')) return is;
+
+  std::istringstream lineStream(line.substr(1));
+  std::string part;
+  while (getline(lineStream >> std::ws, part, ':'))
   {
-    std::istringstream iss(input.substr(input.find('(') + 1));
-    while (std::getline(iss, part, ':'))
+    auto pos = part.find(' ');
+    if (pos == std::string::npos) continue;
+    std::string key = part.substr(0, pos);
+    std::string value = part.substr(pos + 1);
+
+    if (value.find("ull") != std::string::npos)
     {
-      std::string key, value;
-      std::getline(iss, key, ' ');
-      std::getline(iss, value, ':');
-      if (key == "key1" || key == "key2")
-      {
-        unsigned long long* key_ptr = (key == "key1") ? &data.key1 : &data.key2;
-        if (value.find("ull") != std::string::npos || value.find("ULL") != std::string::npos)
-        {
-          *key_ptr = std::stoull(value.substr(0, value.find("ull")));
-        }
-        else if (value.find("0x") != std::string::npos || value.find("0X") != std::string::npos)
-        {
-          *key_ptr = std::stoull(value, nullptr, 16);
-        }
-      }
-      else if (key == "key3")
-      {
-        data.key3 = value.substr(1, value.length() - 2);
-      }
+      k1 = true;
+      ds.key1 = std::stoull(value.substr(0, value.find("ull")));
+    }
+    else if (value.find("0x") != std::string::npos || value.find("0X") != std::string::npos)
+    {
+      k2 = true;
+      ds.key2 = std::stoull(value, nullptr, 16);
+    }
+    else
+    {
+      ds.key3 = "\"" + value.substr(1, value.length() - 2);
     }
   }
+
+  if (!k1 || !k2)
+  {
+    ds.key3 = "";
+  }
+
   return is;
 }
 
-std::ostream& operator<<(std::ostream& os, const DataStruct& data)
+std::ostream& operator<<(std::ostream& os, const DataStruct& ds)
 {
-  os << "(:key1 " << data.key1 << "ull:key2 " << data.key2 << "ull:key3 \"" << data.key3 << "\":)";
+  if (ds.key3.empty())
+  {
+    return os;
+  }
+
+  os << "(:key1 ";
+
+  os << ds.key1 << "ull:key2 ";
+
+  os << "0x" << std::hex << ds.key2 << ":key3 " << std::dec;
+
+  os << ds.key3 << "\":)";
+
   return os;
 }
