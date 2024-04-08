@@ -14,7 +14,7 @@ namespace ponomarev
   struct Data
   {
     double key1;
-    unsigned long long key2;
+    std::string key2;
     std::string key3;
   };
 
@@ -30,7 +30,7 @@ namespace ponomarev
 
   struct LongLongIO
   {
-    unsigned long long &ref;
+    std::string &ref;
   };
 
   struct StringIO
@@ -66,7 +66,7 @@ bool compare_entry(const ponomarev::Data &e1, const ponomarev::Data &e2)
   }
   else if (e1.key2 != e2.key2)
   {
-    return (e1.key2 < e2.key2);
+    return (std::stoull(e1.key2) < std::stoull(e2.key2));
   }
   return (e1.key3.length() < e2.key3.length());
 };
@@ -109,7 +109,7 @@ namespace ponomarev
     }
     char c = '0';
     in >> c;
-    if (c != dest.exp)
+    if (tolower(c) != dest.exp)
     {
       in.setstate(std::ios::failbit);
     }
@@ -123,7 +123,8 @@ namespace ponomarev
     {
       return in;
     }
-    return in >> DelimiterIO{ '0' } >> DelimiterIO{ 'b' } >> dest.ref;
+    std::getline(in >> DelimiterIO{ '0' } >> DelimiterIO{ 'b' }, dest.ref, ':');
+    return in;
   }
 
   std::istream &operator>>(std::istream &in, DoubleIO &&dest)
@@ -161,20 +162,23 @@ namespace ponomarev
       using str = StringIO;
       std::string typeOfKey;
       in >> sep{ '(' };
+      std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
       for (size_t i = 0; i < 3; i++)
       {
-        std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
         if (typeOfKey == "key1")
         {
           in >> dbl{ input.key1 };
+          std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
         }
         else if (typeOfKey == "key2")
         {
           in >> lolo{ input.key2 };
+          std::getline(in, typeOfKey, ' ');
         }
         else if (typeOfKey == "key3")
         {
           in >> str{ input.key3 };
+          std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
         }
         else
         {
@@ -182,8 +186,10 @@ namespace ponomarev
           break;
         }
       }
-      in >> sep{ ':' };
-      in >> sep{ ')' };
+      if (typeOfKey[0] != ')')
+      {
+        in.setstate(std::ios::failbit);
+      }
     }
     if (in)
     {
