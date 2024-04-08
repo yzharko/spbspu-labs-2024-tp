@@ -49,7 +49,7 @@ std::ostream& psarev::operator<<(std::ostream& out, const DataStruct& data)
   }
   iofmtguard fmtguard(out);
   out << "(:key1 " << std::fixed << std::setprecision(1) << data.key1 << "d";
-  out << ":key2 0x" << data.key2;
+  out << ":key2 0x" << std::hex << std::uppercase << data.key2;
   out << ":key3 " << std::quoted(data.key3) << ":)";
   return out;
 }
