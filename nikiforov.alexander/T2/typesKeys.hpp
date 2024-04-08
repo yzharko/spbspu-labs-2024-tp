@@ -1,6 +1,6 @@
 #ifndef TYPESKEYS_HPP
 #define TYPESKEYS_HPP
-#include <sstream>
+#include <string>
 
 namespace nikiforov
 {
