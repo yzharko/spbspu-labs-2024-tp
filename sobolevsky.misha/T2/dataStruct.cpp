@@ -86,8 +86,8 @@ std::ostream & sobolevsky::operator<<(std::ostream & out, const sobolevsky::Data
   {
     return out;
   }
-  out << "(:key1 " << std::fixed << std::setprecision(1) << value.get1() << value.getD();
-  out << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)";
+  out << "(:key1 " << std::fixed << std::setprecision(1) << value.get1() << value.getD()
+  << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)";
   return out;
 }
 
