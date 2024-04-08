@@ -90,3 +90,18 @@ std::ostream & sobolevsky::operator<<(std::ostream & out, const sobolevsky::Data
   out << ":key2 '" << value.get2() << "'" << ":key3 \"" << value.get3() << "\":)\n";
   return out;
 }
+
+bool sobolevsky::operator<(const sobolevsky::DataStruct & first, const sobolevsky::DataStruct & second)
+{
+  if (first.get1() != second.get1())
+  {
+    return first.get1() < second.get1();
+  }
+
+  if (first.get2() != second.get2())
+  {
+    return first.get2() < second.get2();
+  }
+
+  return first.get3().size() < second.get3().size();
+}

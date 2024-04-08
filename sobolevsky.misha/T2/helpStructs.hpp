@@ -11,21 +11,6 @@ namespace sobolevsky
     char expected = 0;
   };
 
-  struct Double_
-  {
-    double dbl;
-  };
-
-  struct Char_
-  {
-    char ch;
-  };
-
-  struct String_
-  {
-    std::string str;
-  };
-
 std::istream & operator>>(std::istream & in, sobolevsky::Delimitr && exp);
 }
 

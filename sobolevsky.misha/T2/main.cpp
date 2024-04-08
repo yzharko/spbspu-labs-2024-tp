@@ -10,6 +10,7 @@
 int main()
 {
   std::vector< sobolevsky::DataStruct > vec;
+
   while (!std::cin.eof())
   {
     std::copy(
@@ -23,6 +24,8 @@ int main()
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
+  std::sort(vec.begin(), vec.end());
 
   std::copy(
     vec.cbegin(),

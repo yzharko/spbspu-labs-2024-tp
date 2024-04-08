@@ -27,8 +27,9 @@ namespace sobolevsky
       char Dd;
   };
 
-std::istream & operator>>(std::istream & in, sobolevsky::DataStruct & value);
-std::ostream & operator<<(std::ostream & out, const sobolevsky::DataStruct & value);
+  std::istream & operator>>(std::istream & in, sobolevsky::DataStruct & value);
+  std::ostream & operator<<(std::ostream & out, const sobolevsky::DataStruct & value);
+  bool operator<(const DataStruct & first, const DataStruct & second);
 }
 
 #endif
