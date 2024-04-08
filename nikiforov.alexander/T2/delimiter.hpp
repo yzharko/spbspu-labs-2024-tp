@@ -1,6 +1,6 @@
 #ifndef DELIMITER_HPP
 #define DELIMITER_HPP
-#include <sstream>
+#include <iomanip>
 
 namespace nikiforov
 {
