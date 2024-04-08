@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
+#include <sstream>
 #include "DataStruct.h"
 
 int main()
@@ -12,13 +13,6 @@ int main()
       std::istream_iterator<DataStruct>(),
       std::back_inserter(dataVector));
 
-  if (!dataVector.size())
-  {
-    std::cout << "Looks like there is no supported record. Cannot determine input. Test skipped\n";
-
-    return 0;
-  }
-
   std::sort(dataVector.begin(), dataVector.end(), [](const DataStruct& a, const DataStruct& b)
   {
     if (a.key1 != b.key1) return a.key1 < b.key1;
@@ -26,7 +20,10 @@ int main()
     return a.key3.length() < b.key3.length();
   });
 
-  std::copy(dataVector.begin(), dataVector.end(), std::ostream_iterator<DataStruct>(std::cout, "\n"));
+  for (const auto& ds : dataVector)
+  {
+    std::cout << ds << (ds.key3.empty() ? "" : "\n");
+  }
 
   return 0;
 }
