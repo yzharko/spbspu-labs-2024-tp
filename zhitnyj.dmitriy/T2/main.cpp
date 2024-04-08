@@ -12,7 +12,7 @@ int main()
       std::istream_iterator<DataStruct>(),
       std::back_inserter(dataVector));
 
-  if (dataVector.empty())
+  if (!dataVector.size())
   {
     std::cout << "Looks like there is no supported record. Cannot determine input. Test skipped\n";
 
