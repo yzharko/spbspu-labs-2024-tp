@@ -1,16 +1,35 @@
 #ifndef HELPSTRUCTS_HPP
 #define HELPSTRUCTS_HPP
 
-#include <iostream>
+#include <iosfwd>
+#include <string>
 
 namespace sobolevsky
 {
-  struct Delimitr
+  struct Delimitr_
   {
-    char expected = 0;
+    char expected;
   };
 
-  std::istream & operator>>(std::istream & in, sobolevsky::Delimitr && exp);
+  struct Double_
+  {
+    double &key1_;
+  };
+
+  struct Char_
+  {
+    char &key2_;
+  };
+
+  struct String_
+  {
+    std::string &key3_;
+  };
+
+  std::istream & operator>>(std::istream & in, Delimitr_ && exp);
+  std::istream & operator>>(std::istream & in, Double_ && exp);
+  std::istream & operator>>(std::istream & in, Char_ && exp);
+  std::istream & operator>>(std::istream & in, String_ && exp);
 }
 
 #endif
