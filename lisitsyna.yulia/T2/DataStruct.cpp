@@ -16,9 +16,9 @@ bool comp(const DataStruct& rh, const DataStruct& lf)
   return rh.key3.length() < lf.key3.length();
 }
 
-std::istream& operator>>(std::istream& in, Data& dest)
+std::istream& operator>>(std::istream& in, DataStruct& dest)
 {
-  std::istream::sentry sentry(in);
+  std::istream::sentry guard(in);
   if (!sentry)
   {
     return in;
@@ -26,7 +26,7 @@ std::istream& operator>>(std::istream& in, Data& dest)
   Data input;
   {
     using sep = Separator;
-    using label = LabelIO;
+    using label = Label;
     using sll = SllLit;
     using chr = ChrLit;
     using str = StringKey;
@@ -64,7 +64,7 @@ std::istream& operator>>(std::istream& in, Data& dest)
 
 std::ostream& operator<<(std::ostream& out, const DataStruct& src)
 {
-  std::ostream::sentry sentry(out);
+  std::ostream::sentry guard(out);
   if (!sentry)
   {
     return out;
