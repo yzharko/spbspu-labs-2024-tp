@@ -10,8 +10,8 @@ struct DataStruct
     unsigned long long key2 = 0;
     std::string key3 = "";
 
-    friend std::istream& operator>>(std::istream& is, DataStruct& data);
-    friend std::ostream& operator<<(std::ostream& os, const DataStruct& data);
+    friend std::istream& operator>>(std::istream& is, DataStruct& ds);
+    friend std::ostream& operator<<(std::ostream& os, const DataStruct& ds);
 };
 
 #endif
