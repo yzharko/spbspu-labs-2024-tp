@@ -20,11 +20,11 @@ std::istream& psarev::operator>>(std::istream& in, DataStruct& data)
       in >> delim{ ':' } >> keyNum;
       if (keyNum == "key1")
       {
-        in >> DoubleIO{ houseKeeper.key1 };
+        in >> DoubleIO{ houseKeeper.key1 } >> delim{ 'd' };
       }
       else if (keyNum == "key2")
       {
-        in >> UllHexIO{ houseKeeper.key2 };
+        in >> delim{ '0' } >> delim{ 'x' } >> UllHexIO{ houseKeeper.key2 };
       }
       else if (keyNum == "key3")
       {

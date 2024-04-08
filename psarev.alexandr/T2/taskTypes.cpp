@@ -10,11 +10,8 @@ std::istream& psarev::operator>>(std::istream& in, DoubleIO&& dest)
   {
     return in;
   }
-  if (!(in >> dest.ref >> delim{ 'd' }) && !(std::isdigit(dest.ref)))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
+
+  return in >> dest.ref;
 }
 
 std::istream& psarev::operator>>(std::istream& in, UllHexIO&& dest)
@@ -24,11 +21,7 @@ std::istream& psarev::operator>>(std::istream& in, UllHexIO&& dest)
   {
     return in;
   }
-  if (!(in >> delim{ '0' } >> delim{ 'x' } >> dest.ref) && !std::isdigit(dest.ref))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
+  return in >> dest.ref;
 }
 
 std::istream& psarev::operator>>(std::istream& in, StringIO&& dest)

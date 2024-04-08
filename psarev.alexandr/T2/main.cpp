@@ -15,7 +15,7 @@ int main()
       std::istream_iterator< psarev::DataStruct >(),
       std::back_inserter(dataVec)
     );
-    if (std::cin.fail())
+    if (std::cin.fail() && !std::cin.eof())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
