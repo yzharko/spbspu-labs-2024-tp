@@ -102,9 +102,9 @@ namespace maksimov
       return key3;
     }
   private:
-    double key1;
-    unsigned long long key2;
-    std::string key3;
+    double key1 = 0;
+    unsigned long long key2 = 0;
+    std::string key3 = "";
   };
 
   std::istream& operator>>(std::istream& is, MyStruct& value)
@@ -121,7 +121,7 @@ namespace maksimov
     elem c{ 0, "" };
     is >> del{ '(' } >> del{ ':' } >> a;
     is >> del{ ':' } >> b;
-    is >> del{ ':' } >> c >> del{ ')' };
+    is >> del{ ':' } >> c >> del{ ':' } >> del{ ')' };
     if (is)
     {
       value = MyStruct{ a, b, c };
@@ -136,7 +136,7 @@ namespace maksimov
     {
       return out;
     }
-    out << "(:key1 " << std::setprecision(2) << std::scientific << value.getKey1();
+    out << "(:key1 " << value.getKey1();
     out << ":key2 0" << value.getKey2();
     out << ":key3 \"" << value.getKey3() << "\")";
     return out;
@@ -146,7 +146,7 @@ namespace maksimov
 int main()
 {
   std::vector< maksimov::MyStruct > data;
-  if (!std::cin.eof())
+  while (!std::cin.eof())
   {
     std::copy(
       std::istream_iterator< maksimov::MyStruct >{std::cin},
