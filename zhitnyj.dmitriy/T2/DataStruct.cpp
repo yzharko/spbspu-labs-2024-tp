@@ -56,7 +56,7 @@ std::ostream& operator<<(std::ostream& os, const DataStruct& ds)
 
   os << "0x" << std::uppercase << std::hex << ds.key2 << ":key3 " << std::dec;
 
-  os << ds.key3 << (ds.key3.back() == '"' ? ":" : ":\":)");
+  os << ds.key3 << (ds.key3.back() == '"' ? ":)" : ":\":)");
 
   return os;
 }
