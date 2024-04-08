@@ -31,7 +31,7 @@ std::istream& operator>>(std::istream& is, DataStruct& ds)
     }
     else
     {
-      ds.key3 = "\"" + value.substr(1, value.length() - 2);
+      ds.key3 = value.substr(0, value.length());
     }
   }
 
@@ -54,9 +54,9 @@ std::ostream& operator<<(std::ostream& os, const DataStruct& ds)
 
   os << ds.key1 << "ull:key2 ";
 
-  os << "0x" << std::hex << ds.key2 << ":key3 " << std::dec;
+  os << "0x" << std::uppercase << std::hex << ds.key2 << ":key3 " << std::dec;
 
-  os << ds.key3 << "\":)";
+  os << ds.key3 << (ds.key3.back() == '"' ? ":" : ":\":)");
 
   return os;
 }
