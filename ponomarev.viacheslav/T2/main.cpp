@@ -162,23 +162,28 @@ namespace ponomarev
       using str = StringIO;
       std::string typeOfKey;
       in >> sep{ '(' };
-      std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
       for (size_t i = 0; i < 3; i++)
       {
+        if (typeOfKey == "key2")
+        {
+          std::getline(in , typeOfKey, ' ');
+        }
+        else
+        {
+          std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
+        }
+
         if (typeOfKey == "key1")
         {
           in >> dbl{ input.key1 };
-          std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
         }
         else if (typeOfKey == "key2")
         {
           in >> lolo{ input.key2 };
-          std::getline(in, typeOfKey, ' ');
         }
         else if (typeOfKey == "key3")
         {
           in >> str{ input.key3 };
-          std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
         }
         else
         {
@@ -186,11 +191,18 @@ namespace ponomarev
           break;
         }
       }
-      if (typeOfKey[0] != ')')
+
+      if (typeOfKey == "key2")
       {
-        in.setstate(std::ios::failbit);
+        in >> sep{ ')' };
+      }
+      else
+      {
+        in >> sep{ ':' };
+        in >> sep{ ')' };
       }
     }
+
     if (in)
     {
       dest = input;
