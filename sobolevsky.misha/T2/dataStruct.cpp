@@ -20,11 +20,7 @@ std::istream & sobolevsky::operator>>(std::istream & in, sobolevsky::DataStruct 
       in >> del{':'} >> keyX;
       if (keyX == "key1")
       {
-        in >> Double_{data.key1} >> helpChar;
-        if (!(helpChar == 'd' || helpChar == 'D'))
-        {
-          in.setstate(std::ios::failbit);
-        }
+        in >> Double_{data.key1} >> del{'d'};
       }
       else if (keyX == "key2")
       {
