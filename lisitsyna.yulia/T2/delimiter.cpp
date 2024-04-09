@@ -19,7 +19,7 @@ std::istream & lisitsyna::operator>>(std::istream & in, Separator && dest)
 std::istream& lisitsyna::operator>>(std::istream& in, Label&& dest)
 {
   std::istream::sentry guard(in);
-  if (!sentry)
+  if (!guard)
   {
     return in;
   }
