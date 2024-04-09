@@ -9,7 +9,7 @@ std::istream & lisitsyna::operator>>(std::istream & in, Separator && dest)
   }
   char c = '0';
   in >> c;
-  if (c != dest.exp))
+  if (in && (c != dest.exp))
   {
     in.setstate(std::ios::failbit);
   }

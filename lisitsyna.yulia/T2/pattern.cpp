@@ -1,6 +1,7 @@
 #include "pattern.hpp"
 #include "delimiter.hpp"
 #include "ScopeGuard.hpp"
+#include "DataStruct.hpp"
 #include <iostream>
 
 std::istream& lisitsyna::operator>>(std::istream& in, SllLit&& dest)
