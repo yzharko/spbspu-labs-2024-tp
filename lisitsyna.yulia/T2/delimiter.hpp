@@ -11,3 +11,4 @@ namespace lisitsyna
   };
   std::istream & operator>>(std::istream & in, Separator && dest);
 }
+#endif
