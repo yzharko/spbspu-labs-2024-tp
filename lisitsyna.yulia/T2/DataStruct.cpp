@@ -1,8 +1,6 @@
 #include "DataStruct.hpp"
 #include "ScopeGuard.hpp"
 #include "pattern.hpp"
-#include "pattern.cpp"
-#include "delimiter.cpp"
 #include "delimiter.hpp"
 #include <iostream>
 
