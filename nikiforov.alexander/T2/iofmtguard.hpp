@@ -1,6 +1,6 @@
 #ifndef IOFMTGUARD_HPP
 #define IOFMTGUARD_HPP
-#include <iomanip>
+#include <ios>
 
 namespace nikiforov
 {
