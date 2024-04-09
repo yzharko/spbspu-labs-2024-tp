@@ -1,9 +1,12 @@
 #include "DataStruct.hpp"
 #include "ScopeGuard.hpp"
 #include "pattern.hpp"
+#include "pattern.cpp"
+#include "delimiter.cpp"
+#include "delimiter.hpp"
 #include <iostream>
 
-bool comp(const DataStruct& rh, const DataStruct& lf)
+bool compare(const DataStruct& rh, const DataStruct& lf)
 {
   if (rh.key1 != lf.key1)
   {
@@ -19,7 +22,7 @@ bool comp(const DataStruct& rh, const DataStruct& lf)
 std::istream& operator>>(std::istream& in, DataStruct& dest)
 {
   std::istream::sentry guard(in);
-  if (!sentry)
+  if (!guard)
   {
     return in;
   }
@@ -65,7 +68,7 @@ std::istream& operator>>(std::istream& in, DataStruct& dest)
 std::ostream& operator<<(std::ostream& out, const DataStruct& src)
 {
   std::ostream::sentry guard(out);
-  if (!sentry)
+  if (!guard)
   {
     return out;
   }
