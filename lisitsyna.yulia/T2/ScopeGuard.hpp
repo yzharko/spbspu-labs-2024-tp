@@ -21,7 +21,7 @@ namespace lisitsyna
       }
     private:
       char fill_;
-      std::basic_ios<char>& s;
+      std::basic_ios<char>& s_;
       std::streamsize precision_;
       std::basic_ios<char>::fmtflags flags_;
   };
