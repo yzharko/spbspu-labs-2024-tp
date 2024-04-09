@@ -20,5 +20,10 @@ namespace lisitsyna
     std::string& ref;
   };
   std::istream& operator>>(std::istream& in, StringKey&& dest);
+  struct Label
+  {
+    std::string exp;
+  };
+  std::istream& operator>>(std::istream& in, Label && dest);
 }
 #endif

@@ -10,10 +10,4 @@ namespace lisitsyna
     char exp;
   };
   std::istream & operator>>(std::istream & in, Separator && dest);
-  struct Label
-  {
-    std::string exp;
-  };
-  std::istream& operator>>(std::istream& in, Label && dest);
 }
-#endif

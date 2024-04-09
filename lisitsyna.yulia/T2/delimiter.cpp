@@ -15,18 +15,3 @@ std::istream & lisitsyna::operator>>(std::istream & in, Separator && dest)
   }
   return in;
 }
-
-std::istream& lisitsyna::operator>>(std::istream& in, Label&& dest)
-{
-  std::istream::sentry guard(in);
-  if (!guard)
-  {
-    return in;
-  }
-  std::string data = "";
-  if ((in >> StringKey{ data }) && (data != dest.exp))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
-}
