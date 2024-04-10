@@ -1,6 +1,6 @@
 #ifndef STRUCTS_HPP
 #define STRUCTS_HPP
-#include <iostream>
+#include <iosfwd>
 #include <complex>
 #include <string>
 
