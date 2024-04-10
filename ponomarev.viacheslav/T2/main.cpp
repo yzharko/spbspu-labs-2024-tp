@@ -282,7 +282,7 @@ namespace ponomarev
     double mantis = src.key1;
     int degree = 0;
     out << "(:";
-    if (0 < mantis < 10)
+    if (mantis < 10)
     {
       while (mantis < 1)
       {
