@@ -253,13 +253,13 @@ namespace ponomarev
         }
       }
 
-      if (typeOfKey == "key2")
+      if ((typeOfKey == "key3"))
       {
+        in >> sep{ ':' };
         in >> sep{ ')' };
       }
       else
       {
-        in >> sep{ ':' };
         in >> sep{ ')' };
       }
     }
