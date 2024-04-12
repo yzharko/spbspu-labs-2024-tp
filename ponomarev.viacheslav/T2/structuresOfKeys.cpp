@@ -10,11 +10,9 @@ std::istream &ponomarev::operator>>(std::istream &in, DoubleIO &&dest)
     return in;
   }
 
-  std::string numberStr;
-  std::string degreeStr;
+  std::string numberStr = "";
+  std::string degreeStr = "";
   char symbol = '0';
-  char sign;
-  const char temp = 'e';
   in >> symbol;
   numberStr += symbol;
   numberStr += '.';
@@ -33,6 +31,8 @@ std::istream &ponomarev::operator>>(std::istream &in, DoubleIO &&dest)
   }
 
   symbol = tolower(symbol);
+  const char temp = 'e';
+  char sign = 0;
   if (symbol == temp)
   {
     in >> sign;
@@ -94,11 +94,3 @@ std::istream &ponomarev::operator>>(std::istream &in, StringIO &&dest)
 
   return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
 }
-
-
-
-
-
-
-
-

@@ -15,6 +15,7 @@ namespace ponomarev
 
   std::istream &operator>>(std::istream &in, Data &dest);
   std::ostream &operator<<(std::ostream &out, const Data &dest);
+  bool operator<(const Data & lhs, const Data & rhs);
 }
 
 #endif

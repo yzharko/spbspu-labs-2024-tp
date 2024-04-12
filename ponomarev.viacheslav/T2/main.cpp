@@ -1,12 +1,8 @@
-#include "dataStruct.hpp"
-#include "comparator.hpp"
 #include <algorithm>
 #include <iterator>
 #include <vector>
 #include <limits>
-
-// формат ввода:
-// (:key1 5.45e-2:key2 0b1000101:key3 "Data":)
+#include "dataStruct.hpp"
 
 int main()
 {
@@ -25,7 +21,7 @@ int main()
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-  std::sort(data.begin(), data.end(), ponomarev::compare_entry);
+  std::sort(data.begin(), data.end());
   std::copy(
     std::begin(data),
     std::end(data),

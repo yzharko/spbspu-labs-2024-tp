@@ -103,3 +103,16 @@ std::ostream &ponomarev::operator<<(std::ostream &out, const Data &src)
   out << ":)";
   return out;
 }
+
+bool ponomarev::operator<(const ponomarev::Data & left, const ponomarev::Data & right)
+{
+  if (left.key1 != right.key1)
+  {
+    return (left.key1 < right.key1);
+  }
+  else if (left.key2 != right.key2)
+  {
+    return (std::stoull(left.key2) < std::stoull(right.key2));
+  }
+  return (left.key3.length() < right.key3.length());
+}
