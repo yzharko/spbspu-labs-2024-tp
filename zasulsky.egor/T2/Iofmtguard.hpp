@@ -1,4 +1,4 @@
-ifndef IOFMTGUARD_HPP
+#ifndef IOFMTGUARD_HPP
 #define IOFMTGUARD_HPP
 
 #include <iomanip>
@@ -20,4 +20,3 @@ namespace zasulsky
 }
 
 #endif
-
