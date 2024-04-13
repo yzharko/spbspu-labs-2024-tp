@@ -1,7 +1,6 @@
 #ifndef SCOPEGUARD_HPP
 #define SCOPEGUARD_HPP
 
-// #include <iostream>
 #include <ios>
 #include <iosfwd>
 
