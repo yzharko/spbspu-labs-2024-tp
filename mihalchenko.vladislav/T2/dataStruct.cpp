@@ -15,19 +15,14 @@ std::istream &mihalchenko::operator>>(std::istream &is, DataStruct &value)
     using ull2 = UllBinIO;
     using complex = ComplexIO;
     using str = StringIO;
-    bool flag11 = false;
+    bool flKey1 = false;
     is >> sep{'('};
     std::string key = "";
     int c = 0;
     for (size_t i = 0; i < 3; i++)
     {
       c = i;
-      // flag11 == true ? flag11 = false : is >> sep{':'};
-      if (flag11 == true)
-      {
-        flag11 = false;
-      }
-      else
+      if (flKey1 != true)
       {
         is >> sep{':'};
       }
@@ -35,29 +30,24 @@ std::istream &mihalchenko::operator>>(std::istream &is, DataStruct &value)
       if (key == "key1")
       {
         is >> ull2{inputDS.key1_};
-        flag11 = true;
+        flKey1 = true;
       }
       else if (key == "key2")
       {
         is >> complex{inputDS.key2_};
+        flKey1 = false;
       }
       else if (key == "key3")
       {
         is >> str{inputDS.key3_};
+        flKey1 = false;
       }
       else
       {
         is.setstate(std::ios::failbit);
       }
     }
-    if (key == "key1" && c == 2)
-    {
-      is >> sep{')'};
-    }
-    else
-    {
-      is >> sep{':'} >> sep{')'};
-    }
+    (key == "key1" && c == 2) ? (is >> sep{')'}) : is >> sep{':'} >> sep{')'};
   }
   if (is)
   {
