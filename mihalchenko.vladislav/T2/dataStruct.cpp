@@ -1,5 +1,4 @@
 #include "dataStruct.hpp"
-// #include <iostream>
 #include "delimiters.hpp"
 #include "scopeGuard.hpp"
 
@@ -23,6 +22,7 @@ std::istream &mihalchenko::operator>>(std::istream &is, DataStruct &value)
     for (size_t i = 0; i < 3; i++)
     {
       c = i;
+      // flag11 == true ? flag11 = false : is >> sep{':'};
       if (flag11 == true)
       {
         flag11 = false;
@@ -74,12 +74,8 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const DataStruct &value
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "("
-      << ":key1 "
-      << "0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
-      << value.key2_.real() << " " << value.key2_.imag() << ")"
-      << ":key3 \"" << value.key3_ << "\":"
-      << ")";
+  out << "(:key1 0b" << value.key1_ << ":key2 #c(" << std::fixed << std::setprecision(1)
+      << value.key2_.real() << " " << value.key2_.imag() << "):key3 \"" << value.key3_ << "\":)";
   return out;
 }
 
@@ -87,35 +83,14 @@ bool mihalchenko::operator<(const DataStruct &lhs, const DataStruct &rhs)
 {
   if (lhs.key1_ != rhs.key1_)
   {
-    if (lhs.key1_ < rhs.key1_)
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return (lhs.key1_ < rhs.key1_);
   }
   else if (abs(lhs.key2_) != abs(rhs.key2_))
   {
-    if (abs(lhs.key2_) < abs(rhs.key2_))
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return (abs(lhs.key2_) < abs(rhs.key2_));
   }
   else
   {
-    if (lhs.key3_.size() < rhs.key3_.size())
-    {
-      return true;
-    }
-    else
-    {
-      return false;
-    }
+    return (lhs.key3_.size() < rhs.key3_.size());
   }
 }
