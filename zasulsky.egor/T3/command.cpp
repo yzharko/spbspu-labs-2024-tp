@@ -140,7 +140,7 @@ void zasulsky::printMinVert(const polygons& data, std::ostream& out)
 
 void printSizeCount(const zasulsky::polygons& data, zasulsky::predicate pred, std::ostream& out)
 {
-  out << std::count_if(data.begin(), data.end(), pred);
+  out << std::count_if(data.begin(), data.end(), pred) << '\n';
 }
 
 void zasulsky::printEvCount(const polygons& data, std::ostream& out)
