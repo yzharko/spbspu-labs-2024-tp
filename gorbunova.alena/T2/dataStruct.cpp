@@ -54,8 +54,7 @@ bool gorbunova::operator<(const DataStruct &lhs, const DataStruct &rhs)
 {
   if (lhs.key1 != rhs.key1)
   {
-    return std::real(lhs.key1) < std::real(rhs.key1) ||
-           (std::real(lhs.key1) == std::real(rhs.key1) && std::imag(lhs.key1) < std::imag(rhs.key1));
+    return abs(lhs.key1) < abs(rhs.key1);
   }
   else if (lhs.key2 != rhs.key2)
   {
