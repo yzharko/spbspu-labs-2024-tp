@@ -105,8 +105,6 @@ int main(int argc, char** argv)
     {
       zasulsky::printInvCmd(std::cout);
       std::cout << '\n';
-      std::cin.clear();
-      zasulsky::skipUntilNewLine(std::cin);
     }
   }
   return 0;
