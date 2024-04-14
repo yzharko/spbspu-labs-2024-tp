@@ -94,7 +94,9 @@ int main(int argc, char** argv)
           std::cin >> pol >> zasulsky::DelimiterIO{ '\n' };
           if (!std::cin)
           {
-            throw std::invalid_argument("not polygon");
+            zasulsky::printInvCmd(std::cout);
+            std::cin.clear();
+            zasulsky::skipUntilNewLine(std::cin);
           }
         }
         else
