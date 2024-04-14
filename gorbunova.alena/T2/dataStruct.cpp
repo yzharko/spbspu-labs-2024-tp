@@ -13,7 +13,7 @@ std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
   {
     std::string key = "";
     in >> delimiter{'('};
-    for (size_t i = 0; i < 3; i++)
+    for (size_t i = 0; i < 3; ++i)
     {
       in >> delimiter{':'} >> key;
       if (key == "key1")
@@ -108,8 +108,14 @@ std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
   if (tmp == 'D')
   {
     is >> value.ref.second;
+  }
+  else
+  {
+    is.setstate(std::ios::failbit);
     return is;
   }
+  is >> delimiter{':'} >> delimiter{')'};
+  return is;
 }
 std::istream &gorbunova::operator>>(std::istream &in, str &&dest)
 {
