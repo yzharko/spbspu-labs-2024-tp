@@ -121,12 +121,13 @@ zasulsky::frame correctFrame(zasulsky::frame lhs, zasulsky::frame rhs)
 
   return { {minX, minY}, {maxX, maxY} };
 }
-double zasulsky::sumPmArea(double acc, const Point& p1)
+
+double zasulsky::sumPmArea(double accumulatedArea, const Point& startPoint)
 {
-  auto p2 = std::next(&p1);
-  auto PmArea = ((p1.x * p2->y) - (p2->x * p1.y));
-  auto res = acc + PmArea;
-  return res;
+  auto nextPoint = std::next(&startPoint);
+  auto currentTriangleArea = ((startPoint.x * nextPoint->y) - (nextPoint->x * startPoint.y));
+  auto newAccumulatedArea = accumulatedArea + currentTriangleArea;
+  return newAccumulatedArea;
 }
 
 double zasulsky::countArea(const Polygon& pol)
@@ -174,6 +175,8 @@ bool zasulsky::isRightAngle(int v1x, int v2x, int v1y, int v2y)
   return false;
 }
 
+
+
 bool zasulsky::checkForRect(const Polygon& pol)
 {
   auto np = pol.points;
@@ -186,17 +189,19 @@ bool zasulsky::checkForRect(const Polygon& pol)
     auto temp3 = np.back();
     np.pop_back();
     auto temp4 = np.back();
-    if (temp2.x - temp1.x == temp3.x - temp4.x && temp2.y - temp3.y == temp1.y - temp4.y)
-    {
-      auto v1x = (temp1.x - temp2.x);
-      auto v2x = (temp3.x - temp2.x);
-      auto v1y = (temp1.y - temp2.y);
-      auto v2y = (temp3.y - temp2.y);
-      if (zasulsky::isRightAngle(v1x, v2x, v1y, v2y))
-      {
-        return 1;
-      }
-    }
+
+    auto v1x = (temp1.x - temp2.x);
+    auto v2x = (temp3.x - temp2.x);
+    auto v1y = (temp1.y - temp2.y);
+    auto v2y = (temp3.y - temp2.y);
+    bool  equalitySides = (temp2.x - temp1.x == temp3.x - temp4.x && temp2.y - temp3.y == temp1.y - temp4.y);
+    bool rightAngle = (zasulsky::isRightAngle(v1x, v2x, v1y, v2y));
+    return equalitySides && rightAngle ? 1 : 0;
   }
   return 0;
+}
+
+bool zasulsky::IsEqual(Polygon lhs, Polygon rhs)
+{
+  return lhs == rhs;
 }
