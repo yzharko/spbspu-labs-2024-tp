@@ -92,6 +92,10 @@ int main(int argc, char** argv)
         if (isTwo)
         {
           std::cin >> pol >> zasulsky::DelimiterIO{ '\n' };
+          if (!std::cin)
+          {
+            throw std::invalid_argument("not polygon");
+          }
         }
         else
         {
