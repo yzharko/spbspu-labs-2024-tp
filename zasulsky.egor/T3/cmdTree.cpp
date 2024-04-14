@@ -1,6 +1,6 @@
 #include "cmdTree.hpp"
 #include "InpOutTypes.hpp"
-#iclude "Polygon.hpp"
+#include "Polygon.hpp"
 
 zasulsky::CmdTree::CmdTree()
 {

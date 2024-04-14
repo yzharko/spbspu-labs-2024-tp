@@ -27,14 +27,14 @@ bool zasulsky::checkUniqueness(zasulsky::Polygon pol)
 {
   bool isid = true;
   zasulsky::Polygon oth;
-  for (int j = 0; j < pol.points.size(); j++)
+  for (size_t j = 0; j < pol.points.size(); j++)
   {
     oth.points.push_back(pol.points[j]);
   }
-  for (int k = 0; k < oth.points.size(); k++)
+  for (size_t k = 0; k < oth.points.size(); k++)
   {
     int equal = 0;
-    for (int i = 0; i < pol.points.size(); i++)
+    for (size_t i = 0; i < pol.points.size(); i++)
     {
       if (oth.points[k] == pol.points[i])
       {
