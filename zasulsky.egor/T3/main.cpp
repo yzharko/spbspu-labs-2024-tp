@@ -63,7 +63,7 @@ int main(int argc, char** argv)
       }
       else
       {
-        throw std::invalid_argument("no command")
+        throw std::invalid_argument("no command");
       }
 
       if (cmd.cmdsOne.count(command))
