@@ -104,6 +104,7 @@ int main(int argc, char** argv)
     catch (...)
     {
       zasulsky::printInvCmd(std::cout);
+      std::cout << '\n';
       std::cin.clear();
       zasulsky::skipUntilNewLine(std::cin);
     }
