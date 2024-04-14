@@ -64,6 +64,7 @@ int main(int argc, char** argv)
       else
       {
         zasulsky::printInvCmd(std::cout);
+        std::cout << '\n';
       }
 
       if (cmd.cmdsOne.count(command))
