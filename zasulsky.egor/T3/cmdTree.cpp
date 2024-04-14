@@ -64,7 +64,7 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
   size_t spacePos = inputString.find(' ');
   if (spacePos == std::string::npos)
   {
-    if (!zasulsky::checkSize(polygon) || !zasulsky::checkUniqueness(input))
+    if (!zasulsky::checkSize(polygon) || !zasulsky::checkUniqueness(polygon))
     {
       throw std::invalid_argument("not correct Polygon");
     }
@@ -78,7 +78,7 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
     size_t closeParenthesis = inputString.find(')', openParenthesis);
     if (openParenthesis == std::string::npos || closeParenthesis == std::string::npos)
     {
-      if (!zasulsky::checkSize(input) || !zasulsky::checkUniqueness(input))
+      if (!zasulsky::checkSize(polygon) || !zasulsky::checkUniqueness(polygon))
       {
         throw std::invalid_argument("not correct Polygon");
       }
@@ -88,7 +88,7 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
     size_t semicolonPos = pointStr.find(';');
     if (semicolonPos == std::string::npos)
     {
-      if (!zasulsky::checkSize(input) || !zasulsky::checkUniqueness(input))
+      if (!zasulsky::checkSize(polygon) || !zasulsky::checkUniqueness(polygon))
       {
         throw std::invalid_argument("not correct Polygon");
       }
@@ -99,7 +99,7 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
     point.y = std::stoi(pointStr.substr(semicolonPos + 1));
     polygon.points.push_back(point);
     pos = closeParenthesis + 1;
-    if (!zasulsky::checkSize(input) || !zasulsky::checkUniqueness(input))
+    if (!zasulsky::checkSize(polygon) || !zasulsky::checkUniqueness(polygon))
     {
       throw std::invalid_argument("not correct Polygon");
     }
