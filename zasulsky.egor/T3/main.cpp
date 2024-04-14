@@ -69,6 +69,7 @@ int main(int argc, char** argv)
       if (cmd.cmdsOne.count(command))
       {
         cmd.doCommand(command, polygons, std::cout);
+        std::cout << '\n';
       }
 
       if (cmd.cmdsTwo.count(command))
@@ -82,6 +83,7 @@ int main(int argc, char** argv)
           num = stoi(secondWord);
         }
         cmd.doCommand(command, polygons, num, std::cout);
+        std::cout << '\n';
 
       }
 
@@ -96,9 +98,8 @@ int main(int argc, char** argv)
           pol = stringToPolygon(secondWord);
         }
         cmd.doCommand(command, polygons, pol, std::cout);
-
+        std::cout << '\n';
       }
-
     }
     catch (...)
     {
