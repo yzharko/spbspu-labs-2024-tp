@@ -90,7 +90,7 @@ std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
   {
     return is;
   }
-  char tmp;
+  char tmp = '\0';
   is >> delimiter{'('} >> delimiter{':'};
   is >> tmp;
   if (tmp == 'N')
