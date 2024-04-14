@@ -1,6 +1,7 @@
 #include "dataStruct.hpp"
 #include "iofmtguard.hpp"
 #include "delimiter.hpp"
+#include <iomanip>
 
 std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
 {
@@ -45,7 +46,7 @@ std::ostream &gorbunova::operator<<(std::ostream &out, const DataStruct &data)
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(" << ":key1 #c(" << data.key1.real() << " " << data.key1.imag() << ")";
+  out << "(" << ":key1 #c(" << std::fixed << std::setprecision(1) << data.key1.real() << " " << data.key1.imag() << ")";
   out << ":key2 " << "(:N " << data.key2.first << ":D " << data.key2.second << ":)";
   out << ":key3 \"" << data.key3 << "\":)";
   return out;
