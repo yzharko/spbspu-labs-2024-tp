@@ -23,6 +23,37 @@ std::ostream& zasulsky::operator<<(std::ostream& out, const zasulsky::Point& dat
   return out << '(' << data.x << ';' << data.y << ')';
 }
 
+bool zasulsky::checkUniqueness(zasulsky::Polygon pol)
+{
+  bool isid = true;
+  zasulsky::Polygon oth;
+  for (int j = 0; j < pol.points.size(); j++)
+  {
+    oth.points.push_back(pol.points[j]);
+  }
+  for (int k = 0; k < oth.points.size(); k++)
+  {
+    int equal = 0;
+    for (int i = 0; i < pol.points.size(); i++)
+    {
+      if (oth.points[k] == pol.points[i])
+      {
+        equal += 1;
+      }
+    }
+    if (equal >= 2)
+    {
+      isid = false;
+    }
+  }
+  return isid;
+}
+
+bool zasulsky::checkSize(zasulsky::Polygon pol)
+{
+  return pol.points.size() >= 3 ? true : false;
+}
+
 bool zasulsky::operator==(const Point& lhs, const Point& rhs)
 {
   return ((lhs.x == rhs.x) && (lhs.y == rhs.y));

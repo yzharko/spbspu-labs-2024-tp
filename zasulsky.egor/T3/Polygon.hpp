@@ -29,6 +29,8 @@ namespace zasulsky
     std::vector< Point > points;
   };
 
+  bool checkUniqueness(zasulsky::Polygon pol);
+  bool checkSize(zasulsky::Polygon pol);
   std::istream& operator>>(std::istream& in, Polygon& rhs);
   std::ostream& operator<<(std::ostream& out, const Polygon& rhs);
   bool operator==(const Polygon& lhs, const Polygon& rhs);

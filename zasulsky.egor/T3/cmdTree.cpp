@@ -1,5 +1,6 @@
 #include "cmdTree.hpp"
 #include "InpOutTypes.hpp"
+#iclude "Polygon.hpp"
 
 zasulsky::CmdTree::CmdTree()
 {
@@ -63,6 +64,10 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
   size_t spacePos = inputString.find(' ');
   if (spacePos == std::string::npos)
   {
+    if (!checkSize(polygon) || !checkUniqueness(input))
+    {
+      throw std::invalid_argument("not correct Polygon");
+    }
     return polygon;
   }
   int numVertices = std::stoi(inputString.substr(0, spacePos));
@@ -73,12 +78,20 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
     size_t closeParenthesis = inputString.find(')', openParenthesis);
     if (openParenthesis == std::string::npos || closeParenthesis == std::string::npos)
     {
+      if (!checkSize(input) || !checkUniqueness(input))
+      {
+        throw std::invalid_argument("not correct Polygon");
+      }
       return polygon;
     }
     std::string pointStr = inputString.substr(openParenthesis + 1, closeParenthesis - openParenthesis - 1);
     size_t semicolonPos = pointStr.find(';');
     if (semicolonPos == std::string::npos)
     {
+      if (!checkSize(input) || !checkUniqueness(input))
+      {
+        throw std::invalid_argument("not correct Polygon");
+      }
       return polygon;
     }
     zasulsky::Point point;
@@ -86,6 +99,10 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
     point.y = std::stoi(pointStr.substr(semicolonPos + 1));
     polygon.points.push_back(point);
     pos = closeParenthesis + 1;
+    if (!checkSize(input) || !checkUniqueness(input))
+    {
+      throw std::invalid_argument("not correct Polygon");
+    }
   }
   return polygon;
 }
