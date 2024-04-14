@@ -91,7 +91,7 @@ int main(int argc, char** argv)
       {
         if (isTwo)
         {
-          std::cin >> pol;
+          std::cin >> pol >> zasulsky::DelimiterIO{ '\n' };
         }
         else
         {
