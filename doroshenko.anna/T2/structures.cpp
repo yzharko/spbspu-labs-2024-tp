@@ -38,7 +38,7 @@ std::istream& doroshenko::operator>>(std::istream& input, DoubleIO&& dest)
   {
     return input;
   }
-  if (!(input >> dest.ref))
+  if (!(input >> dest.ref) || dest.ref == 0)
   {
     input.setstate(std::ios::failbit);
   }
@@ -122,9 +122,36 @@ std::ostream& doroshenko::operator<<(std::ostream& output, const DataStruct& src
     return output;
   }
   iofmtguard fmtguard(output);
-  output << "(:key1 " << std::scientific << std::setprecision(1) << src.key1;
+  output << "(:key1 ";
+  outDblSci(output, src.key1);
   output << ":key2 " << "'" << src.key2 << "'";
   output << ":key3 " << '"' << src.key3 << '"' << ":)";
+  return output;
+}
+
+std::ostream& doroshenko::outDblSci(std::ostream& output, double number)
+{
+  int mantissa = 0;
+  char sign = '0';
+  if (number >= 1.0)
+  {
+    while (number > 1.0)
+    {
+      number /= 10;
+      mantissa++;
+    }
+    sign = '+';
+  }
+  else
+  {
+    while (number < 1.0)
+    {
+      number *= 10;
+      mantissa++;
+    }
+    sign = '-';
+  }
+  output << std::fixed << std::setprecision(1) << number << 'e' << sign << mantissa;
   return output;
 }
 
