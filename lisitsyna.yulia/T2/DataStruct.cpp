@@ -3,7 +3,7 @@
 #include "ScopeGuard.hpp"
 #include <iomanip>
 
-bool lisitsyna::operator<(const lisitsyna::Data& first, const lisitsyna::Data& second)
+bool lisitsyna::operator<(const Data& first, const Data& second)
 {
   if (first.key1 == second.key1)
   {
