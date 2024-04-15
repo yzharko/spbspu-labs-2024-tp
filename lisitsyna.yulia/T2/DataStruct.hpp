@@ -1,19 +1,20 @@
 #ifndef DATA_STRUCT_HPP
 #define DATA_STRUCT_HPP
+
 #include <string>
-#include <istream>
-#include <ostream>
 
 namespace lisitsyna
 {
-  struct DataStruct
+  struct Data
   {
     long long key1;
     char key2;
     std::string key3;
   };
-  bool compare(const DataStruct& rh, const DataStruct& lh);
-  std::istream& operator>>(std::istream& in, DataStruct& dest);
-  std::ostream& operator<<(std::ostream& out, const DataStruct& dest);
+
+  bool comp(const Data& rh, const Data& lh);
+  std::istream& operator>>(std::istream& in, Data& dest);
+  std::ostream& operator<<(std::ostream& out, const Data& dest);
 }
+
 #endif
