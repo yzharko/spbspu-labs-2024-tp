@@ -2,7 +2,6 @@
 #include "delimeter.hpp"
 #include <iomanip>
 
-
 std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
 {
   std::istream::sentry guard(in);
@@ -32,8 +31,8 @@ std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
       }
       else if (y == 2)
       {
-        long long int num = 0;
-        unsigned long long den = 0;
+        size_t num = 0;
+        size_t den = 0;
         in >> ds{ "(:n" } >> num >> ds{ ":d" } >> den >> ds{ ":)" };
         if (in)
         {
@@ -83,7 +82,7 @@ std::ostream& printScientific(std::ostream& out, double number)
     return out;
   }
   out << std::fixed << std::setprecision(1);
-  int exp = 0;
+  size_t exp = 0;
   char mark = 0;
   if (number != 0)
   {

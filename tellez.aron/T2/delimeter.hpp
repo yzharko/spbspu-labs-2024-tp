@@ -19,6 +19,7 @@ namespace tellez
   {
     char expected;
   };
+
   std::istream& operator>>(std::istream& in, Delimeterchar&& exp);
   std::istream& operator>>(std::istream& in, Delimeterstring&& exp);
   std::istream& operator>>(std::istream& in, Delimeterpair&& exp);

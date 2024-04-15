@@ -8,7 +8,7 @@ int main()
 {
   using namespace tellez;
   using input_it_t = std::istream_iterator<DataStruct>;
-  std::list<DataStruct> data;
+  std::list< DataStruct > data;
   while (true)
   {
     DataStruct temp;
@@ -21,7 +21,6 @@ int main()
     }
     data.push_back(temp);
   }
-
   data.sort();
   for (const auto &item : data)
   {
