@@ -1,7 +1,7 @@
 #include "DataStruct.hpp"
 #include "ScopeGuard.hpp"
 #include "pattern.hpp"
-#include "delimiter.hpp"
+#include "Structure.hpp"
 
 #include <iostream>
 
@@ -27,7 +27,7 @@ std::istream& operator>>(std::istream& in, Data& dest)
   }
   Data input;
   {
-    using sep = Separator;
+    using sep = Delimiter;
     using label = Label;
     using sll = SllLit;
     using chr = ChrLit;
