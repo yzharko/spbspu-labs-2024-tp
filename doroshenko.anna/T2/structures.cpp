@@ -144,7 +144,7 @@ std::ostream& doroshenko::outDblSci(std::ostream& output, double number)
   }
   else
   {
-    while (number < 1.0)
+    while (number < 1.0 && mantissa < 10)
     {
       number *= 10;
       mantissa++;
@@ -157,34 +157,19 @@ std::ostream& doroshenko::outDblSci(std::ostream& output, double number)
 
 bool doroshenko::compareStructs(const DataStruct& firstStruct, const DataStruct& secondStruct)
 {
-  if (firstStruct.key1 < secondStruct.key1)
+  if (firstStruct.key1 == secondStruct.key1)
   {
-    return true;
-  }
-  else if (firstStruct.key1 == secondStruct.key1)
-  {
-    if (firstStruct.key2 < secondStruct.key2)
+    if (firstStruct.key2 == secondStruct.key2)
     {
-      return true;
-    }
-    else if (firstStruct.key2 == secondStruct.key2)
-    {
-      if (firstStruct.key3.length() < secondStruct.key3.length())
-      {
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+      return (firstStruct.key3.length() < secondStruct.key3.length());
     }
     else
     {
-      return false;
+      return (firstStruct.key2 < secondStruct.key2);
     }
   }
   else
   {
-    return false;
+    return (firstStruct.key1 < secondStruct.key1);
   }
 }
