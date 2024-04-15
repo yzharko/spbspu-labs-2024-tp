@@ -12,7 +12,7 @@ namespace lisitsyna
     std::string key3;
   };
 
-  bool operator(const Data& first, const Data& second);
+  bool operator<(const Data& first, const Data& second);
   std::istream& operator>>(std::istream& in, Data& dest);
   std::ostream& operator<<(std::ostream& out, const Data& dest);
 }
