@@ -1,14 +1,16 @@
 #ifndef DELIMITER_HPP
 #define DELIMITER_HPP
-#include <istream>
-#include <string>
+
+#include <iostream>
 
 namespace lisitsyna
 {
-  struct Separator
+  struct Delimiter
   {
+    explicit Delimiter(char exp);
     char exp;
   };
-  std::istream & operator>>(std::istream & in, Separator && dest);
+
+  std::istream& operator>>(std::istream& in, Delimiter&& dest);
 }
 #endif

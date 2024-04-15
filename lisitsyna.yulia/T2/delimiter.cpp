@@ -1,9 +1,14 @@
-#include "delimiter.hpp"
+#include "Delimiter.h"
+#include <iostream>
 
-std::istream & lisitsyna::operator>>(std::istream & in, Separator && dest)
+lisitsyna::Delimiter::Delimiter(char exp) :
+  exp(exp)
+{}
+
+std::istream& lisitsyna::operator>>(std::istream& in, Delimiter&& dest)
 {
-  std::istream::sentry guard(in);
-  if (!guard)
+  std::istream::sentry sentry(in);
+  if (!sentry)
   {
     return in;
   }
