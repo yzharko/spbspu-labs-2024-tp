@@ -9,10 +9,7 @@ int main()
   using namespace tellez;
   using input_it_t = std::istream_iterator<DataStruct>;
   std::list<DataStruct> data;
-
-  // Cambio en la declaración de la lista, ahora se crea vacía
-
-  while (true) // Cambio en la condición del bucle, no necesitamos verificar eof() antes de leer
+  while (true)
   {
     DataStruct temp;
     std::cin >> temp;
@@ -20,13 +17,13 @@ int main()
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      break; // Salir del bucle si la entrada falla
+      break;
     }
-    data.push_back(temp); // Agregar al final de la lista en lugar de usar std::copy
+    data.push_back(temp);
   }
 
   data.sort();
-  for (const auto &item : data) // Cambio en el bucle de salida
+  for (const auto &item : data)
   {
     std::cout << item << '\n';
   }
