@@ -38,7 +38,7 @@ std::istream& doroshenko::operator>>(std::istream& input, DoubleIO&& dest)
   {
     return input;
   }
-  if (!(input >> std::scientific >> dest.ref))
+  if (!(input >> dest.ref))
   {
     input.setstate(std::ios::failbit);
   }
@@ -53,8 +53,7 @@ std::istream& doroshenko::operator>>(std::istream& input, CharIO&& dest)
     return input;
   }
   using separator = DelimiterIO;
-  input >> separator{ '\'' } >> dest.ref >> separator{ '\'' };
-  if (input && !std::isalpha(dest.ref))
+  if (!(input >> separator{ '\'' } >> dest.ref >> separator{ '\'' }) || !std::isalpha(dest.ref))
   {
     input.setstate(std::ios::failbit);
   }
