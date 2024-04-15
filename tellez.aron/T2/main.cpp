@@ -7,7 +7,6 @@
 int main()
 {
   using namespace tellez;
-  using input_it_t = std::istream_iterator<DataStruct>;
   std::list< DataStruct > data;
   while (true)
   {
