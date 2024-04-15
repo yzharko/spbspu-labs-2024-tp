@@ -2,7 +2,7 @@
 #define INPUTSTRUCTS_H
 
 #include <string>
-#include "Delimiter.h"
+#include "delimiter.hpp"
 
 namespace lisitsyna
 {
