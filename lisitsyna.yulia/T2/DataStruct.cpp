@@ -25,10 +25,10 @@ std::istream& lisitsyna::operator>>(std::istream& in, Data& dest)
   }
   lisitsyna::Data input;
   {
-    using sep = Delimeter;
+    using sep = Delimiter;
     using ll = LongLong;
     using chr = Char;
-    using str = String;
+    using str = StringKey;
     in >> sep{ '(' };
     in >> sep{ ':' };
     for (int i = 0; i < 3; i++)
