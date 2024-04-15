@@ -1,5 +1,5 @@
-#ifndef DATA_STRUCT_HPP
-#define DATA_STRUCT_HPP
+#ifndef DATASTRUCT_HPP
+#define DATASTRUCT_HPP
 
 #include <string>
 
@@ -12,7 +12,7 @@ namespace lisitsyna
     std::string key3;
   };
 
-  bool comp(const Data& rh, const Data& lh);
+  bool operetor(const Data& first, const Data& second);
   std::istream& operator>>(std::istream& in, Data& dest);
   std::ostream& operator<<(std::ostream& out, const Data& dest);
 }

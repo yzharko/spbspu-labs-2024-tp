@@ -1,47 +1,43 @@
 #include "DataStruct.hpp"
+#include "InputStructs.hpp"
 #include "ScopeGuard.hpp"
-#include "pattern.hpp"
-#include "Structure.hpp"
+#include <iomanip>
 
-#include <iostream>
-
-bool comp(const Data& rh, const Data& lf)
+bool lisitsyna::operator<(const lisitsyna::Data& first, const lisitsyna::Data& second)
 {
-  if (rh.key1 != lf.key1)
+  if (first.key1 == second.key1)
   {
-    return rh.key1 < lf.key1;
-  }
-  if (lf.key2 != rh.key2)
-  {
-    return rh.key2 < lh.key2;
-  }
-  return rh.key3.length() < lf.key3.length();
+    if (first.key2 == second.key2)
+      return first.key3 < second.key3;
+    else
+      return first.key2 < second.key2;
+    }
+  else
+    return first.key1 < second.key1;
 }
 
-std::istream& operator>>(std::istream& in, Data& dest)
+std::istream& lisitsyna::operator>>(std::istream& in, Data& dest)
 {
-  std::istream::sentry guard(in);
-  if (!guard)
+  std::istream::sentry sentry(in);
+  if (!sentry)
   {
     return in;
   }
-  Data input;
+  lisitsyna::Data input;
   {
-    using sep = Delimiter;
-    using label = Label;
-    using sll = SllLit;
-    using chr = ChrLit;
-    using str = StringKey;
+    using sep = Delimeter;
+    using ll = LongLong;
+    using chr = Char;
+    using str = String;
     in >> sep{ '(' };
     in >> sep{ ':' };
-
     for (int i = 0; i < 3; i++)
     {
       std::string keyx = "";
       in >> keyx;
       if (keyx == "key1")
       {
-        in >> sll{ input.key1 };
+        in >> ll{ input.key1 };
         in >> sep{ ':' };
       }
       else if (keyx == "key2")
@@ -56,25 +52,25 @@ std::istream& operator>>(std::istream& in, Data& dest)
       }
     }
     in >> sep{ ')' };
-    if (in)
-    {
-      dest = input;
-    }
-    return in;
   }
+  if (in)
+  {
+    dest = input;
+  }
+  return in;
 }
 
-std::ostream& operator<<(std::ostream& out, const Data& src)
+std::ostream& lisitsyna::operator<<(std::ostream& out, const Data& src)
 {
-  std::ostream::sentry guard(out);
-  if (!guard)
+  std::ostream::sentry sentry(out);
+  if (!sentry)
   {
     return out;
   }
-  StreamGuard fmtguard(out);
+  iofmtguard fmtguard(out);
   out << "(:";
-  out << "key1 " << std::uppercase << src.key1 << ":";
-  out << "key2 " << "\'" << src.key2 << "\'" << ":";
+  out << "key1 " << src.key1 << "ll" << ":";
+  out << "key2 " << '\'' << src.key2 << "\':";
   out << "key3 " << '\"' << src.key3 << '\"';
   out << ":)";
   return out;
