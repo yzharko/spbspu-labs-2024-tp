@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <sstream>
 #include "DataStruct.h"
 
 int main()
@@ -13,12 +12,7 @@ int main()
       std::istream_iterator<DataStruct>(),
       std::back_inserter(dataVector));
 
-  std::sort(dataVector.begin(), dataVector.end(), [](const DataStruct& a, const DataStruct& b)
-  {
-    if (a.key1 != b.key1) return a.key1 < b.key1;
-    if (a.key2 != b.key2) return a.key2 < b.key2;
-    return a.key3.length() < b.key3.length();
-  });
+  std::sort(dataVector.begin(), dataVector.end());
 
   for (const auto& ds : dataVector)
   {
