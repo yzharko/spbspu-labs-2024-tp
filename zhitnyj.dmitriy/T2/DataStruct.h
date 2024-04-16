@@ -2,6 +2,7 @@
 #define DATASTRUCT_H
 
 #include <iostream>
+#include <iosfwd>
 #include <string>
 
 struct DataStruct
@@ -12,6 +13,7 @@ struct DataStruct
 
     friend std::istream& operator>>(std::istream& is, DataStruct& ds);
     friend std::ostream& operator<<(std::ostream& os, const DataStruct& ds);
+    bool operator<(const DataStruct& other) const;
 };
 
 #endif
