@@ -1,41 +1,55 @@
+#include <string>
 #include "DataStruct.h"
-#include <sstream>
-#include <iomanip>
+
+bool DataStruct::operator<(const DataStruct& other) const
+{
+  if (key1 != other.key1) return key1 < other.key1;
+  if (key2 != other.key2) return key2 < other.key2;
+  return key3.length() < other.key3.length();
+}
 
 std::istream& operator>>(std::istream& is, DataStruct& ds)
 {
-  bool k1 = 0;
-  bool k2 = 0;
+  bool key1 = false;
+  bool key2 = false;
 
-  std::string line;
-  if (!getline(is, line, ')')) return is;
-
-  std::istringstream lineStream(line.substr(1));
-  std::string part;
-  while (getline(lineStream >> std::ws, part, ':'))
+  char ch;
+  if (is >> ch && ch == '(')
   {
-    auto pos = part.find(' ');
-    if (pos == std::string::npos) continue;
-    std::string key = part.substr(0, pos);
-    std::string value = part.substr(pos + 1);
+    std::string line;
+    getline(is, line, ')');
 
-    if (value.find("ull") != std::string::npos)
+    size_t start = 0;
+    size_t end = line.find(':');
+    while (end != std::string::npos)
     {
-      k1 = true;
-      ds.key1 = std::stoull(value.substr(0, value.find("ull")));
-    }
-    else if (value.find("0x") != std::string::npos || value.find("0X") != std::string::npos)
-    {
-      k2 = true;
-      ds.key2 = std::stoull(value, nullptr, 16);
-    }
-    else
-    {
-      ds.key3 = value.substr(0, value.length());
+      std::string part = line.substr(start, end - start);
+      size_t pos = part.find(' ');
+      if (pos != std::string::npos)
+      {
+        std::string key = part.substr(0, pos);
+        std::string value = part.substr(pos + 1);
+        if (value.find("ull") != std::string::npos)
+        {
+          key1 = true;
+          ds.key1 = std::stoull(value.substr(0, value.find("ull")));
+        }
+        else if (value.find("0x") != std::string::npos || value.find("0X") != std::string::npos)
+        {
+          key2 = true;
+          ds.key2 = std::stoull(value, nullptr, 16);
+        }
+        else
+        {
+          ds.key3 = value;
+        }
+      }
+      start = end + 1;
+      end = line.find(':', start);
     }
   }
 
-  if (!k1 || !k2)
+  if (!key1 || !key2)
   {
     ds.key3 = "";
   }
