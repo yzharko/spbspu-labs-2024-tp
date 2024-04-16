@@ -1,9 +1,9 @@
 #ifndef STRUCTURES_HPP
 #define STRUCTURES_HPP
 
-#include<string>
-#include<iostream>
-#include<iterator>
+#include <string>
+#include <iosfwd>
+#include <iterator>
 
 namespace doroshenko
 {
