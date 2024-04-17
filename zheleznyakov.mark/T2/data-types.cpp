@@ -43,8 +43,8 @@ namespace zheleznyakov
 
   bool operator<(const real &leftReal, const real &rightReal)
   {
-    const double val1 = static_cast<double>(leftReal.first) / leftReal.second;
-    const double val2 = static_cast<double>(rightReal.first) / rightReal.second;
+    const double val1 = static_cast< double >(leftReal.first) / leftReal.second;
+    const double val2 = static_cast< double >(rightReal.first) / rightReal.second;
     return val1 < val2;
   }
 }
