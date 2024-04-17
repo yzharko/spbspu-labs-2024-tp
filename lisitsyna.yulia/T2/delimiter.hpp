@@ -1,7 +1,7 @@
 #ifndef DELIMITER_HPP
 #define DELIMITER_HPP
 
-#include <iosfwd>
+#include <iostream>
 
 namespace lisitsyna
 {
