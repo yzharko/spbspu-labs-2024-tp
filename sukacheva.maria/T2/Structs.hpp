@@ -1,6 +1,7 @@
 #ifndef STRUCTS_HPP
 #define STRUCTS_HPP
-#include <iostream>
+#include <iosfwd>
+#include <string>
 
 namespace sukacheva {
 
@@ -18,6 +19,10 @@ namespace sukacheva {
   {
     long long & value;
   };
+
+  std::istream& operator>>(std::istream& is, LongLongLit&& val);
+  std::istream& operator>>(std::istream& is, DoubleLit&& val);
+  std::istream& operator>>(std::istream& is, String&& val);
 }
 
 #endif
