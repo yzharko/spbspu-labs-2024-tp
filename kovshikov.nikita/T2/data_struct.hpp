@@ -50,7 +50,7 @@ namespace kovshikov
     }
     char ch = ' ';
     long long pairFirst = 0;
-    unsigned long long pairSecond;
+    unsigned long long pairSecond = 0;
     std::string str = "";
     //записать в cin учитывая беспорядочность ключей на потоке ввода;
     is >> ch >> pairFirst >> pairSecond >> str;
