@@ -10,65 +10,48 @@ std::istream &ponomarev::operator>>(std::istream &in, DoubleIO &&dest)
     return in;
   }
 
-  std::string numberStr = "";
-  std::string degreeStr = "";
-  char symbol = '0';
-  in >> symbol;
-  numberStr += symbol;
-  numberStr += '.';
-  in >> symbol;
-  if (symbol != '.')
+  std::string num;
+  std::getline(in, num, ':');
+  if ((num[1] != '.') || !(std::isdigit(num[0])))
   {
     in.setstate(std::ios::failbit);
     return in;
   }
-  in >> symbol;
-
-  while (std::isdigit(symbol))
+  size_t posE = num.find('e');
+  if (posE == std::string::npos)
   {
-    numberStr += symbol;
-    in >> symbol;
+    size_t posE = num.find('E');
+    if (posE == std::string::npos)
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
   }
-
-  symbol = tolower(symbol);
-  const char temp = 'e';
-  char sign = 0;
-  if (symbol == temp)
-  {
-    in >> sign;
-  }
-  else
+  if ((num[posE + 1] != '+') && (num[posE + 1] != '-'))
   {
     in.setstate(std::ios::failbit);
     return in;
   }
-  in >> symbol;
 
-  while (std::isdigit(symbol))
+  for (size_t i = 2; i < posE; i++)
   {
-    degreeStr += symbol;
-    in >> symbol;
+    if (!(std::isdigit(num[i])))
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
   }
 
-  if (symbol != ':')
+  for (size_t i = posE + 2; i < num.length(); i++)
   {
-    in.setstate(std::ios::failbit);
-    return in;
+    if (!(std::isdigit(num[i])))
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
   }
-  double numberDoub = std::stod(numberStr);
-  double degreeInt = std::stoi(degreeStr);
-  if (sign == '+')
-  {
-    dest.ref = numberDoub * std::pow(10, degreeInt);
-  }
-  else if (sign == '-')
-  {
-    dest.ref = numberDoub * std::pow(10, -degreeInt);
-  }
-  else
-  {
-    in.setstate(std::ios::failbit);
-  }
+
+  dest.ref = std::stod(num);
   return in;
 }
 
