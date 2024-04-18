@@ -3,7 +3,8 @@
 
 #include <iostream>
 
-namespace kaseev {
+namespace kaseev
+{
   struct Delimiter {
     char expected;
   };
