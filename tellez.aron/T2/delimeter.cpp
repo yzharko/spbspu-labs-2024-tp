@@ -36,7 +36,7 @@ std::istream& tellez::operator>>(std::istream& in, Delimeterpair&& exp)
   {
     char current_char = 0;
     in >> current_char;
-    current_char = std::tolower(c);
+    current_char = std::tolower(current_char);
     if (current_char != exp.expected)
     {
       in.setstate(std::ios::failbit);
