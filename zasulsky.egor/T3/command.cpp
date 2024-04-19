@@ -34,7 +34,7 @@ void printArea(const zasulsky::polygons& data, zasulsky::predicate pred, std::os
 
   zasulsky::iofmtguard streamGuard(out);
   out << std::fixed << std::setprecision(1);
-  out << std::accumulate(areas.begin(), areas.end(), 0.0, zasulsky::countAreas);
+  out << std::accumulate(areas.begin(), areas.end(), 0.0, countAreas);
 }
 
 void zasulsky::printEvAr(const polygons& data, std::ostream& out)
