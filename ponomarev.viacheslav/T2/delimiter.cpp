@@ -1,4 +1,5 @@
 #include "delimiter.hpp"
+#include <iostream>
 
 std::istream &ponomarev::operator>>(std::istream &in, DelimiterIO &&dest)
 {
