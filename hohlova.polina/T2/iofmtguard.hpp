@@ -1,6 +1,6 @@
 #ifndef IOFMTGUERD_HPP
 #define IOFMTGUARD_HPP
-#include <sstream>
+#include <ios>
 
 namespace hohlova
 {

@@ -1,5 +1,6 @@
 #include "structures.hpp"
 #include "iofmtguard.hpp"
+#include "delimiter.hpp"
 
 namespace hohlova
 {
@@ -8,22 +9,6 @@ namespace hohlova
   using rl = RealIO;
   using dbl = DoubleIO;
   using str = StringIO;
-
-  std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    char c = '0';
-    in >> c;
-    if (in && (c != dest.exp))
-    {
-      in.setstate(std::ios::failbit);
-    }
-    return in;
-  }
 
   std::istream& operator>>(std::istream& in, DoubleIO&& dest)
   {
@@ -58,21 +43,6 @@ namespace hohlova
       return in;
     }
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
-  }
-
-  std::istream& operator>>(std::istream& in, LabelIO&& dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    std::string data = "";
-    if ((in >> data) && (data != dest.exp))
-    {
-      in.setstate(std::ios::failbit);
-    }
-    return in;
   }
 
   std::istream& operator>>(std::istream& in, Data& dest)

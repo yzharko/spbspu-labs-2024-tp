@@ -1,11 +1,13 @@
+#include "structures.hpp"
 #include <limits>
 #include <algorithm>
-#include "structures.hpp"
+#include <vector>
+#include <iterator>
 
 int main()
 {
   using namespace hohlova;
-  std::vector<Data> data;
+  std::vector< Data > data;
 
   while (!std::cin.eof())
   {
