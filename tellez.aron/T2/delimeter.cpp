@@ -3,9 +3,9 @@
 std::istream& tellez::operator>>(std::istream& in, Delimeterchar&& exp)
 {
   std::istream::sentry guard(in);
-  char c = 0;
-  in >> c;
-  if (c != exp.expected)
+  char current_char = 0;
+  in >> current_char;
+  if (current_char != exp.expected)
   {
     in.setstate(std::ios::failbit);
   }
@@ -34,10 +34,10 @@ std::istream& tellez::operator>>(std::istream& in, Delimeterpair&& exp)
   std::istream::sentry guard(in);
   if (guard)
   {
-    char c = 0;
-    in >> c;
-    c = std::tolower(c);
-    if (c != exp.expected)
+    char current_char = 0;
+    in >> current_char;
+    current_char = std::tolower(c);
+    if (current_char != exp.expected)
     {
       in.setstate(std::ios::failbit);
     }
