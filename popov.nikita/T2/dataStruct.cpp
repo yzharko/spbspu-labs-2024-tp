@@ -40,7 +40,7 @@ std::istream & popov::operator>>(std::istream & is, popov::DataStruct & number)
 }
 
 std::ostream & popov::operator<<(std::ostream & out, const DataStruct & struc)
-{
+  {
   std::ostream::sentry guard(out);
   if (!guard)
   {
@@ -74,4 +74,17 @@ std::ostream & popov::operator<<(std::ostream & out, const DataStruct & struc)
   out << ":key2 " << struc.key2 << "ull";
   out << ":key3 \"" << struc.key3 << "\":)";
   return out;
+}
+
+bool popov::operator<(const DataStruct & lhs, const DataStruct & rhs)
+{
+  if (lhs.key1 != rhs.key1)
+  {
+    return lhs.key1 < rhs.key1;
+  }
+  else if (lhs.key2 != rhs.key2)
+  {
+    return lhs.key2 < rhs.key2;
+  }
+  return lhs.key3.size() < rhs.key3.size();
 }
