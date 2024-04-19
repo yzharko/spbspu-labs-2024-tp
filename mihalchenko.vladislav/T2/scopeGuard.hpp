@@ -2,7 +2,6 @@
 #define SCOPEGUARD_HPP
 
 #include <ios>
-#include <iosfwd>
 
 namespace mihalchenko
 {

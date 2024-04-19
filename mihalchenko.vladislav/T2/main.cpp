@@ -6,7 +6,7 @@
 
 int main()
 {
-  using mihalchenko::DataStruct;
+  using namespace mihalchenko;
   std::vector<DataStruct> dataStruct;
   while (!std::cin.eof())
   {
