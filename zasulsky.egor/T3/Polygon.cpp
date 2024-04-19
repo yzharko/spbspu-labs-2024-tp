@@ -14,6 +14,7 @@ std::istream& zasulsky::operator>>(std::istream& in, Point& rhs)
   }
   return in;
 }
+
 std::ostream& zasulsky::operator<<(std::ostream& out, const zasulsky::Point& data)
 {
   std::ostream::sentry sentry(out);
@@ -58,6 +59,7 @@ bool zasulsky::operator==(const Point& lhs, const Point& rhs)
 {
   return ((lhs.x == rhs.x) && (lhs.y == rhs.y));
 }
+
 std::istream& zasulsky::operator>>(std::istream& in, Polygon& rhs)
 {
   std::istream::sentry sentry(in);
@@ -112,7 +114,6 @@ size_t zasulsky::getSize(const Polygon& polygon)
 {
   return polygon.points.size();
 }
-
 
 void zasulsky::skipUntilNewLine(std::istream& in)
 {

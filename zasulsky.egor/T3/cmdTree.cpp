@@ -106,5 +106,3 @@ zasulsky::Polygon stringToPolygon(const std::string& inputString)
   }
   return polygon;
 }
-
-
