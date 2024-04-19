@@ -34,10 +34,13 @@ namespace zasulsky
     std::map< std::string, typeF > cmdsOne;
     std::map< std::string, typeS > cmdsTwo;
     std::map< std::string, typeT > cmdsThree;
+
+    bool checkCommand(std::string & cmd);
   };
   bool isSimpleCmd(std::string name);
   std::ostream& printInvCmd(std::ostream& out);
 }
 
 zasulsky::Polygon stringToPolygon(const std::string& inputString);
+
 #endif

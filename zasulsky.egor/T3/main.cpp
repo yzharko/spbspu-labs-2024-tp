@@ -44,7 +44,7 @@ int main(int argc, char** argv)
     secondWord.erase(0, 1);
     command = firstWord;
     command += " " + secondWord;
-    bool isTwo = false;
+    bool isTwoWordInCommandName = false;
 
     try
     {
@@ -53,11 +53,11 @@ int main(int argc, char** argv)
         break;
       }
 
-      if (cmd.cmdsOne.count(command) || cmd.cmdsTwo.count(command) || cmd.cmdsThree.count(command))
+      if (cmd.checkCommand(command))
       {
-        isTwo = true;
+        isTwoWordInCommandName = true;
       }
-      else if (cmd.cmdsOne.count(firstWord) || cmd.cmdsTwo.count(firstWord) || cmd.cmdsThree.count(firstWord))
+      else if (cmd.checkCommand(firstWord))
       {
         command = firstWord;
       }
@@ -74,7 +74,7 @@ int main(int argc, char** argv)
 
       if (cmd.cmdsTwo.count(command))
       {
-        if (isTwo)
+        if (isTwoWordInCommandName)
         {
           std::cin >> num;
         }
@@ -84,12 +84,11 @@ int main(int argc, char** argv)
         }
         cmd.doCommand(command, polygons, num, std::cout);
         std::cout << '\n';
-
       }
 
       if (cmd.cmdsThree.count(command))
       {
-        if (isTwo)
+        if (isTwoWordInCommandName)
         {
           std::cin >> pol >> zasulsky::DelimiterIO{ '\n' };
           if (!std::cin)

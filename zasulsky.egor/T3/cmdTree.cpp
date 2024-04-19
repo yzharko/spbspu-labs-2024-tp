@@ -47,6 +47,11 @@ void zasulsky::CmdTree::doCommand(const std::string& cmd,
   function(data, out, pol);
 }
 
+bool zasulsky::CmdTree::checkCommand(std::string& cmd)
+{
+  return  (cmdsOne.count(cmd) || cmdsTwo.count(cmd) || cmdsThree.count(cmd)) ? true : false;
+}
+
 bool zasulsky::isSimpleCmd(std::string name)
 {
   return name == "MAX" || name == "MIN" || name == "AREA" || name == "COUNT";
