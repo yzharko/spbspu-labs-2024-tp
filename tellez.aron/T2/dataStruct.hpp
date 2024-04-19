@@ -7,7 +7,7 @@ namespace tellez
   struct DataStruct
   {
     double key1;
-    std::pair< size_t, size_t > key2;
+    std::pair< long long, unsigned long long > key2;
     std::string key3;
     bool operator<(const DataStruct& data) const;
     bool operator>(const DataStruct& data) const;
@@ -22,3 +22,4 @@ namespace tellez
 }
 
 #endif
+
