@@ -50,9 +50,9 @@ std::ostream & popov::operator<<(std::ostream & out, const DataStruct & struc)
   out << "(:";
   int count = 0;
   double value = struc.key1;
-  if (value > 10)
+  if (value >= 10)
   {
-    while (value > 10)
+    while (value >= 10)
     {
       value = value / 10;
       count += 1;
