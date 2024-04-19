@@ -10,17 +10,22 @@
 
 namespace zasulsky
 {
-  using namespace std::placeholders;
-  auto takeSizeF = std::bind(zasulsky::getSize, _1);
-  auto takeSizeS = std::bind(zasulsky::getSize, _2);
-  auto takeArF = std::bind(zasulsky::countArea, _1);
-  auto takeArS = std::bind(zasulsky::countArea, _2);
+  namespace detail
+  {
+    using namespace std::placeholders;
+    auto takeSizeF = std::bind(zasulsky::getSize, _1);
+    auto takeSizeS = std::bind(zasulsky::getSize, _2);
+    auto takeArF = std::bind(zasulsky::countArea, _1);
+    auto takeArS = std::bind(zasulsky::countArea, _2);
 
-  auto isOdd = std::bind(std::modulus< size_t >{}, takeSizeF, 2);
-  auto isEven = std::bind(std::logical_not< bool >{}, std::bind(isOdd, _1));
-  auto isSizeEqualToN = std::bind(std::equal_to< size_t >{}, takeSizeF, _2);
-  auto countAreas = std::bind(std::plus< double >{}, _1, takeArS);
+    auto isOdd = std::bind(std::modulus< size_t >{}, takeSizeF, 2);
+    auto isEven = std::bind(std::logical_not< bool >{}, std::bind(isOdd, _1));
+    auto isSizeEqualToN = std::bind(std::equal_to< size_t >{}, takeSizeF, _2);
+    auto countAreas = std::bind(std::plus< double >{}, _1, takeArS);
+  }
 }
+
+using namespace zasulsky::detail;
 
 void printArea(const zasulsky::polygons& data, zasulsky::predicate pred, std::ostream& out)
 {
@@ -31,7 +36,6 @@ void printArea(const zasulsky::polygons& data, zasulsky::predicate pred, std::os
   out << std::fixed << std::setprecision(1);
   out << std::accumulate(areas.begin(), areas.end(), 0.0, zasulsky::countAreas);
 }
-
 
 void zasulsky::printEvAr(const polygons& data, std::ostream& out)
 {
