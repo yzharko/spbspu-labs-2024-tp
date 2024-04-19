@@ -35,7 +35,6 @@ namespace zasulsky
     std::map< std::string, typeS > cmdsTwo;
     std::map< std::string, typeT > cmdsThree;
   };
-  bool isNum(std::string str);
   bool isSimpleCmd(std::string name);
   std::ostream& printInvCmd(std::ostream& out);
 }
