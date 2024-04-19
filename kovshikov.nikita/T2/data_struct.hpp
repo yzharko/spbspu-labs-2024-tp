@@ -10,7 +10,7 @@ namespace kovshikov
   {
   public:
     DataStruct():
-    key1_('a'),
+    key1_(' '),
     key2_(27, 2005),
     key3_("nikita")
     {};
@@ -40,38 +40,48 @@ namespace kovshikov
     std::pair<long long, unsigned long long> key2_;
     std::string key3_;
   };
-  std::istream & operator>>(std::istream &is, DataStruct &value)
+
+  std::istream & operator>>(std::istream &is, DataStruct &value);
+  std::ostream & operator<<(std::ostream & out, const DataStruct &value);
+
+  struct DelimetrIO
   {
-    //для ввода использовать delimetr;
-    std::istream::sentry guard(is);
-    if(!guard)
-    {
-      return is;
-    }
-    char ch = ' ';
-    long long pairFirst = 0;
-    unsigned long long pairSecond = 0;
-    std::string str = "";
-    //записать в cin учитывая беспорядочность ключей на потоке ввода;
-    is >> ch >> pairFirst >> pairSecond >> str;
-    if(is)
-    {
-      value = DataStruct(ch, pairFirst, pairSecond, str);
-    }
-    //учесть игнорирование неправильного ввода;
+    char expected;
+  };
+}
+
+std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
+{
+  //для ввода использовать delimetr;
+  std::istream::sentry guard(is);
+  if(!guard)
+  {
     return is;
   }
-  std::ostream & operator<<(std::ostream & out, const DataStruct &value)
+  char ch = ' ';
+  long long pairFirst = 0;
+  unsigned long long pairSecond = 0;
+  std::string str = "";
+  //записать в cin учитывая беспорядочность ключей на потоке ввода;
+  is >> ch >> pairFirst >> pairSecond >> str;
+  if(is)
   {
-    std::ostream::sentry guard(out);
-    if(!guard)
-    {
-      return out;
-    }
-    out << "(:key1 " << value.getKey1() << ":key2 (:N " << value.getFirstKey2()
-    << ":D " << value.getSecondKey2() << ":):key3 " << value.getKey3() << ":)";
+    value = DataStruct(ch, pairFirst, pairSecond, str);
+  }
+  //учесть игнорирование неправильного ввода;
+  return is;
+}
+
+std::ostream & kovshikov::operator<<(std::ostream & out, const DataStruct &value)
+{
+  std::ostream::sentry guard(out);
+  if(!guard)
+  {
     return out;
   }
+  out << "(:key1 " << value.getKey1() << ":key2 (:N " << value.getFirstKey2()
+  << ":D " << value.getSecondKey2() << ":):key3 " << value.getKey3() << ":)";
+  return out;
 }
 
 #endif
