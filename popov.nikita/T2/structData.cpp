@@ -8,7 +8,12 @@ std::istream & popov::operator>>(std::istream & is, DoubleIO && number)
   {
     return is;
   }
-  return is >> number.num;
+  is >> number.num;
+  if (number.num == 0)
+  {
+    input.setstate(std::ios::failbit);
+  }
+  return is;
 }
 
 std::istream & popov::operator>>(std::istream & is, UnsLongLongIO && number)
@@ -18,7 +23,7 @@ std::istream & popov::operator>>(std::istream & is, UnsLongLongIO && number)
   {
     return is;
   }
-  return is >> number.num>> DelimiterIO{'u'} >> DelimiterIO{'l'} >> DelimiterIO{'l'};
+  return is >> number.num >> DelimiterIO{'u'} >> DelimiterIO{'l'} >> DelimiterIO{'l'};
 }
 
 std::istream & popov::operator>>(std::istream & is, popov::StringIO && number)
