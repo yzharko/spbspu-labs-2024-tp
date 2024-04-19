@@ -7,22 +7,20 @@
 int main()
 {
   using namespace tellez;
-  std::list< DataStruct > data;
-  while (true)
+  using input_it_t = std::istream_iterator< DataStruct >;
+  std::list< DataStruct > data(input_it_t{ std::cin }, input_it_t{});
+  using output_it_t = std::ostream_iterator< DataStruct >;
+
+  while (!std::cin.eof())
   {
-    DataStruct temp;
-    std::cin >> temp;
     if (std::cin.fail())
     {
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      break;
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-    data.push_back(temp);
+    std::copy(input_it_t{ std::cin }, input_it_t{}, std::back_inserter(data));
   }
+
   data.sort();
-  for (const auto &item : data)
-  {
-    std::cout << item << '\n';
-  }
+  std::copy(data.cbegin(), data.cend(), output_it_t{ std::cout, "\n" });
 }

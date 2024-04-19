@@ -5,7 +5,7 @@ std::istream& tellez::operator>>(std::istream& in, Delimeterchar&& exp)
   std::istream::sentry guard(in);
   char c = 0;
   in >> c;
-  if (guard && in.get(c) && c != exp.expected)
+  if (c != exp.expected)
   {
     in.setstate(std::ios::failbit);
   }
@@ -17,16 +17,14 @@ std::istream& tellez::operator>>(std::istream& in, Delimeterstring&& exp)
   size_t i = 0;
   while (exp.expected[i] != '\0')
   {
-    char current_char = exp.expected[i];
-    if (std::isalpha(current_char))
+    if (std::isalpha(exp.expected[i]))
     {
-      in >> Delimeterpair{ current_char };
+      in >> Delimeterpair{ exp.expected[i++] };
     }
     else
     {
-      in >> Delimeterchar{ current_char };
+      in >> Delimeterchar{ exp.expected[i++] };
     }
-    ++i;
   }
   return in;
 }
