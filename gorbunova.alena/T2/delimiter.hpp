@@ -1,14 +1,14 @@
 #ifndef DELIMITER_HPP
 #define DELIMITER_HPP
-#include <iostream>
+#include <iosfwd>
 
 namespace gorbunova
 {
-  struct delimiter
+  struct Delimiter
   {
     char expected;
   };
 
-  std::istream &operator>>(std::istream &in, delimiter &&dest);
+  std::istream &operator>>(std::istream &in, Delimiter &&dest);
 }
 #endif

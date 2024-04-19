@@ -13,24 +13,24 @@ std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
   DataStruct input;
   {
     std::string key = "";
-    in >> delimiter{'('};
+    in >> Delimiter{'('};
     for (size_t i = 0; i < 3; ++i)
     {
-      in >> delimiter{':'} >> key;
+      in >> Delimiter{':'} >> key;
       if (key == "key1")
       {
-        in >> complexx{input.key1};
+        in >> Complexx{input.key1};
       }
       else if (key == "key2")
       {
-        in >> ratio{input.key2};
+        in >> Ratio{input.key2};
       }
       else if (key == "key3")
       {
-        in >> str{input.key3};
+        in >> Str{input.key3};
       }
     }
-    in >> delimiter{':'} >> delimiter{')'};
+    in >> Delimiter{':'} >> Delimiter{')'};
   }
   if (in)
   {
@@ -67,7 +67,7 @@ bool gorbunova::operator<(const DataStruct &lhs, const DataStruct &rhs)
     return lhs.key3.length() < rhs.key3.length();
   }
 }
-std::istream &gorbunova::operator>>(std::istream &in, complexx &&dest)
+std::istream &gorbunova::operator>>(std::istream &in, Complexx &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
@@ -76,7 +76,7 @@ std::istream &gorbunova::operator>>(std::istream &in, complexx &&dest)
   }
   double re = 0;
   double im = 0;
-  in >> delimiter{'#'} >> delimiter{'c'} >> delimiter{'('} >> re >> im >> delimiter{')'};
+  in >> Delimiter{'#'} >> Delimiter{'c'} >> Delimiter{'('} >> re >> im >> Delimiter{')'};
   if (in)
   {
     dest.ref.real(re);
@@ -84,7 +84,7 @@ std::istream &gorbunova::operator>>(std::istream &in, complexx &&dest)
   }
   return in;
 }
-std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
+std::istream &gorbunova::operator>>(std::istream &is, Ratio &&value)
 {
   std::istream::sentry sentry(is);
   if (!sentry)
@@ -92,7 +92,7 @@ std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
     return is;
   }
   char tmp = '\0';
-  is >> delimiter{'('} >> delimiter{':'};
+  is >> Delimiter{'('} >> Delimiter{':'};
   is >> tmp;
   if (tmp == 'N')
   {
@@ -103,7 +103,7 @@ std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
     is.setstate(std::ios::failbit);
     return is;
   }
-  is >> delimiter{':'};
+  is >> Delimiter{':'};
   is >> tmp;
   if (tmp == 'D')
   {
@@ -114,16 +114,16 @@ std::istream &gorbunova::operator>>(std::istream &is, ratio &&value)
     is.setstate(std::ios::failbit);
     return is;
   }
-  is >> delimiter{':'} >> delimiter{')'};
+  is >> Delimiter{':'} >> Delimiter{')'};
   return is;
 }
-std::istream &gorbunova::operator>>(std::istream &in, str &&dest)
+std::istream &gorbunova::operator>>(std::istream &in, Str &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
   {
     return in;
   }
-  std::getline(in >> delimiter{'"'}, dest.ref, '"');
+  std::getline(in >> Delimiter{'"'}, dest.ref, '"');
   return in;
 }

@@ -6,22 +6,22 @@ namespace gorbunova
 {
   struct DataStruct
   {
-    std::complex<double> key1;
+    std::complex< double > key1;
     std::pair<long long, unsigned long long> key2;
     std::string key3;
   };
 
-  struct complexx
+  struct Complexx
   {
-    std::complex<double> &ref;
+    std::complex< double > &ref;
   };
 
-  struct ratio
+  struct Ratio
   {
     std::pair<long long, unsigned long long> &ref;
   };
 
-  struct str
+  struct Str
   {
     std::string &ref;
   };
@@ -29,8 +29,8 @@ namespace gorbunova
   std::istream &operator>>(std::istream &in, DataStruct &dest);
   std::ostream &operator<<(std::ostream &out, const DataStruct &dest);
   bool operator<(const DataStruct &lhs, const DataStruct &rhs);
-  std::istream &operator>>(std::istream &in, complexx &&dest);
-  std::istream &operator>>(std::istream &in, ratio &&dest);
-  std::istream &operator>>(std::istream &in, str &&dest);
+  std::istream &operator>>(std::istream &in, Complexx &&dest);
+  std::istream &operator>>(std::istream &in, Ratio &&dest);
+  std::istream &operator>>(std::istream &in, Str &&dest);
 }
 #endif
