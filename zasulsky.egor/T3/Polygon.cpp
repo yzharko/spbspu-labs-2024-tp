@@ -214,19 +214,19 @@ bool zasulsky::checkForRect(const Polygon& pol)
   auto np = pol.points;
   if (np.size() == 4)
   {
-    auto firstTemp = np.back();
+    auto firstT = np.back();
     np.pop_back();
-    auto secondTemp = np.back();
+    auto secondT = np.back();
     np.pop_back();
-    auto thirdTemp = np.back();
+    auto thirdT = np.back();
     np.pop_back();
-    auto fourthTemp = np.back();
+    auto fourthT = np.back();
 
-    auto firstVecX = (firstTemp.x - secondTemp.x);
-    auto secondVecX = (thirdTemp.x - secondTemp.x);
-    auto firstVecY = (firstTemp.y - secondTemp.y);
-    auto secondVecY = (thirdTemp.y - secondTemp.y);
-    bool  equalitySides = (secondTemp.x - firstTemp.x == thirdTemp.x - fourthTemp.x && secondTemp.y - thirdTemp.y == firstTemp.y - fourthTemp.y);
+    auto firstVecX = (firstT.x - secondT.x);
+    auto secondVecX = (thirdT.x - secondT.x);
+    auto firstVecY = (firstT.y - secondT.y);
+    auto secondVecY = (thirdT.y - secondT.y);
+    bool equalitySides = (secondT.x - firstT.x == thirdT.x - fourthT.x && secondT.y - thirdT.y == firstT.y - fourthT.y);
     bool rightAngle = (zasulsky::isRightAngle(firstVecX, secondVecX, firstVecY, secondVecY));
     return equalitySides && rightAngle ? 1 : 0;
   }
