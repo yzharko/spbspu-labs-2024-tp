@@ -11,7 +11,7 @@ std::istream & popov::operator>>(std::istream & is, DoubleIO && number)
   is >> number.num;
   if (number.num == 0)
   {
-    input.setstate(std::ios::failbit);
+    is.setstate(std::ios::failbit);
   }
   return is;
 }
