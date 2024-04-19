@@ -1,6 +1,7 @@
 #include "dataStruct.hpp"
 #include "iofmtguard.hpp"
 #include "delimiter.hpp"
+#include "types.hpp"
 
 namespace hohlova
 {
