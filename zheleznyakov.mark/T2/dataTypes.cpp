@@ -1,5 +1,5 @@
 #include <iostream>
-#include "data-types.hpp"
+#include "dataTypes.hpp"
 #include "separators.hpp"
 
 namespace zheleznyakov

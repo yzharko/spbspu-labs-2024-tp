@@ -1,5 +1,5 @@
 #include "iofmtguard.hpp"
-#include "data-struct.hpp"
+#include "dataStruct.hpp"
 #include "separators.hpp"
 
 namespace zheleznyakov
