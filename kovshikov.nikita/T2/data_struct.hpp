@@ -3,70 +3,51 @@
 #include <string>
 #include <utility>
 #include <iostream>
+#include "io_structures.hpp"
+#include "scope_guard.hpp"
 
 namespace kovshikov
 {
   struct DataStruct
   {
-  public:
-    DataStruct():
-    key1_(' '),
-    key2_(27, 2005),
-    key3_("nikita")
-    {};
-    DataStruct(char ch, long long pairFirst, unsigned long long pairSecond, std::string str):
-    key1_(ch),
-    key2_(pairFirst, pairSecond),
-    key3_(str)
-    {};
-    char getKey1() const
-    {
-      return key1_;
-    }
-    long long getFirstKey2() const
-    {
-      return key2_.first;
-    }
-    unsigned long long getSecondKey2() const
-    {
-      return key2_.second;
-    }
-    std::string getKey3() const
-    {
-      return key3_;
-    }
-  private:
-    char key1_;
-    std::pair<long long, unsigned long long> key2_;
-    std::string key3_;
+    char key1;
+    std::pair< long long, unsigned long long > key2;
+    std::string key3;
   };
 
   std::istream & operator>>(std::istream &is, DataStruct &value);
   std::ostream & operator<<(std::ostream & out, const DataStruct &value);
-
-  struct DelimetrIO
-  {
-    char expected;
-  };
 }
 
 std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
 {
-  //для ввода использовать delimetr;
   std::istream::sentry guard(is);
   if(!guard)
   {
     return is;
   }
-  char ch = ' ';
-  long long pairFirst = 0;
-  unsigned long long pairSecond = 0;
-  std::string str = "";
-  //записать в cin учитывая беспорядочность ключей на потоке ввода;
-  is >> ch >> pairFirst >> pairSecond >> str;
+  std::string key;
+  DataStruct input;
+  is >> Del{'('} >> Del{':'} >> key;
+  for(int i = 0; i < 3; i++)
+  {
+    if(key == "key1")
+    {
+      is >> Chr{input.key1} >> Del{':'};
+    }
+    else if(key == "key2")
+    {
+      is >> Pair{input.key2} >> Del{':'};
+    }
+    else if(key == "key3")
+    {
+      is >> Str{input.key3} >> Del{':'};
+    }
+  }
+  is >> Del{')'};
   if(is)
   {
-    value = DataStruct(ch, pairFirst, pairSecond, str);
+    value = input;
   }
   //учесть игнорирование неправильного ввода;
   return is;
@@ -79,8 +60,9 @@ std::ostream & kovshikov::operator<<(std::ostream & out, const DataStruct &value
   {
     return out;
   }
-  out << "(:key1 " << value.getKey1() << ":key2 (:N " << value.getFirstKey2()
-  << ":D " << value.getSecondKey2() << ":):key3 " << value.getKey3() << ":)";
+  iofmtguard fmtguard(out);
+  out << "(:key1 " << value.key1 << ":key2 (:N " << value.key2.first
+  << ":D " << value.key2.second << ":):key3 " << value.key3 << ":)";
   return out;
 }
 
