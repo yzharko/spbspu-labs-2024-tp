@@ -17,22 +17,6 @@ std::istream & kovshikov::operator>>(std::istream & is, DelimiterIO && value)
   return is;
 }
 
-std::istream & kovshikov::operator>>(std::istream & is, SeparatorIO && value)
-{
-  std::istream::sentry guard(is);
-  if (!guard)
-  {
-    return is;
-  }
-  std::string str;
-  is >> str;
-  if (str != value.sep)
-  {
-    is.setstate(std::ios::failbit);
-  }
-  return is;
-}
-
 std::istream & kovshikov::operator>>(std::istream & is, CharIO && value)
 {
   std::istream::sentry sentry(is);
@@ -50,15 +34,20 @@ std::istream & kovshikov::operator>>(std::istream & is, PairIO && value)
   {
     return is;
   }
-  return is >> Sep{"(:N"} >> value.pair.first >> Sep{":D"} >> value.pair.second >> Sep{":)"};
+  is >> Del{'('} >> Del{':'} >> Del{'N'};
+  is >> value.pair.first;
+  is  >> Del{':'} >> Del{'D'};
+  is >> value.pair.second;
+  is >> Del{':'} >> Del{')'};
+  return is;
 }
 
 std::istream & kovshikov::operator>>(std::istream & is, StringIO && value)
 {
-   std::istream::sentry sentry(is);
-    if (!sentry)
-    {
-      return is;
-    }
-    return std::getline(is >> DelimiterIO{ '"' }, value.str, '"'); //???
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  return std::getline(is >> DelimiterIO{ '"' }, value.str, '"');
 }

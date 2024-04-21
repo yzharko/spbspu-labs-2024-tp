@@ -28,9 +28,10 @@ std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
   }
   std::string key;
   DataStruct input;
-  is >> Del{'('} >> Del{':'} >> key;
+  is >> Del{'('} >> Del{':'};
   for(int i = 0; i < 3; i++)
   {
+    is >> key;
     if(key == "key1")
     {
       is >> Chr{input.key1} >> Del{':'};
@@ -42,6 +43,10 @@ std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
     else if(key == "key3")
     {
       is >> Str{input.key3} >> Del{':'};
+    }
+    else
+    {
+      is.setstate(std::ios::failbit);
     }
   }
   is >> Del{')'};
