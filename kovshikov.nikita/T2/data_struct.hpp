@@ -54,7 +54,6 @@ std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
   {
     value = input;
   }
-  //учесть игнорирование неправильного ввода;
   return is;
 }
 
@@ -66,8 +65,8 @@ std::ostream & kovshikov::operator<<(std::ostream & out, const DataStruct &value
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(:key1 " << value.key1 << ":key2 (:N " << value.key2.first
-  << ":D " << value.key2.second << ":):key3 " << value.key3 << ":)";
+  out << "(:key1 " << '\'' << value.key1 << '\'' << ":key2 (:N " << value.key2.first
+  << ":D " << value.key2.second << ":):key3 " << "\"" << value.key3 << "\":)";
   return out;
 }
 
