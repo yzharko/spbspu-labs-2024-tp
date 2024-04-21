@@ -81,4 +81,7 @@ bool kovshikov::operator>(const DataStruct &left, const DataStruct &right)
   }
 }
 
-
+bool kovshikov::operator<(const DataStruct &left, const DataStruct &right)
+{
+  return !(left > right);
+}

@@ -18,7 +18,7 @@ namespace kovshikov
   std::istream & operator>>(std::istream &is, DataStruct &value);
   std::ostream & operator<<(std::ostream & out, const DataStruct &value);
   bool operator>(const DataStruct &left, const DataStruct &right);
- // bool operator<(const DataStruct &value);
+  bool operator<(const DataStruct &left, const DataStruct &rigth);
 }
 
 #endif
