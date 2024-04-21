@@ -26,6 +26,7 @@ std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
   {
     return is;
   }
+  iofmtguard fmtguard(is);
   std::string key;
   DataStruct input;
   is >> Del{'('} >> Del{':'};

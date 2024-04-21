@@ -17,7 +17,7 @@ namespace kovshikov
 
   struct PairIO
   {
-    std::pair< long long, unsigned long long > pair;
+    std::pair< long long, unsigned long long > &pair;
   };
 
   struct StringIO
