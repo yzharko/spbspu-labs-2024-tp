@@ -4,7 +4,7 @@
 #include "Keys.hpp"
 #include "ScopeGuard.hpp"
 
-bool operator<(const reznikova::DataStruct & first, const reznikova::DataStruct & second)
+bool reznikova::operator<(const reznikova::DataStruct & first, const reznikova::DataStruct & second)
 {
   if (first.key1 != second.key1)
   {

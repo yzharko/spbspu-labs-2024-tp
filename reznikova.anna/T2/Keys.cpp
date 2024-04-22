@@ -24,7 +24,6 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::CMPLSP && val
   using del = Delimiter;
   double real, imag;
   is >> del{'#'} >> del{'c'} >> del{'('} >> real >> imag >> del{')'};
-  if (is)
   value.num.real(real);
   value.num.real(imag);
   return is;
