@@ -1,5 +1,4 @@
 #include "Keys.hpp"
-#include <ios>
 #include "Delimeter.hpp"
 #include "ScopeGuard.hpp"
 
@@ -10,7 +9,11 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::ULLOCT && val
   {
     return is;
   }
-  return is >> std::oct >> value.num;
+  std::string str;
+  is >> std::oct >> str;
+  value.len = str.length();
+  value.num = stoull(str);
+  return is;
 }
 
 std::istream & reznikova::operator>>(std::istream & is, reznikova::CMPLSP && value)
@@ -37,4 +40,20 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::STR && value)
     return is;
   }
   return std::getline(is >> Delimiter{ '"' }, value.num, '"');
+}
+
+std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::ULLOCT && value)
+{
+  std::ostream::sentry sentry(out);
+  if(!sentry)
+  {
+    return out;
+  }
+  iofmtguard guard(out);
+  while (value.len > std::to_string(value.num).length())
+  {
+    out << "0";
+  }
+  out << std::oct << value.num;
+  return out;
 }
