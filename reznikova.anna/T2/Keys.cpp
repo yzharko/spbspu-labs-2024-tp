@@ -10,8 +10,7 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::ULLOCT && val
   {
     return is;
   }
-  is >> std::oct >> value.num;
-  return is;
+  return is >> std::oct >> value.num;
 }
 
 std::istream & reznikova::operator>>(std::istream & is, reznikova::CMPLSP && value)
@@ -22,7 +21,8 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::CMPLSP && val
     return is;
   }
   using del = Delimiter;
-  double real, imag;
+  double real;
+  double imag;
   is >> del{'#'} >> del{'c'} >> del{'('} >> real >> imag >> del{')'};
   value.num.real(real);
   value.num.real(imag);
@@ -36,6 +36,5 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::STR && value)
   {
     return is;
   }
-  is >> value.num;
-  return is;
+  return std::getline(is >> Delimiter{ '"' }, value.num, '"');
 }
