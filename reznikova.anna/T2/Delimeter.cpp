@@ -1,6 +1,6 @@
 #include "Delimeter.hpp"
 
-std::istream & operator>>(std::istream & is, reznikova::Delimiter && exp)
+std::istream & reznikova::operator>>(std::istream & is, reznikova::Delimiter && exp)
 {
   std::istream::sentry guard(is);
   if (!guard)
