@@ -8,7 +8,6 @@
 namespace zasulsky
 {
   using polygons = std::vector< Polygon >;
-
   using predicate = std::function< bool(const Polygon&) >;
   using comparator = std::function< bool(const Polygon&, const Polygon&) >;
 
@@ -50,7 +49,6 @@ namespace zasulsky
       return a = max;
     }
   };
-
 }
 
 #endif

@@ -207,8 +207,6 @@ bool zasulsky::isRightAngle(int v1x, int v2x, int v1y, int v2y)
   return false;
 }
 
-
-
 bool zasulsky::checkForRect(const Polygon& pol)
 {
   auto np = pol.points;
