@@ -63,8 +63,8 @@ std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::DataSt
   {
     return out;
   }
-  out << "(:" << "key1" << value.key1;
-  out << ":" << "key2" << CMPLSP{value.key2};
+  out << "(:" << "key1 " << value.key1;
+  out << ":" << "key2 #c(" << value.key2 << ")";
   out << ":" << "key3 \"" << value.key3 << "\")";
   return out;
 }

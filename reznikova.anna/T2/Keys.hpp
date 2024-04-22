@@ -24,6 +24,5 @@ namespace reznikova
   std::istream & operator>>(std::istream & is, ULLOCT && value);
   std::istream & operator>>(std::istream & is, CMPLSP && value);
   std::istream & operator>>(std::istream & is, STR && value);
-  std::ostream & operator<<(std::ostream & out, const CMPLSP && value);
 }
 #endif

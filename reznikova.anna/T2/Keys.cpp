@@ -40,15 +40,3 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::STR && value)
   is >> value.num;
   return is;
 }
-
-std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::CMPLSP && value)
-{
-  std::ostream::sentry sentry(out);
-  iofmtguard guard(out);
-  if(!sentry)
-  {
-    return out;
-  }
-  out << "#c(" << value.num.real() << " " << value.num.imag() << ")";
-  return out;
-}
