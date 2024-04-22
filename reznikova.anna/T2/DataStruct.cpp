@@ -64,7 +64,7 @@ std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::DataSt
   {
     return out;
   }
-  out << "(:" << "key1 " << std::oct << value.key1;
+  out << "(:" << "key1 0" << std::oct << value.key1;
   out << ":" << std::fixed << "key2 #c(" << std::setprecision(1) << value.key2.real() << " " << value.key2.imag() << ")";
   out << ":" << std::fixed << "key3 \"" << value.key3 << "\":)";
   return out;
