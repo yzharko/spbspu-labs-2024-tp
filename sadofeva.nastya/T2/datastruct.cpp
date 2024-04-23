@@ -64,7 +64,7 @@ std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DataStruct & de
     using lng = UnsignedLongLongIO;
     using str = StringIO;
     std::string key;
-    is >> del{'('};
+    is >> del{ '(' };
     for (size_t i = 0; i < 3;i++)
     {
       is >> del{ ':' } >> key;
@@ -81,7 +81,7 @@ std::istream & sadofeva::operator>>(std::istream & is, sadofeva::DataStruct & de
         is >> str{struct_.key3};
       }
     }
-    is >> del{':'} >> del{')'};
+    is >> del{ ':' } >> del{ ')' };
   }
   if (is)
   {
@@ -122,7 +122,7 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
   }
   iofmtguard fmtguard(out);
   out << "(:key1 " << std::scientific << std::setprecision(2) << src.key1;
-  out << ":key2 0x" << " " << std::hex << std::uppercase << src.key2;
+  out << ":key2 0x" << std::hex << std::uppercase << src.key2;
   out << ":key3" << " \"" << src.key3 << "\":)";
   return out;
 }
