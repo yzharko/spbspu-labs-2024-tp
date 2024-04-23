@@ -1,6 +1,6 @@
 #ifndef DELIMETER_HPP
 #define DELIMETER_HPP
-
+#include <iosfwd>
 #include <istream>
 
 namespace tellez

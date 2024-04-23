@@ -138,28 +138,3 @@ bool tellez::DataStruct::operator<(const DataStruct& data) const
   }
   return key1 < data.key1;
 }
-
-bool tellez::DataStruct::operator>=(const DataStruct& data) const
-{
-  return !(*this < data);
-}
-
-bool tellez ::DataStruct::operator<=(const DataStruct& data) const
-{
-  return !(data < *this);
-}
-
-bool tellez::DataStruct::operator>(const DataStruct& data) const
-{
-  return (data < *this);
-}
-
-bool tellez::DataStruct::operator==(const DataStruct& data) const
-{
-  return !(*this < data) && !(data < *this);
-}
-
-bool tellez::DataStruct::operator!=(const DataStruct& data) const
-{
-  return !(data == *this);
-}
