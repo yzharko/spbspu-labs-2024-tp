@@ -121,7 +121,25 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(:key1 " << std::scientific << std::setprecision(2) << src.key1;
+  out << "(:key1 ";
+  int e = 0;
+  double numberDouble = src.key1;
+  if (numberDouble < 1 && numberDouble != 0)
+  {
+    for ( nummberDouble < 1; e--)
+    {
+      numberDouble *= 10;
+    }
+  }
+  else
+  {
+    for (numberDouble > 0;e++)
+    {
+      numberDouble /= 10;
+    }
+  }
+  out << std::fixed << std::setprecision(1);
+  out << numberDouble << 'e' << std:showpos << e;
   out << ":key2 0x" << std::hex << std::uppercase << src.key2;
   out << ":key3" << " \"" << src.key3 << "\":)";
   return out;
