@@ -3,6 +3,7 @@
 #include "structuresOfKeys.hpp"
 #include "iofmtguard.hpp"
 #include <iomanip>
+#include <cmath>
 
 std::istream &ponomarev::operator>>(std::istream &in, Data &dest)
 {
@@ -77,27 +78,9 @@ std::ostream &ponomarev::operator<<(std::ostream &out, const Data &src)
     return out;
   }
   iofmtguard fmtguard(out);
-  double mantis = src.key1;
-  int degree = 0;
+
   out << "(:";
-  if (mantis < 10)
-  {
-    while (mantis < 1)
-    {
-      mantis *= 10;
-      degree += 1;
-    }
-    out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e-" << degree << ":";
-  }
-  else
-  {
-    while (mantis > 9)
-    {
-      mantis /= 10;
-      degree += 1;
-    }
-    out << "key1 "<< std::fixed << std::setprecision(1) << mantis << "e+" << degree << ":";
-  }
+  out << "key1 " << src.key1 << ":";
   out << "key2 " << "0b" << src.key2 << ":";
   out << "key3 " << '"' << src.key3 << '"';
   out << ":)";
