@@ -1,4 +1,4 @@
-k#ifndef DATASTRUCT_HPP
+#ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 #include <string>
 #include "Keys.hpp"
