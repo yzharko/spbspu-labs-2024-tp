@@ -8,7 +8,7 @@ namespace ponomarev
 {
   struct DoubleIO
   {
-    double &ref;
+    std::string &ref;
   };
 
   struct LongLongIO

@@ -10,7 +10,7 @@ std::istream &ponomarev::operator>>(std::istream &in, DoubleIO &&dest)
     return in;
   }
 
-  std::string num;
+  std::string num = "";
   std::getline(in, num, ':');
   if ((num[1] != '.') || !(std::isdigit(num[0])))
   {
@@ -51,7 +51,7 @@ std::istream &ponomarev::operator>>(std::istream &in, DoubleIO &&dest)
     }
   }
 
-  dest.ref = std::stod(num);
+  dest.ref = num;
   return in;
 }
 
