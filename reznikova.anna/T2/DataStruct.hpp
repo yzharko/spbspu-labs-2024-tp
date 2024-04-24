@@ -1,4 +1,4 @@
-#ifndef DATASTRUCT_HPP
+k#ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 #include <string>
 #include "Keys.hpp"
@@ -13,6 +13,6 @@ namespace reznikova
   };
   bool operator<(const DataStruct & first, const DataStruct & second);
   std::istream & operator>>(std::istream & is, DataStruct & value);
-  std::ostream & operator<<(std::ostream & out, DataStruct & value);
+  std::ostream & operator<<(std::ostream & out, const DataStruct & value);
 }
 #endif

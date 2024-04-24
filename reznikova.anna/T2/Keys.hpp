@@ -9,7 +9,6 @@ namespace reznikova
   struct ULLOCT
   {
     unsigned long long int & num;
-    size_t len;
   };
 
   struct CMPLSP

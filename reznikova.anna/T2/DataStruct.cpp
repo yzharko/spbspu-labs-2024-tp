@@ -56,17 +56,17 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::DataStruct & 
   return is;
 }
 
-std::ostream & reznikova::operator<<(std::ostream & out, reznikova::DataStruct & value)
+std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::DataStruct & value)
 {
   std::ostream::sentry sentry(out);
+  iofmtguard guard(out);
   if(!sentry)
   {
     return out;
   }
-  iofmtguard guard(out);
-  out << "(:" << "key1" << ULLOCT{ value.key1 };
-  out << ":" << "key2 #c(" << std::fixed << std::setprecision(1) << value.key2.real();
+  out << "(:" << "key1 0" << std::oct << value.key1;
+  out << ":" << std::fixed << "key2 #c(" << std::setprecision(1) << value.key2.real();
   out << " " << value.key2.imag() << ")";
-  out << ":" << "key3 \"" << std::fixed << value.key3 << "\":)";
+  out << ":" << std::fixed << "key3 \"" << value.key3 << "\":)";
   return out;
 }
