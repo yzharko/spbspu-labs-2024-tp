@@ -13,6 +13,6 @@ namespace reznikova
   };
   bool operator<(const DataStruct & first, const DataStruct & second);
   std::istream & operator>>(std::istream & is, DataStruct & value);
-  std::ostream & operator<<(std::ostream & out, const DataStruct & value);
+  std::ostream & operator<<(std::ostream & out, DataStruct & value);
 }
 #endif

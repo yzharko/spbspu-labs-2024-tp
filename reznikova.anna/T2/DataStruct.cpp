@@ -56,7 +56,7 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::DataStruct & 
   return is;
 }
 
-std::ostream & reznikova::operator<<(std::ostream & out, const reznikova::DataStruct & value)
+std::ostream & reznikova::operator<<(std::ostream & out, reznikova::DataStruct & value)
 {
   std::ostream::sentry sentry(out);
   if(!sentry)
