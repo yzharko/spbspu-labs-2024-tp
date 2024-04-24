@@ -91,7 +91,7 @@ bool ponomarev::operator<(const ponomarev::Data & left, const ponomarev::Data & 
 {
   if (left.key1 != right.key1)
   {
-    return (left.key1 < right.key1);
+    return (std::stod(left.key1) < std::stod(right.key1));
   }
   else if (left.key2 != right.key2)
   {
