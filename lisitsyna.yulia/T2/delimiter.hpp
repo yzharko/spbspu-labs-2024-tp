@@ -1,8 +1,6 @@
 #ifndef DELIMITER_HPP
 #define DELIMITER_HPP
 
-#include <iostream>
-
 namespace lisitsyna
 {
   struct Delimiter

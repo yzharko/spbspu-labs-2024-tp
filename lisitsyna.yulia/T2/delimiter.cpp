@@ -1,3 +1,4 @@
+#include <iostream>
 #include "delimiter.hpp"
 
 lisitsyna::Delimiter::Delimiter(char exp) :
