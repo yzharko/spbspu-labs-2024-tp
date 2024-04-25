@@ -7,7 +7,7 @@ namespace kovshikov
   class iofmtguard
   {
   public:
-    iofmtguard(std::basic_ios< char > &s);
+    iofmtguard(std::basic_ios< char > &s) explicit;
     ~iofmtguard();
   private:
     std::basic_ios< char > &s_;

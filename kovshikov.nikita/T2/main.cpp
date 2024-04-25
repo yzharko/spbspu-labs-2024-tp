@@ -8,8 +8,8 @@
 int main()
 {
   using namespace kovshikov;
-  using input_it = std::istream_iterator<DataStruct>;
-  std::vector<DataStruct> data;
+  using input_it = std::istream_iterator< DataStruct >;
+  std::vector< DataStruct > data;
 
   while(!std::cin.eof())
   {
@@ -17,13 +17,13 @@ int main()
     if(std::cin.fail())
     {
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 
   std::sort(data.begin(), data.end());
 
-  using output_it = std::ostream_iterator<DataStruct>;
+  using output_it = std::ostream_iterator< DataStruct >;
   std::copy(data.cbegin(), data.cend(), output_it{std::cout, "\n"});
 
   return 0;

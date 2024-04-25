@@ -8,7 +8,7 @@ std::istream & kovshikov::operator>>(std::istream &is, DataStruct &value)
     return is;
   }
   iofmtguard fmtguard(is);
-  std::string key;
+  std::string key = "";
   DataStruct input;
   is >> Del{'('} >> Del{':'};
   for(int i = 0; i < 3; i++)
