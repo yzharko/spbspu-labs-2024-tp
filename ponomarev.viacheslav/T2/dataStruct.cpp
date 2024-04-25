@@ -3,7 +3,6 @@
 #include "structuresOfKeys.hpp"
 #include "iofmtguard.hpp"
 #include <iomanip>
-#include <cmath>
 
 std::istream &ponomarev::operator>>(std::istream &in, Data &dest)
 {
