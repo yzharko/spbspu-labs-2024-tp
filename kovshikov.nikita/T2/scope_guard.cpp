@@ -1,6 +1,6 @@
 #include "scope_guard.hpp"
 
-kovshikov::iofmtguard::iofmtguard(std::basic_ios< char > &s):
+kovshikov::iofmtguard::iofmtguard(std::basic_ios< char > &s) explicit:
   s_(s),
   fill_(s.fill()),
   precision_(s.precision()),
