@@ -11,10 +11,10 @@ int main()
   using input_it = std::istream_iterator< DataStruct >;
   std::vector< DataStruct > data;
 
-  while(!std::cin.eof())
+  while (!std::cin.eof())
   {
     std::copy(input_it{std::cin}, input_it{}, std::back_inserter(data));
-    if(std::cin.fail())
+    if (std::cin.fail())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
