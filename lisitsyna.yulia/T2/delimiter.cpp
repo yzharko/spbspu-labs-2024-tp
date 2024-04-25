@@ -1,5 +1,5 @@
 #include "delimiter.hpp"
-
+#include <iostream>
 lisitsyna::Delimiter::Delimiter(char exp) :
   exp(exp)
 {}
