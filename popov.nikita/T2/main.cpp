@@ -1,13 +1,13 @@
-#include <vector>
-#include "dataStruct.hpp"
 #include <iostream>
+#include <vector>
 #include <iterator>
 #include <limits>
 #include <algorithm>
+#include "dataStruct.hpp"
 
 int main()
 {
-  std::vector<popov::DataStruct> data;
+  std::vector< popov::DataStruct > data;
   while (!std::cin.eof())
   {
     std::copy(

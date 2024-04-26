@@ -1,7 +1,7 @@
 #ifndef STRUCTDATA_HPP
 #define STRUCTDATA_HPP
 
-#include <iostream>
+#include <iosfwd>
 
 namespace popov
 {
