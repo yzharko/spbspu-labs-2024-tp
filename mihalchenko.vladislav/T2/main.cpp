@@ -6,24 +6,24 @@
 
 int main()
 {
-  using namespace mihalchenko;
-  std::vector<DataStruct> dataStruct;
+  using mihalchenko::DataStruct;
+  std::vector< mihalchenko::DataStruct > dataStruct;
   while (!std::cin.eof())
   {
     std::copy(
-      std::istream_iterator<mihalchenko::DataStruct>{std::cin},
-      std::istream_iterator<mihalchenko::DataStruct>{},
+      std::istream_iterator< mihalchenko::DataStruct >{std::cin},
+      std::istream_iterator< mihalchenko::DataStruct >{},
       std::back_inserter(dataStruct));
     if (std::cin.fail() && !std::cin.eof())
     {
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
   std::sort(dataStruct.begin(), dataStruct.end());
   std::copy(
     std::begin(dataStruct),
     std::end(dataStruct),
-    std::ostream_iterator<mihalchenko::DataStruct>(std::cout, "\n"));
+    std::ostream_iterator< mihalchenko::DataStruct >(std::cout, "\n"));
   return 0;
 }
