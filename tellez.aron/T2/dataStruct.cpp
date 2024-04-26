@@ -13,12 +13,12 @@ std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
   {
     using del = Delimeterchar;
     using dell = Delimeterstring;
-    in >> del{ '(' };
+    in >> del{'('};
     size_t keys = 3;
     size_t y = 0;
     for (size_t i = 0; i < keys; ++i)
     {
-      in >> dell{ ":key" } >> y;
+      in >> dell{":key"} >> y;
       using ds = Delimeterstring;
       if (y == 1)
       {
@@ -33,7 +33,7 @@ std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
       {
         long long int num = 0;
         unsigned long long den = 0;
-        in >> ds{ "(:n" } >> num >> ds{ ":d" } >> den >> ds{ ":)" };
+        in >> ds{"(:n"} >> num >> ds{":d"} >> den >> ds{":)"};
         if (in)
         {
           data.key2.first = num;
@@ -54,9 +54,21 @@ std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
         in.setstate(std::ios::failbit);
       }
     }
-    in >> dell{ ":)" };
+    in >> dell{":)"};
   }
   return in;
+}
+
+std::ostream& tellez::operator<<(std::ostream& out, const DataStruct& value)
+{
+  std::ostream::sentry guard(out);
+  if (guard)
+  {
+   out << "(:key1 " << value.key1 << ":key2 (:N " << value.key2.first
+       << ":D " << value.key2.second << ":)"
+       << ":key3 " << '"' << value.key3 << '"' << ":)";
+  }
+    return out;
 }
 
 std::istream& tellez::operator>>(std::istream& in, std::string& exp)
@@ -68,62 +80,10 @@ std::istream& tellez::operator>>(std::istream& in, std::string& exp)
   }
   else
   {
-    in >> Delimeterchar{ '"' };
+    in >> Delimeterchar{'"'};
     std::getline(in, exp, '"');
   }
   return in;
-}
-
-std::ostream& printScientific(std::ostream& out, double number)
-{
-  std::ostream::sentry guard(out);
-  if (!guard)
-  {
-    return out;
-  }
-  out << std::fixed << std::setprecision(1);
-  size_t exp = 0;
-  char mark = 0;
-  if (number != 0)
-  {
-    if (number >= 1.0)
-    {
-      while (number > 1.0)
-      {
-        number = number / 10;
-        exp++;
-      }
-      mark = '+';
-    }
-    else
-    {
-      while (number < 1.0)
-      {
-        number = number * 10;
-        exp++;
-      }
-      mark = '-';
-    }
-    out << number << 'e' << mark << exp;
-  }
-  else
-  {
-    out << number;
-  }
-  return out;
-}
-
-std::ostream& tellez::operator<<(std::ostream& out, const DataStruct& value)
-{
-  std::ostream::sentry guard(out);
-  if (guard)
-  {
-    out << "(:key1 ";
-    printScientific(out, value.key1);
-    out << ":key2 (:N " << value.key2.first << ":D " << value.key2.second << ":)";
-    out << ":key3 " << '"' << value.key3 << '"' << ":)";
-  }
-  return out;
 }
 
 bool tellez::DataStruct::operator<(const DataStruct& data) const
