@@ -7,12 +7,12 @@
 int main()
 {
   using mihalchenko::DataStruct;
-  std::vector< mihalchenko::DataStruct > dataStruct;
+  std::vector< DataStruct > dataStruct;
   while (!std::cin.eof())
   {
     std::copy(
-      std::istream_iterator< mihalchenko::DataStruct >{std::cin},
-      std::istream_iterator< mihalchenko::DataStruct >{},
+      std::istream_iterator< DataStruct >{std::cin},
+      std::istream_iterator< DataStruct >{},
       std::back_inserter(dataStruct));
     if (std::cin.fail() && !std::cin.eof())
     {
@@ -24,6 +24,6 @@ int main()
   std::copy(
     std::begin(dataStruct),
     std::end(dataStruct),
-    std::ostream_iterator< mihalchenko::DataStruct >(std::cout, "\n"));
+    std::ostream_iterator< DataStruct >(std::cout, "\n"));
   return 0;
 }
