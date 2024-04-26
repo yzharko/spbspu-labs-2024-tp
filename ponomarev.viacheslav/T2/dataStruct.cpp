@@ -4,7 +4,7 @@
 #include "iofmtguard.hpp"
 #include <iomanip>
 
-std::istream &ponomarev::operator>>(std::istream &in, Data &dest)
+std::istream &ponomarev::operator>>(std::istream &in, DataStruct &dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
@@ -12,7 +12,7 @@ std::istream &ponomarev::operator>>(std::istream &in, Data &dest)
     return in;
   }
 
-  Data input;
+  DataStruct input;
   {
     using sep = DelimiterIO;
     using dbl = DoubleIO;
@@ -69,7 +69,7 @@ std::istream &ponomarev::operator>>(std::istream &in, Data &dest)
   return in;
 }
 
-std::ostream &ponomarev::operator<<(std::ostream &out, const Data &src)
+std::ostream &ponomarev::operator<<(std::ostream &out, const DataStruct &src)
 {
   std::ostream::sentry sentry(out);
   if (!sentry)
@@ -86,7 +86,7 @@ std::ostream &ponomarev::operator<<(std::ostream &out, const Data &src)
   return out;
 }
 
-bool ponomarev::operator<(const ponomarev::Data & left, const ponomarev::Data & right)
+bool ponomarev::operator<(const DataStruct & left, const DataStruct & right)
 {
   if (left.key1 != right.key1)
   {

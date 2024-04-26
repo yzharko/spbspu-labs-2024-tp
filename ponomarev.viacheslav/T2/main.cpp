@@ -6,13 +6,13 @@
 
 int main()
 {
-  using ponomarev::Data;
-  std::vector< Data > data;
+  using ponomarev::DataStruct;
+  std::vector< DataStruct > data;
   while (!std::cin.eof())
   {
     std::copy(
-      std::istream_iterator< Data >(std::cin),
-      std::istream_iterator< Data >(),
+      std::istream_iterator< DataStruct >(std::cin),
+      std::istream_iterator< DataStruct >(),
       std::back_inserter(data)
     );
     if (std::cin.fail() && !std::cin.eof())
@@ -25,7 +25,7 @@ int main()
   std::copy(
     std::begin(data),
     std::end(data),
-    std::ostream_iterator< Data >(std::cout, "\n")
+    std::ostream_iterator< DataStruct >(std::cout, "\n")
   );
   return 0;
 }

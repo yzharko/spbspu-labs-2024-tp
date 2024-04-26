@@ -21,9 +21,15 @@ namespace ponomarev
     std::string &ref;
   };
 
+  struct pairIO
+  {
+    std::pair< long long, unsigned long long > &ref;
+  };
+
   std::istream &operator>>(std::istream &in, DoubleIO &&dest);
   std::istream &operator>>(std::istream &in, LongLongIO &&dest);
   std::istream &operator>>(std::istream &in, StringIO &&dest);
+  std::istream &operator>>(std::istream &in, pairIO &&dest);
 }
 
 #endif

@@ -77,3 +77,19 @@ std::istream &ponomarev::operator>>(std::istream &in, StringIO &&dest)
 
   return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
 }
+
+std::istream &ponomarev::operator>>(std::istream &in, pairIO &&dest)
+{
+  std::istream::sentry guard(in);
+  if(!guard)
+  {
+    return in;
+  }
+
+  in >> DelimiterIO{ '(' } >> DelimiterIO{ ':' } >> DelimiterIO{ 'N' };
+  in >> dest.ref.first;
+  in  >> DelimiterIO{ ':' } >> DelimiterIO{ 'D' };
+  in >> dest.ref.second;
+  in >> DelimiterIO{ ':' } >> DelimiterIO{ ')' };
+  return in;
+}
