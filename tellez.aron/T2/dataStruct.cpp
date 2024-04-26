@@ -31,7 +31,7 @@ std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
       }
       else if (y == 2)
       {
-        long long int num = 0;
+        long long num = 0;
         unsigned long long den = 0;
         in >> ds{"(:n"} >> num >> ds{":d"} >> den >> ds{":)"};
         if (in)
