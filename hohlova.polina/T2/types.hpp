@@ -1,6 +1,6 @@
 #ifndef TYPES_HPP
 #define TYPES_HPP
-#include <iostream>
+#include <iosfwd>
 
 namespace hohlova
 {
