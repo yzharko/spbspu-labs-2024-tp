@@ -25,19 +25,6 @@ namespace hohlova
   std::istream& operator>>(std::istream& in, DoubleIO&& dest);
   std::istream& operator>>(std::istream& in, RealIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
-
-  struct SLLLitIO
-  {
-    long long& ref;
-  };
-
-  struct ULLHexIO
-  {
-    unsigned long long& ref;
-  };
-
-  std::istream& operator>>(std::istream& in, SLLLitIO&& dest);
-  std::istream& operator>>(std::istream& in, ULLHexIO&& dest);
 }
 
 #endif
