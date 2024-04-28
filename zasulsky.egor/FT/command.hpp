@@ -32,7 +32,7 @@ void create(dictOfDicts& ref, std::string name);
 class Parser
 {
 public:
-  Parser(std::string  toparse);
+  explicit Parser(std::string toparse);
   std::string operator ()();
 
 private:

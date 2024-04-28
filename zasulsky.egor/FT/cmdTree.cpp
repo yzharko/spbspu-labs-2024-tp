@@ -44,6 +44,7 @@ void CmdTree::doCommand(const std::string& cmd, dictOfDicts& ref, std::string st
   typeFo function = cmdsFour.at(cmd);
   function(ref, str, str2, str3);
 }
+
 void CmdTree::doCommand(const std::string& cmd, dictOfDicts& ref, std::ostream& out)
 {
   typeFi function = cmdsFive.at(cmd);
