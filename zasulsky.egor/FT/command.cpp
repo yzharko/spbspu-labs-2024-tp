@@ -229,6 +229,10 @@ void combination(dictOfDicts& ref, std::string str)
   {
     vec.push_back(i);
   }
+  if (vec.size() < 3)
+  {
+    throw std::invalid_argument("not enough arg");
+  }
   std::string name = vec.front();
   auto it = ref.find(vec.front());
   vec.erase(vec.begin());
