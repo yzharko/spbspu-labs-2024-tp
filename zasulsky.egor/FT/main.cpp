@@ -60,8 +60,6 @@ int main()
     catch (...)
     {
       printInvCmd(std::cout);
-      std::cin.clear();
-      skipUntilNewLine(std::cin);
       continue;
     }
   }
