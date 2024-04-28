@@ -51,12 +51,6 @@ void CmdTree::doCommand(const std::string& cmd, dictOfDicts& ref, std::ostream& 
   function(ref, out);
 }
 
-void skipUntilNewLine(std::istream& in)
-{
-  auto maxstream = std::numeric_limits< std::streamsize >::max();
-  in.ignore(maxstream, '\n');
-}
-
 std::ostream& printInvCmd(std::ostream& out)
 {
   return out << "<INVALID COMMAND>\n";

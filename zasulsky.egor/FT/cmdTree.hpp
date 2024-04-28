@@ -33,6 +33,5 @@ public:
 };
 
 std::ostream& printInvCmd(std::ostream& out);
-void skipUntilNewLine(std::istream& in);
 
 #endif
