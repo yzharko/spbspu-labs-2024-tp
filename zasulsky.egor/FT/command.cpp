@@ -189,11 +189,19 @@ void intersect(dictOfDicts& ref, std::string str)
   {
     vec.push_back(i);
   }
+  if (vec.size() < 3)
+  {
+    throw std::invalid_argument("not enough arg");
+  }
   std::string name = vec.front();
   auto it = ref.find(vec.front());
   vec.erase(vec.begin());
   auto it2 = ref.find(vec.front());
   vec.erase(vec.begin());
+  if (it2 == ref.end())
+  {
+    throw std::invalid_argument("dictionary is empty");
+  }
   std::map<std::string, std::vector< std::string > > res;
   std::map<std::string, std::vector< std::string > > result;
   if (it != ref.end())
@@ -223,6 +231,10 @@ void intersect(dictOfDicts& ref, std::string str)
         }
       }
     }
+    else
+    {
+      throw std::logic_error("dictionary is empty");
+    }
   }
   if (it != ref.end())
   {
@@ -235,6 +247,7 @@ void intersect(dictOfDicts& ref, std::string str)
     resIt->second = result;
   }
 }
+
 void combination(dictOfDicts& ref, std::string str)
 {
   std::vector<std::string> vec;
@@ -248,6 +261,10 @@ void combination(dictOfDicts& ref, std::string str)
   vec.erase(vec.begin());
   auto it2 = ref.find(vec.front());
   vec.erase(vec.begin());
+  if (it2 == ref.end())
+  {
+    throw std::invalid_argument("dictionary is empty");
+  }
   std::map<std::string, std::vector< std::string > > res;
   std::map<std::string, std::vector< std::string > > result;
   if (it != ref.end())
@@ -281,6 +298,10 @@ void combination(dictOfDicts& ref, std::string str)
         }
       }
     }
+    else
+    {
+      throw std::logic_error("dictionary is empty");
+    }
   }
   if (it != ref.end())
   {
@@ -293,6 +314,7 @@ void combination(dictOfDicts& ref, std::string str)
     resIt->second = result;
   }
 }
+
 void tag(dictOfDicts& ref, std::string str)
 {
   size_t fPos = str.find_first_of(" ");
