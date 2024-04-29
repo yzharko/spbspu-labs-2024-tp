@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <iterator>
 #include "DataStruct.hpp"
 
 int main()
