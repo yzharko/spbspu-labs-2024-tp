@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <limits>
-#include "figures.hpp"
+// #include <vector>
+#include "functions.hpp"
+#include "mapOfCommands.hpp"
 
 int main(int argc, char **argv)
 {
@@ -31,8 +33,7 @@ int main(int argc, char **argv)
   }
   while (!std::cin.eof())
   {
-    size_t counterOfPointers = 0;
-    std::string points = "";
-    std::getline(std::cin, points);
+    std::string command = "";
+    std::cin >> command;
   }
 }

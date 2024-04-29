@@ -87,3 +87,22 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
               std::ostream_iterator<Point>(out, " "));
   return out;
 }
+
+std::istream &mihalchenko::operator>>(std::istream &is, std::string &rhs)
+{
+  std::istream::sentry guard(is);
+  if (!guard)
+  {
+    return is;
+  }
+  std::string rez = "";
+  using del = DelimiterIO;
+  is >> rez >> del{' '};
+  rez += ';';
+  is >> rez;
+  if (is)
+  {
+    rhs = rez;
+  }
+  return is;
+}
