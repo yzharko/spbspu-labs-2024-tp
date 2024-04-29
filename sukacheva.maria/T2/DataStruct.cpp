@@ -64,7 +64,7 @@ namespace sukacheva {
     }
     else if (left.key2 != right.key2)
     {
-      return (abs(left.key2) < abs(right.key2));
+      return (left.key2 < right.key2);
     }
     else
     {
