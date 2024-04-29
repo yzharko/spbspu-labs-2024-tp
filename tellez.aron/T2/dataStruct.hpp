@@ -13,7 +13,6 @@ namespace tellez
   };
 
   std::istream& operator>>(std::istream& in, DataStruct& data);
-  std::istream& operator>>(std::istream& in, std::string& exp);
   std::ostream& operator<<(std::ostream& out, const DataStruct& value);
 }
 
