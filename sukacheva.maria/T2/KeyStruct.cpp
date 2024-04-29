@@ -30,5 +30,5 @@ std::istream& sukacheva::operator>>(std::istream& is, DblLit&& value)
   {
     return is;
   }
-  return is >> value.val;
+  return is >> value.val >> Delimeter{ 'd' };
 }
