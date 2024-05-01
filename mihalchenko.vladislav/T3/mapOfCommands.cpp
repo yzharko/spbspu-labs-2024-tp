@@ -1,8 +1,8 @@
 #include "mapOfCommands.hpp"
-#include "figures.hpp"
+// #include "figures.hpp"
 
 void mihalchenko::doCmdWithStrings(const std::string &cmd,
-                                   const std::vector< Polygon > &data,
+                                   const std::vector<Polygon> &data,
                                    std::ostream &out)
 {
   argString function = cmdWithStrings.at(cmd);
@@ -10,7 +10,7 @@ void mihalchenko::doCmdWithStrings(const std::string &cmd,
 }
 
 void mihalchenko::doCmdWithStringAndDigit(const std::string &cmd,
-                                          const std::vector< Polygon > &data,
+                                          const std::vector<Polygon> &data,
                                           int num,
                                           std::ostream &out)
 {
@@ -19,7 +19,7 @@ void mihalchenko::doCmdWithStringAndDigit(const std::string &cmd,
 }
 
 void mihalchenko::doCmdWithDigitAndPolygon(const std::string &cmd,
-                                           const std::vector< Polygon > &data,
+                                           const std::vector<Polygon> &data,
                                            const Polygon &pol,
                                            std::ostream &out)
 {

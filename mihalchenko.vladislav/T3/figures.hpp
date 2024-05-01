@@ -6,9 +6,9 @@
 #include <iterator>
 #include <string>
 #include <utility>
-#include <algorithm>
+// #include <algorithm>
 
-#include <functional>
+// #include <functional>
 #include <numeric>
 
 namespace mihalchenko
@@ -33,13 +33,16 @@ namespace mihalchenko
     std::pair<double, double> &ref;
   };
 
+  // size_t getSize(const Polygon& polygon);
+  // double sumArea(double area, const Point& startPoint);
+  // double countArea(const Polygon &polygon);
   std::istream &operator>>(std::istream &is, DelimiterIO &&exp);
   std::istream &operator>>(std::istream &is, Point &rhs);
   std::ostream &operator<<(std::ostream &out, const Point &rhs);
   std::istream &operator>>(std::istream &is, Polygon &rhs);
   std::ostream &operator<<(std::ostream &out, const Polygon &rhs);
-  std::istream &operator>>(std::istream &is, std::string &rhs);
-  bool operator==(const Polygon &lhs, const Polygon &rhs);
+  // std::istream &operator>>(std::istream &is, std::string &rhs);
+  // bool operator==(const Polygon &lhs, const Polygon &rhs);
 }
 
 #endif

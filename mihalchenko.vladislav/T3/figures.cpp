@@ -1,6 +1,30 @@
 #include "figures.hpp"
-#include <iostream>
+// #include <iostream>
 #include <algorithm>
+#include <cmath>
+
+/*size_t mihalchenko::getSize(const Polygon &polygon)
+{
+  return polygon.points.size();
+}
+
+double mihalchenko::sumArea(double area, const Point &startPoint)
+{
+  auto nextPoint = *std::next(&startPoint);
+  auto triangleArea = ((startPoint.x * nextPoint.y) - (nextPoint.x * startPoint.y));
+  auto newArea = area + triangleArea;
+  return newArea;
+}
+
+double mihalchenko::countArea(const Polygon &polygon)
+{
+  double area = std::accumulate(polygon.points.begin(), std::prev(polygon.points.end()), 0., mihalchenko::sumArea);
+  auto lhs = std::prev(polygon.points.end())->x * polygon.points.front().y;
+  auto rhs = polygon.points.front().x * std::prev(polygon.points.end())->y;
+  auto pmArea = lhs - rhs;
+  area = 0.5 * std::abs(area + pmArea);
+  return area;
+}*/
 
 std::istream &mihalchenko::operator>>(std::istream &is, DelimiterIO &&exp)
 {
@@ -84,11 +108,11 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
   out << counterOfPoints;
   std::copy_n(rhs.points.begin(),
               counterOfPoints - 1,
-              std::ostream_iterator<Point>(out, " "));
-  return out;
+              std::ostream_iterator<Point>(out << ' ', " "));
+  return out; // << rhs.points.back();
 }
 
-std::istream &mihalchenko::operator>>(std::istream &is, std::string &rhs)
+/*std::istream &mihalchenko::operator>>(std::istream &is, std::string &rhs)
 {
   std::istream::sentry guard(is);
   if (!guard)
@@ -105,4 +129,14 @@ std::istream &mihalchenko::operator>>(std::istream &is, std::string &rhs)
     rhs = rez;
   }
   return is;
-}
+}*/
+
+/*bool mihalchenko::operator==(const Polygon& lhs, const Polygon& rhs)
+{
+  auto firstLhs = lhs.points.begin();
+  auto lastLhs = lhs.points.end();
+  auto firstRhs = rhs.points.begin();
+  auto lastRhs = rhs.points.end();
+  bool result = std::equal(firstLhs, lastLhs, firstRhs, lastRhs);
+  return result;
+}*/

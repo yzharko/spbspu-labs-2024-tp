@@ -3,7 +3,7 @@
 
 #include <map>
 #include <functional>
-#include <vector>
+// #include <vector>
 // #include <string>
 #include "functions.hpp"
 
@@ -30,6 +30,8 @@ namespace mihalchenko
                                 const std::vector< Polygon > &data,
                                 const Polygon &pol,
                                 std::ostream &out);
+
+  // using namespace std::placeholders;
 }
 
 #endif
