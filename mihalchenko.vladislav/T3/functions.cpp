@@ -5,8 +5,8 @@
 // #include <stdexcept>
 #include <numeric>
 #include <algorithm>
-// #include <functional>
-#include "mapOfCommands.hpp"
+#include <functional>
+// #include "mapOfCommands.hpp"
 
 // using namespace mihalchenko;
 using namespace std::placeholders;

@@ -33,9 +33,6 @@ namespace mihalchenko
     std::pair<double, double> &ref;
   };
 
-  // size_t getSize(const Polygon& polygon);
-  // double sumArea(double area, const Point& startPoint);
-  // double countArea(const Polygon &polygon);
   std::istream &operator>>(std::istream &is, DelimiterIO &&exp);
   std::istream &operator>>(std::istream &is, Point &rhs);
   std::ostream &operator<<(std::ostream &out, const Point &rhs);

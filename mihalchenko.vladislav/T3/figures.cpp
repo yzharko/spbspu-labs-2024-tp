@@ -3,29 +3,6 @@
 #include <algorithm>
 #include <cmath>
 
-/*size_t mihalchenko::getSize(const Polygon &polygon)
-{
-  return polygon.points.size();
-}
-
-double mihalchenko::sumArea(double area, const Point &startPoint)
-{
-  auto nextPoint = *std::next(&startPoint);
-  auto triangleArea = ((startPoint.x * nextPoint.y) - (nextPoint.x * startPoint.y));
-  auto newArea = area + triangleArea;
-  return newArea;
-}
-
-double mihalchenko::countArea(const Polygon &polygon)
-{
-  double area = std::accumulate(polygon.points.begin(), std::prev(polygon.points.end()), 0., mihalchenko::sumArea);
-  auto lhs = std::prev(polygon.points.end())->x * polygon.points.front().y;
-  auto rhs = polygon.points.front().x * std::prev(polygon.points.end())->y;
-  auto pmArea = lhs - rhs;
-  area = 0.5 * std::abs(area + pmArea);
-  return area;
-}*/
-
 std::istream &mihalchenko::operator>>(std::istream &is, DelimiterIO &&exp)
 {
   std::istream::sentry guard(is);
