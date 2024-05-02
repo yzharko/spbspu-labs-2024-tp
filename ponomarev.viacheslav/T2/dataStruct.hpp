@@ -20,9 +20,9 @@ namespace ponomarev
     std::string key3;
   };
 
-  std::istream &operator>>(std::istream &in, DataStruct &dest);
-  std::ostream &operator<<(std::ostream &out, const DataStruct &dest);
-  bool operator<(const DataStruct & lhs, const DataStruct & rhs);
+  std::istream &operator>>(std::istream &in, yaDataStruct &dest);
+  std::ostream &operator<<(std::ostream &out, const yaDataStruct &dest);
+  bool operator<(const yaDataStruct & lhs, const yaDataStruct & rhs);
 }
 
 #endif

@@ -4,7 +4,7 @@
 #include "iofmtguard.hpp"
 #include <iomanip>
 
-std::istream &ponomarev::operator>>(std::istream &in, DataStruct &dest)
+std::istream &ponomarev::operator>>(std::istream &in, yaDataStruct &dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
@@ -12,20 +12,21 @@ std::istream &ponomarev::operator>>(std::istream &in, DataStruct &dest)
     return in;
   }
 
-  DataStruct input;
+  yaDataStruct input;
   {
     using sep = DelimiterIO;
     using dbl = DoubleIO;
     using lolo = LongLongIO;
     using str = StringIO;
+    using pair = PairIO;
     std::string typeOfKey = "key3";
     in >> sep{ '(' };
 
     for (size_t i = 0; i < 3; i++)
     {
-      if (typeOfKey == "key3")
+      if (typeOfKey == "key3" || typeOfKey == "key2")
       {
-        std::getline(in >> DelimiterIO{ ':' }, typeOfKey, ' ');
+        std::getline(in >> sep{ ':' }, typeOfKey, ' ');
       }
       else
       {
@@ -34,11 +35,11 @@ std::istream &ponomarev::operator>>(std::istream &in, DataStruct &dest)
 
       if (typeOfKey == "key1")
       {
-        in >> dbl{ input.key1 };
+        in >> lolo{ input.key2 };
       }
       else if (typeOfKey == "key2")
       {
-        in >> lolo{ input.key2 };
+        in >> pair{ input.key4 };
       }
       else if (typeOfKey == "key3")
       {
@@ -69,7 +70,7 @@ std::istream &ponomarev::operator>>(std::istream &in, DataStruct &dest)
   return in;
 }
 
-std::ostream &ponomarev::operator<<(std::ostream &out, const DataStruct &src)
+std::ostream &ponomarev::operator<<(std::ostream &out, const yaDataStruct &src)
 {
   std::ostream::sentry sentry(out);
   if (!sentry)
@@ -79,22 +80,22 @@ std::ostream &ponomarev::operator<<(std::ostream &out, const DataStruct &src)
   iofmtguard fmtguard(out);
 
   out << "(:";
-  out << "key1 " << src.key1 << ":";
-  out << "key2 " << "0b" << src.key2 << ":";
+  out << "key1 " << "0b" << src.key2 << ":";
+  out << "key2 (:N " << src.key4.first << ":D " << src.key4.second << ":):";
   out << "key3 " << '"' << src.key3 << '"';
   out << ":)";
   return out;
 }
 
-bool ponomarev::operator<(const DataStruct & left, const DataStruct & right)
+bool ponomarev::operator<(const yaDataStruct & left, const yaDataStruct & right)
 {
-  if (left.key1 != right.key1)
+  if (left.key2 != right.key2)
   {
-    return (std::stod(left.key1) < std::stod(right.key1));
+    return (std::stoll(left.key2) < std::stoll(right.key2));
   }
-  else if (left.key2 != right.key2)
+  else if (left.key4 != right.key4)
   {
-    return (std::stoull(left.key2) < std::stoull(right.key2));
+    return (left.key2 < right.key2);
   }
   return (left.key3.length() < right.key3.length());
 }

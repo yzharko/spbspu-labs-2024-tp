@@ -8,6 +8,7 @@ std::istream &ponomarev::operator>>(std::istream &in, DelimiterIO &&dest)
   {
     return in;
   }
+
   char c = '0';
   in >> c;
   if (tolower(c) != dest.exp)
