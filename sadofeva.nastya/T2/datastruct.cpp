@@ -126,14 +126,14 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
   double numberDouble = src.key1;
   if (numberDouble < 1 && numberDouble != 0)
   {
-    for (numberDouble < 1; e--)
+    for (; numberDouble < 1; e--)
     {
       numberDouble *= 10;
     }
   }
   else
   {
-    for (numberDouble > 9; e++)
+    for (; numberDouble > 9; e++)
     {
       numberDouble /= 10;
     }
