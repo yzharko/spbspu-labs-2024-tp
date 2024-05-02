@@ -10,6 +10,12 @@ bool DataStruct::operator<(const DataStruct& other) const
 
 std::istream& operator>>(std::istream& is, DataStruct& ds)
 {
+  std::istream::sentry guard(is);
+  if (!guard)
+  {
+    return is;
+  }
+
   bool key1 = false;
   bool key2 = false;
 
@@ -59,6 +65,12 @@ std::istream& operator>>(std::istream& is, DataStruct& ds)
 
 std::ostream& operator<<(std::ostream& os, const DataStruct& ds)
 {
+  std::ostream::sentry guard(os);
+  if (!guard)
+  {
+    return os;
+  }
+
   if (ds.key3.empty())
   {
     return os;
