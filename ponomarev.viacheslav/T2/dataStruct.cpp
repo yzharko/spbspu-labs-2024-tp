@@ -94,7 +94,7 @@ bool ponomarev::operator<(const yaDataStruct & left, const yaDataStruct & right)
   }
   else if (left.key4 != right.key4)
   {
-    return (left.key2 < right.key2);
+    return (left.key4 < right.key4);
   }
   return (left.key3.length() < right.key3.length());
 }
