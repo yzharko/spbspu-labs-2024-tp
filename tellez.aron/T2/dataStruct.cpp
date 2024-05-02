@@ -1,7 +1,7 @@
+#include <iomanip>
 #include "dataStruct.hpp"
 #include "delimeter.hpp"
 #include "value.hpp"
-#include <iomanip>
 
 std::istream& tellez::operator>>(std::istream& in, DataStruct& data)
 {
