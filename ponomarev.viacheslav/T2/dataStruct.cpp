@@ -15,7 +15,6 @@ std::istream &ponomarev::operator>>(std::istream &in, yaDataStruct &dest)
   yaDataStruct input;
   {
     using sep = DelimiterIO;
-    using dbl = DoubleIO;
     using lolo = LongLongIO;
     using str = StringIO;
     using pair = PairIO;
