@@ -1,4 +1,5 @@
 #include "delimeter.hpp"
+#include <istream>
 
 std::istream& tellez::operator>>(std::istream& in, Delimeterchar&& exp)
 {
