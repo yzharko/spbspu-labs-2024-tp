@@ -51,7 +51,7 @@ std::istream &ponomarev::operator>>(std::istream &in, yaDataStruct &dest)
       }
     }
 
-    if ((typeOfKey == "key3"))
+    if ((typeOfKey == "key3") || (typeOfKey == "key2"))
     {
       in >> sep{ ':' };
       in >> sep{ ')' };
