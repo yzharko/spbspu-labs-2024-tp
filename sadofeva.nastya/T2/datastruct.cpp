@@ -133,7 +133,7 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
   }
   else
   {
-    for (numberDouble > 0; e++)
+    for (numberDouble > 9; e++)
     {
       numberDouble /= 10;
     }
