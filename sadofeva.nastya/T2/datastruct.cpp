@@ -126,20 +126,20 @@ std::ostream & sadofeva::operator<<(std::ostream & out, const sadofeva::DataStru
   double numberDouble = src.key1;
   if (numberDouble < 1 && numberDouble != 0)
   {
-    for ( nummberDouble < 1; e--)
+    for (numberDouble < 1; e--)
     {
       numberDouble *= 10;
     }
   }
   else
   {
-    for (numberDouble > 0;e++)
+    for (numberDouble > 0; e++)
     {
       numberDouble /= 10;
     }
   }
   out << std::fixed << std::setprecision(1);
-  out << numberDouble << 'e' << std:showpos << e;
+  out << numberDouble << 'e' << std::showpos << e;
   out << ":key2 0x" << std::hex << std::uppercase << src.key2;
   out << ":key3" << " \"" << src.key3 << "\":)";
   return out;
