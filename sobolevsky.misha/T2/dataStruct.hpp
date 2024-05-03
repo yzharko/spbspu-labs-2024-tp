@@ -1,7 +1,7 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 
-#include "helpStructs.hpp"
+#include "../common/helpStructs.hpp"
 
 namespace sobolevsky
 {
