@@ -1,5 +1,5 @@
-#include <iomanip>
 #include "dataStruct.hpp"
+#include <iomanip>
 #include "delimeter.hpp"
 #include "value.hpp"
 
