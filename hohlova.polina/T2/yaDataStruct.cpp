@@ -68,11 +68,4 @@ namespace hohlova
   {
     return (lhs.key1 < rhs.key1 || abs(lhs.key2) < abs(rhs.key2) || lhs.key3.size() < rhs.key3.size());
   }
-
-  bool operator<(const std::pair<sll, ull>& leftReal, const std::pair<sll, ull>& rightReal)
-  {
-    const double val1 = static_cast<double>(leftReal.first) / leftReal.second;
-    const double val2 = static_cast<double>(rightReal.first) / rightReal.second;
-    return val1 < val2;
-  }
 }

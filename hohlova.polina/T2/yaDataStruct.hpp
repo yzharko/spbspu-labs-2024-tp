@@ -18,7 +18,6 @@ namespace hohlova
   std::ostream& operator<<(std::ostream& out, const Data& dest);
 
   bool operator<(const Data& lhs, const Data& rhs);
-  bool operator<(const real& leftReal, const real& rightReal);
 };
 
 #endif
