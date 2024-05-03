@@ -10,6 +10,7 @@ namespace psarev
   double plusArea(Polygon& poly, double summed);
 
   double sumEvenAreas(Polygon& poly, double summed);
+  double sumOddAreas(Polygon& poly, double summed);
 
   //double sumAreasIfOdd(double res, const Polygon& shape);
   //double sumAreasIfEqual(double res, const Polygon& shape, size_t numOfVertexes);
