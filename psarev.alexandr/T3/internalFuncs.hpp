@@ -14,18 +14,14 @@ namespace psarev
   size_t getSpecVerts(size_t summed, Polygon& poly, size_t& numVerts);
 
   bool isDigit(const std::string& str);
+  bool isRect(Polygon& poly);
 
   double plusArea(double summed, Polygon& poly);
   double plusEvenArea(double summed, Polygon& poly);
   double plusOddArea(double summed, Polygon& poly);
-  double plusSameArea(double summed, Polygon& poly, size_t numOfVerts);
+  double plusSameArea(double summed, Polygon& poly, size_t& numVerts);
 
-  //double sumAreasIfOdd(double res, const Polygon& shape);
-  //double sumAreasIfEqual(double res, const Polygon& shape, size_t numOfVertexes);
-  //int getNumOfVertexes(const Polygon& shape);
-  //bool isNumOfVertexesEven(const Polygon shape);
-  //bool isNumOfVertexesOdd(const Polygon shape);
-  //bool isNumOfVertexesEqual(const Polygon shape, size_t numOfVertexes);
+  size_t getRects(size_t summed, Polygon& poly);
 }
 
 #endif

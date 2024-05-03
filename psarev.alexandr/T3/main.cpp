@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
     cmds["MAX"] = std::bind(psarev::chooseMaxOpt, _1, _2, _3);
     cmds["MIN"] = std::bind(psarev::chooseMinOpt, _1, _2, _3);
     cmds["COUNT"] = std::bind(psarev::chooseCountOpt, _1, _2, _3);
+    cmds["RECTS"] = std::bind(psarev::countRects, _1, _2, _3);
     //cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
   }
 

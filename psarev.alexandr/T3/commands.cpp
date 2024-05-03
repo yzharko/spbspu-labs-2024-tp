@@ -111,25 +111,31 @@ std::ostream& psarev::chooseCountOpt(std::vector< Polygon >& polyVec, std::istre
 
 using namespace std::placeholders;
 
+std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+{
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getRects, _1, _2)) << '\n';
+  return out;
+}
+
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _1, _2)) << '\n';
 }
 
 void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _1, _2)) << '\n';
 }
 
 void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
   double areaSum = std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusArea, _1, _2)) << '\n';
-  std::cout << areaSum / polyVec.size();
+  out << areaSum / polyVec.size();
 }
 
 void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
 
 void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)

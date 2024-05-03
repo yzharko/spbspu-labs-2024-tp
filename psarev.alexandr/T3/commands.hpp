@@ -10,6 +10,7 @@ namespace psarev
   std::ostream& chooseMaxOpt(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out);
   std::ostream& chooseMinOpt(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out);
   std::ostream& chooseCountOpt(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out);
+  std::ostream& countRects(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out);
 
   void getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out);
   void getOddArea(std::vector< Polygon >& polyVec, std::ostream& out);

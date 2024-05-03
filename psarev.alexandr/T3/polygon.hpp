@@ -29,8 +29,6 @@ namespace psarev
   };
 
   std::istream& operator>>(std::istream& in, Polygon& figure);
-  //std::ostream& operator<<(std::ostream& out, const Polygon& figure);
-  //bool operator<(const Polygon& fFigure, const Polygon& sFigure);
 }
 
 #endif
