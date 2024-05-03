@@ -5,10 +5,11 @@
 
 namespace psarev
 {
-  void areaOdd(Polygon&, std::istream&, std::ostream& out);
-  void areaEven(int&, std::istream&, std::ostream& out);
-  void areaMean(int&, std::istream&, std::ostream& out);
-  void areaNumOfVerts(int&, std::istream&, std::ostream& out);
+  std::ostream& chooseAreaType(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out);
+  double getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out);
+  double getOddArea(std::vector< Polygon >& polyVec);
+  double getMeanArea(std::vector< Polygon >& polyVec);
+  double getNoVArea(std::vector< Polygon >& polyVec, int verts);
 }
 
 #endif

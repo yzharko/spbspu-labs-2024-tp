@@ -1,6 +1,5 @@
+#include <iostream>
 #include "polygon.hpp"
-#include "taskTypes.hpp"
-#include "delim.hpp"
 #include "scopeGuard.hpp"
 
 using delim = psarev::DelimiterIO;
@@ -36,10 +35,30 @@ std::istream& psarev::operator>>(std::istream& in, Polygon& data)
   return in;
 }
 
-//std::ostream& psarev::operator<<(std::ostream& out, const Polygon& data)
-//{
-//}
+std::istream& psarev::operator>>(std::istream& in, DelimiterIO&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  char c = '0';
+  in >> c;
+  if (in && (c != dest.exp))
+  {
+    in.setstate(std::ios::failbit);
+  }
+  return in;
+}
 
-//bool psarev::operator<(const Polygon& first, const Polygon& second)
-//{
-//}
+using delim = psarev::DelimiterIO;
+
+std::istream& psarev::operator>>(std::istream& in, intIO&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  return in >> dest.ref;
+}

@@ -36,10 +36,10 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function < void(std::istream&, std::ostream&) > > cmds;
   {
     using namespace std::placeholders;
-    cmds["AREA1"] = std::bind(psarev::areaOdd, polyVec[0], _1, _2);
-    cmds["AREA2"] = std::bind(psarev::areaEven, context, _1, _2);
-    cmds["AREA3"] = std::bind(psarev::areaMean, context, _1, _2);
-    cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
+    cmds["AREA"] = std::bind(psarev::areaOdd, polyVec[0], _1, _2, _3);
+    //cmds["AREA2"] = std::bind(psarev::areaEven, context, _1, _2);
+    //cmds["AREA3"] = std::bind(psarev::areaMean, context, _1, _2);
+    //cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
   }
 
   std::string cmd;
