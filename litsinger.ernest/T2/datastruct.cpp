@@ -2,6 +2,8 @@
 #include "dataTypes.hpp"
 #include "delimiters.hpp"
 #include "scopeguard.hpp"
+#include <string>
+#include <iostream>
 
 std::istream& litsinger::operator>>(std::istream& is, litsinger::DataStruct& value)
 {
