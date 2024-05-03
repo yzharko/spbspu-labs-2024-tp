@@ -17,10 +17,13 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
 
   //}
 }
+
+using namespace std::placeholders;
+
 double psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  double sumAreas = (polyVec.points.size() % 2 == 0) ? res + countArea(shape) : res;
-  double result = std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(sumAreasIfEven, _1, _2));
+  double result = std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(sumEvenAreas, _1, _2));
+  return result;
 }
 
 //void psarev::areaMean(int&, std::istream&, std::ostream& out)

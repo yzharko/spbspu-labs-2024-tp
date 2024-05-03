@@ -8,6 +8,8 @@ namespace psarev
   double getArea(Polygon& poly);
   int getInterValue(Point& ptOne, Point& ptTwo);
   double plusArea(Polygon& poly, double summed);
+
+  double sumEvenAreas(Polygon& poly, double summed);
   double sumAreasIfEven(double res, const Polygon& shape);
   double sumAreasIfOdd(double res, const Polygon& shape);
   double sumAreasIfEqual(double res, const Polygon& shape, size_t numOfVertexes);

@@ -15,10 +15,22 @@ double psarev::getArea(Polygon& poly)
 
 int psarev::getInterValue(Point& ptOne, Point& ptTwo)
 {
-  return ptOne.x * ptTwo.y - ptOne.y * ptTwo.x;
+  return (ptOne.x * ptTwo.y) - (ptOne.y * ptTwo.x);
 }
 
 double psarev::plusArea(Polygon& poly, double summed)
 {
-  return res + countArea(shape);
+  return getArea(poly) + summed;
+}
+
+double psarev::sumEvenAreas(Polygon& poly, double summed)
+{
+  if (poly.points.size() % 2 == 0)
+  {
+    return plusArea(poly, summed);
+  }
+  else
+  {
+    return summed;
+  }
 }
