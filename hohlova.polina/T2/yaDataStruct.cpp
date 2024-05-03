@@ -54,10 +54,10 @@ namespace hohlova
     }
     iofmtguard fmtguard(out);
     out << "(:";
-    out << "key1 " << src.key1.first << ":D" << src.key1.second << ":)";
+    out << "key1 " << src.key1.first << ":D " << src.key1.second << ":)";
     out << ":";
     out << "key2 "
-      << "#c( " << std::fixed << std::setprecision(1) << src.key2.real() << " "<< src.key2.imag() << ")";
+      << "#c(" << std::fixed << std::setprecision(1) << src.key2.real() << " "<< src.key2.imag() << ")";
     out << ":";
     out << "key3 \"" << src.key3 << "\"";
     out << ":)";
