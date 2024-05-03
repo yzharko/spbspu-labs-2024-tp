@@ -1,4 +1,5 @@
 #include "value.hpp"
+#include <istream>
 
 std::string removeZeros(std::string str)
 {
