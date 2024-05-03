@@ -22,16 +22,6 @@ namespace hohlova
     return in;
   }
 
-  std::istream& operator>>(std::istream& in, StringIO&& dest)
-  {
-    std::istream::sentry sentry(in);
-    if (!sentry)
-    {
-      return in;
-    }
-    return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
-  }
-
   std::istream& operator>>(std::istream& in, ComplexIO&& dest)
   {
     std::istream::sentry guard(in);
@@ -41,12 +31,23 @@ namespace hohlova
     }
     double re = 0;
     double im = 0;
-    in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >> re >> im >> DelimiterIO{ ')' };
+    in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >> re >
     if (in)
     {
       dest.ref.real(re);
       dest.ref.imag(im);
     }
     return in;
+  }
+
+
+  std::istream& operator>>(std::istream& in, StringIO&& dest)
+  {
+    std::istream::sentry sentry(in);
+    if (!sentry)
+    {
+      return in;
+    }
+    return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
 }

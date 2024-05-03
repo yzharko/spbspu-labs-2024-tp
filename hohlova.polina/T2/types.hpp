@@ -13,19 +13,19 @@ namespace hohlova
     real& ref;
   };
 
-  struct StringIO
-  {
-    std::string& ref;
-  };
-
   struct ComplexIO
   {
     std::complex< double >& ref;
   };
 
+  struct StringIO
+  {
+    std::string& ref;
+  };
+
   std::istream& operator>>(std::istream& in, RealIO&& dest);
+  std::istream& operator>>(sta::istream& in, ComplexIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
-  std::istream& operator>>(std::istream& in, ComplexIO&& dest);
 }
 
 #endif
