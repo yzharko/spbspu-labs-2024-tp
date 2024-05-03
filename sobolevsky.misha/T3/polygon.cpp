@@ -16,7 +16,11 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
     in.setstate(std::ios::failbit);
     return in;
   }
-  std::cout << "penis\n";
-  std::copy(std::istream_iterator< sobolevsky::Point >(in), std::istream_iterator< sobolevsky::Point >(), std::back_inserter(polygon.points));
+  for(size_t i = 0; i < vertexCount; i++)
+  {
+    sobolevsky::Point temp;
+    in >> temp;
+    polygon.points.push_back(temp);
+  }
   return in;
 }

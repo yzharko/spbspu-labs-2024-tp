@@ -11,6 +11,5 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Point& point)
   }
   using del = sobolevsky::Delimitr_;
   in >> del{'('} >> point.x >> del{';'} >> point.y >> del{')'};
-  std::cout << point.x << ":" << point.y << "\n";
   return in;
 }

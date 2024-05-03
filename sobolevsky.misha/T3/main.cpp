@@ -4,6 +4,7 @@
 #include <limits>
 #include <functional>
 #include <iterator>
+#include "commands.hpp"
 #include "point.hpp"
 #include "polygon.hpp"
 
@@ -24,7 +25,6 @@ int main(int argc, char* argv[])
   std::vector< sobolevsky::Polygon > polygons;
   while (!file.eof())
   {
-    std::cout << "test\n";
     if (file.fail())
     {
       file.clear();
@@ -33,5 +33,22 @@ int main(int argc, char* argv[])
     std::copy(std::istream_iterator< sobolevsky::Polygon >(file), std::istream_iterator< sobolevsky::Polygon >(), std::back_inserter(polygons));
   }
 
-  std::cout << polygons.size() << "\n";
+  std::map< std::string, std::function < void(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out) > > cmds;
+  cmds["AREA"] = sobolevsky::area;
+  cmds["MAX"] = sobolevsky::max;
+  cmds["MIN"] = sobolevsky::min;
+  cmds["COUNT"] = sobolevsky::count;
+  std::string cmd;
+  while (std::cin >> cmd)
+  {
+    try
+    {
+      cmds.at(cmd)(polygons, std::cin, std::cout);
+    }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    
+  }
 }
