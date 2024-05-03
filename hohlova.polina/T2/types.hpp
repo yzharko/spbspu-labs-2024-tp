@@ -26,7 +26,7 @@ namespace hohlova
   struct ComplexIO
   {
     std::complex< double >& ref;
-  }
+  };
   std::istream& operator>>(std::istream& in, DoubleIO&& dest);
   std::istream& operator>>(std::istream& in, RealIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
