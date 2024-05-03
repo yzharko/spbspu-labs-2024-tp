@@ -1,8 +1,28 @@
 #include "commands.hpp"
+#include <map>
+#include <cctype>
+#include <functional>
 
 void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
 {
-  out << "area\n";
+  std::string arg;
+  in >> arg;
+  if (arg == "EVEN")
+  {
+    
+  }
+  else if (arg == "ODD")
+  {
+
+  }
+  else if (arg == "MEAN")
+  {
+    
+  }
+  else
+  {
+
+  }
 }
 
 void sobolevsky::max(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)

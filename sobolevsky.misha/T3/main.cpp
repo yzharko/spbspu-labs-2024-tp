@@ -33,6 +33,8 @@ int main(int argc, char* argv[])
     std::copy(std::istream_iterator< sobolevsky::Polygon >(file), std::istream_iterator< sobolevsky::Polygon >(), std::back_inserter(polygons));
   }
 
+  std::cout << polygons[0].getArea() << "\n";
+
   std::map< std::string, std::function < void(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out) > > cmds;
   cmds["AREA"] = sobolevsky::area;
   cmds["MAX"] = sobolevsky::max;
@@ -45,9 +47,9 @@ int main(int argc, char* argv[])
     {
       cmds.at(cmd)(polygons, std::cin, std::cout);
     }
-    catch(const std::exception& e)
+    catch(const std::out_of_range&)
     {
-      std::cerr << e.what() << '\n';
+      std::cerr << "<INVALID COMMAND>\n";
     }
     
   }
