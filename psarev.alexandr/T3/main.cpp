@@ -30,14 +30,13 @@ int main(int argc, char* argv[])
     }
   }
 
-  int context = 0;
-
   std::map< std::string, std::function < std::ostream& (std::vector < psarev::Polygon >&, std::istream&, std::ostream&) > > cmds;
   {
     using namespace std::placeholders;
     cmds["AREA"] = std::bind(psarev::chooseAreaType, _1, _2, _3);
-    //cmds["AREA2"] = std::bind(psarev::areaEven, context, _1, _2);
-    //cmds["AREA3"] = std::bind(psarev::areaMean, context, _1, _2);
+    cmds["MAX"] = std::bind(psarev::chooseMaxOpt, _1, _2, _3);
+    cmds["MIN"] = std::bind(psarev::chooseMinOpt, _1, _2, _3);
+    //cmds["COUNT"] = std::bind(psarev::chooseCountOpt, _1, _2, _3);
     //cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
   }
 
@@ -48,9 +47,10 @@ int main(int argc, char* argv[])
     {
       cmds.at(cmd)(polyVec, std::cin, std::cout);
     }
-    catch (const std::overflow_error& e)
+    catch (const std::logic_error& e)
     {
       std::cerr << e.what() << "\n";
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
     catch (const std::out_of_range&)
     {

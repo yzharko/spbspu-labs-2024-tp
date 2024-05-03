@@ -7,6 +7,8 @@ namespace psarev
 {
   double getArea(Polygon& poly);
   int getInterValue(Point& ptOne, Point& ptTwo);
+  size_t getNumVerts(Polygon& poly);
+
   bool isDigit(const std::string& str);
 
   double plusArea(double summed, Polygon& poly);

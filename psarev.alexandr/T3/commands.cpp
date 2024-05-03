@@ -32,8 +32,52 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
     }
     else
     {
-      throw std::overflow_error("<INVALID COMMAND>");
+      throw std::logic_error("<INVALID COMMAND>");
     }
+  }
+  return out;
+}
+
+std::ostream& psarev::chooseMaxOpt(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+{
+  std::string opt = "";
+  in >> opt;
+
+  if (opt == "AREA")
+  {
+    out << std::fixed << std::setprecision(1);
+    getMaxArea(polyVec, out);
+  }
+  else if (opt == "VERTEXES")
+  {
+    out << std::fixed << std::setprecision(0);
+    getMaxVerts(polyVec, out);
+  }
+  else
+  {
+    throw std::logic_error("<INVALID COMMAND>");
+  }
+  return out;
+}
+
+std::ostream& psarev::chooseMinOpt(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+{
+  std::string opt = "";
+  in >> opt;
+
+  if (opt == "AREA")
+  {
+    out << std::fixed << std::setprecision(1);
+    getMinArea(polyVec, out);
+  }
+  else if (opt == "VERTEXES")
+  {
+    out << std::fixed << std::setprecision(0);
+    getMinVerts(polyVec, out);
+  }
+  else
+  {
+    throw std::logic_error("<INVALID COMMAND>");
   }
   return out;
 }
@@ -61,11 +105,19 @@ void psarev::getAreaNumOfVerts(std::vector< Polygon >& polyVec, std::ostream& ou
   std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
 
-//void psarev::areaMean(int&, std::istream&, std::ostream& out)
-//{
-//  out << "AREA MEAN dispatched\n";
-//}
-//void psarev::areaNumOfVerts(int&, std::istream&, std::ostream& out)
-//{
-//  out << "AREA NOV dispatched\n";
-//}
+void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  std::vector< double > areaVec(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
+  double maxArea = *(std::max_element(areaVec.begin(), areaVec.end()));
+  out << maxArea << '\n';
+}
+
+void psarev::getMaxVerts(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  std::vector< int > numsVerts(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), std::bind(getNumVerts, _1));
+  int maxNum = *(std::max_element(numsVerts.begin(), numsVerts.end()));
+  out << maxNum << '\n';
+}
+

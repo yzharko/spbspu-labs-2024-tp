@@ -19,6 +19,23 @@ int psarev::getInterValue(Point& ptOne, Point& ptTwo)
   return (ptOne.x * ptTwo.y) - (ptOne.y * ptTwo.x);
 }
 
+size_t psarev::getNumVerts(Polygon& poly)
+{
+  return poly.points.size();
+}
+
+bool psarev::isDigit(const std::string& str)
+{
+  for (char c : str)
+  {
+    if (!std::isdigit(c))
+    {
+      return false;
+    }
+  }
+  return !str.empty();
+}
+
 double psarev::plusArea(double summed, Polygon& poly)
 {
   return getArea(poly) + summed;
@@ -60,14 +77,3 @@ double psarev::plusSameArea(double summed, Polygon& poly, size_t numOfVerts)
   }
 }
 
-bool psarev::isDigit(const std::string& str)
-{
-  for (char c : str)
-  {
-    if (!std::isdigit(c))
-    {
-      return false;
-    }
-  }
-  return !str.empty();
-}
