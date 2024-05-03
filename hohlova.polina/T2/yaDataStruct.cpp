@@ -66,6 +66,6 @@ namespace hohlova
 
   bool operator<(const Data& lhs, const Data& rhs)
   {
-    return (lhs.key1 < rhs.key1  abs(lhs.key2) < abs(rhs.key2)  lhs.key3.size() < rhs.key3.size());
+    return (lhs.key1 < rhs.key1 || abs(lhs.key2) < abs(rhs.key2) || lhs.key3.size() < rhs.key3.size());
   }
 }
