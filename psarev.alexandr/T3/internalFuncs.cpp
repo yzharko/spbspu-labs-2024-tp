@@ -10,7 +10,8 @@ double psarev::getArea(Polygon& poly)
 
   std::transform(++(poly.points.begin()), poly.points.end(), poly.points.begin(), interValues.begin(), std::bind(getInterValue, _1, _2));
   int area = std::accumulate(interValues.begin(), interValues.end(), 0);
-  return abs(area) / 2.0;
+  double result = abs(area) / 2.0;
+  return result;
 }
 
 int psarev::getInterValue(Point& ptOne, Point& ptTwo)
@@ -18,12 +19,12 @@ int psarev::getInterValue(Point& ptOne, Point& ptTwo)
   return (ptOne.x * ptTwo.y) - (ptOne.y * ptTwo.x);
 }
 
-double psarev::plusArea(Polygon& poly, double summed)
+double psarev::plusArea(double summed, Polygon& poly)
 {
   return getArea(poly) + summed;
 }
 
-double psarev::plusEvenArea(Polygon& poly, double summed)
+double psarev::plusEvenArea(double summed, Polygon& poly)
 {
   if (poly.points.size() % 2 == 0)
   {
@@ -35,7 +36,7 @@ double psarev::plusEvenArea(Polygon& poly, double summed)
   }
 }
 
-double psarev::plusOddArea(Polygon& poly, double summed)
+double psarev::plusOddArea(double summed, Polygon& poly)
 {
   if (poly.points.size() % 2 != 0)
   {
@@ -45,4 +46,28 @@ double psarev::plusOddArea(Polygon& poly, double summed)
   {
     return summed;
   }
+}
+
+double psarev::plusSameArea(double summed, Polygon& poly, size_t numOfVerts)
+{
+  if (poly.points.size() == numOfVerts)
+  {
+    return getArea(poly) + summed;
+  }
+  else
+  {
+    return summed;
+  }
+}
+
+bool psarev::isDigit(const std::string& str)
+{
+  for (char c : str)
+  {
+    if (!std::isdigit(c))
+    {
+      return false;
+    }
+  }
+  return !str.empty();
 }

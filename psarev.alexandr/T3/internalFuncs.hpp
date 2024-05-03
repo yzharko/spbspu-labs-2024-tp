@@ -7,10 +7,12 @@ namespace psarev
 {
   double getArea(Polygon& poly);
   int getInterValue(Point& ptOne, Point& ptTwo);
-  double plusArea(Polygon& poly, double summed);
+  bool isDigit(const std::string& str);
 
-  double plusEvenArea(Polygon& poly, double summed);
-  double plusOddArea(Polygon& poly, double summed);
+  double plusArea(double summed, Polygon& poly);
+  double plusEvenArea(double summed, Polygon& poly);
+  double plusOddArea(double summed, Polygon& poly);
+  double plusSameArea(double summed, Polygon& poly, size_t numOfVerts);
 
   //double sumAreasIfOdd(double res, const Polygon& shape);
   //double sumAreasIfEqual(double res, const Polygon& shape, size_t numOfVertexes);

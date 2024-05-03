@@ -3,7 +3,6 @@
 #include <limits>
 #include <fstream>
 #include <vector>
-#include <iostream>
 #include <iterator>
 #include <algorithm>
 #include "polygon.hpp"
@@ -48,6 +47,10 @@ int main(int argc, char* argv[])
     try
     {
       cmds.at(cmd)(polyVec, std::cin, std::cout);
+    }
+    catch (const std::overflow_error& e)
+    {
+      std::cerr << e.what() << "\n";
     }
     catch (const std::out_of_range&)
     {

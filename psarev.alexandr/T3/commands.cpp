@@ -4,6 +4,7 @@
 #include <numeric>
 #include <algorithm>
 #include <iomanip>
+#include <string>
 
 std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
 {
@@ -19,6 +20,21 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
   {
     getOddArea(polyVec, out);
   }
+  else if (type == "MEAN")
+  {
+    getMeanArea(polyVec, out);
+  }
+  else
+  {
+    if (isDigit(type)) {
+      size_t numOfVerts = std::stoi(type);
+      getAreaNumOfVerts(polyVec, out, numOfVerts);
+    }
+    else
+    {
+      throw std::overflow_error("<INVALID COMMAND>");
+    }
+  }
   return out;
 }
 
@@ -26,17 +42,23 @@ using namespace std::placeholders;
 
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _2, _1)) << '\n';
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _1, _2)) << '\n';
 }
 
 void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _2, _1)) << '\n';
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _1, _2)) << '\n';
 }
 
 void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusArea, _2, _1)) << '\n';
+  double areaSum = std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusArea, _1, _2)) << '\n';
+  std::cout << areaSum / polyVec.size();
+}
+
+void psarev::getAreaNumOfVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
+{
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
 
 //void psarev::areaMean(int&, std::istream&, std::ostream& out)
