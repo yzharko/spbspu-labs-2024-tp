@@ -13,3 +13,14 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Point& point)
   in >> del{'('} >> point.x >> del{';'} >> point.y >> del{')'};
   return in;
 }
+
+std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Point& point)
+{
+  std::ostream::sentry guard(out);
+  if (!guard)
+  {
+    return out;
+  }
+  out << '(' << point.x << ';' << point.y << ')';
+  return out;
+}

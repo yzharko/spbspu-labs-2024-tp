@@ -28,10 +28,10 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
 double sobolevsky::Polygon::getArea()
 {
   double area = 0;
-  std::cout << points.size() << "\n";
   for (int i = 0; i < points.size(); i++)
   {
-    if (i == points.size())
+    std::cout << points[i];
+    if (i == points.size() - 1)
     {
       area += (points[i].x * points[0].y - points[i].y * points[0].x);
     }

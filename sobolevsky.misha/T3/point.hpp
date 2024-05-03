@@ -10,6 +10,7 @@ namespace sobolevsky
   };
 
   std::istream& operator>>(std::istream& in, sobolevsky::Point& point);
+  std::ostream& operator<<(std::ostream& out, sobolevsky::Point& point);
 }
 
 #endif
