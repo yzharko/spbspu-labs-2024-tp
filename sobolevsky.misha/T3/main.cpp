@@ -33,7 +33,10 @@ int main(int argc, char* argv[])
     std::copy(std::istream_iterator< sobolevsky::Polygon >(file), std::istream_iterator< sobolevsky::Polygon >(), std::back_inserter(polygons));
   }
 
-  std::cout << polygons[0].getArea() << "\n";
+  for (int i = 0; i < polygons.size(); i++)
+  {
+    std::cout << polygons[i].points.size() << "\n";
+  }
 
   std::map< std::string, std::function < void(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out) > > cmds;
   cmds["AREA"] = sobolevsky::area;

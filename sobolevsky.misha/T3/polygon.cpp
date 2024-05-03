@@ -25,19 +25,18 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
   return in;
 }
 
-double sobolevsky::Polygon::getArea()
+double sobolevsky::getArea(const sobolevsky::Polygon& polygon)
 {
   double area = 0;
-  for (int i = 0; i < points.size(); i++)
+  for (int i = 0; i < polygon.points.size(); i++)
   {
-    std::cout << points[i];
-    if (i == points.size() - 1)
+    if (i == polygon.points.size() - 1)
     {
-      area += (points[i].x * points[0].y - points[i].y * points[0].x);
+      area += (polygon.points[i].x * polygon.points[0].y - polygon.points[i].y * polygon.points[0].x);
     }
     else
     {
-      area += (points[i].x * points[i+1].y - points[i].y * points[i+1].x);
+      area += (polygon.points[i].x * polygon.points[i+1].y - polygon.points[i].y * polygon.points[i+1].x);
     }
   }
   return 0.5 * abs(area);

@@ -9,10 +9,9 @@ namespace sobolevsky
   struct Polygon
   {
     std::vector< Point > points;
-
-    double getArea();
   };
 
+  double getArea(const sobolevsky::Polygon& polygon);
   std::istream& operator>>(std::istream& in, sobolevsky::Polygon& polygon);
 }
 
