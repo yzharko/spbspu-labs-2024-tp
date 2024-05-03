@@ -1,5 +1,5 @@
 #include "yaDataStruct.hpp"
-#include "delimeter.hpp"
+#include "delimiter.hpp"
 #include "iofmtguard.hpp"
 #include "types.hpp"
 
