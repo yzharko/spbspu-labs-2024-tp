@@ -31,7 +31,7 @@ namespace hohlova
     }
     double re = 0;
     double im = 0;
-    in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >> re >
+    in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >> re >> im >> DelimiterIO{ ')' };
     if (in)
     {
       dest.ref.real(re);
