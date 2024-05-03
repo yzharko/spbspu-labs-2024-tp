@@ -6,11 +6,9 @@
 
 namespace hohlova
 {
-  using ull = unsigned long long;
-
   struct Data
   {
-    ull key1;
+    unsigned long long key1;
     std::complex< double > key2;
     std::string key3;
   };
