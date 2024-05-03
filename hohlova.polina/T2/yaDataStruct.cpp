@@ -5,7 +5,7 @@
 
 namespace hohlova
 {
-  using rl = RealIO;
+  using ull = ULLIO;
   using str = StringIO;
   using sep = DelimiterIO;
   using label = LabelIO;
@@ -26,7 +26,7 @@ namespace hohlova
       in >> sep{ ':' } >> currentKey;
       if (currentKey == "key1")
       {
-        in >> rl{ input.key1 };
+        in >> ull{ input.key1 };
       }
       else if (currentKey == "key2")
       {
@@ -54,7 +54,7 @@ namespace hohlova
     }
     iofmtguard fmtguard(out);
     out << "(:";
-    out << "key1 " << src.key1.first << ":D " << src.key1.second << ":)";
+    out << "key1 0x" << std::uppercase << std::hex << src.key1 << ":)";
     out << ":";
     out << "key2 "
       << "#c(" << std::fixed << std::setprecision(1) << src.key2.real() << " "<< src.key2.imag() << ")";

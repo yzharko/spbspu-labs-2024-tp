@@ -7,19 +7,14 @@ namespace hohlova
   using sep = DelimiterIO;
   using label = LabelIO;
 
-  std::istream& operator>>(std::istream& in, RealIO&& dest)
+  std::istream& operator>>(std::istream& in, ULLIO&& dest)
   {
     std::istream::sentry sentry(in);
     if (!sentry)
     {
       return in;
     }
-    in >> sep{ '(' } >> sep{ ':' } >> label{ "N" };
-    in >> dest.ref.first;
-    in >> sep{ ':' } >> label{ "D" };
-    in >> dest.ref.second;
-    in >> sep{ ':' } >> sep{ ')' };
-    return in;
+    return in >> std::hex >> dest.ref;
   }
 
   std::istream& operator>>(std::istream& in, ComplexIO&& dest)

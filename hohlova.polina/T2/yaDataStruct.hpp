@@ -6,13 +6,11 @@
 
 namespace hohlova
 {
-  using real = std::pair<long long, unsigned long long>;
-  using sll = long long;
   using ull = unsigned long long;
 
   struct Data
   {
-    real key1;
+    ull key1;
     std::complex< double > key2;
     std::string key3;
   };
