@@ -10,9 +10,9 @@
 
 int main(int argc, char* argv[])
 {
-  /*std::ifstream input(argv[1]);*/
-  std::ifstream input;
-  input.open("./x64/Debug/inputT2.txt");
+  std::ifstream input(argv[1]);
+  //std::ifstream input;
+  //input.open("./x64/Debug/inputT2.txt");
 
   std::vector< psarev::Polygon > polyVec;
 
@@ -38,7 +38,6 @@ int main(int argc, char* argv[])
     cmds["MIN"] = std::bind(psarev::chooseMinOpt, _1, _2, _3);
     cmds["COUNT"] = std::bind(psarev::chooseCountOpt, _1, _2, _3);
     cmds["RECTS"] = std::bind(psarev::countRects, _1, _2, _3);
-    //cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
   }
 
   std::string cmd;
