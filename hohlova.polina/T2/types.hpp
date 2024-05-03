@@ -24,7 +24,7 @@ namespace hohlova
   };
 
   std::istream& operator>>(std::istream& in, RealIO&& dest);
-  std::istream& operator>>(sta::istream& in, ComplexIO&& dest);
+  std::istream& operator>>(std::istream& in, ComplexIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
 }
 
