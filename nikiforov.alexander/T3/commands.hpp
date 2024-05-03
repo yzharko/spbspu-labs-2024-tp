@@ -7,8 +7,6 @@
 
 namespace nikiforov
 {
-  std::string cutOption(std::string cmd);
-
   void takingArea(const std::vector< Polygon >& figure, std::istream&, std::ostream& out);
   double getPoints(const Point& first, const Point& second);
   double getArea(const Polygon& polygon);
@@ -21,6 +19,8 @@ namespace nikiforov
   size_t numOfVertexes(const Polygon& polygon);
 
   void takingMin(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out);
+
+  void takingCount(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out);
 }
 
 #endif

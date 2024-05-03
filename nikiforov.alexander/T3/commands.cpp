@@ -5,17 +5,12 @@ using namespace std::placeholders;
 
 namespace nikiforov
 {
-  std::string cutOption(std::string cmd)
-  {
-    std::string option = cmd.substr(cmd.find(" ") + 1);
-    return option;
-  }
-
   void takingArea(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
   {
     std::string option = "";
     in >> option;
     std::vector< double > areaOfEach;
+
     if (option == "ODD")
     {
       std::vector< Polygon > figuresOdd;
@@ -120,7 +115,7 @@ namespace nikiforov
   {
     std::string option = "";
     in >> option;
-    
+
     if (option == "AREA")
     {
       std::vector< double > areaOfEach;
@@ -176,6 +171,29 @@ namespace nikiforov
         numOfVertexes
       );
       out << *std::min_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes)) << "\n";
+    }
+    else
+    {
+      throw std::out_of_range("");
+    }
+  }
+
+  void takingCount(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
+  {
+    std::string option = "";
+    in >> option;
+
+    if (option == "ODD")
+    {
+      out << count_if(std::begin(figure), std::end(figure), isOdd);
+    }
+    else if (option == "EVEN")
+    {
+      out << count_if(std::begin(figure), std::end(figure), isEven);
+    }
+    else if (isdigit(option[0]))
+    {
+      out << count_if(std::begin(figure), std::end(figure), std::bind(numOfVert, stoi(option), _1));
     }
     else
     {

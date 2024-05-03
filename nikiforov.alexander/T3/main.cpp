@@ -2,12 +2,11 @@
 #include <map>
 #include "commands.hpp"
 
-
 int main(int argc, char* argv[])
 {
-  //std::ifstream input(argv[1]);
-  std::ifstream input;
-  input.open("../x64/Debug/input.txt");
+  std::ifstream input(argv[1]);
+  //std::ifstream input;
+  //input.open("../x64/Debug/input.txt");
   std::vector< nikiforov::Polygon > figure;
 
   while (!input.eof())
@@ -30,12 +29,11 @@ int main(int argc, char* argv[])
     cmds["AREA"] = std::bind(nikiforov::takingArea, figure, _1, _2);
     cmds["MAX"] = std::bind(nikiforov::takingMax, figure, _1, _2);
     cmds["MIN"] = std::bind(nikiforov::takingMin, figure, _1, _2);
-
-    //cmds["COUNT"] = std::bind(count, figure, _1, _2);
+    cmds["COUNT"] = std::bind(nikiforov::takingCount, figure, _1, _2);
   }
 
   std::string cmd = "";
-  
+
   while (std::cin >> cmd)
   {
     try
@@ -52,12 +50,5 @@ int main(int argc, char* argv[])
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-
-  /*std::copy(
-    std::begin(figure),
-    std::end(figure),
-    std::ostream_iterator< nikiforov::Polygon >(std::cout, "\n")
-  );*/
-  
   return 0;
 }
