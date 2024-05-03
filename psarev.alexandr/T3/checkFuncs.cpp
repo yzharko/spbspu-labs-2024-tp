@@ -27,10 +27,10 @@ double psarev::sumEvenAreas(Polygon& poly, double summed)
 {
   if (poly.points.size() % 2 == 0)
   {
-    return plusArea(poly, summed);
+    return getArea(poly) + 1.0;
   }
   else
   {
-    return summed;
+    return 1.0;
   }
 }

@@ -33,10 +33,10 @@ int main(int argc, char* argv[])
 
   int context = 0;
 
-  std::map< std::string, std::function < void(std::istream&, std::ostream&) > > cmds;
+  std::map< std::string, std::function < std::ostream& (std::vector < psarev::Polygon >&, std::istream&, std::ostream&) > > cmds;
   {
     using namespace std::placeholders;
-    cmds["AREA"] = std::bind(psarev::areaOdd, polyVec[0], _1, _2, _3);
+    cmds["AREA"] = std::bind(psarev::chooseAreaType, _1, _2, _3);
     //cmds["AREA2"] = std::bind(psarev::areaEven, context, _1, _2);
     //cmds["AREA3"] = std::bind(psarev::areaMean, context, _1, _2);
     //cmds["AREA4"] = std::bind(psarev::areaNumOfVerts, context, _1, _2);
@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
   {
     try
     {
-      cmds.at(cmd)(std::cin, std::cout);
+      cmds.at(cmd)(polyVec, std::cin, std::cout);
     }
     catch (const std::out_of_range&)
     {
