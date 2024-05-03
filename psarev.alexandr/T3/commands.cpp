@@ -26,12 +26,17 @@ using namespace std::placeholders;
 
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(sumEvenAreas, _2, _1)) << '\n';
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _2, _1)) << '\n';
 }
 
 void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(sumOddAreas, _2, _1)) << '\n';
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _2, _1)) << '\n';
+}
+
+void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
+{
+  std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusArea, _2, _1)) << '\n';
 }
 
 //void psarev::areaMean(int&, std::istream&, std::ostream& out)

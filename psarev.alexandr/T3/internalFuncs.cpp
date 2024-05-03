@@ -1,4 +1,4 @@
-#include "checkFuncs.hpp"
+#include "internalFuncs.hpp"
 #include <algorithm>
 #include <functional>
 #include <numeric>
@@ -23,7 +23,7 @@ double psarev::plusArea(Polygon& poly, double summed)
   return getArea(poly) + summed;
 }
 
-double psarev::sumEvenAreas(Polygon& poly, double summed)
+double psarev::plusEvenArea(Polygon& poly, double summed)
 {
   if (poly.points.size() % 2 == 0)
   {
@@ -35,7 +35,7 @@ double psarev::sumEvenAreas(Polygon& poly, double summed)
   }
 }
 
-double psarev::sumOddAreas(Polygon& poly, double summed)
+double psarev::plusOddArea(Polygon& poly, double summed)
 {
   if (poly.points.size() % 2 != 0)
   {

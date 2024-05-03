@@ -1,5 +1,5 @@
-#ifndef CHECK_FUNCS_HPP
-#define CHECK_FUNCS_HPP
+#ifndef INTERNAL_FUNCS_HPP
+#define INTERNAL_FUNCS_HPP
 #include <iostream>
 #include "polygon.hpp"
 
@@ -9,8 +9,8 @@ namespace psarev
   int getInterValue(Point& ptOne, Point& ptTwo);
   double plusArea(Polygon& poly, double summed);
 
-  double sumEvenAreas(Polygon& poly, double summed);
-  double sumOddAreas(Polygon& poly, double summed);
+  double plusEvenArea(Polygon& poly, double summed);
+  double plusOddArea(Polygon& poly, double summed);
 
   //double sumAreasIfOdd(double res, const Polygon& shape);
   //double sumAreasIfEqual(double res, const Polygon& shape, size_t numOfVertexes);
