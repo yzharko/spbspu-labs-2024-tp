@@ -27,8 +27,8 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
   else
   {
     if (isDigit(type)) {
-      size_t numOfVerts = std::stoi(type);
-      getAreaNumOfVerts(polyVec, out, numOfVerts);
+      size_t numVerts = std::stoi(type);
+      getAreaNumVerts(polyVec, out, numVerts);
     }
     else
     {
@@ -82,6 +82,33 @@ std::ostream& psarev::chooseMinOpt(std::vector< Polygon >& polyVec, std::istream
   return out;
 }
 
+std::ostream& psarev::chooseCountOpt(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+{
+  std::string opt = "";
+  in >> opt;
+
+  if (opt == "EVEN")
+  {
+    countEvenVerts(polyVec, out);
+  }
+  else if (opt == "ODD")
+  {
+    countOddVerts(polyVec, out);
+  }
+  else
+  {
+    if (isDigit(opt)) {
+      size_t numVerts = std::stoi(opt);
+      countSpecVerts(polyVec, out, numVerts);
+    }
+    else
+    {
+      throw std::logic_error("<INVALID COMMAND>");
+    }
+  }
+  return out;
+}
+
 using namespace std::placeholders;
 
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
@@ -100,7 +127,7 @@ void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
   std::cout << areaSum / polyVec.size();
 }
 
-void psarev::getAreaNumOfVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
+void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
 {
   std::cout << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
@@ -135,4 +162,19 @@ void psarev::getMinVerts(std::vector < Polygon >& polyVec, std::ostream& out)
   std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), std::bind(getNumVerts, _1));
   int minNum = *(std::min_element(numsVerts.begin(), numsVerts.end()));
   out << minNum << '\n';
+}
+
+void psarev::countEvenVerts(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getEvenVerts, _1, _2)) << '\n';
+}
+
+void psarev::countOddVerts(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getOddVerts, _1, _2)) << '\n';
+}
+
+void psarev::countSpecVerts(std::vector < Polygon >& polyVec, std::ostream& out, size_t& numVerts)
+{
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getSpecVerts, _1, _2, numVerts)) << '\n';
 }

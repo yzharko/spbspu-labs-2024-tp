@@ -9,6 +9,10 @@ namespace psarev
   int getInterValue(Point& ptOne, Point& ptTwo);
   size_t getNumVerts(Polygon& poly);
 
+  size_t getOddVerts(size_t summed, Polygon& poly);
+  size_t getEvenVerts(size_t summed, Polygon& poly);
+  size_t getSpecVerts(size_t summed, Polygon& poly, size_t& numVerts);
+
   bool isDigit(const std::string& str);
 
   double plusArea(double summed, Polygon& poly);

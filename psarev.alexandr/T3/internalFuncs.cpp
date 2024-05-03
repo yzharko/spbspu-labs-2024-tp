@@ -24,6 +24,42 @@ size_t psarev::getNumVerts(Polygon& poly)
   return poly.points.size();
 }
 
+size_t psarev::getOddVerts(size_t summed, Polygon& poly)
+{
+  if (poly.points.size() % 2 != 0)
+  {
+    return ++summed;
+  }
+  else
+  {
+    return summed;
+  }
+}
+
+size_t psarev::getEvenVerts(size_t summed, Polygon& poly)
+{
+  if (poly.points.size() % 2 == 0)
+  {
+    return ++summed;
+  }
+  else
+  {
+    return summed;
+  }
+}
+
+size_t psarev::getSpecVerts(size_t summed, Polygon& poly, size_t& numVerts)
+{
+  if (poly.points.size() == numVerts)
+  {
+    return ++summed;
+  }
+  else
+  {
+    return summed;
+  }
+}
+
 bool psarev::isDigit(const std::string& str)
 {
   for (char c : str)
@@ -76,4 +112,3 @@ double psarev::plusSameArea(double summed, Polygon& poly, size_t numOfVerts)
     return summed;
   }
 }
-
