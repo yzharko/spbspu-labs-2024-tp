@@ -41,4 +41,22 @@ namespace hohlova
     }
     return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
   }
+
+  std::istream& operator>>(std::istream& in, ComplexIO&& dest)
+  {
+    std::istream::sentry guard(in);
+    if (!guard)
+    {
+      return in;
+    }
+    double re = 0;
+    double im = 0;
+    in >> DelimiterIO{ '#' } >> DelimiterIO{ 'c' } >> DelimiterIO{ '(' } >> re >> im >> DelimiterIO{ ')' };
+    if (in)
+    {
+      dest.ref.real(re);
+      dest.ref.imag(im);
+    }
+    return in;
+  }
 }

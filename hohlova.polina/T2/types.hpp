@@ -2,6 +2,7 @@
 #define TYPES_HPP
 #include <iosfwd>
 #include <utility>
+#include <complex>
 
 namespace hohlova
 {
@@ -22,9 +23,14 @@ namespace hohlova
     std::string& ref;
   };
 
+  struct ComplexIO
+  {
+    std::complex< double >& ref;
+  }
   std::istream& operator>>(std::istream& in, DoubleIO&& dest);
   std::istream& operator>>(std::istream& in, RealIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
+  std::istream& operator>>(std::istream& in, ComplexIO&& dest);
 }
 
 #endif
