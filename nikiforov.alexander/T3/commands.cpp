@@ -98,12 +98,12 @@ namespace nikiforov
 
   bool isOdd(const Polygon& polygon)
   {
-    return polygon.points.size() % 2 == 0 ? true : false;
+    return polygon.points.size() % 2 != 0 ? true : false;
   }
 
   bool isEven(const Polygon& polygon)
   {
-    return polygon.points.size() % 2 != 0 ? true : false;
+    return polygon.points.size() % 2 == 0 ? true : false;
   }
 
   bool numOfVert(size_t num, const Polygon& polygon)
