@@ -113,6 +113,14 @@ void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
   out << maxArea << '\n';
 }
 
+void psarev::getMinArea(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  std::vector< double > areaVec(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
+  double minArea = *(std::min_element(areaVec.begin(), areaVec.end()));
+  out << minArea << '\n';
+}
+
 void psarev::getMaxVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
   std::vector< int > numsVerts(polyVec.size());
@@ -121,3 +129,10 @@ void psarev::getMaxVerts(std::vector < Polygon >& polyVec, std::ostream& out)
   out << maxNum << '\n';
 }
 
+void psarev::getMinVerts(std::vector < Polygon >& polyVec, std::ostream& out)
+{
+  std::vector< int > numsVerts(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), std::bind(getNumVerts, _1));
+  int minNum = *(std::min_element(numsVerts.begin(), numsVerts.end()));
+  out << minNum << '\n';
+}
