@@ -8,11 +8,6 @@ namespace hohlova
 {
   using real = std::pair< long long, unsigned long long >;
 
-  struct DoubleIO
-  {
-    double& ref;
-  };
-
   struct RealIO
   {
     real& ref;
@@ -27,7 +22,7 @@ namespace hohlova
   {
     std::complex< double >& ref;
   };
-  std::istream& operator>>(std::istream& in, DoubleIO&& dest);
+
   std::istream& operator>>(std::istream& in, RealIO&& dest);
   std::istream& operator>>(std::istream& in, StringIO&& dest);
   std::istream& operator>>(std::istream& in, ComplexIO&& dest);
