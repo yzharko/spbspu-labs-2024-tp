@@ -13,7 +13,7 @@ namespace nikiforov
 
   bool isOdd(const Polygon& polygon);
   bool isEven(const Polygon& polygon);
-  bool numOfVert(int num, const Polygon& polygon);
+  bool numOfVert(size_t num, const Polygon& polygon);
 
   void takingMax(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out);
   size_t numOfVertexes(const Polygon& polygon);

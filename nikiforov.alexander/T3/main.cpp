@@ -1,12 +1,25 @@
 #include <iostream>
 #include <map>
+#include <iterator>
 #include "commands.hpp"
 
 int main(int argc, char* argv[])
 {
-  std::ifstream input(argv[1]);
-  //std::ifstream input;
-  //input.open("../x64/Debug/input.txt");
+  if (argc != 2)
+  {
+    std::cerr << "Error: wrong number of parameters\n";
+    return 2;
+  }
+
+  //std::ifstream input(argv[1]);
+  std::ifstream input;
+  input.open("../x64/Debug/input.txt");
+  if (!input)
+  {
+    std::cerr << "Error: unable to open the file\n";
+    return 2;
+  }
+  
   std::vector< nikiforov::Polygon > figure;
 
   while (!input.eof())

@@ -58,7 +58,7 @@ namespace nikiforov
       std::copy_if(
         std::begin(figure), std::end(figure),
         std::back_inserter(figuresNumOfVert),
-        std::bind(numOfVert, std::stoi(option), _1)
+        std::bind(numOfVert, size_t(stoi(option)), _1)
       );
 
       std::transform(
@@ -106,7 +106,7 @@ namespace nikiforov
     return polygon.points.size() % 2 != 0 ? true : false;
   }
 
-  bool numOfVert(int num, const Polygon& polygon)
+  bool numOfVert(size_t num, const Polygon& polygon)
   {
     return polygon.points.size() == num ? true : false;
   }
@@ -193,7 +193,7 @@ namespace nikiforov
     }
     else if (isdigit(option[0]))
     {
-      out << count_if(std::begin(figure), std::end(figure), std::bind(numOfVert, stoi(option), _1));
+      out << count_if(std::begin(figure), std::end(figure), std::bind(numOfVert, size_t(stoi(option)), _1));
     }
     else
     {
