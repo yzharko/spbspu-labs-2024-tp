@@ -7,8 +7,6 @@
 namespace hohlova
 {
   using real = std::pair<long long, unsigned long long>;
-  using sll = long long;
-  using ull = unsigned long long;
 
   struct Data
   {
