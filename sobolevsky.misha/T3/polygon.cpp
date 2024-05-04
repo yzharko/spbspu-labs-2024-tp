@@ -23,11 +23,6 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
     in >> tempPoint;
     tempPolyg.points.push_back(tempPoint);
   }
-  if (vertexCount != tempPolyg.points.size())
-  {
-    in.setstate(std::ios::failbit);
-    return in;
-  }
   polygon = tempPolyg;
   return in;
 }

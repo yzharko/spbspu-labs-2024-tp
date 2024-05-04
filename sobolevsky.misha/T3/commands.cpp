@@ -121,10 +121,6 @@ bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsk
       }
     }
   }
-  else
-  {
-    throw std::exception();
-  }
   return isSame;
 }
 
@@ -230,11 +226,21 @@ void sobolevsky::count(const std::vector< sobolevsky::Polygon > & vec, std::istr
   }
 }
 
+bool sobolevsky::isEqual(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2)
+{
+  return polyg1.points.size() == polyg2.points.size();
+}
+
 void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
 {
   sobolevsky::Polygon inpPolyg;
   in >> inpPolyg;
   using namespace std::placeholders;
+  std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
+  if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
+  {
+    throw std::exception();
+  }
   std::function< bool(const sobolevsky::Polygon &) > bindIntersection = std::bind(sobolevsky::intersectPolyg, inpPolyg, _1);
   out << std::count_if(vec.cbegin(), vec.cend(), bindIntersection) << "\n";
 }
@@ -244,6 +250,11 @@ void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istre
   sobolevsky::Polygon inpPolyg;
   in >> inpPolyg;
   using namespace std::placeholders;
+  std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
+  if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
+  {
+    throw std::exception();
+  }
   std::function< bool(const sobolevsky::Polygon &) > bindSame = std::bind(sobolevsky::isSamePolyg, inpPolyg, _1);
   out << std::count_if(vec.cbegin(), vec.cend(), bindSame) << "\n";
 }

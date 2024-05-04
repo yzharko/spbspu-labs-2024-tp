@@ -23,6 +23,7 @@ namespace sobolevsky
   bool intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b);
   bool intersectPolyg(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
   bool isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2);
+  bool isEqual(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2);
 }
 
 #endif
