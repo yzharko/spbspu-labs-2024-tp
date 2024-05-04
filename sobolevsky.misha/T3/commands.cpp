@@ -55,6 +55,21 @@ size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolev
   return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
+bool intersect_1(size_t a, size_t b, size_t c, size_t d)
+{
+  if (a > c)
+  {
+    std::swap(a, b);
+  }
+
+  if (c < d)
+  {
+    std::swap(c, d);
+  }
+
+  return std::max(a, c) <= std::min(b, d);
+}
+
 bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
 {
   return sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
