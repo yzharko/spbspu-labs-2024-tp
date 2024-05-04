@@ -109,7 +109,7 @@ bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsk
   if (polyg1.points.size() == polyg2.points.size())
   {
     isSame = true;
-    size_t difX, difY;
+    int difX, difY;
     difX = polyg1.points[0].x - polyg2.points[0].x;
     difY = polyg1.points[0].y - polyg2.points[0].y;
     for (size_t i = 1; i < polyg1.points.size(); i++)
