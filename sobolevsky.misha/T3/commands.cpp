@@ -50,12 +50,12 @@ size_t sobolevsky::countIf(size_t result, const sobolevsky::Polygon & polygon, s
   return result;
 }
 
-size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c)
+long long sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c)
 {
   return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
-bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
+bool sobolevsky::intersect_1(int a, int b, int c, int d)
 {
   if (a > b)
   {
