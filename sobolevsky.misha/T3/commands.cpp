@@ -55,7 +55,7 @@ size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolev
   return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
-bool intersect_1(size_t a, size_t b, size_t c, size_t d)
+bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
 {
   if (a > c)
   {
@@ -101,6 +101,27 @@ bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobo
   }
 
   return false;
+}
+
+bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2)
+{
+  bool isSame = false;
+  if (polyg1.points.size() == polyg2.points.size())
+  {
+    isSame = true;
+    size_t difX, difY;
+    difX = polyg1.points[0].x - polyg2.points[0].x;
+    difY = polyg1.points[0].y - polyg2.points[0].y;
+    for (size_t i = 1; i < polyg1.points.size(); i++)
+    {
+      if (((polyg1.points[i].x - polyg2.points[i].x) != difX) || ((polyg1.points[i].y - polyg2.points[i].y) != difY))
+      {
+        isSame = false;
+        break;
+      }
+    }
+  }
+  return isSame;
 }
 
 void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
@@ -196,5 +217,9 @@ void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, s
 
 void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
 {
-  out << "penis\n";
+  sobolevsky::Polygon inpPolyg;
+  in >> inpPolyg;
+  using namespace std::placeholders;
+  std::function< bool(const sobolevsky::Polygon &) > bindSame = std::bind(sobolevsky::isSamePolyg, inpPolyg, _1);
+  out << std::count_if(vec.cbegin(), vec.cend(), bindSame) << "\n";
 }
