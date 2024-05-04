@@ -23,7 +23,7 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream &
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]) && std::isdigit(type[0]) > 2)
+    if (std::isdigit(type[0]) && std::stoull(type) > 2)
     {
       processAreaNum(std::stoull(type), polygons, out);
     }
@@ -253,7 +253,7 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]) && std::isdigit(type[0]) > 2)
+    if (std::isdigit(type[0]) && std::stoull(type) > 2)
     {
       processCountVertexes(std::stoull(type), polygons, out);
     }
