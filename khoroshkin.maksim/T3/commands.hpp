@@ -33,6 +33,8 @@ namespace khoroshkin
 
   void cmdRightshapes(const std::vector< Polygon > & polygons, std::ostream & out);
   bool isAngleRight(const Polygon & polygon);
+  Point vectorFromCoords(const Point & firstPoint, const Point & secondPoint);
+  double cosFromVects(const Point & firstPoint, const Point & secondPoint);
 }
 
 #endif

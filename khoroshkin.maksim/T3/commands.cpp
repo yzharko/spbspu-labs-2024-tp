@@ -387,23 +387,37 @@ void khoroshkin::cmdRightshapes(const std::vector< Polygon > & polygons, std::os
 bool khoroshkin::isAngleRight(const Polygon & polygon)
 {
   std::vector< Point > vectorFromPoints;
+  auto getVector = std::bind(vectorFromCoords, _1, _2);
   std::transform(
     polygon.points.begin(),
-    polygon.points.end(),
+    polygon.points.end() - 1,
     std::next(polygon.points.begin()),
     std::back_inserter(vectorFromPoints),
-    [](const Point & a, const Point & b){ return Point{ b.x - a.x, b.y - a.y }; }
+    getVector
   );
+  vectorFromPoints.push_back(getVector(polygon.points.back(), polygon.points.front()));
   std::vector< double > cosOfVectors;
+  auto getCos = std::bind(cosFromVects, _1, _2);
   std::transform(
     vectorFromPoints.begin(),
-    vectorFromPoints.end(),
+    vectorFromPoints.end() - 1,
     std::next(vectorFromPoints.begin()),
     std::back_inserter(cosOfVectors),
-    [](const Point & a, const Point & b)
-    {
-      return (a.x * b.x + a.y * b.y) / (std::sqrt(a.x * a.x + a.y * a.y) * std::sqrt(b.x * b.x + b.y * b.y));
-    }
+    getCos
   );
+  cosOfVectors.push_back(getCos(vectorFromPoints.back(), vectorFromPoints.front()));
   return std::find_if(cosOfVectors.begin(), cosOfVectors.end(), [](const double & cos){ return cos == 0; }) != cosOfVectors.end();
+}
+
+khoroshkin::Point khoroshkin::vectorFromCoords(const khoroshkin::Point & firstPoint, const khoroshkin::Point & secondPoint)
+{
+  return khoroshkin::Point{ secondPoint.x - firstPoint.x, secondPoint.y - firstPoint.y};
+}
+
+double khoroshkin::cosFromVects(const khoroshkin::Point & firstPoint, const khoroshkin::Point & secondPoint)
+{
+  double topExpr = (firstPoint.x * secondPoint.x + firstPoint.y * secondPoint.y);
+  double botExprFirst = std::sqrt(std::pow(firstPoint.x, 2) + std::pow(firstPoint.y, 2));
+  double botExprSecond = std::sqrt(std::pow(secondPoint.x, 2) + std::pow(secondPoint.y, 2));
+  return topExpr / (botExprFirst * botExprSecond);
 }
