@@ -5,6 +5,8 @@
 #include <string>
 #include <utility>
 #include <limits>
+#include <functional>
+#include <iterator>
 #include "commands.hpp"
 
 int main(int argc, char * argv[])
@@ -32,7 +34,7 @@ int main(int argc, char * argv[])
     }
   }
 
-  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out) > > cmds;
+  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is) > > cmds;
   {
     using namespace std::placeholders;
     cmds["AREA"] = std::bind(khoroshkin::cmdArea, _1, _2, _3);
@@ -40,7 +42,7 @@ int main(int argc, char * argv[])
     cmds["MIN"] = std::bind(khoroshkin::cmdMin, _1, _2, _3);
     cmds["COUNT"] = std::bind(khoroshkin::cmdCount, _1, _2, _3);
     cmds["PERMS"] = std::bind(khoroshkin::cmdPerms, _1, _2, _3);
-    cmds["RIGHTSHAPES"] = std::bind(khoroshkin::cmdRightshapes, _1, _2, _3);
+    cmds["RIGHTSHAPES"] = std::bind(khoroshkin::cmdRightshapes, _1, _2);
   }
 
   std::string cmd;
@@ -48,7 +50,7 @@ int main(int argc, char * argv[])
   {
     try
     {
-      cmds.at(cmd)(polygons, std::cin, std::cout);
+      cmds.at(cmd)(polygons, std::cout, std::cin);
     }
     catch(const std::out_of_range & e)
     {

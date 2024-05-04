@@ -5,12 +5,13 @@
 #include <numeric>
 #include <iomanip>
 #include <string>
+#include <cmath>
 
 using namespace std::placeholders;
 
-void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out) > > areaCmds;
+  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > areaCmds;
   areaCmds["EVEN"] = processEven;
   areaCmds["ODD"] = processOdd;
   areaCmds["MEAN"] = processMean;
@@ -18,13 +19,13 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::istream &
   is >> type;
   try
   {
-    areaCmds.at(type)(polygons, is, out);
+    areaCmds.at(type)(polygons, out);
   }
   catch(const std::out_of_range & e)
   {
     if (std::isdigit(type[0]))
     {
-      processAreaNum(std::stoull(type), polygons, is, out);
+      processAreaNum(std::stoull(type), polygons, out);
     }
     else
     {
@@ -33,7 +34,7 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::istream &
   }
 }
 
-void khoroshkin::processEven(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processEven(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< Polygon > onlyEvenPolygons;
   std::copy_if(
@@ -46,7 +47,7 @@ void khoroshkin::processEven(const std::vector< Polygon > & polygons, std::istre
   out << std::setprecision(1) << std::fixed << sum << '\n';
 }
 
-void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< Polygon > onlyOddPolygons;
   std::copy_if(
@@ -59,13 +60,13 @@ void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::istrea
   out << std::setprecision(1) << std::fixed << sum << '\n';
 }
 
-void khoroshkin::processMean(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processMean(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   double sum = sumAllAreas(polygons);
   out << std::setprecision(1) << std::fixed << sum / polygons.size() << '\n';
 }
 
-void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< Polygon > polygonsWithNVertexes;
   auto OnlyNVertexes = std::bind(std::equal_to< size_t >{}, vertexes, _1);
@@ -134,16 +135,16 @@ double khoroshkin::getArea(const Polygon & polygon)
   return 0.5 * std::abs(sum - diff);
 }
 
-void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out) > > maxCmds;
+  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > maxCmds;
   maxCmds["AREA"] = processMaxArea;
   maxCmds["VERTEXES"] = processMaxVertexes;
   std::string type;
   is >> type;
   try
   {
-    maxCmds.at(type)(polygons, is, out);
+    maxCmds.at(type)(polygons, out);
   }
   catch(const std::out_of_range & e)
   {
@@ -151,7 +152,7 @@ void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::istream & 
   }
 }
 
-void khoroshkin::processMaxArea(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processMaxArea(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< double > AreasOfPolygons;
   std::transform(
@@ -164,7 +165,7 @@ void khoroshkin::processMaxArea(const std::vector< Polygon > & polygons, std::is
   out << std::setprecision(1) << std::fixed << AreasOfPolygons.back() << '\n';
 }
 
-void khoroshkin::processMaxVertexes(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processMaxVertexes(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< size_t > vertexesOfPolygons;
   std::transform(
@@ -177,16 +178,16 @@ void khoroshkin::processMaxVertexes(const std::vector< Polygon > & polygons, std
   out << vertexesOfPolygons.back() << '\n';
 }
 
-void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out) > > minCmds;
+  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > minCmds;
   minCmds["AREA"] = processMinArea;
   minCmds["VERTEXES"] = processMinVertexes;
   std::string type;
   is >> type;
   try
   {
-    minCmds.at(type)(polygons, is, out);
+    minCmds.at(type)(polygons, out);
   }
   catch(const std::out_of_range & e)
   {
@@ -194,7 +195,7 @@ void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::istream & 
   }
 }
 
-void khoroshkin::processMinArea(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processMinArea(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< double > AreasOfPolygons;
   std::transform(
@@ -207,7 +208,7 @@ void khoroshkin::processMinArea(const std::vector< Polygon > & polygons, std::is
   out << std::setprecision(1) << std::fixed << AreasOfPolygons.front() << '\n';
 }
 
-void khoroshkin::processMinVertexes(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processMinVertexes(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< size_t > vertexesOfPolygons;
   std::transform(
@@ -220,22 +221,22 @@ void khoroshkin::processMinVertexes(const std::vector< Polygon > & polygons, std
   out << vertexesOfPolygons.front() << '\n';
 }
 
-void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out) > > countCmds;
+  std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > countCmds;
   countCmds["EVEN"] = processCountEven;
   countCmds["ODD"] = processCountOdd;
   std::string type;
   is >> type;
   try
   {
-    countCmds.at(type)(polygons, is, out);
+    countCmds.at(type)(polygons, out);
   }
   catch(const std::out_of_range & e)
   {
     if (std::isdigit(type[0]))
     {
-      processCountVertexes(std::stoull(type), polygons, is, out);
+      processCountVertexes(std::stoull(type), polygons, out);
     }
     else
     {
@@ -244,7 +245,7 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::istream 
   }
 }
 
-void khoroshkin::processCountEven(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processCountEven(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< size_t > evenPolygons;
   std::transform(
@@ -262,7 +263,7 @@ void khoroshkin::processCountEven(const std::vector< Polygon > & polygons, std::
   out << countEven << '\n';
 }
 
-void khoroshkin::processCountOdd(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processCountOdd(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< size_t > oddPolygons;
   std::transform(
@@ -280,7 +281,7 @@ void khoroshkin::processCountOdd(const std::vector< Polygon > & polygons, std::i
   out << countOdd << '\n';
 }
 
-void khoroshkin::processCountVertexes(size_t vertexes, const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::processCountVertexes(size_t vertexes, const std::vector< Polygon > & polygons, std::ostream & out)
 {
   std::vector< size_t > polygonsWithNVertexes;
   std::transform(
@@ -298,13 +299,13 @@ void khoroshkin::processCountVertexes(size_t vertexes, const std::vector< Polygo
   out << countWithNVertexes << '\n';
 }
 
-void khoroshkin::cmdPerms(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdPerms(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
 {
   Polygon givenPolygon;
   is >> givenPolygon;
   auto comparePolygon = std::bind(checkPerms, givenPolygon, _1);
   size_t count = std::count_if(polygons.begin(), polygons.end(), comparePolygon);
-  std::cout << count << '\n';
+  out << count << '\n';
 }
 
 bool khoroshkin::checkPerms(const Polygon & lhs, const Polygon & rhs)
@@ -328,7 +329,7 @@ bool khoroshkin::checkPoints(const Polygon & toCompare, const Point & point)
     }) != toCompare.points.end();
 }
 
-void khoroshkin::cmdRightshapes(const std::vector< Polygon > & polygons, std::istream & is, std::ostream & out)
+void khoroshkin::cmdRightshapes(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   size_t count = std::count_if(polygons.begin(), polygons.end(), isAngleRight);
   out << count << '\n';
