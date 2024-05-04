@@ -40,6 +40,8 @@ int main(int argc, char* argv[])
   cmds["MAX"] = sobolevsky::getMax;
   cmds["MIN"] = sobolevsky::getMin;
   cmds["COUNT"] = sobolevsky::count;
+  cmds["INTERSECTIONS"] = sobolevsky::intersections;
+  cmds["SAME"] = sobolevsky::same;
   std::string cmd;
   while (std::cin >> cmd)
   {
