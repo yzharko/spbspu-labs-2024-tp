@@ -162,6 +162,10 @@ void sobolevsky::getMax(const std::vector< sobolevsky::Polygon > & vec, std::ist
 {
   std::string arg;
   in >> arg;
+  if (vec.size() == 0)
+  {
+    throw std::exception();
+  }
   if (arg == "AREA")
   {
     out << sobolevsky::getArea(*std::max_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinArea)) << "\n";
@@ -176,6 +180,10 @@ void sobolevsky::getMin(const std::vector< sobolevsky::Polygon > & vec, std::ist
 {
   std::string arg;
   in >> arg;
+  if (vec.size() == 0)
+  {
+    throw std::exception();
+  }
   if (arg == "AREA")
   {
     out << sobolevsky::getArea(*std::min_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinArea)) << "\n";
