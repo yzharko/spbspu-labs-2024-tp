@@ -30,10 +30,12 @@ int main(int argc, char* argv[])
       file.clear();
       file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-    std::copy(std::istream_iterator< sobolevsky::Polygon >(file), std::istream_iterator< sobolevsky::Polygon >(), std::back_inserter(polygons));
+    std::copy(std::istream_iterator< sobolevsky::Polygon >(file), 
+    std::istream_iterator< sobolevsky::Polygon >(), std::back_inserter(polygons));
   }
 
-  std::map< std::string, std::function < void(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out) > > cmds;
+  std::map< std::string, std::function < void( const std::vector< sobolevsky::Polygon > & vec, 
+    std::istream & in, std::ostream & out) > > cmds;
   cmds["AREA"] = sobolevsky::area;
   cmds["MAX"] = sobolevsky::getMax;
   cmds["MIN"] = sobolevsky::getMin;
@@ -49,6 +51,6 @@ int main(int argc, char* argv[])
     {
       std::cerr << "<INVALID COMMAND>\n";
     }
-    
   }
+  return 0;
 }

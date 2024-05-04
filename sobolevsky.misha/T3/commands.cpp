@@ -87,9 +87,8 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
   }
   else
   {
-    size_t num = stoll(arg);
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, num, true);
+    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, stoll(arg), true);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
   }
 }
@@ -101,13 +100,15 @@ void sobolevsky::getMax(const std::vector< sobolevsky::Polygon > & vec, std::ist
   if (arg == "AREA")
   {
     using namespace std::placeholders;
-    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxArea = std::bind(sobolevsky::getMaxMinArea, _1, _2, true);
+    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxArea = 
+    std::bind(sobolevsky::getMaxMinArea, _1, _2, true);
     out << sobolevsky::getArea(*std::max_element(vec.cbegin(), vec.cend(), bindMaxArea)) << "\n";
   }
   else if (arg == "VERTEXES")
   {
     using namespace std::placeholders;
-    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxVert = std::bind(sobolevsky::getMaxMinVertex, _1, _2, true);
+    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxVert = 
+    std::bind(sobolevsky::getMaxMinVertex, _1, _2, true);
     out << std::max_element(vec.cbegin(), vec.cend(), bindMaxVert)->points.size() << "\n";
   }
 }
@@ -119,13 +120,15 @@ void sobolevsky::getMin(const std::vector< sobolevsky::Polygon > & vec, std::ist
   if (arg == "AREA")
   {
     using namespace std::placeholders;
-    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxArea = std::bind(sobolevsky::getMaxMinArea, _1, _2, false);
+    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxArea = 
+    std::bind(sobolevsky::getMaxMinArea, _1, _2, false);
     out << sobolevsky::getArea(*std::max_element(vec.cbegin(), vec.cend(), bindMaxArea)) << "\n";
   }
   else if (arg == "VERTEXES")
   {
     using namespace std::placeholders;
-    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxVert = std::bind(sobolevsky::getMaxMinVertex, _1, _2, false);
+    std::function< bool(const sobolevsky::Polygon &, const sobolevsky::Polygon &) > bindMaxVert = 
+    std::bind(sobolevsky::getMaxMinVertex, _1, _2, false);
     out << std::max_element(vec.cbegin(), vec.cend(), bindMaxVert)->points.size() << "\n";
   }
 }
