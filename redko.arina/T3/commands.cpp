@@ -34,17 +34,17 @@ std::ostream & redko::countAreas(std::istream & in, std::ostream & out, const st
 
 double redko::countAreasEven(const std::vector < Polygon > & shapes)
 {
-  return std::accumulate(shapes.cbegin(), shapes.cend(), 0, std::bind(sumAreasIfEven, _1, _2));
+  return std::accumulate(shapes.cbegin(), shapes.cend(), 0, sumAreasIfEven);
 }
 
 double redko::countAreasOdd(const std::vector < Polygon > & shapes)
 {
-  return std::accumulate(shapes.cbegin(), shapes.cend(), 0, std::bind(sumAreasIfOdd, _1, _2));
+  return std::accumulate(shapes.cbegin(), shapes.cend(), 0, sumAreasIfOdd);
 }
 
 double redko::countAreasMean(const std::vector < Polygon > & shapes)
 {
-  double areas = std::accumulate(shapes.cbegin(), shapes.cend(), 0, std::bind(sumAreas, _1, _2));
+  double areas = std::accumulate(shapes.cbegin(), shapes.cend(), 0, sumAreas);
   return areas / shapes.size();
 }
 
@@ -75,7 +75,7 @@ std::ostream & redko::getMax(std::istream & in, std::ostream & out, const std::v
 double redko::getMaxArea(const std::vector < Polygon > & shapes)
 {
   std::vector< double > areas(shapes.size());
-  std::transform(shapes.begin(), shapes.end(), areas.begin(), std::bind(countArea, _1));
+  std::transform(shapes.begin(), shapes.end(), areas.begin(), countArea);
   double maxArea = *std::max_element(areas.begin(), areas.end());
   return maxArea;
 }
@@ -83,7 +83,7 @@ double redko::getMaxArea(const std::vector < Polygon > & shapes)
 double redko::getMaxVertexes(const std::vector < Polygon > & shapes)
 {
   std::vector< int > numsOfVertexes(shapes.size());
-  std::transform(shapes.begin(), shapes.end(), numsOfVertexes.begin(), std::bind(getNumOfVertexes, _1));
+  std::transform(shapes.begin(), shapes.end(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::max_element(numsOfVertexes.begin(), numsOfVertexes.end());
   return maxVertexes;
 }
@@ -110,7 +110,7 @@ std::ostream & redko::getMin(std::istream & in, std::ostream & out, const std::v
 double redko::getMinArea(const std::vector< Polygon > & shapes)
 {
   std::vector< double > areas(shapes.size());
-  std::transform(shapes.begin(), shapes.end(), areas.begin(), std::bind(countArea, _1));
+  std::transform(shapes.begin(), shapes.end(), areas.begin(), countArea);
   double minArea = *std::min_element(areas.begin(), areas.end());
   return minArea;
 }
@@ -118,7 +118,7 @@ double redko::getMinArea(const std::vector< Polygon > & shapes)
 double redko::getMinVertexes(const std::vector< Polygon > & shapes)
 {
   std::vector< int > numsOfVertexes(shapes.size());
-  std::transform(shapes.cbegin(), shapes.cend(), numsOfVertexes.begin(), std::bind(getNumOfVertexes, _1));
+  std::transform(shapes.cbegin(), shapes.cend(), numsOfVertexes.begin(), getNumOfVertexes);
   int minVertexes = *std::min_element(numsOfVertexes.begin(), numsOfVertexes.end());
   return minVertexes;
 }
@@ -145,12 +145,12 @@ std::ostream & redko::count(std::istream & in, std::ostream & out, const std::ve
 
 int redko::countEven(const std::vector < Polygon > & shapes)
 {
-  return std::count_if(shapes.begin(), shapes.end(), std::bind(isNumOfVertexesEven, _1));
+  return std::count_if(shapes.begin(), shapes.end(), isNumOfVertexesEven);
 }
 
 int redko::countOdd(const std::vector < Polygon > & shapes)
 {
-  return std::count_if(shapes.begin(), shapes.end(), std::bind(isNumOfVertexesOdd, _1));
+  return std::count_if(shapes.begin(), shapes.end(), isNumOfVertexesOdd);
 }
 
 int redko::countShapes(const std::vector < Polygon > & shapes, int numOfVertexes)
@@ -161,8 +161,7 @@ int redko::countShapes(const std::vector < Polygon > & shapes, int numOfVertexes
 std::ostream & redko::countIntersections(std::istream & in, std::ostream & out, const std::vector < Polygon > & shapes)
 {
   Polygon compairingShape{};
-  in >> compairingShape;
-  if (!in)
+  if (!(in >> compairingShape) || in.peek() != '\n')
   {
     throw std::logic_error("wrong parameter");
   }
@@ -172,6 +171,6 @@ std::ostream & redko::countIntersections(std::istream & in, std::ostream & out, 
 
 std::ostream & redko::countRightShapes(std::istream &, std::ostream & out, const std::vector < Polygon > & shapes)
 {
-  out << std::count_if(shapes.begin(), shapes.end(), std::bind(isRightShape, _1)) << '\n';
+  out << std::count_if(shapes.cbegin(), shapes.cend(), isRightShape) << '\n';
   return out;
 }

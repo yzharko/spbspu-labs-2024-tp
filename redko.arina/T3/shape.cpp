@@ -9,17 +9,17 @@ int redko::diffMultPair(const Point & firstP, const Point & secondP)
   return firstP.x * secondP.y - firstP.y * secondP.x;
 }
 
-bool redko::isPointInTriangle(const Point & point, const Point & firstP, const Point & secondP, const Point & thirdP)
+redko::Point redko::makeVector(const Point & firstP, const Point & secondP)
 {
-  int betweenFS = (firstP.x - point.x) * (secondP.y - firstP.y) - (secondP.x - firstP.x) * (firstP.y - point.y);
-  int betweenST = (secondP.x - point.x) * (thirdP.y - secondP.y) - (thirdP.x - secondP.x) * (secondP.y - point.y);
-  int betweenTF = (thirdP.x - point.x) * (firstP.y - thirdP.y) - (firstP.x - thirdP.x) * (thirdP.y - point.y);
-  return (betweenFS >= 0 && betweenST >= 0 && betweenTF >= 0) || (betweenFS <= 0 && betweenST <= 0 && betweenTF <= 0);
+  Point vector{};
+  vector.x = secondP.x - firstP.x;
+  vector.y = secondP.y - firstP.y;
+  return vector;
 }
 
-bool redko::isRightAngle(const Point & firstP, const Point & secondP, const Point & thirdP)
+int redko::makeScalar(const Point & firstV, const Point & secondV)
 {
-  return ((secondP.x - firstP.x) * (thirdP.x - firstP.x) + (secondP.y - firstP.y) * (thirdP.y - firstP.y) == 0);
+  return firstV.x * secondV.x + firstV.y * secondV.y;
 }
 
 std::istream & redko::operator>>(std::istream & in, Point & dest)
@@ -90,27 +90,82 @@ bool redko::isNumOfVertexesEqual(const Polygon shape, size_t numOfVertexes)
   return shape.points.size() == numOfVertexes;
 }
 
+int redko::makeVectorMultiply(const Point & point, const Point & firstP, const Point & secondP)
+{
+  return (firstP.x - point.x) * (secondP.y - firstP.y) - (secondP.x - firstP.x) * (firstP.y - point.y);
+}
+
+bool redko::isPointInPolygon(const Point & point, const Polygon & shape)
+{
+  std::vector< int > vectorProduct(shape.points.size() - 1);
+  std::transform(
+    ++shape.points.cbegin(),
+    shape.points.cend(),
+    shape.points.cbegin(),
+    vectorProduct.begin(),
+    std::bind(makeVectorMultiply, point, _2, _1)
+  );
+  vectorProduct.push_back(makeVectorMultiply(point, shape.points.back(), shape.points.front()));
+  bool pointIsToTheRight = std::all_of(
+    vectorProduct.cbegin(),
+    vectorProduct.cend(),
+    [](int num)
+    {
+      return num >= 0;
+    }
+  );
+  bool pointIsToTheLeft = std::all_of(
+    vectorProduct.cbegin(),
+    vectorProduct.cend(),
+    [](int num)
+    {
+      return num <= 0;
+    }
+  );
+  return pointIsToTheRight || pointIsToTheLeft;
+}
+
 bool redko::isIntersected(const Polygon & firstS, const Polygon & secondS)
 {
-  for (size_t i = 0; i < firstS.points.size(); ++i)
-  {
-    for (size_t j = 0; j < secondS.points.size() - 2; ++j)
-    {
-      if (isPointInTriangle(firstS.points[i], secondS.points[j], secondS.points[j + 1], secondS.points[j + 2]))
-      {
-        return true;
-      }
-    }
-  }
-  return false;
+  bool firstInSecond = std::any_of(
+    firstS.points.cbegin(),
+    firstS.points.cend(),
+    std::bind(isPointInPolygon, _1, secondS)
+  );
+  bool secondInFirst = std::any_of(
+    secondS.points.cbegin(),
+    secondS.points.cend(),
+    std::bind(isPointInPolygon, _1, firstS)
+  );
+  return firstInSecond || secondInFirst;
+}
+
+bool redko::isEqual(int firstN, int secondN)
+{
+  return firstN == secondN;
 }
 
 bool redko::isRightShape(const Polygon & shape)
 {
-  int verts = shape.points.size();
-  Point secondP = shape.points[verts - 1];
-  Point thirdP = shape.points[verts - 2];
-  return std::any_of(shape.points.cbegin() + 2, shape.points.cend(), std::bind(isRightAngle, _1, secondP, thirdP));
+  std::vector< Point > vectors(shape.points.size() - 1);
+  std::transform(
+    ++shape.points.cbegin(),
+    shape.points.cend(), shape.points.cbegin(),
+    vectors.begin(),
+    std::bind(makeVector, _1, _2)
+  );
+  vectors.push_back(makeVector(shape.points.back(), shape.points.front()));
+
+  std::vector< int > scalars(vectors.size() - 1);
+  std::transform(
+    ++vectors.cbegin(),
+    vectors.cend(),
+    vectors.cbegin(),
+    scalars.begin(),
+    std::bind(makeScalar, _1, _2)
+  );
+  scalars.push_back(makeScalar(vectors.back(), vectors.front()));
+  return std::any_of(scalars.cbegin(), scalars.cend(), std::bind(isEqual, _1, 0));
 }
 
 std::istream & redko::operator>>(std::istream & in, Polygon & dest)
@@ -121,15 +176,26 @@ std::istream & redko::operator>>(std::istream & in, Polygon & dest)
     return in;
   }
   size_t pointCount = 0;
-  in >> pointCount;
-  Point point{};
-  std::vector< Point > polygon{};
+  if (!(in >> pointCount) || pointCount <= 2)
+  {
+    in.setstate(std::ios::failbit);
+    return in;
+  }
+  std::vector< Point > polygon;
+  Point point;
   for (size_t i = 0; i < pointCount; ++i)
   {
-    in >> point;
-    polygon.push_back(point);
+    if (in.peek() == '\n')
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
+    if (in >> point)
+    {
+      polygon.push_back(point);
+    }
   }
-  if (in)
+  if (in && polygon.size() == pointCount)
   {
     dest = Polygon{ polygon };
   }

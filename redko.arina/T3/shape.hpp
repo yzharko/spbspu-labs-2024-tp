@@ -11,8 +11,9 @@ namespace redko
   };
 
   int diffMultPair(const Point & firstP, const Point & secondP);
-  bool isPointInTriangle(const Point & point, const Point & firstP, const Point & secondP, const Point & thirdP);
-  bool isRightAngle(const Point & firstP, const Point & secondP, const Point & thirdP);
+  Point makeVector(const Point & firstP, const Point & secondP);
+  int makeScalar(const Point & firstV, const Point & secondV);
+  int makeVectorMultiply(const Point & point, const Point & firstP, const Point & secondP);
 
   std::istream & operator>>(std::istream & in, Point & dest);
 
@@ -30,7 +31,9 @@ namespace redko
   bool isNumOfVertexesEven(const Polygon shape);
   bool isNumOfVertexesOdd(const Polygon shape);
   bool isNumOfVertexesEqual(const Polygon shape, size_t numOfVertexes);
+  bool isPointInPolygon(const Point & point, const Polygon & shape);
   bool isIntersected(const Polygon & firstS, const Polygon & secondS);
+  bool isEqual(int firstN, int secondN);
   bool isRightShape(const Polygon & shape);
 
   std::istream & operator>>(std::istream & in, Polygon & dest);
