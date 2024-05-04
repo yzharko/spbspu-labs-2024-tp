@@ -29,7 +29,7 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream &
     }
     else
     {
-      std::cerr << "<INVALID COMMAND>" << '\n';
+      out << "<INVALID COMMAND>" << '\n';
     }
   }
 }
@@ -132,7 +132,7 @@ double khoroshkin::getArea(const Polygon & polygon)
     0,
     std::bind(std::plus< double >{}, _1, _2)
   );
-  return 0.5 * std::abs(sum - diff);
+  return 0.5 * std::abs(sum + polygon.points.back().x * polygon.points.front().y - diff - polygon.points.front().x * polygon.points.back().y);
 }
 
 void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is)
@@ -148,7 +148,7 @@ void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    std::cerr << "<INVALID COMMAND>" << '\n';
+    out << "<INVALID COMMAND>" << '\n';
   }
 }
 
@@ -191,7 +191,7 @@ void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    std::cerr << "<INVALID COMMAND>" << '\n';
+    out << "<INVALID COMMAND>" << '\n';
   }
 }
 
@@ -247,7 +247,7 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
     }
     else
     {
-      std::cerr << "<INVALID COMMAND>" << '\n';
+      out << "<INVALID COMMAND>" << '\n';
     }
   }
 }
