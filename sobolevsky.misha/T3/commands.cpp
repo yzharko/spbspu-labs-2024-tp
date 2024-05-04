@@ -66,14 +66,13 @@ bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
   {
     std::swap(c, d);
   }
+
 	return std::max(a,c) <= std::min(b,d);
 }
 
 bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
 {
-  return (sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
-  && sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0
-  && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0);
+  return sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y) && sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0 && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0;
 }
 
 bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b)
@@ -85,6 +84,7 @@ bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobo
       return true;
     }
   }
+
   return false;
 }
 
@@ -97,6 +97,7 @@ bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobo
       return true;
     }
   }
+
   return false;
 }
 
