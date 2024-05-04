@@ -50,7 +50,14 @@ std::istream & khoroshkin::operator>>(std::istream & is, Polygon & dest)
   for (size_t i = 0; i < vertexes; i++)
   {
     is >> point;
-    polygon.points.push_back(point);
+    if (is)
+    {
+      polygon.points.push_back(point);
+    }
+  }
+  if (vertexes != polygon.points.size() || polygon.points.size() <= 2)
+  {
+    is.setstate(std::ios::failbit);
   }
   if (is)
   {
