@@ -82,21 +82,20 @@ void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & 
   );
 
   double sum = sumAllAreas(polygonsWithNVertexes);
-  std::vector< size_t > howManyVertexes;
+  std::vector< size_t > isVertexesExist;
   std::transform(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(howManyVertexes),
-    [](const Polygon & polygon){ return polygon.points.size(); }
+    std::back_inserter(isVertexesExist),
+    [vertexes](const Polygon & polygon){ return polygon.points.size() == vertexes; }
   );
-  try
+  if (isVertexesExist.empty())
   {
-    howManyVertexes.at(vertexes);
-    out << std::setprecision(1) << std::fixed << sum << '\n';
+    out << "<INVALID COMMAND>\n";
   }
-  catch(const std::exception& e)
+  else
   {
-    out << "INVALID COMMAND>\n";
+    out << std::setprecision(1) << std::fixed << sum << '\n';
   }
 }
 
@@ -337,9 +336,24 @@ void khoroshkin::cmdPerms(const std::vector< Polygon > & polygons, std::ostream 
 {
   Polygon givenPolygon;
   is >> givenPolygon;
-  auto comparePolygon = std::bind(checkPerms, givenPolygon, _1);
-  size_t count = std::count_if(polygons.begin(), polygons.end(), comparePolygon);
-  out << count << '\n';
+  size_t givenPolygonVertexes = givenPolygon.points.size();
+  std::vector< Polygon > allVertexes;
+  std::copy_if(
+    polygons.begin(),
+    polygons.end(),
+    std::back_inserter(allVertexes),
+    [givenPolygonVertexes](const Polygon & polygon){ return polygon.points.size() == givenPolygonVertexes; }
+  );
+  if (allVertexes.empty())
+  {
+    out << "<INVALID COMMAND>\n";
+  }
+  else
+  {
+    auto comparePolygon = std::bind(checkPerms, givenPolygon, _1);
+    size_t count = std::count_if(polygons.begin(), polygons.end(), comparePolygon);
+    out << count << '\n';
+  }
 }
 
 bool khoroshkin::checkPerms(const Polygon & lhs, const Polygon & rhs)
