@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
   cmds["INTERSECTIONS"] = sobolevsky::intersections;
   cmds["SAME"] = sobolevsky::same;
   std::string cmd;
+  std::cout << std::fixed;
+  std::cout.precision(1);
   while (std::cin >> cmd)
   {
     try
