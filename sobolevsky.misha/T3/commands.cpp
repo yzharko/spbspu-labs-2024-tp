@@ -52,15 +52,16 @@ size_t sobolevsky::countIf(size_t result, const sobolevsky::Polygon & polygon, s
 
 size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c)
 {
-	return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+  return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
 
 bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
 {
-	if (a > b)
+  if (a > b)
   {
     std::swap(a, b);
   }
+
 	if (c > d)
   {
     std::swap(c, d);
@@ -70,8 +71,8 @@ bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
 
 bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
 {
-	return (sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
-	&& sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0
+  return (sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
+  && sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0
   && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0);
 }
 
@@ -192,5 +193,5 @@ void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, s
 
 void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
 {
-
+  out << "penis\n";
 }
