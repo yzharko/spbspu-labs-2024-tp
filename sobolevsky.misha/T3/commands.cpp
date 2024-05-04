@@ -148,6 +148,10 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
   }
   else
   {
+    if (stoll(arg) < 3)
+    {
+      throw std::exception();
+    }
     using namespace std::placeholders;
     std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, stoll(arg), true);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
@@ -200,6 +204,10 @@ void sobolevsky::count(const std::vector< sobolevsky::Polygon > & vec, std::istr
   }
   else
   {
+    if (stoll(arg) < 3)
+    {
+      throw std::exception();
+    }
     using namespace std::placeholders;
     std::function< size_t(size_t, const sobolevsky::Polygon &) > bindVertNum = std::bind(sobolevsky::countIf, _1, _2, stoll(arg), true);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertNum) << "\n";

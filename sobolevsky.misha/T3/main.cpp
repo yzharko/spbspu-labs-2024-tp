@@ -51,7 +51,7 @@ int main(int argc, char* argv[])
     {
       cmds.at(cmd)(polygons, std::cin, std::cout);
     }
-    catch(const std::out_of_range&)
+    catch(std::exception&)
     {
       std::cerr << "<INVALID COMMAND>\n";
     }
