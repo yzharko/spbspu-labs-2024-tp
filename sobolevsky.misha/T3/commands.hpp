@@ -17,6 +17,11 @@ namespace sobolevsky
   bool getMaxMinArea(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
   bool getMaxMinVertex(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
   size_t countIf(size_t result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode);
+  size_t areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c);
+  bool intersect_1(size_t a, size_t b, size_t c, size_t d);
+  bool intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d);
+  bool intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b);
+  bool intersectPolyg(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
 }
 
 #endif

@@ -4,6 +4,7 @@
 #include <functional>
 #include <numeric>
 #include <algorithm>
+#include <utility>
 
 double sobolevsky::areaIf(double result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode)
 {
@@ -47,6 +48,55 @@ size_t sobolevsky::countIf(size_t result, const sobolevsky::Polygon & polygon, s
     result += 1;
   }
   return result;
+}
+
+size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c)
+{
+	return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+}
+
+bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
+{
+	if (a > b)
+  {
+    std::swap(a, b);
+  }
+	if (c > d) 
+  {
+    std::swap(c, d);
+  }
+	return std::max(a,c) <= std::min(b,d);
+}
+
+bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
+{
+	return sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
+	&& sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0 
+  && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0;
+}
+
+bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b)
+{
+  for(size_t i = 0; i < polygon.points.size(); i++)
+  {
+    if (sobolevsky::intersectVectors(a, b, polygon.points[i], polygon.points[i % polygon.points.size() + 1]))
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
+bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2)
+{
+  for(size_t i = 0; i < polygon1.points.size(); i++)
+  {
+    if (sobolevsky::intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[i % polygon1.points.size() + 1]))
+    {
+      return true;
+    }
+  }
+  return false;
 }
 
 void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
@@ -133,7 +183,11 @@ void sobolevsky::count(const std::vector< sobolevsky::Polygon > & vec, std::istr
 
 void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
 {
-
+  sobolevsky::Polygon inpPolyg;
+  in >> inpPolyg;
+  using namespace std::placeholders;
+  std::function< bool(const sobolevsky::Polygon &) > bindIntersection = std::bind(sobolevsky::intersectPolyg, inpPolyg, _1);
+  out << std::count_if(vec.cbegin(), vec.cend(), bindIntersection) << "\n";
 }
 
 void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
