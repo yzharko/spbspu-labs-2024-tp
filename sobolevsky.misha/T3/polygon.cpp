@@ -35,7 +35,7 @@ std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Polygon& pol
     return out;
   }
   out << polygon.points.size();
-  for (int i = 0; i < polygon.points.size(); i++)
+  for (size_t i = 0; i < polygon.points.size(); i++)
   {
     out << " " << polygon.points[i];
   }
@@ -46,7 +46,7 @@ std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Polygon& pol
 double sobolevsky::getArea(const sobolevsky::Polygon& polygon)
 {
   double area = 0;
-  for (int i = 0; i < polygon.points.size(); i++)
+  for (size_t i = 0; i < polygon.points.size(); i++)
   {
     if (i == polygon.points.size() - 1)
     {
