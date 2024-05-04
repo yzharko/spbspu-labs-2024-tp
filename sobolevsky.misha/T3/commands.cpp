@@ -57,12 +57,12 @@ size_t sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolev
 
 bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
 {
-  if (a > c)
+  if (a > b)
   {
     std::swap(a, b);
   }
 
-  if (c < d)
+  if (c > d)
   {
     std::swap(c, d);
   }
