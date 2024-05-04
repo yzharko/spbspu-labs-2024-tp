@@ -12,8 +12,8 @@ int main()
   while (!std::cin.eof())
   {
     std::copy(
-      std::istream_iterator<Data>{std::cin},
-      std::istream_iterator<Data>{},
+      std::istream_iterator< Data >{std::cin},
+      std::istream_iterator< Data >{},
       std::back_inserter(data));
     if (std::cin.fail())
     {
