@@ -121,6 +121,10 @@ bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsk
       }
     }
   }
+  else
+  {
+    throw std::exception();
+  }
   return isSame;
 }
 
