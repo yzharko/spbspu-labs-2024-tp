@@ -63,6 +63,10 @@ void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::ostrea
 void khoroshkin::processMean(const std::vector< Polygon > & polygons, std::ostream & out)
 {
   double sum = sumAllAreas(polygons);
+  if (polygons.empty())
+  {
+    throw std::out_of_range("");
+  }
   out << std::setprecision(1) << std::fixed << sum / polygons.size() << '\n';
 }
 
@@ -78,7 +82,22 @@ void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & 
   );
 
   double sum = sumAllAreas(polygonsWithNVertexes);
-  out << std::setprecision(1) << std::fixed << sum << '\n';
+  std::vector< size_t > howManyVertexes;
+  std::transform(
+    polygons.begin(),
+    polygons.end(),
+    std::back_inserter(howManyVertexes),
+    [](const Polygon & polygon){ return polygon.points.size(); }
+  );
+  try
+  {
+    howManyVertexes.at(vertexes);
+    out << std::setprecision(1) << std::fixed << sum << '\n';
+  }
+  catch(const std::exception& e)
+  {
+    out << "INVALID COMMAND>\n";
+  }
 }
 
 double khoroshkin::sumAllAreas(const std::vector< Polygon > & polygons)
@@ -162,6 +181,10 @@ void khoroshkin::processMaxArea(const std::vector< Polygon > & polygons, std::os
     [](const Polygon & polygon){ return getArea(polygon); }
   );
   std::sort(AreasOfPolygons.begin(), AreasOfPolygons.end());
+  if (AreasOfPolygons.empty())
+  {
+    throw std::out_of_range("");
+  }
   out << std::setprecision(1) << std::fixed << AreasOfPolygons.back() << '\n';
 }
 
@@ -175,6 +198,10 @@ void khoroshkin::processMaxVertexes(const std::vector< Polygon > & polygons, std
     [](const Polygon & polygon){ return polygon.points.size(); }
   );
   std::sort(vertexesOfPolygons.begin(), vertexesOfPolygons.end());
+  if (vertexesOfPolygons.empty())
+  {
+    throw std::out_of_range("");
+  }
   out << vertexesOfPolygons.back() << '\n';
 }
 
