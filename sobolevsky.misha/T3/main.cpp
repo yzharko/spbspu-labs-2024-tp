@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
 
   std::map< std::string, std::function < void(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out) > > cmds;
   cmds["AREA"] = sobolevsky::area;
-  cmds["MAX"] = sobolevsky::max;
-  cmds["MIN"] = sobolevsky::min;
+  cmds["MAX"] = sobolevsky::getMax;
+  cmds["MIN"] = sobolevsky::getMin;
   cmds["COUNT"] = sobolevsky::count;
   std::string cmd;
   while (std::cin >> cmd)
