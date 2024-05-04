@@ -142,6 +142,10 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
   }
   else if (arg == "MEAN")
   {
+    if (vec.size() == 0)
+    {
+      throw std::exception();
+    }
     using namespace std::placeholders;
     std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, 2, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) / vec.size() << "\n";
