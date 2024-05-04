@@ -195,9 +195,13 @@ std::istream & redko::operator>>(std::istream & in, Polygon & dest)
       polygon.push_back(point);
     }
   }
-  if (in && polygon.size() == pointCount)
+  if (in && polygon.size() == pointCount && in.peek() == '\n')
   {
     dest = Polygon{ polygon };
+  }
+  else
+  {
+    in.setstate(std::ios::failbit);
   }
   return in;
 }

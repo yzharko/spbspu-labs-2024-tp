@@ -161,7 +161,7 @@ int redko::countShapes(const std::vector < Polygon > & shapes, int numOfVertexes
 std::ostream & redko::countIntersections(std::istream & in, std::ostream & out, const std::vector < Polygon > & shapes)
 {
   Polygon compairingShape{};
-  if (!(in >> compairingShape) || in.peek() != '\n')
+  if (!(in >> compairingShape))
   {
     throw std::logic_error("wrong parameter");
   }
