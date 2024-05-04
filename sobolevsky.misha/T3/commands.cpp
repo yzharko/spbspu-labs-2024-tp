@@ -4,9 +4,13 @@
 #include <functional>
 #include <numeric>
 
-double sobolevsky::AreaIf(double result, const sobolevsky::Polygon & polygon, bool evenOrOdd)
+double sobolevsky::AreaIf(double result, const sobolevsky::Polygon & polygon, size_t mode)
 {
-  if (evenOrOdd == (polygon.points.size() % 2))
+  if (mode == 2)
+  {
+    result += sobolevsky::getArea(polygon);
+  }
+  else if (mode == (polygon.points.size() % 2))
   {
     result += sobolevsky::getArea(polygon);
   }
@@ -20,18 +24,20 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
   if (arg == "EVEN")
   {
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindAreaIf = std::bind(sobolevsky::AreaIf, _1, _2, false);
+    std::function< double(double, const sobolevsky::Polygon &) > bindAreaIf = std::bind(sobolevsky::AreaIf, _1, _2, 0);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindAreaIf) << "\n";
   }
   else if (arg == "ODD")
   {
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindAreaIf = std::bind(sobolevsky::AreaIf, _1, _2, true);
+    std::function< double(double, const sobolevsky::Polygon &) > bindAreaIf = std::bind(sobolevsky::AreaIf, _1, _2, 1);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindAreaIf) << "\n";
   }
   else if (arg == "MEAN")
   {
-    
+    using namespace std::placeholders;
+    std::function< double(double, const sobolevsky::Polygon &) > bindAreaIf = std::bind(sobolevsky::AreaIf, _1, _2, 2);
+    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindAreaIf) / vec.size() << "\n";
   }
   else
   {

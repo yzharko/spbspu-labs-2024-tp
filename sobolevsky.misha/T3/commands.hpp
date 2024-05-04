@@ -11,7 +11,7 @@ namespace sobolevsky
   void min(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
   void count(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
 
-  double AreaIf(double result, const sobolevsky::Polygon & polygon, bool evenOrOdd);
+  double AreaIf(double result, const sobolevsky::Polygon & polygon, size_t mode);
 }
 
 #endif
