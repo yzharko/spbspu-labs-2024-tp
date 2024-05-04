@@ -72,16 +72,20 @@ bool sobolevsky::intersect_1(size_t a, size_t b, size_t c, size_t d)
 
 bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
 {
-  return sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
+  return (sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
   && sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0
-  && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0;
+  && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0)
+  || ((c.x - a.x) * (b.y - a.y) - (b.x - a.x) * (c.y - a.y) == 0)
+  || ((d.x - a.x) * (b.y - a.y) - (b.x - a.x) * (d.y - a.y) == 0)
+  || ((a.x - c.x) * (d.y - c.y) - (d.x - c.x) * (a.y - c.y) == 0)
+  || ((b.x - c.x) * (d.y - c.y) - (d.x - c.x) * (b.y - c.y) == 0);
 }
 
 bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b)
 {
   for(size_t i = 0; i < polygon.points.size(); i++)
   {
-    if (sobolevsky::intersectVectors(a, b, polygon.points[i], polygon.points[i % polygon.points.size() + 1]))
+    if (sobolevsky::intersectVectors(a, b, polygon.points[i], polygon.points[(i + 1) % polygon.points.size()]))
     {
       return true;
     }
@@ -94,7 +98,7 @@ bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobo
 {
   for(size_t i = 0; i < polygon1.points.size(); i++)
   {
-    if (sobolevsky::intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[i % polygon1.points.size() + 1]))
+    if (sobolevsky::intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[(i + 1) % polygon1.points.size()]))
     {
       return true;
     }
