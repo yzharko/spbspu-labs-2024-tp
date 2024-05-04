@@ -235,6 +235,10 @@ void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, s
 {
   sobolevsky::Polygon inpPolyg;
   in >> inpPolyg;
+  if (!in)
+  {
+    throw std::exception();
+  }
   using namespace std::placeholders;
   std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
   if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
@@ -249,6 +253,10 @@ void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istre
 {
   sobolevsky::Polygon inpPolyg;
   in >> inpPolyg;
+  if (!in)
+  {
+    throw std::exception();
+  }
   using namespace std::placeholders;
   std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
   if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
