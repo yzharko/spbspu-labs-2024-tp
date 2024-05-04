@@ -23,13 +23,13 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream &
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]))
+    if (std::isdigit(type[0]) && std::isdigit(type[0]) > 2)
     {
       processAreaNum(std::stoull(type), polygons, out);
     }
     else
     {
-      out << "<INVALID COMMAND>" << '\n';
+      out << "<INVALID COMMAND>\n";
     }
   }
 }
@@ -159,7 +159,7 @@ void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    out << "<INVALID COMMAND>" << '\n';
+    out << "<INVALID COMMAND>\n";
   }
 }
 
@@ -210,7 +210,7 @@ void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    out << "<INVALID COMMAND>" << '\n';
+    out << "<INVALID COMMAND>\n";
   }
 }
 
@@ -253,13 +253,13 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]))
+    if (std::isdigit(type[0]) && std::isdigit(type[0]) > 2)
     {
       processCountVertexes(std::stoull(type), polygons, out);
     }
     else
     {
-      out << "<INVALID COMMAND>" << '\n';
+      out << "<INVALID COMMAND>\n";
     }
   }
 }
