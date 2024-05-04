@@ -315,7 +315,8 @@ bool khoroshkin::checkPerms(const Polygon & lhs, const Polygon & rhs)
     return false;
   }
   auto isPointContains = std::bind(checkPoints, lhs, _1);
-  return lhs.points.size() == std::count_if(rhs.points.begin(), rhs.points.end(), isPointContains);
+  long unsigned int countPointsIn = std::count_if(rhs.points.begin(), rhs.points.end(), isPointContains);
+  return lhs.points.size() == countPointsIn;
 }
 
 bool khoroshkin::checkPoints(const Polygon & toCompare, const Point & point)
