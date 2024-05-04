@@ -41,7 +41,7 @@ void khoroshkin::processEven(const std::vector< Polygon > & polygons, std::ostre
     polygons.begin(),
     polygons.end(),
     std::back_inserter(onlyEvenPolygons),
-    [](const Polygon & polygon){ return polygon.points.size() % 2; }
+    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
   );
   double sum = sumAllAreas(onlyEvenPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
@@ -54,7 +54,7 @@ void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::ostrea
     polygons.begin(),
     polygons.end(),
     std::back_inserter(onlyOddPolygons),
-    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
+    [](const Polygon & polygon){ return polygon.points.size() % 2; }
   );
   double sum = sumAllAreas(onlyOddPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
@@ -105,7 +105,7 @@ double khoroshkin::getArea(const Polygon & polygon)
   std::vector< double > sumOfCoords;
   std::transform(
     polygon.points.begin(),
-    polygon.points.end(),
+    polygon.points.end() - 1,
     std::next(polygon.points.begin()),
     std::back_inserter(sumOfCoords),
     [](const Point & a, const Point & b){ return a.x * b.y; }
@@ -114,7 +114,7 @@ double khoroshkin::getArea(const Polygon & polygon)
   std::vector< double > diffOfCoords;
   std::transform(
     polygon.points.begin(),
-    polygon.points.end(),
+    polygon.points.end() - 1,
     std::next(polygon.points.begin()),
     std::back_inserter(diffOfCoords),
     [](const Point & a, const Point & b){ return a.y * b.x; }
@@ -230,11 +230,18 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
   is >> type;
   try
   {
-    countCmds.at(type)(polygons, out);
+    if (!polygons.empty())
+    {
+      countCmds.at(type)(polygons, out);
+    }
+    else
+    {
+      throw std::out_of_range("");
+    }
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]))
+    if (std::isdigit(type[0]) && !polygons.empty())
     {
       processCountVertexes(std::stoull(type), polygons, out);
     }
@@ -252,7 +259,7 @@ void khoroshkin::processCountEven(const std::vector< Polygon > & polygons, std::
     polygons.begin(),
     polygons.end(),
     std::back_inserter(evenPolygons),
-    [](const Polygon & polygon){ return polygon.points.size() % 2; }
+    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
   );
   size_t countEven = std::accumulate(
     evenPolygons.begin(),
@@ -270,7 +277,7 @@ void khoroshkin::processCountOdd(const std::vector< Polygon > & polygons, std::o
     polygons.begin(),
     polygons.end(),
     std::back_inserter(oddPolygons),
-    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
+    [](const Polygon & polygon){ return polygon.points.size() % 2; }
   );
   size_t countOdd = std::accumulate(
     oddPolygons.begin(),
