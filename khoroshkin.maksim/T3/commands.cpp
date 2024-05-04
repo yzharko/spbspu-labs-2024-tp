@@ -89,14 +89,7 @@ void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & 
     std::back_inserter(isVertexesExist),
     [vertexes](const Polygon & polygon){ return polygon.points.size() == vertexes; }
   );
-  if (isVertexesExist.empty())
-  {
-    out << "<INVALID COMMAND>\n";
-  }
-  else
-  {
-    out << std::setprecision(1) << std::fixed << sum << '\n';
-  }
+  out << std::setprecision(1) << std::fixed << sum << '\n';
 }
 
 double khoroshkin::sumAllAreas(const std::vector< Polygon > & polygons)
@@ -256,18 +249,11 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
   is >> type;
   try
   {
-    if (!polygons.empty())
-    {
-      countCmds.at(type)(polygons, out);
-    }
-    else
-    {
-      throw std::out_of_range("");
-    }
+    countCmds.at(type)(polygons, out);
   }
   catch(const std::out_of_range & e)
   {
-    if (std::isdigit(type[0]) && !polygons.empty())
+    if (std::isdigit(type[0]))
     {
       processCountVertexes(std::stoull(type), polygons, out);
     }
