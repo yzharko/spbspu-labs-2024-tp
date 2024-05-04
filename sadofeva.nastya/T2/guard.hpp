@@ -1,6 +1,6 @@
 #ifndef GUARD_HPP
 #define GUARD_HPP
-#include <iostream>
+#include <ios>
 #include <limits>
 
 namespace sadofeva
@@ -8,7 +8,7 @@ namespace sadofeva
   class iofmtguard
   {
   public:
-    iofmtguard(std::basic_ios<char> & s);
+    explicit iofmtguard(std::basic_ios< char > & s);
     ~iofmtguard();
   private:
     std::basic_ios<char> & s_;

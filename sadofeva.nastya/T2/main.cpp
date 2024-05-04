@@ -6,7 +6,6 @@
 #include "delimiter.hpp"
 #include "datastruct.hpp"
 
-
 int main()
 {
   std::vector< sadofeva::DataStruct > data;

@@ -1,7 +1,6 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUST_HPP
-#include <string>
-#include <iostream>
+#include <iosfwd>
 #include "delimiter.hpp"
 
 namespace sadofeva
