@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
     }
     catch(std::exception&)
     {
-      std::cerr << "<INVALID COMMAND>\n";
+      std::cout << "<INVALID COMMAND>\n";
     }
   }
   return 0;
