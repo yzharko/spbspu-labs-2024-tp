@@ -13,6 +13,7 @@ namespace sobolevsky
 
   double getArea(const sobolevsky::Polygon& polygon);
   std::istream& operator>>(std::istream& in, sobolevsky::Polygon& polygon);
+  std::ostream& operator<<(std::ostream& out, sobolevsky::Polygon& polygon);
 }
 
 #endif

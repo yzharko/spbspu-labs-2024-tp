@@ -16,13 +16,31 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
     in.setstate(std::ios::failbit);
     return in;
   }
+  sobolevsky::Polygon tempPolyg;
   for(size_t i = 0; i < vertexCount; i++)
   {
-    sobolevsky::Point temp;
-    in >> temp;
-    polygon.points.push_back(temp);
+    sobolevsky::Point tempPoint;
+    in >> tempPoint;
+    tempPolyg.points.push_back(tempPoint);
   }
+  polygon = tempPolyg;
   return in;
+}
+
+std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Polygon& polygon)
+{
+  std::ostream::sentry guard(out);
+  if (!guard)
+  {
+    return out;
+  }
+  out << polygon.points.size();
+  for (int i = 0; i < polygon.points.size(); i++)
+  {
+    out << " " << polygon.points[i];
+  }
+  out << "\n";
+  return out;
 }
 
 double sobolevsky::getArea(const sobolevsky::Polygon& polygon)
