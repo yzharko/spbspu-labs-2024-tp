@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <iostream>
-#include "delimiter.hpp"
+#include "datastruct.hpp"
 
 namespace khoroshkin
 {

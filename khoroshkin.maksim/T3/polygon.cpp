@@ -1,21 +1,6 @@
 #include "polygon.hpp"
 #include <iostream>
 
-std::istream & khoroshkin::operator>>(std::istream & is, DelimiterIO && dest)
-{
-  std::istream::sentry guard(is);
-  if (!guard)
-  {
-    return is;
-  }
-  char c = '0';
-  is >> c;
-  if (is && (c != dest.exp))
-  {
-    is.setstate(std::ios::failbit);
-  }
-  return is;
-}
 std::istream & khoroshkin::operator>>(std::istream & is, Point & dest)
 {
   std::istream::sentry guard(is);
