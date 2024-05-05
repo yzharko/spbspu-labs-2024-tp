@@ -1,5 +1,7 @@
 #include "dataStruct.hpp"
 #include <iostream>
+#include <bitset>
+#include <string>
 
 std::istream &anikanov::operator>>(std::istream &in, anikanov::DelimiterIO &&dest)
 {
@@ -35,7 +37,12 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::UllBinIO &&dest)
   if (!sentry) {
     return in;
   }
-  return in >> std::oct >> dest.ref;
+  in >> anikanov::DelimiterIO{'0'} >> anikanov::DelimiterIO{'b'} >> dest.ref;
+  if (!in) {
+    in.setstate(std::ios::failbit);
+  }
+  dest.ref = std::bitset<64>(dest.ref).to_ullong();
+  return in;
 }
 
 std::istream &anikanov::operator>>(std::istream &in, anikanov::StringIO &&dest)
@@ -55,7 +62,7 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::DelStrIO &&dest)
   }
   size_t i = 0;
   while (dest.exp[i] != '\0') {
-    in >> DelimiterIO({dest.exp[i++]});
+    in >> anikanov::DelimiterIO({dest.exp[i++]});
   }
   return in;
 }
@@ -67,13 +74,13 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::DataStruct &dest)
     return in;
   }
 
-  using del = DelimiterIO;
-  using delStr = DelStrIO;
-  using lit = UllLitIO;
-  using bin = UllBinIO;
-  using str = StringIO;
+  using del = anikanov::DelimiterIO;
+  using delStr = anikanov::DelStrIO;
+  using lit = anikanov::UllLitIO;
+  using bin = anikanov::UllBinIO;
+  using str = anikanov::StringIO;
 
-  DataStruct input;
+  anikanov::DataStruct input;
 
   in >> delStr({"(:"});
   int number = 0;
@@ -86,7 +93,8 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::DataStruct &dest)
         in >> lit{input.key1};
         break;
       case 2:
-        in >> std::oct >> bin{input.key2} >> std::dec;
+        in >> bin {input.key2} >> std::dec;
+        in >> std::dec;
         break;
       case 3:
         in >> str{input.key3};
@@ -114,8 +122,16 @@ std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
     return out;
   }
   anikanov::iofmtguard fmtguard(out);
+
   out << "(:key1 " << src.key1 << "ull";
-  out << ":key2 0b" << std::oct << src.key2;
+
+  std::string bin = std::bitset<sizeof(unsigned long long) * 8>(src.key2).to_string();
+  int pos = 0;
+  while (bin[pos] == '0') {
+    pos++;
+  }
+
+  out << ":key2 0b" << bin.substr(pos);
   out << ":key3 \"" << src.key3 << "\":)";
   return out;
 }

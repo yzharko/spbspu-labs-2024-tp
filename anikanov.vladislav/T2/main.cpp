@@ -3,8 +3,8 @@
 #include <iterator>
 #include <vector>
 
-#include "dataStruct.hpp"
-#include "mainExtension.hpp"
+#include "dataStruct.cpp"
+#include "mainExtension.cpp"
 
 int main()
 {
