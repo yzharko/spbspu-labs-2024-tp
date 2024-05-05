@@ -9,10 +9,6 @@ using namespace std::placeholders;
 
 std::ostream & redko::countAreas(std::istream & in, std::ostream & out, const std::vector< Polygon > & shapes)
 {
-  if (shapes.empty())
-  {
-    throw std::logic_error("unable to process with empty data");
-  }
   std::string parameter = "";
   in >> parameter;
   out << std::fixed << std::setprecision(1);
@@ -52,6 +48,10 @@ double redko::countAreasOdd(const std::vector < Polygon > & shapes)
 
 double redko::countAreasMean(const std::vector < Polygon > & shapes)
 {
+  if (shapes.empty())
+  {
+    throw std::logic_error("unable to process with empty data");
+  }
   double areas = std::accumulate(shapes.cbegin(), shapes.cend(), 0, sumAreas);
   return areas / shapes.size();
 }
