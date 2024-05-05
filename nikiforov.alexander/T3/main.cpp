@@ -52,13 +52,9 @@ int main(int argc, char* argv[])
     {
       cmds.at(cmd)(std::cin, std::cout);
     }
-    catch (const std::overflow_error& e)
-    {
-      std::cerr << "<GOTH_ERROR: " << e.what() << ">\n";
-    }
     catch (const std::out_of_range&)
     {
-      std::cerr << "<INVALID COMMAND>\n";
+      std::cout << "<INVALID COMMAND>\n";
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }

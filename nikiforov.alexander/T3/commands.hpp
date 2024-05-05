@@ -22,7 +22,7 @@ namespace nikiforov
   void takingCount(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out);
 
   double getAreaResult(const std::vector< Polygon >& shapes, std::string mode);
-  double getVertexesResult(const std::vector< Polygon >& shapes, std::string mode);
+  size_t getVertexesResult(const std::vector< Polygon >& shapes, std::string mode);
 }
 
 #endif

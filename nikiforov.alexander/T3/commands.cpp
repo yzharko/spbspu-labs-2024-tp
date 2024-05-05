@@ -12,7 +12,7 @@ namespace nikiforov
     in >> option;
     out << std::fixed << std::setprecision(1);
 
-    if (option == "ODD" && !shapes.empty())
+    if (option == "ODD")
     {
       std::vector< Polygon > figuresOdd;
       std::copy_if(
@@ -23,7 +23,7 @@ namespace nikiforov
 
       out << getAreaResult(figuresOdd, "area") << "\n";
     }
-    else if (option == "EVEN" && !shapes.empty())
+    else if (option == "EVEN")
     {
       std::vector< Polygon > figuresEven;
       std::copy_if(
@@ -34,11 +34,11 @@ namespace nikiforov
 
       out << getAreaResult(figuresEven, "area") << "\n";
     }
-    else if (option == "MEAN" && !shapes.empty())
+    else if (option == "MEAN")
     {
       out << getAreaResult(shapes, "area") / shapes.size() << "\n";
     }
-    else if (isdigit(option[0]) && !shapes.empty())
+    else if (isdigit(option[0]) && stoi(option) > 2)
     {
       std::vector< Polygon > figuresNumOfVert;
       std::copy_if(
@@ -121,6 +121,7 @@ namespace nikiforov
   {
     std::string option = "";
     in >> option;
+    out << std::fixed << std::setprecision(1);
 
     if (option == "AREA" && !shapes.empty())
     {
@@ -141,15 +142,15 @@ namespace nikiforov
     std::string option = "";
     in >> option;
 
-    if (option == "ODD" && !shapes.empty())
+    if (option == "ODD")
     {
       out << count_if(std::begin(shapes), std::end(shapes), isOdd) << "\n";
     }
-    else if (option == "EVEN" && !shapes.empty())
+    else if (option == "EVEN")
     {
       out << count_if(std::begin(shapes), std::end(shapes), isEven) << "\n";
     }
-    else if (isdigit(option[0]) && !shapes.empty())
+    else if (isdigit(option[0]) && stoi(option) > 2)
     {
       out << count_if(std::begin(shapes), std::end(shapes), std::bind(numOfVert, size_t(stoi(option)), _1)) << "\n";
     }
@@ -181,7 +182,7 @@ namespace nikiforov
     }
   }
 
-  double getVertexesResult(const std::vector< Polygon >& shapes, std::string mode)
+  size_t getVertexesResult(const std::vector< Polygon >& shapes, std::string mode)
   {
     std::vector< size_t > vectOfAllVertexes;
     std::transform(
