@@ -34,7 +34,7 @@ namespace nikiforov
 
       out << getAreaResult(figuresEven, "area") << "\n";
     }
-    else if (option == "MEAN")
+    else if (option == "MEAN" && !shapes.empty())
     {
       out << getAreaResult(shapes, "area") / shapes.size() << "\n";
     }

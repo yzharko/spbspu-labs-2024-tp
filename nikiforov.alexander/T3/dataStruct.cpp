@@ -17,7 +17,10 @@ namespace nikiforov
       using sep = DelimiterIO;
       size_t countPoints = 0;
 
-      in >> countPoints;
+      if (!(in >> countPoints))
+      {
+        in.setstate(std::ios::failbit);
+      }
 
       for (size_t i = 0; i < countPoints; i++)
       {
@@ -28,6 +31,11 @@ namespace nikiforov
         {
           result.points.emplace_back(input);
         }
+      }
+
+      if (countPoints != result.points.size() || result.points.size() <= 2)
+      {
+        in.setstate(std::ios::failbit);
       }
     }
     if (in)
