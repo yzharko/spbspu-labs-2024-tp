@@ -6,9 +6,6 @@
 #include "dataStruct.hpp"
 #include "inOutPut.hpp"
 
-#include "iofmtguard.cpp"
-#include "dataStruct.cpp"
-
 int main()
 {
   using namespace anikanov;
