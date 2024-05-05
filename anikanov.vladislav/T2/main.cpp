@@ -4,34 +4,35 @@
 #include <vector>
 
 #include "dataStruct.hpp"
-#include "mainExtension.hpp"
+#include "inOutPut.hpp"
+
+#include "iofmtguard.cpp"
+#include "dataStruct.cpp"
 
 int main()
 {
   using namespace anikanov;
 
-  std::vector< anikanov::DataStruct > dataStruct;
+  std::vector< DataStruct > dataStruct;
 
-  while (std::cin.good())
-  {
+  while (std::cin.good()) {
     std::copy(
-        std::istream_iterator< anikanov::DataStruct >(std::cin),
-        std::istream_iterator< anikanov::DataStruct >(),
+        std::istream_iterator< DataStruct >(std::cin),
+        std::istream_iterator< DataStruct >(),
         std::back_inserter(dataStruct)
     );
-    if (std::cin.fail() && !std::cin.eof())
-    {
+    if (std::cin.fail() && !std::cin.eof()) {
       std::cin.clear();
       std::cin.ignore();
     }
   }
 
-  std::sort(dataStruct.begin(), dataStruct.end(), anikanov::dataStructComparator);
+  std::sort(dataStruct.begin(), dataStruct.end());
 
   std::copy(
       std::begin(dataStruct),
       std::end(dataStruct),
-      std::ostream_iterator< anikanov::DataStruct >(std::cout, "\n")
+      std::ostream_iterator< DataStruct >(std::cout, "\n")
   );
   return 0;
 }
