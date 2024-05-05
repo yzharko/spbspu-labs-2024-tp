@@ -1,5 +1,5 @@
 #include "point.hpp"
-#include "../common/helpStructs.hpp"
+#include <helpStructs.hpp>
 #include <algorithm>
 
 std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Point& point)
