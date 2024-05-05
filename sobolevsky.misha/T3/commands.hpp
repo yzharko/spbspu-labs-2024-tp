@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include "polygon.hpp"
 
 namespace sobolevsky
@@ -26,6 +27,7 @@ namespace sobolevsky
   bool intersectPolyg(const Polygon & polygon1, const Polygon & polygon2);
   bool isSamePolyg(const Polygon & polyg1, const Polygon & polyg2);
   bool isEqual(const Polygon & polyg1, const Polygon & polyg2);
+  void error(std::ostream & out, const std::string & text);
 }
 
 #endif

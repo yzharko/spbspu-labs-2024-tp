@@ -45,15 +45,17 @@ int main(int argc, char* argv[])
   std::string cmd;
   std::cout << std::fixed;
   std::cout.precision(1);
+  using namespace std::placeholders;
+  std::function< void(std::ostream &) > bindError = std::bind(sobolevsky::error, _1, "<INVALID COMMAND>");
   while (std::cin >> cmd)
   {
     try
     {
       cmds.at(cmd)(polygons, std::cin, std::cout);
     }
-    catch(std::exception&)
+    catch(const std::exception & e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      bindError(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

@@ -133,6 +133,11 @@ bool sobolevsky::isSamePolyg(const Polygon & polyg1, const Polygon & polyg2)
   return isSame;
 }
 
+void sobolevsky::error(std::ostream & out, const std::string & text)
+{
+  out << text;
+}
+
 void sobolevsky::area(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
