@@ -18,7 +18,7 @@ namespace sobolevsky
   double areaIf(double result, const Polygon & polygon, size_t mode, bool inpMode);
   bool getMaxMinArea(const Polygon & polygon1, const Polygon & polygon2);
   bool getMaxMinVertex(const Polygon & polygon1, const Polygon & polygon2);
-  size_t countIf(size_t result, const Polygon & polygon, size_t mode, bool inpMode);
+  bool countIf(const Polygon & polygon, size_t mode, bool inpMode);
   long long areaTriangl(Point a, Point b, Point c);
   bool intersect_1(int a, int b, int c, int d);
   bool intersectVectorPointOnLine(Point a, Point b, Point c);

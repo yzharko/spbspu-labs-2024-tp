@@ -32,21 +32,14 @@ bool sobolevsky::getMaxMinVertex(const Polygon & polygon1, const Polygon & polyg
   return polygon1.points.size() < polygon2.points.size();
 }
 
-size_t sobolevsky::countIf(size_t result, const Polygon & polygon, size_t mode, bool inpMode)
+bool sobolevsky::countIf(const Polygon & polygon, size_t mode, bool inpMode)
 {
-  if (inpMode && polygon.points.size() == mode)
+  if ((inpMode && polygon.points.size() == mode) || (!inpMode && mode == (polygon.points.size()) % 2)
+  || (!inpMode && mode == (polygon.points.size()) % 2))
   {
-    result += 1;
+    return true;
   }
-  else if (!inpMode && mode == (polygon.points.size()) % 2)
-  {
-    result += 1;
-  }
-  else if (!inpMode && mode == (polygon.points.size()) % 2)
-  {
-    result += 1;
-  }
-  return result;
+  return false;
 }
 
 long long sobolevsky::areaTriangl(Point a, Point b, Point c)
@@ -226,14 +219,14 @@ void sobolevsky::count(const std::vector< Polygon > & vec, std::istream & in, st
   if (arg == "EVEN")
   {
     using namespace std::placeholders;
-    std::function< size_t(size_t, const Polygon &) > bindVertEven = std::bind(countIf, _1, _2, 0, false);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertEven) << "\n";
+    std::function< bool(const Polygon &) > bindVertEven = std::bind(countIf, _1, 0, false);
+    out << std::count_if(vec.cbegin(), vec.cend(), bindVertEven) << "\n";
   }
   else if (arg == "ODD")
   {
     using namespace std::placeholders;
-    std::function< size_t(size_t, const Polygon &) > bindVertOdd = std::bind(countIf, _1, _2, 1, false);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertOdd) << "\n";
+    std::function< bool(const Polygon &) > bindVertOdd = std::bind(countIf, _1, 1, false);
+    out << std::count_if(vec.cbegin(), vec.cend(), bindVertOdd) << "\n";
   }
   else
   {
@@ -242,8 +235,8 @@ void sobolevsky::count(const std::vector< Polygon > & vec, std::istream & in, st
       throw std::exception();
     }
     using namespace std::placeholders;
-    std::function< size_t(size_t, const Polygon &) > bindVertNum = std::bind(countIf, _1, _2, stoll(arg), true);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertNum) << "\n";
+    std::function< bool(const Polygon &) > bindVertNum = std::bind(countIf, _1, stoll(arg), true);
+    out << std::count_if(vec.cbegin(), vec.cend(), bindVertNum) << "\n";
   }
 }
 
