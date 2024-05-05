@@ -46,6 +46,7 @@ double redko::countArea(const Polygon & shape)
 {
   std::vector< int > pairs(shape.points.size());
   std::transform(++shape.points.cbegin(), shape.points.cend(), shape.points.cbegin(), pairs.begin(), std::bind(diffMultPair, _1, _2));
+  pairs.push_back(diffMultPair(shape.points.front(), shape.points.back()));
   int area = std::accumulate(pairs.cbegin(), pairs.cend(), 0);
   return abs(area) / 2.0;
 }

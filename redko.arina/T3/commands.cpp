@@ -9,6 +9,10 @@ using namespace std::placeholders;
 
 std::ostream & redko::countAreas(std::istream & in, std::ostream & out, const std::vector< Polygon > & shapes)
 {
+  if (shapes.empty())
+  {
+    throw std::logic_error("unable to process with empty data");
+  }
   std::string parameter = "";
   in >> parameter;
   out << std::fixed << std::setprecision(1);
@@ -27,6 +31,10 @@ std::ostream & redko::countAreas(std::istream & in, std::ostream & out, const st
   else
   {
     int numOfVertexes = std::stoi(parameter);
+    if (numOfVertexes <= 2)
+    {
+      throw std::logic_error("wrong parameter");
+    }
     out << countAreasVertexes(shapes, numOfVertexes) << '\n';
   }
   return out;
@@ -55,6 +63,10 @@ double redko::countAreasVertexes(const std::vector < Polygon > & shapes, int num
 
 std::ostream & redko::getMax(std::istream & in, std::ostream & out, const std::vector< Polygon > & shapes)
 {
+  if (shapes.empty())
+  {
+    throw std::logic_error("unable to process with empty data");
+  }
   std::string parameter = "";
   in >> parameter;
   if (parameter == "AREA")
@@ -90,6 +102,10 @@ double redko::getMaxVertexes(const std::vector < Polygon > & shapes)
 
 std::ostream & redko::getMin(std::istream & in, std::ostream & out, const std::vector< Polygon > & shapes)
 {
+  if (shapes.empty())
+  {
+    throw std::logic_error("unable to process with empty data");
+  }
   std::string parameter = "";
   in >> parameter;
   if (parameter == "AREA")
@@ -138,6 +154,10 @@ std::ostream & redko::count(std::istream & in, std::ostream & out, const std::ve
   else
   {
     int numOfVertexes = std::stoi(parameter);
+    if (numOfVertexes <= 2)
+    {
+      throw std::logic_error("wrong parameter");
+    }
     out << countShapes(shapes, numOfVertexes) << '\n';
   }
   return out;
