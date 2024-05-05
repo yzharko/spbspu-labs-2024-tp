@@ -9,14 +9,13 @@
 int main()
 {
   using namespace anikanov;
+  using iit = std::istream_iterator< DataStruct >;
+  using oit = std::ostream_iterator< DataStruct >;
 
   std::vector< DataStruct > dataStruct;
 
   while (std::cin.good()) {
-    std::copy(
-        std::istream_iterator< DataStruct >(std::cin),
-        std::istream_iterator< DataStruct >(),
-        std::back_inserter(dataStruct)
+    std::copy(iit(std::cin), iit(), std::back_inserter(dataStruct)
     );
     if (std::cin.fail() && !std::cin.eof()) {
       std::cin.clear();
@@ -26,10 +25,7 @@ int main()
 
   std::sort(dataStruct.begin(), dataStruct.end());
 
-  std::copy(
-      std::begin(dataStruct),
-      std::end(dataStruct),
-      std::ostream_iterator< DataStruct >(std::cout, "\n")
+  std::copy(std::begin(dataStruct), std::end(dataStruct), oit(std::cout, "\n")
   );
   return 0;
 }
