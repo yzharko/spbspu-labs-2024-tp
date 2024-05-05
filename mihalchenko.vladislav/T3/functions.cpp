@@ -48,7 +48,7 @@ void mihalchenko::getAreaOdd(const std::vector<Polygon> &polygons, std::ostream 
   std::copy_if(polygons.cbegin(), polygons.cend(),
                std::back_inserter(copyOddPolygons),
                std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2));
-  getAreaResult(copyOddPolygons, false, out << '\n');
+  getAreaResult(copyOddPolygons, false, out);
 }
 
 void mihalchenko::getAreaEven(const std::vector<Polygon> &polygons, std::ostream &out)
@@ -59,14 +59,14 @@ void mihalchenko::getAreaEven(const std::vector<Polygon> &polygons, std::ostream
                polygons.cend(),
                std::back_inserter(copyEvenPolygons),
                std::bind(std::logical_not<bool>{}, std::bind(std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2), _1)));
-  getAreaResult(copyEvenPolygons, false, out << '\n');
+  getAreaResult(copyEvenPolygons, false, out);
 }
 
 void mihalchenko::getAreaMean(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   std::vector<Polygon> copyPolygons;
   std::copy(polygons.cbegin(), polygons.cend(), std::back_inserter(copyPolygons));
-  getAreaResult(copyPolygons, true, out << '\n');
+  getAreaResult(copyPolygons, true, out);
 }
 
 void mihalchenko::getAreaVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out)
@@ -75,7 +75,7 @@ void mihalchenko::getAreaVertexes(const std::vector<Polygon> &polygons, size_t n
   std::copy_if(
       polygons.cbegin(), polygons.cend(), std::back_inserter(copyPolygonIfEqual),
       std::bind(std::bind(std::equal_to<size_t>{}, std::bind(getSize, _1), _2), _1, num));
-  getAreaResult(copyPolygonIfEqual, false, out << '\n');
+  getAreaResult(copyPolygonIfEqual, false, out);
 }
 
 std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygons, bool isMeanPredicate, std::ostream &out)
@@ -94,7 +94,7 @@ std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygon
                            std::bind(std::plus<double>{}, _1, std::bind(countArea, _2))) /
                copyPolygons.size();
   }
-  return out;
+  return out << '\n';
 }
 
 void mihalchenko::printArea(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
