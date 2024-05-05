@@ -15,8 +15,7 @@ int main()
   std::vector< DataStruct > dataStruct;
 
   while (std::cin.good()) {
-    std::copy(iit(std::cin), iit(), std::back_inserter(dataStruct)
-    );
+    std::copy(iit(std::cin), iit(), std::back_inserter(dataStruct));
     if (std::cin.fail() && !std::cin.eof()) {
       std::cin.clear();
       std::cin.ignore();
