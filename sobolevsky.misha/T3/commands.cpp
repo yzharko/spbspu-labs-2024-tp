@@ -84,12 +84,14 @@ bool sobolevsky::intersectVectors(Point a, Point b, const Polygon & polygon, siz
   || intersectVectorPointOnLine(c, d, a) || intersectVectorPointOnLine(c, d, b);
 }
 
-bool sobolevsky::intersectPolygAndVect(const Polygon & polygon, Point a, Point b)
+bool sobolevsky::intersectPolygAndVect(const Polygon & polygon1, const Polygon & polygon2, size_t i)
 {
-  std::vector< size_t > v(polygon.points.size());
+  Point a = polygon2.points[i];
+  Point b = polygon2.points[(i + 1) % polygon1.points.size()];
+  std::vector< size_t > v(polygon1.points.size());
   std::iota(v.begin(), v.end(), 0);
   using namespace std::placeholders;
-  std::function< bool(size_t) > bindIntersectPolygAndVect = std::bind(intersectVectors, a, b, polygon, _1);
+  std::function< bool(size_t) > bindIntersectPolygAndVect = std::bind(intersectVectors, a, b, polygon1, _1);
   if (std::count_if(v.cbegin(), v.cend(), bindIntersectPolygAndVect) > 0)
   {
     return true;
@@ -99,14 +101,14 @@ bool sobolevsky::intersectPolygAndVect(const Polygon & polygon, Point a, Point b
 
 bool sobolevsky::intersectPolyg(const Polygon & polygon1, const Polygon & polygon2)
 {
-  for(size_t i = 0; i < polygon1.points.size(); i++)
+  std::vector< size_t > v(polygon1.points.size());
+  std::iota(v.begin(), v.end(), 0);
+  using namespace std::placeholders;
+  std::function< bool(size_t) > bindIntersectPolygAndVect = std::bind(intersectPolygAndVect, polygon2, polygon1, _1);
+  if (std::count_if(v.cbegin(), v.cend(), bindIntersectPolygAndVect) > 0)
   {
-    if (intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[(i + 1) % polygon1.points.size()]))
-    {
-      return true;
-    }
+    return true;
   }
-
   return false;
 }
 

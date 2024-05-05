@@ -22,7 +22,7 @@ namespace sobolevsky
   bool intersect_1(int a, int b, int c, int d);
   bool intersectVectorPointOnLine(Point a, Point b, Point c);
   bool intersectVectors(Point a, Point b, const Polygon & polygon, size_t i);
-  bool intersectPolygAndVect(const Polygon & polygon, Point a, Point b);
+  bool intersectPolygAndVect(const Polygon & polygon1, const Polygon & polygon2, size_t i);
   bool intersectPolyg(const Polygon & polygon1, const Polygon & polygon2);
   bool isSamePolyg(const Polygon & polyg1, const Polygon & polyg2);
   bool isEqual(const Polygon & polyg1, const Polygon & polyg2);
