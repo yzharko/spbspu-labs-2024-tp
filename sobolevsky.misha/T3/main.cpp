@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
   std::cout << std::fixed;
   std::cout.precision(1);
   using namespace std::placeholders;
-  std::function< void(std::ostream &) > bindError = std::bind(sobolevsky::error, _1, "<INVALID COMMAND>");
+  std::function< void(std::ostream &) > bindError = std::bind(sobolevsky::error, _1, "<INVALID COMMAND>\n");
   while (std::cin >> cmd)
   {
     try
