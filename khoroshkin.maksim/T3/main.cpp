@@ -45,6 +45,7 @@ int main(int argc, char * argv[])
     cmds["RIGHTSHAPES"] = std::bind(khoroshkin::cmdRightshapes, _1, _2);
   }
 
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string cmd;
   while (std::cin >> cmd)
   {
@@ -54,7 +55,7 @@ int main(int argc, char * argv[])
     }
     catch(const std::out_of_range & e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      outInvalid(std::cout);
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }

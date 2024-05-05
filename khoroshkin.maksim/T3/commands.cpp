@@ -1,6 +1,7 @@
 #include "commands.hpp"
 #include <map>
 #include <algorithm>
+#include <iostream>
 #include <functional>
 #include <numeric>
 #include <iomanip>
@@ -15,6 +16,7 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream &
   areaCmds["EVEN"] = processEven;
   areaCmds["ODD"] = processOdd;
   areaCmds["MEAN"] = processMean;
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string type;
   is >> type;
   try
@@ -29,7 +31,7 @@ void khoroshkin::cmdArea(const std::vector< Polygon > & polygons, std::ostream &
     }
     else
     {
-      out << "<INVALID COMMAND>\n";
+      outInvalid(out);
     }
   }
 }
@@ -41,7 +43,10 @@ void khoroshkin::processEven(const std::vector< Polygon > & polygons, std::ostre
     polygons.begin(),
     polygons.end(),
     std::back_inserter(onlyEvenPolygons),
-    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
+    [](const Polygon & polygon)
+    {
+      return !(polygon.points.size() % 2);
+    }
   );
   double sum = sumAllAreas(onlyEvenPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
@@ -54,7 +59,10 @@ void khoroshkin::processOdd(const std::vector< Polygon > & polygons, std::ostrea
     polygons.begin(),
     polygons.end(),
     std::back_inserter(onlyOddPolygons),
-    [](const Polygon & polygon){ return polygon.points.size() % 2; }
+    [](const Polygon & polygon)
+    {
+      return polygon.points.size() % 2;
+    }
   );
   double sum = sumAllAreas(onlyOddPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
@@ -78,7 +86,10 @@ void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & 
     polygons.begin(),
     polygons.end(),
     std::back_inserter(polygonsWithNVertexes),
-    [OnlyNVertexes](const Polygon & polygon){ return OnlyNVertexes(polygon.points.size()); }
+    [OnlyNVertexes](const Polygon & polygon)
+    {
+      return OnlyNVertexes(polygon.points.size());
+    }
   );
 
   double sum = sumAllAreas(polygonsWithNVertexes);
@@ -87,7 +98,10 @@ void khoroshkin::processAreaNum(size_t vertexes, const std::vector< Polygon > & 
     polygons.begin(),
     polygons.end(),
     std::back_inserter(isVertexesExist),
-    [vertexes](const Polygon & polygon){ return polygon.points.size() == vertexes; }
+    [vertexes](const Polygon & polygon)
+    {
+      return polygon.points.size() == vertexes;
+    }
   );
   out << std::setprecision(1) << std::fixed << sum << '\n';
 }
@@ -99,7 +113,10 @@ double khoroshkin::sumAllAreas(const std::vector< Polygon > & polygons)
     polygons.begin(),
     polygons.end(),
     std::back_inserter(AreasOfPolygons),
-    [](const Polygon & polygon){ return getArea(polygon); }
+    [](const Polygon & polygon)
+    {
+      return getArea(polygon);
+    }
   );
 
   double sumOfAreas = std::accumulate(
@@ -119,7 +136,10 @@ double khoroshkin::getArea(const Polygon & polygon)
     polygon.points.end() - 1,
     std::next(polygon.points.begin()),
     std::back_inserter(sumOfCoords),
-    [](const Point & a, const Point & b){ return a.x * b.y; }
+    [](const Point & a, const Point & b)
+    {
+      return a.x * b.y;
+    }
   );
 
   std::vector< double > diffOfCoords;
@@ -128,7 +148,10 @@ double khoroshkin::getArea(const Polygon & polygon)
     polygon.points.end() - 1,
     std::next(polygon.points.begin()),
     std::back_inserter(diffOfCoords),
-    [](const Point & a, const Point & b){ return a.y * b.x; }
+    [](const Point & a, const Point & b)
+    {
+      return a.y * b.x;
+    }
   );
 
   double sum = std::accumulate(
@@ -151,6 +174,7 @@ void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & 
   std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > maxCmds;
   maxCmds["AREA"] = processMaxArea;
   maxCmds["VERTEXES"] = processMaxVertexes;
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string type;
   is >> type;
   try
@@ -159,7 +183,7 @@ void khoroshkin::cmdMax(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    out << "<INVALID COMMAND>\n";
+    outInvalid(out);
   }
 }
 
@@ -170,7 +194,10 @@ void khoroshkin::processMaxArea(const std::vector< Polygon > & polygons, std::os
     polygons.begin(),
     polygons.end(),
     std::back_inserter(AreasOfPolygons),
-    [](const Polygon & polygon){ return getArea(polygon); }
+    [](const Polygon & polygon)
+    {
+      return getArea(polygon);
+    }
   );
   std::sort(AreasOfPolygons.begin(), AreasOfPolygons.end());
   if (AreasOfPolygons.empty())
@@ -187,7 +214,10 @@ void khoroshkin::processMaxVertexes(const std::vector< Polygon > & polygons, std
     polygons.begin(),
     polygons.end(),
     std::back_inserter(vertexesOfPolygons),
-    [](const Polygon & polygon){ return polygon.points.size(); }
+    [](const Polygon & polygon)
+    {
+      return polygon.points.size();
+    }
   );
   std::sort(vertexesOfPolygons.begin(), vertexesOfPolygons.end());
   if (vertexesOfPolygons.empty())
@@ -202,6 +232,7 @@ void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::ostream & 
   std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > minCmds;
   minCmds["AREA"] = processMinArea;
   minCmds["VERTEXES"] = processMinVertexes;
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string type;
   is >> type;
   try
@@ -210,7 +241,7 @@ void khoroshkin::cmdMin(const std::vector< Polygon > & polygons, std::ostream & 
   }
   catch(const std::out_of_range & e)
   {
-    out << "<INVALID COMMAND>\n";
+    outInvalid(out);
   }
 }
 
@@ -221,7 +252,10 @@ void khoroshkin::processMinArea(const std::vector< Polygon > & polygons, std::os
     polygons.begin(),
     polygons.end(),
     std::back_inserter(AreasOfPolygons),
-    [](const Polygon & polygon){ return getArea(polygon); }
+    [](const Polygon & polygon)
+    {
+      return getArea(polygon);
+    }
   );
   std::sort(AreasOfPolygons.begin(), AreasOfPolygons.end());
   out << std::setprecision(1) << std::fixed << AreasOfPolygons.front() << '\n';
@@ -234,7 +268,10 @@ void khoroshkin::processMinVertexes(const std::vector< Polygon > & polygons, std
     polygons.begin(),
     polygons.end(),
     std::back_inserter(vertexesOfPolygons),
-    [](const Polygon & polygon){ return polygon.points.size(); }
+    [](const Polygon & polygon)
+    {
+      return polygon.points.size();
+    }
   );
   std::sort(vertexesOfPolygons.begin(), vertexesOfPolygons.end());
   out << vertexesOfPolygons.front() << '\n';
@@ -245,6 +282,7 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
   std::map< std::string, std::function< void(const std::vector< Polygon > & polygons, std::ostream & out) > > countCmds;
   countCmds["EVEN"] = processCountEven;
   countCmds["ODD"] = processCountOdd;
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string type;
   is >> type;
   try
@@ -259,7 +297,7 @@ void khoroshkin::cmdCount(const std::vector< Polygon > & polygons, std::ostream 
     }
     else
     {
-      out << "<INVALID COMMAND>\n";
+      outInvalid(out);
     }
   }
 }
@@ -271,7 +309,10 @@ void khoroshkin::processCountEven(const std::vector< Polygon > & polygons, std::
     polygons.begin(),
     polygons.end(),
     std::back_inserter(evenPolygons),
-    [](const Polygon & polygon){ return !(polygon.points.size() % 2); }
+    [](const Polygon & polygon)
+    {
+      return !(polygon.points.size() % 2);
+    }
   );
   size_t countEven = std::accumulate(
     evenPolygons.begin(),
@@ -289,7 +330,10 @@ void khoroshkin::processCountOdd(const std::vector< Polygon > & polygons, std::o
     polygons.begin(),
     polygons.end(),
     std::back_inserter(oddPolygons),
-    [](const Polygon & polygon){ return polygon.points.size() % 2; }
+    [](const Polygon & polygon)
+    {
+      return polygon.points.size() % 2;
+    }
   );
   size_t countOdd = std::accumulate(
     oddPolygons.begin(),
@@ -307,7 +351,10 @@ void khoroshkin::processCountVertexes(size_t vertexes, const std::vector< Polygo
     polygons.begin(),
     polygons.end(),
     std::back_inserter(polygonsWithNVertexes),
-    [vertexes](const Polygon & polygon){ return polygon.points.size() == vertexes; }
+    [vertexes](const Polygon & polygon)
+    {
+      return polygon.points.size() == vertexes;
+    }
   );
   size_t countWithNVertexes = std::accumulate(
     polygonsWithNVertexes.begin(),
@@ -323,16 +370,20 @@ void khoroshkin::cmdPerms(const std::vector< Polygon > & polygons, std::ostream 
   Polygon givenPolygon;
   is >> givenPolygon;
   size_t givenPolygonVertexes = givenPolygon.points.size();
+  auto outInvalid = std::bind(outMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::vector< Polygon > allVertexes;
   std::copy_if(
     polygons.begin(),
     polygons.end(),
     std::back_inserter(allVertexes),
-    [givenPolygonVertexes](const Polygon & polygon){ return polygon.points.size() == givenPolygonVertexes; }
+    [givenPolygonVertexes](const Polygon & polygon)
+    {
+      return polygon.points.size() == givenPolygonVertexes;
+    }
   );
   if (allVertexes.empty())
   {
-    out << "<INVALID COMMAND>\n";
+    outInvalid(out);
   }
   else
   {
@@ -392,7 +443,14 @@ bool khoroshkin::isAngleRight(const Polygon & polygon)
     getCos
   );
   cosOfVectors.push_back(getCos(vectorFromPoints.back(), vectorFromPoints.front()));
-  return std::find_if(cosOfVectors.begin(), cosOfVectors.end(), [](const double & cos){ return cos == 0; }) != cosOfVectors.end();
+  return std::find_if(
+    cosOfVectors.begin(),
+    cosOfVectors.end(),
+    [](const double & cos)
+    {
+      return cos == 0;
+    }
+    ) != cosOfVectors.end();
 }
 
 khoroshkin::Point khoroshkin::vectorFromCoords(const khoroshkin::Point & firstPoint, const khoroshkin::Point & secondPoint)
@@ -406,4 +464,9 @@ double khoroshkin::cosFromVects(const khoroshkin::Point & firstPoint, const khor
   double botExprFirst = std::sqrt(std::pow(firstPoint.x, 2) + std::pow(firstPoint.y, 2));
   double botExprSecond = std::sqrt(std::pow(secondPoint.x, 2) + std::pow(secondPoint.y, 2));
   return topExpr / (botExprFirst * botExprSecond);
+}
+
+void khoroshkin::outMessage(std::ostream & out, const std::string & message)
+{
+  out << message;
 }

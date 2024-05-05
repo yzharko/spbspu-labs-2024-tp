@@ -1,7 +1,9 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
 
-#include <iostream>
+#include <iosfwd>
+#include <string>
+#include <functional>
 #include "polygon.hpp"
 
 namespace khoroshkin
@@ -35,6 +37,8 @@ namespace khoroshkin
   bool isAngleRight(const Polygon & polygon);
   Point vectorFromCoords(const Point & firstPoint, const Point & secondPoint);
   double cosFromVects(const Point & firstPoint, const Point & secondPoint);
+
+  void outMessage(std::ostream & out, const std::string & message);
 }
 
 #endif
