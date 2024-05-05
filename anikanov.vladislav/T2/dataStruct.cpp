@@ -107,7 +107,7 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::DataStruct &dest)
   return in;
 }
 
-std::ostream &operator<<(std::ostream &out, const anikanov::DataStruct &src)
+std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
 {
   std::ostream::sentry sentry(out);
   if (!sentry) {
