@@ -1,5 +1,4 @@
 #include "commands.hpp"
-#include <map>
 #include <cctype>
 #include <functional>
 #include <numeric>
@@ -75,8 +74,10 @@ bool sobolevsky::intersectVectorPointOnLine(Point a, Point b, Point c)
   return (c.x - a.x) * (b.y - a.y) - (b.x - a.x) * (c.y - a.y) == 0;
 }
 
-bool sobolevsky::intersectVectors(Point a, Point b, Point c, Point d)
+bool sobolevsky::intersectVectors(Point a, Point b, const Polygon & polygon, size_t i)
 {
+  Point c = polygon.points[i];
+  Point d = polygon.points[(i + 1) % polygon.points.size()];
   return (intersect_1(a.x, b.x, c.x, d.x) && intersect_1(a.y, b.y, c.y, d.y)
   && areaTriangl(a,b,c) * areaTriangl(a,b,d) <= 0 && areaTriangl(c,d,a) * areaTriangl(c,d,b) <= 0)
   || intersectVectorPointOnLine(a, b, c) || intersectVectorPointOnLine(a, b, d)
@@ -85,14 +86,14 @@ bool sobolevsky::intersectVectors(Point a, Point b, Point c, Point d)
 
 bool sobolevsky::intersectPolygAndVect(const Polygon & polygon, Point a, Point b)
 {
-  for(size_t i = 0; i < polygon.points.size(); i++)
+  std::vector< size_t > v(polygon.points.size());
+  std::iota(v.begin(), v.end(), 0);
+  using namespace std::placeholders;
+  std::function< bool(size_t) > bindIntersectPolygAndVect = std::bind(intersectVectors, a, b, polygon, _1);
+  if (std::count_if(v.cbegin(), v.cend(), bindIntersectPolygAndVect) > 0)
   {
-    if (intersectVectors(a, b, polygon.points[i], polygon.points[(i + 1) % polygon.points.size()]))
-    {
-      return true;
-    }
+    return true;
   }
-
   return false;
 }
 

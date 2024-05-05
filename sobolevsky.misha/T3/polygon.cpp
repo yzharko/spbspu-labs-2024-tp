@@ -1,5 +1,4 @@
 #include "polygon.hpp"
-#include <iterator>
 #include <algorithm>
 
 std::istream& sobolevsky::operator>>(std::istream& in, Polygon& polygon)

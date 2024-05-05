@@ -1,6 +1,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
-#include <iostream>
+
+#include <fstream>
 
 namespace sobolevsky
 {
