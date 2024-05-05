@@ -1,7 +1,7 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 
-#include <iosfwd>
+#include <iostream>
 #include <string>
 
 namespace anikanov {
