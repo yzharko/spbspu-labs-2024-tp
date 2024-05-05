@@ -1,8 +1,16 @@
-#include "iofmtguard.hpp"
+#include "inOutPut.hpp"
 
 #include <iostream>
 #include <bitset>
 #include <string>
+
+#include "delimiterIO.hpp"
+#include "ullBinIO.hpp"
+#include "ullLitIO.hpp"
+#include "stringIO.hpp"
+#include "delStrIO.hpp"
+#include "dataStruct.hpp"
+#include "iofmtguard.hpp"
 
 
 std::istream &anikanov::operator>>(std::istream &in, DelimiterIO &&dest)
