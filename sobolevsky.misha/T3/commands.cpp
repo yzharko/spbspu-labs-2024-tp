@@ -112,25 +112,32 @@ bool sobolevsky::intersectPolyg(const Polygon & polygon1, const Polygon & polygo
   return false;
 }
 
+bool sobolevsky::findDifference(const Polygon & polyg1, const Polygon & polyg2, int difX, int difY, int i)
+{
+  if (((polyg1.points[i].x - polyg2.points[i].x) != difX) || ((polyg1.points[i].y - polyg2.points[i].y) != difY))
+  {
+    return true;
+  }
+  return false;
+}
+
 bool sobolevsky::isSamePolyg(const Polygon & polyg1, const Polygon & polyg2)
 {
-  bool isSame = false;
   if (polyg1.points.size() == polyg2.points.size())
   {
-    isSame = true;
     int difX, difY;
     difX = polyg1.points[0].x - polyg2.points[0].x;
     difY = polyg1.points[0].y - polyg2.points[0].y;
-    for (size_t i = 1; i < polyg1.points.size(); i++)
+    std::vector< int > v(polyg1.points.size() - 1);
+    std::iota(v.begin(), v.end(), 1);
+    using namespace std::placeholders;
+    std::function< bool(int) > bindFindDifference = std::bind(findDifference, polyg1, polyg2, difX, difY, _1);
+    if (std::count_if(v.cbegin(), v.cend(), bindFindDifference) == 0)
     {
-      if (((polyg1.points[i].x - polyg2.points[i].x) != difX) || ((polyg1.points[i].y - polyg2.points[i].y) != difY))
-      {
-        isSame = false;
-        break;
-      }
+      return true;
     }
   }
-  return isSame;
+  return false;
 }
 
 void sobolevsky::error(std::ostream & out, const std::string & text)
