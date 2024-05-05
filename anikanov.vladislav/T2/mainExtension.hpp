@@ -4,7 +4,7 @@
 #include "dataStruct.hpp"
 
 namespace anikanov {
-  bool dataStructComparator(const DataStruct &a, const DataStruct &b);
+  bool dataStructComparator(const anikanov::DataStruct &a, const anikanov::DataStruct &b);
 }
 
 #endif
