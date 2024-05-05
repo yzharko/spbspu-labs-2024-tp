@@ -17,7 +17,6 @@ namespace khoroshkin
     std::vector< Point > points;
   };
 
-  std::istream & operator>>(std::istream & is, DelimiterIO && dest);
   std::istream & operator>>(std::istream & is, Point & dest);
   std::istream & operator>>(std::istream & is, Polygon & dest);
 }
