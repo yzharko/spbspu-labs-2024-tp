@@ -126,7 +126,7 @@ std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
   out << "(:key1 " << src.key1 << "ull";
 
   std::string bin = std::bitset<sizeof(unsigned long long) * 8>(src.key2).to_string();
-  int pos = 0;
+  long unsigned int pos = 0;
   while (bin[pos] == '0' && pos < bin.length() - 1) {
     pos++;
   }
