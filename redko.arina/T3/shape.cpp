@@ -45,7 +45,13 @@ using namespace std::placeholders;
 double redko::countArea(const Polygon & shape)
 {
   std::vector< int > pairs(shape.points.size());
-  std::transform(++shape.points.cbegin(), shape.points.cend(), shape.points.cbegin(), pairs.begin(), std::bind(diffMultPair, _1, _2));
+  std::transform(
+  ++shape.points.cbegin(),
+  shape.points.cend(),
+  shape.points.cbegin(),
+  pairs.begin(),
+  diffMultPair
+  );
   pairs.push_back(diffMultPair(shape.points.front(), shape.points.back()));
   int area = std::accumulate(pairs.cbegin(), pairs.cend(), 0);
   return abs(area) / 2.0;
@@ -166,7 +172,11 @@ bool redko::isRightShape(const Polygon & shape)
     std::bind(makeScalar, _1, _2)
   );
   scalars.push_back(makeScalar(vectors.back(), vectors.front()));
-  return std::any_of(scalars.cbegin(), scalars.cend(), std::bind(isEqual, _1, 0));
+  return std::any_of(
+  scalars.cbegin(),
+  scalars.cend(),
+  std::bind(isEqual, _1, 0)
+  );
 }
 
 std::istream & redko::operator>>(std::istream & in, Polygon & dest)

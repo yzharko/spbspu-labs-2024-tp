@@ -23,9 +23,10 @@ namespace redko
   int countOdd(const std::vector< Polygon > & shapes);
   int countShapes(const std::vector< Polygon > & shapes, int numOfVertexes);
 
-  std::ostream & countIntersections(std::istream &, std::ostream & out, const std::vector< Polygon > & shapes);
+  std::ostream & countIntersections(std::istream & in, std::ostream & out, const std::vector< Polygon > & shapes);
   std::ostream & countRightShapes(std::istream &, std::ostream & out, const std::vector< Polygon > & shapes);
 
+  std::ostream & printMessage(std::ostream & out, const std::string & message);
 }
 
 #endif

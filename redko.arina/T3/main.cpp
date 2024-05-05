@@ -56,13 +56,13 @@ int main(int argc, char ** argv)
     }
     catch (const std::out_of_range &)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      redko::printMessage(std::cout, "<INVALID COMMAND>");
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
     catch (const std::logic_error &)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      redko::printMessage(std::cout, "<INVALID COMMAND>");
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

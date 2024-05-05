@@ -194,3 +194,9 @@ std::ostream & redko::countRightShapes(std::istream &, std::ostream & out, const
   out << std::count_if(shapes.cbegin(), shapes.cend(), isRightShape) << '\n';
   return out;
 }
+
+std::ostream & redko::printMessage(std::ostream & out, const std::string & message)
+{
+  out << message << '\n';
+  return out;
+}
