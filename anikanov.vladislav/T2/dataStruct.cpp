@@ -132,6 +132,9 @@ std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
   }
 
   bin = bin.substr(pos);
+  if (bin[0] != '0'){
+    bin = "0" + bin;
+  }
 
   out << ":key2 0b" << bin;
   out << ":key3 \"" << src.key3 << "\":)";
