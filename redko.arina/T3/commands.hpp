@@ -1,6 +1,6 @@
 #ifndef COMANDS_HPP
 #define COMANDS_HPP
-#include "shape.hpp"
+#include "shapeFunctions.hpp"
 
 namespace redko
 {
