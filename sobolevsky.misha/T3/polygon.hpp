@@ -11,9 +11,9 @@ namespace sobolevsky
     std::vector< Point > points;
   };
 
-  double getArea(const sobolevsky::Polygon& polygon);
-  std::istream& operator>>(std::istream& in, sobolevsky::Polygon& polygon);
-  std::ostream& operator<<(std::ostream& out, sobolevsky::Polygon& polygon);
+  double getArea(const Polygon& polygon);
+  std::istream& operator>>(std::istream& in, Polygon& polygon);
+  std::ostream& operator<<(std::ostream& out, Polygon& polygon);
 }
 
 #endif

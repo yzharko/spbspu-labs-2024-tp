@@ -6,24 +6,25 @@
 
 namespace sobolevsky
 {
-  void area(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
-  void getMax(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
-  void getMin(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
-  void count(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
-  void intersections(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
-  void same(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out);
+  void area(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
+  void getMax(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
+  void getMin(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
+  void count(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
+  void intersections(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
+  void same(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out);
 
-  double areaIf(double result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode);
-  bool getMaxMinArea(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
-  bool getMaxMinVertex(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
-  size_t countIf(size_t result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode);
-  long long areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c);
+  double areaIf(double result, const Polygon & polygon, size_t mode, bool inpMode);
+  bool getMaxMinArea(const Polygon & polygon1, const Polygon & polygon2);
+  bool getMaxMinVertex(const Polygon & polygon1, const Polygon & polygon2);
+  size_t countIf(size_t result, const Polygon & polygon, size_t mode, bool inpMode);
+  long long areaTriangl(Point a, Point b, Point c);
   bool intersect_1(int a, int b, int c, int d);
-  bool intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d);
-  bool intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b);
-  bool intersectPolyg(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2);
-  bool isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2);
-  bool isEqual(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2);
+  bool intersectVectorPointOnLine(Point a, Point b, Point c);
+  bool intersectVectors(Point a, Point b, Point c, Point d);
+  bool intersectPolygAndVect(const Polygon & polygon, Point a, Point b);
+  bool intersectPolyg(const Polygon & polygon1, const Polygon & polygon2);
+  bool isSamePolyg(const Polygon & polyg1, const Polygon & polyg2);
+  bool isEqual(const Polygon & polyg1, const Polygon & polyg2);
 }
 
 #endif

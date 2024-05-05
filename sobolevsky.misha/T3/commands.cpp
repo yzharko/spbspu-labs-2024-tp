@@ -6,34 +6,34 @@
 #include <algorithm>
 #include <utility>
 
-double sobolevsky::areaIf(double result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode)
+double sobolevsky::areaIf(double result, const Polygon & polygon, size_t mode, bool inpMode)
 {
   if (inpMode && polygon.points.size() == mode)
   {
-    result += sobolevsky::getArea(polygon);
+    result += getArea(polygon);
   }
   if (mode == 2 && !inpMode)
   {
-    result += sobolevsky::getArea(polygon);
+    result += getArea(polygon);
   }
   else if (mode == (polygon.points.size() % 2) && !inpMode)
   {
-    result += sobolevsky::getArea(polygon);
+    result += getArea(polygon);
   }
   return result;
 }
 
-bool sobolevsky::getMaxMinArea(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2)
+bool sobolevsky::getMaxMinArea(const Polygon & polygon1, const Polygon & polygon2)
 {
-  return sobolevsky::getArea(polygon1) < sobolevsky::getArea(polygon2);
+  return getArea(polygon1) < getArea(polygon2);
 }
 
-bool sobolevsky::getMaxMinVertex(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2)
+bool sobolevsky::getMaxMinVertex(const Polygon & polygon1, const Polygon & polygon2)
 {
   return polygon1.points.size() < polygon2.points.size();
 }
 
-size_t sobolevsky::countIf(size_t result, const sobolevsky::Polygon & polygon, size_t mode, bool inpMode)
+size_t sobolevsky::countIf(size_t result, const Polygon & polygon, size_t mode, bool inpMode)
 {
   if (inpMode && polygon.points.size() == mode)
   {
@@ -50,7 +50,7 @@ size_t sobolevsky::countIf(size_t result, const sobolevsky::Polygon & polygon, s
   return result;
 }
 
-long long sobolevsky::areaTriangl(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c)
+long long sobolevsky::areaTriangl(Point a, Point b, Point c)
 {
   return (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
 }
@@ -70,22 +70,24 @@ bool sobolevsky::intersect_1(int a, int b, int c, int d)
   return std::max(a, c) <= std::min(b, d);
 }
 
-bool sobolevsky::intersectVectors(sobolevsky::Point a, sobolevsky::Point b, sobolevsky::Point c, sobolevsky::Point d)
+bool sobolevsky::intersectVectorPointOnLine(Point a, Point b, Point c)
 {
-  return (sobolevsky::intersect_1(a.x, b.x, c.x, d.x) && sobolevsky::intersect_1(a.y, b.y, c.y, d.y)
-  && sobolevsky::areaTriangl(a,b,c) * sobolevsky::areaTriangl(a,b,d) <= 0
-  && sobolevsky::areaTriangl(c,d,a) * sobolevsky::areaTriangl(c,d,b) <= 0)
-  || ((c.x - a.x) * (b.y - a.y) - (b.x - a.x) * (c.y - a.y) == 0)
-  || ((d.x - a.x) * (b.y - a.y) - (b.x - a.x) * (d.y - a.y) == 0)
-  || ((a.x - c.x) * (d.y - c.y) - (d.x - c.x) * (a.y - c.y) == 0)
-  || ((b.x - c.x) * (d.y - c.y) - (d.x - c.x) * (b.y - c.y) == 0);
+  return (c.x - a.x) * (b.y - a.y) - (b.x - a.x) * (c.y - a.y) == 0;
 }
 
-bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobolevsky::Point a, sobolevsky::Point b)
+bool sobolevsky::intersectVectors(Point a, Point b, Point c, Point d)
+{
+  return (intersect_1(a.x, b.x, c.x, d.x) && intersect_1(a.y, b.y, c.y, d.y)
+  && areaTriangl(a,b,c) * areaTriangl(a,b,d) <= 0 && areaTriangl(c,d,a) * areaTriangl(c,d,b) <= 0)
+  || intersectVectorPointOnLine(a, b, c) || intersectVectorPointOnLine(a, b, d)
+  || intersectVectorPointOnLine(c, d, a) || intersectVectorPointOnLine(c, d, b);
+}
+
+bool sobolevsky::intersectPolygAndVect(const Polygon & polygon, Point a, Point b)
 {
   for(size_t i = 0; i < polygon.points.size(); i++)
   {
-    if (sobolevsky::intersectVectors(a, b, polygon.points[i], polygon.points[(i + 1) % polygon.points.size()]))
+    if (intersectVectors(a, b, polygon.points[i], polygon.points[(i + 1) % polygon.points.size()]))
     {
       return true;
     }
@@ -94,11 +96,11 @@ bool sobolevsky::intersectPolygAndVect(const sobolevsky::Polygon & polygon, sobo
   return false;
 }
 
-bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobolevsky::Polygon & polygon2)
+bool sobolevsky::intersectPolyg(const Polygon & polygon1, const Polygon & polygon2)
 {
   for(size_t i = 0; i < polygon1.points.size(); i++)
   {
-    if (sobolevsky::intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[(i + 1) % polygon1.points.size()]))
+    if (intersectPolygAndVect(polygon2, polygon1.points[i], polygon1.points[(i + 1) % polygon1.points.size()]))
     {
       return true;
     }
@@ -107,7 +109,7 @@ bool sobolevsky::intersectPolyg(const sobolevsky::Polygon & polygon1, const sobo
   return false;
 }
 
-bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2)
+bool sobolevsky::isSamePolyg(const Polygon & polyg1, const Polygon & polyg2)
 {
   bool isSame = false;
   if (polyg1.points.size() == polyg2.points.size())
@@ -128,20 +130,20 @@ bool sobolevsky::isSamePolyg(const sobolevsky::Polygon & polyg1, const sobolevsk
   return isSame;
 }
 
-void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::area(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
   if (arg == "EVEN")
   {
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, 0, false);
+    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 0, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
   }
   else if (arg == "ODD")
   {
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, 1, false);
+    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 1, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
   }
   else if (arg == "MEAN")
@@ -151,7 +153,7 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
       throw std::exception();
     }
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, 2, false);
+    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 2, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) / vec.size() << "\n";
   }
   else
@@ -161,12 +163,12 @@ void sobolevsky::area(const std::vector< sobolevsky::Polygon > & vec, std::istre
       throw std::exception();
     }
     using namespace std::placeholders;
-    std::function< double(double, const sobolevsky::Polygon &) > bindareaIf = std::bind(sobolevsky::areaIf, _1, _2, stoll(arg), true);
+    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, stoll(arg), true);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
   }
 }
 
-void sobolevsky::getMax(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::getMax(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
@@ -176,15 +178,15 @@ void sobolevsky::getMax(const std::vector< sobolevsky::Polygon > & vec, std::ist
   }
   if (arg == "AREA")
   {
-    out << sobolevsky::getArea(*std::max_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinArea)) << "\n";
+    out << getArea(*std::max_element(vec.cbegin(), vec.cend(), getMaxMinArea)) << "\n";
   }
   else if (arg == "VERTEXES")
   {
-    out << std::max_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinVertex)->points.size() << "\n";
+    out << std::max_element(vec.cbegin(), vec.cend(), getMaxMinVertex)->points.size() << "\n";
   }
 }
 
-void sobolevsky::getMin(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::getMin(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
@@ -194,28 +196,28 @@ void sobolevsky::getMin(const std::vector< sobolevsky::Polygon > & vec, std::ist
   }
   if (arg == "AREA")
   {
-    out << sobolevsky::getArea(*std::min_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinArea)) << "\n";
+    out << getArea(*std::min_element(vec.cbegin(), vec.cend(), getMaxMinArea)) << "\n";
   }
   else if (arg == "VERTEXES")
   {
-    out << std::min_element(vec.cbegin(), vec.cend(), sobolevsky::getMaxMinVertex)->points.size() << "\n";
+    out << std::min_element(vec.cbegin(), vec.cend(), getMaxMinVertex)->points.size() << "\n";
   }
 }
 
-void sobolevsky::count(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::count(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
   if (arg == "EVEN")
   {
     using namespace std::placeholders;
-    std::function< size_t(size_t, const sobolevsky::Polygon &) > bindVertEven = std::bind(sobolevsky::countIf, _1, _2, 0, false);
+    std::function< size_t(size_t, const Polygon &) > bindVertEven = std::bind(countIf, _1, _2, 0, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertEven) << "\n";
   }
   else if (arg == "ODD")
   {
     using namespace std::placeholders;
-    std::function< size_t(size_t, const sobolevsky::Polygon &) > bindVertOdd = std::bind(sobolevsky::countIf, _1, _2, 1, false);
+    std::function< size_t(size_t, const Polygon &) > bindVertOdd = std::bind(countIf, _1, _2, 1, false);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertOdd) << "\n";
   }
   else
@@ -225,48 +227,48 @@ void sobolevsky::count(const std::vector< sobolevsky::Polygon > & vec, std::istr
       throw std::exception();
     }
     using namespace std::placeholders;
-    std::function< size_t(size_t, const sobolevsky::Polygon &) > bindVertNum = std::bind(sobolevsky::countIf, _1, _2, stoll(arg), true);
+    std::function< size_t(size_t, const Polygon &) > bindVertNum = std::bind(countIf, _1, _2, stoll(arg), true);
     out << std::accumulate(vec.cbegin(), vec.cend(), 0, bindVertNum) << "\n";
   }
 }
 
-bool sobolevsky::isEqual(const sobolevsky::Polygon & polyg1, const sobolevsky::Polygon & polyg2)
+bool sobolevsky::isEqual(const Polygon & polyg1, const Polygon & polyg2)
 {
   return polyg1.points.size() == polyg2.points.size();
 }
 
-void sobolevsky::intersections(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::intersections(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
-  sobolevsky::Polygon inpPolyg;
+  Polygon inpPolyg;
   in >> inpPolyg;
   if (!in)
   {
     throw std::exception();
   }
   using namespace std::placeholders;
-  std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
+  std::function< bool(const Polygon &) > findEqual = std::bind(isEqual, inpPolyg, _1);
   if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
   {
     throw std::exception();
   }
-  std::function< bool(const sobolevsky::Polygon &) > bindIntersection = std::bind(sobolevsky::intersectPolyg, inpPolyg, _1);
+  std::function< bool(const Polygon &) > bindIntersection = std::bind(intersectPolyg, inpPolyg, _1);
   out << std::count_if(vec.cbegin(), vec.cend(), bindIntersection) << "\n";
 }
 
-void sobolevsky::same(const std::vector< sobolevsky::Polygon > & vec, std::istream & in, std::ostream & out)
+void sobolevsky::same(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
-  sobolevsky::Polygon inpPolyg;
+  Polygon inpPolyg;
   in >> inpPolyg;
   if (!in)
   {
     throw std::exception();
   }
   using namespace std::placeholders;
-  std::function< bool(const sobolevsky::Polygon &) > findEqual = std::bind(sobolevsky::isEqual, inpPolyg, _1);
+  std::function< bool(const Polygon &) > findEqual = std::bind(isEqual, inpPolyg, _1);
   if (std::count_if(vec.cbegin(), vec.cend(), findEqual) == 0)
   {
     throw std::exception();
   }
-  std::function< bool(const sobolevsky::Polygon &) > bindSame = std::bind(sobolevsky::isSamePolyg, inpPolyg, _1);
+  std::function< bool(const Polygon &) > bindSame = std::bind(isSamePolyg, inpPolyg, _1);
   out << std::count_if(vec.cbegin(), vec.cend(), bindSame) << "\n";
 }

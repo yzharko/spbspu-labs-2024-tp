@@ -9,8 +9,8 @@ namespace sobolevsky
     int x, y;
   };
 
-  std::istream& operator>>(std::istream& in, sobolevsky::Point& point);
-  std::ostream& operator<<(std::ostream& out, sobolevsky::Point& point);
+  std::istream& operator>>(std::istream& in, Point& point);
+  std::ostream& operator<<(std::ostream& out, Point& point);
 }
 
 #endif

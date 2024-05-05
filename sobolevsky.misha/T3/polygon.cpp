@@ -2,7 +2,7 @@
 #include <iterator>
 #include <algorithm>
 
-std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& polygon)
+std::istream& sobolevsky::operator>>(std::istream& in, Polygon& polygon)
 {
   std::istream::sentry guard(in);
   if (!guard)
@@ -16,10 +16,10 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
     in.setstate(std::ios::failbit);
     return in;
   }
-  sobolevsky::Polygon tempPolyg;
+  Polygon tempPolyg;
   for(size_t i = 0; i < vertexCount; i++)
   {
-    sobolevsky::Point tempPoint;
+    Point tempPoint;
     in >> tempPoint;
     tempPolyg.points.push_back(tempPoint);
   }
@@ -27,7 +27,7 @@ std::istream& sobolevsky::operator>>(std::istream& in, sobolevsky::Polygon& poly
   return in;
 }
 
-std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Polygon& polygon)
+std::ostream& sobolevsky::operator<<(std::ostream& out, Polygon& polygon)
 {
   std::ostream::sentry guard(out);
   if (!guard)
@@ -43,7 +43,7 @@ std::ostream& sobolevsky::operator<<(std::ostream& out, sobolevsky::Polygon& pol
   return out;
 }
 
-double sobolevsky::getArea(const sobolevsky::Polygon& polygon)
+double sobolevsky::getArea(const Polygon& polygon)
 {
   double area = 0;
   for (size_t i = 0; i < polygon.points.size(); i++)
