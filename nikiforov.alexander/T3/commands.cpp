@@ -1,72 +1,53 @@
 #include "commands.hpp"
 #include <numeric>
+#include <iomanip>
 
 using namespace std::placeholders;
 
 namespace nikiforov
 {
-  void takingArea(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
+  void takingArea(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out)
   {
     std::string option = "";
     in >> option;
-    std::vector< double > areaOfEach;
+    out << std::fixed << std::setprecision(1);
 
-    if (option == "ODD")
+    if (option == "ODD" && !shapes.empty())
     {
       std::vector< Polygon > figuresOdd;
       std::copy_if(
-        std::begin(figure), std::end(figure),
+        std::begin(shapes), std::end(shapes),
         std::back_inserter(figuresOdd),
         isOdd
       );
 
-      std::transform(
-        std::begin(figuresOdd), std::end(figuresOdd),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << std::accumulate(std::begin(areaOfEach), std::end(areaOfEach), 0) << "\n";
+      out << getAreaResult(figuresOdd, "area") << "\n";
     }
-    else if (option == "EVEN")
+    else if (option == "EVEN" && !shapes.empty())
     {
       std::vector< Polygon > figuresEven;
       std::copy_if(
-        std::begin(figure), std::end(figure),
+        std::begin(shapes), std::end(shapes),
         std::back_inserter(figuresEven),
         isEven
       );
 
-      std::transform(
-        std::begin(figuresEven), std::end(figuresEven),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << std::accumulate(std::begin(areaOfEach), std::end(areaOfEach), 0) << "\n";
+      out << getAreaResult(figuresEven, "area") << "\n";
     }
-    else if (option == "MEAN")
+    else if (option == "MEAN" && !shapes.empty())
     {
-      std::transform(
-        std::begin(figure), std::end(figure),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << (std::accumulate(std::begin(areaOfEach), std::end(areaOfEach), 0)) / figure.size() << "\n";
+      out << getAreaResult(shapes, "area") / shapes.size() << "\n";
     }
-    else if (isdigit(option[0]))
+    else if (isdigit(option[0]) && !shapes.empty())
     {
       std::vector< Polygon > figuresNumOfVert;
       std::copy_if(
-        std::begin(figure), std::end(figure),
+        std::begin(shapes), std::end(shapes),
         std::back_inserter(figuresNumOfVert),
         std::bind(numOfVert, size_t(stoi(option)), _1)
       );
 
-      std::transform(
-        std::begin(figuresNumOfVert), std::end(figuresNumOfVert),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << std::accumulate(std::begin(areaOfEach), std::end(areaOfEach), 0) << "\n";
+      out << getAreaResult(figuresNumOfVert, "area") << "\n";
     }
     else
     {
@@ -74,7 +55,7 @@ namespace nikiforov
     }
   }
 
-  double getPoints(const Point& first, const Point& second)
+  int getPoints(const Point& first, const Point& second)
   {
     return first.x * second.y - first.y * second.x;
   };
@@ -83,7 +64,7 @@ namespace nikiforov
   {
     double res = 0;
     size_t sizePol = polygon.points.size();
-    std::vector< double > countArea;
+    std::vector< int > countArea;
 
     std::transform(++polygon.points.cbegin(), polygon.points.cend(),
       polygon.points.cbegin(),
@@ -98,43 +79,32 @@ namespace nikiforov
 
   bool isOdd(const Polygon& polygon)
   {
-    return polygon.points.size() % 2 != 0 ? true : false;
+    return polygon.points.size() % 2 != 0;
   }
 
   bool isEven(const Polygon& polygon)
   {
-    return polygon.points.size() % 2 == 0 ? true : false;
+    return polygon.points.size() % 2 == 0;
   }
 
   bool numOfVert(size_t num, const Polygon& polygon)
   {
-    return polygon.points.size() == num ? true : false;
+    return polygon.points.size() == num;
   }
 
-  void takingMax(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
+  void takingMax(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out)
   {
     std::string option = "";
     in >> option;
+    out << std::fixed << std::setprecision(1);
 
-    if (option == "AREA")
+    if (option == "AREA" && !shapes.empty())
     {
-      std::vector< double > areaOfEach;
-      std::transform(
-        std::begin(figure), std::end(figure),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << *std::max_element(std::begin(areaOfEach), std::end(areaOfEach)) << "\n";
+      out << getAreaResult(shapes, "max") << "\n";
     }
-    else if (option == "VERTEXES")
+    else if (option == "VERTEXES" && !shapes.empty())
     {
-      std::vector< size_t > vectOfAllVertexes;
-      std::transform(
-        std::begin(figure), std::end(figure),
-        std::back_inserter(vectOfAllVertexes),
-        numOfVertexes
-      );
-      out << *std::max_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes)) << "\n";
+      out << getVertexesResult(shapes, "max") << "\n";
     }
     else
     {
@@ -142,35 +112,23 @@ namespace nikiforov
     }
   }
 
-  size_t numOfVertexes(const Polygon& polygon)
+  size_t countOfVertexes(const Polygon& polygon)
   {
     return polygon.points.size();
   }
 
-  void takingMin(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
+  void takingMin(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out)
   {
     std::string option = "";
     in >> option;
 
-    if (option == "AREA")
+    if (option == "AREA" && !shapes.empty())
     {
-      std::vector< double > areaOfEach;
-      std::transform(
-        std::begin(figure), std::end(figure),
-        std::back_inserter(areaOfEach),
-        getArea
-      );
-      out << *std::min_element(std::begin(areaOfEach), std::end(areaOfEach)) << "\n";
+      out << getAreaResult(shapes, "min") << "\n";
     }
-    else if (option == "VERTEXES")
+    else if (option == "VERTEXES" && !shapes.empty())
     {
-      std::vector< size_t > vectOfAllVertexes;
-      std::transform(
-        std::begin(figure), std::end(figure),
-        std::back_inserter(vectOfAllVertexes),
-        numOfVertexes
-      );
-      out << *std::min_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes)) << "\n";
+      out << getVertexesResult(shapes, "min") << "\n";
     }
     else
     {
@@ -178,26 +136,66 @@ namespace nikiforov
     }
   }
 
-  void takingCount(const std::vector< Polygon >& figure, std::istream& in, std::ostream& out)
+  void takingCount(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out)
   {
     std::string option = "";
     in >> option;
 
-    if (option == "ODD")
+    if (option == "ODD" && !shapes.empty())
     {
-      out << count_if(std::begin(figure), std::end(figure), isOdd);
+      out << count_if(std::begin(shapes), std::end(shapes), isOdd) << "\n";
     }
-    else if (option == "EVEN")
+    else if (option == "EVEN" && !shapes.empty())
     {
-      out << count_if(std::begin(figure), std::end(figure), isEven);
+      out << count_if(std::begin(shapes), std::end(shapes), isEven) << "\n";
     }
-    else if (isdigit(option[0]))
+    else if (isdigit(option[0]) && !shapes.empty())
     {
-      out << count_if(std::begin(figure), std::end(figure), std::bind(numOfVert, size_t(stoi(option)), _1));
+      out << count_if(std::begin(shapes), std::end(shapes), std::bind(numOfVert, size_t(stoi(option)), _1)) << "\n";
     }
     else
     {
       throw std::out_of_range("");
+    }
+  }
+
+  double getAreaResult(const std::vector< Polygon >& shapes, std::string mode)
+  {
+    std::vector< double > areaOfEach;
+    std::transform(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(areaOfEach),
+      getArea
+    );
+    if (mode == "area")
+    {
+      return std::accumulate(std::begin(areaOfEach), std::end(areaOfEach), 0.0);
+    }
+    else if (mode == "max")
+    {
+      return *std::max_element(std::begin(areaOfEach), std::end(areaOfEach));
+    }
+    else
+    {
+      return *std::min_element(std::begin(areaOfEach), std::end(areaOfEach));
+    }
+  }
+
+  double getVertexesResult(const std::vector< Polygon >& shapes, std::string mode)
+  {
+    std::vector< size_t > vectOfAllVertexes;
+    std::transform(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(vectOfAllVertexes),
+      countOfVertexes
+    );
+    if (mode == "max")
+    {
+      return *std::max_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes));
+    }
+    else
+    {
+      return *std::min_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes));
     }
   }
 }

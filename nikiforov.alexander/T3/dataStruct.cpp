@@ -1,5 +1,4 @@
 #include "dataStruct.hpp"
-#include "iofmtguard.hpp"
 #include "delimiter.hpp"
 
 namespace nikiforov
@@ -45,7 +44,6 @@ namespace nikiforov
     {
       return out;
     }
-    iofmtguard fmtguard(out);
     for (size_t i = 0; i < src.points.size(); i++)
     {
       out << "(" << src.points[i].x << "," << src.points[i].y << ")";
