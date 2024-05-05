@@ -7,15 +7,7 @@
 
 double sobolevsky::areaIf(double result, const Polygon & polygon, size_t mode, bool inpMode)
 {
-  if (inpMode && polygon.points.size() == mode)
-  {
-    result += getArea(polygon);
-  }
-  if (mode == 2 && !inpMode)
-  {
-    result += getArea(polygon);
-  }
-  else if (mode == (polygon.points.size() % 2) && !inpMode)
+  if ((inpMode && polygon.points.size() == mode) || (mode == 2 && !inpMode) || (mode == (polygon.points.size() % 2) && !inpMode))
   {
     result += getArea(polygon);
   }
