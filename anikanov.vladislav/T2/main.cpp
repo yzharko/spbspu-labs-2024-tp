@@ -25,7 +25,6 @@ int main()
 
   std::sort(dataStruct.begin(), dataStruct.end());
 
-  std::copy(std::begin(dataStruct), std::end(dataStruct), oit(std::cout, "\n")
-  );
+  std::copy(std::begin(dataStruct), std::end(dataStruct), oit(std::cout, "\n"));
   return 0;
 }
