@@ -1,7 +1,8 @@
 #include "figures.hpp"
+#include "../common/scopeGuard.hpp"
+
+// #include <iterator>
 // #include <iostream>
-#include <algorithm>
-#include <cmath>
 
 std::istream &mihalchenko::operator>>(std::istream &is, DelimiterIO &&exp)
 {
@@ -82,6 +83,7 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
     return out;
   }
   size_t counterOfPoints = rhs.points.size();
+  iofmtguard fmtguard(out);
   out << counterOfPoints;
   std::copy_n(rhs.points.begin(),
               counterOfPoints - 1,
