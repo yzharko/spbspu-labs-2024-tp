@@ -1,5 +1,5 @@
 #include <iomanip>
-#include "DataStruct.h"
+#include "DataStruct.hpp"
 #include "iofmtguard.hpp"
 
 bool DataStruct::operator<(const DataStruct& other) const
