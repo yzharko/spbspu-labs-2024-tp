@@ -28,10 +28,11 @@ namespace miheev
 
   private:
     int changeSign();
-    int sign_; // TODO: rename Хранит, надо ли сейчас вычитать или прибавлять
+    int sign_;
     const Point* prevPoint_;
   };
   double getArea(const Polygon&);
+  size_t countVertexes(const Polygon&);
 }
 
 #endif

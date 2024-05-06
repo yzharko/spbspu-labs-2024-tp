@@ -108,3 +108,8 @@ double miheev::getArea(const miheev::Polygon& polygon)
 
   return std::abs(area);
 }
+
+size_t miheev::countVertexes(const Polygon& polygon)
+{
+  return polygon.points.size();
+}
