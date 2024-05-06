@@ -124,6 +124,30 @@ std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream&,
   return out;
 }
 
+std::ostream& psarev::checkInframe(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+{
+  Polygon curPoly;
+  if (!(in >> curPoly))
+  {
+    throw std::logic_error("<INVALID COMMAND>");
+  }
+  Polygon frame = makeFrame(polyVec);
+  int curMaxX = getMaxX(curPoly);
+  int curMaxY = getMaxY(curPoly);
+  int curMinX = getMinX(curPoly);
+  int curMinY = getMinY(curPoly);
+  if ((curMaxX <= frame.points[0].x) && (curMaxY <= frame.points[0].y) &&
+    (curMinX >= frame.points[1].x) && (curMinY >= frame.points[1].y))
+  {
+    out << "<TRUE>\n";
+  }
+  else
+  {
+    out << "<FALSE>\n";
+  }
+  return out;
+}
+
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);

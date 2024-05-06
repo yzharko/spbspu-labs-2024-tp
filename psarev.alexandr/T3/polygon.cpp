@@ -12,31 +12,30 @@ std::istream& psarev::operator>>(std::istream& in, Polygon& data)
   }
   Polygon curPoly;
   Point inPoint;
+  using intgr = intIO;
+  size_t numOfPoints = 0;
+  if (!(in >> numOfPoints) || numOfPoints <= 2)
   {
-    using intgr = intIO;
-    size_t numOfPoints = 0;
-    if (!(in >> numOfPoints))
+    in.setstate(std::ios::failbit);
+    return in;
+  }
+  for (size_t i = 0; i < numOfPoints; ++i)
+  {
+    in >> delim{ '(' } >> intgr{ inPoint.x };
+    in >> delim{ ';' } >> intgr{ inPoint.y };
+    in >> delim{ ')' };
+    if (in)
     {
-      in.setstate(std::ios::failbit);
-    }
-    for (size_t i = 0; i < numOfPoints; ++i)
-    {
-      in >> delim{ '(' } >> intgr{ inPoint.x };
-      in >> delim{ ';' } >> intgr{ inPoint.y };
-      in >> delim{ ')' };
-      if (in)
-      {
-        curPoly.points.emplace_back(inPoint);
-      }
-    }
-    if (numOfPoints != curPoly.points.size() || curPoly.points.size() <= 2)
-    {
-      in.setstate(std::ios::failbit);
+      curPoly.points.emplace_back(inPoint);
     }
   }
-  if (in)
+  if (in && (in.get() == '\n') && (numOfPoints == curPoly.points.size()))
   {
     data = curPoly;
+  }
+  else
+  {
+    in.setstate(std::ios::failbit);
   }
   return in;
 }

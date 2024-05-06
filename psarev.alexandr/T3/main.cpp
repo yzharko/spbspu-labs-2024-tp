@@ -43,6 +43,7 @@ int main(int argc, char* argv[])
     cmds["MIN"] = std::bind(psarev::chooseMinOpt, _1, _2, _3);
     cmds["COUNT"] = std::bind(psarev::chooseCountOpt, _1, _2, _3);
     cmds["RECTS"] = std::bind(psarev::countRects, _1, _2, _3);
+    cmds["INFRAME"] = std::bind(psarev::checkInframe, _1, _2, _3);
   }
 
   std::string cmd;

@@ -20,6 +20,15 @@ namespace psarev
   double plusSameArea(double summed, Polygon& poly, size_t& numVerts);
 
   size_t getRects(size_t summed, Polygon& poly);
+
+  Polygon makeFrame(std::vector< Polygon >& polyVec);
+  int getMaxX(Polygon& poly);
+  int getMinX(Polygon& poly);
+  int getX(Point& pt);
+
+  int getMaxY(Polygon& poly);
+  int getMinY(Polygon& poly);
+  int getY(Point& pt);
 }
 
 #endif

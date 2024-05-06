@@ -152,3 +152,71 @@ size_t psarev::getRects(size_t summed, Polygon& poly)
     return summed;
   }
 }
+
+psarev::Polygon psarev::makeFrame(std::vector< Polygon >& polyVec)
+{
+  std::vector< int > maxXCoos(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), maxXCoos.begin(), getMaxX);
+  int maxX = *(std::max_element(maxXCoos.begin(), maxXCoos.end()));
+
+  std::vector< int > minXCoos(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), maxXCoos.begin(), getMinX);
+  int minX = *(std::max_element(minXCoos.begin(), minXCoos.end()));
+
+  std::vector< int > maxYCoos(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), maxYCoos.begin(), getMaxY);
+  int maxY = *(std::max_element(maxYCoos.begin(), maxYCoos.end()));
+
+  std::vector< int > minYCoos(polyVec.size());
+  std::transform(polyVec.begin(), polyVec.end(), maxYCoos.begin(), getMinY);
+  int minY = *(std::max_element(minYCoos.begin(), minYCoos.end()));
+
+  Polygon frame;
+  Point rightUp = { maxX, maxY };
+  Point leftDn = { minX, minY };
+  frame.points.emplace_back(rightUp);
+  frame.points.emplace_back(leftDn);
+  return frame;
+}
+
+int psarev::getMaxX(Polygon& poly)
+{
+  std::vector< int > maxCoos(poly.points.size());
+  std::transform(poly.points.begin(), poly.points.end(), maxCoos.begin(), getX);
+  int maxX = *(std::max_element(maxCoos.begin(), maxCoos.end()));
+  return maxX;
+}
+
+int psarev::getMinX(Polygon& poly)
+{
+  std::vector< int > xCoos(poly.points.size());
+  std::transform(poly.points.begin(), poly.points.end(), xCoos.begin(), getX);
+  int minX = *(std::min_element(xCoos.begin(), xCoos.end()));
+  return minX;
+}
+
+int psarev::getX(Point& pt)
+{
+  return pt.x;
+}
+
+int psarev::getMaxY(Polygon& poly)
+{
+  std::vector< int > maxCoos(poly.points.size());
+  std::transform(poly.points.begin(), poly.points.end(), maxCoos.begin(), getY);
+  int maxY = *(std::max_element(maxCoos.begin(), maxCoos.end()));
+  return maxY;
+}
+
+int psarev::getMinY(Polygon& poly)
+{
+  std::vector< int > yCoos(poly.points.size());
+  std::transform(poly.points.begin(), poly.points.end(), yCoos.begin(), getY);
+  int minY = *(std::min_element(yCoos.begin(), yCoos.end()));
+  return minY;
+}
+
+int psarev::getY(Point& pt)
+{
+  return pt.y;
+}
