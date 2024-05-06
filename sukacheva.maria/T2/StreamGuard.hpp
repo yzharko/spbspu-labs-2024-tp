@@ -1,13 +1,13 @@
 #ifndef STREAMGUARD_HPP
 #define STREAMGUARD_HPP
-#include <iostream>
+#include <ios>
 
 namespace sukacheva
 {
   class StreamGuard
   {
   public:
-    explicit StreamGuard(std::basic_ios<char>& s) noexcept;
+    explicit StreamGuard(std::basic_ios< char >& s) noexcept;
     ~StreamGuard();
   private:
     std::basic_ios<char>& s_;

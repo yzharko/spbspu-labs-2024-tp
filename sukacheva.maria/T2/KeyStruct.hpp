@@ -2,7 +2,6 @@
 #define KEYSTRUCT_HPP
 #include <string>
 #include <iosfwd>
-#include <iostream>
 
 namespace sukacheva
 {

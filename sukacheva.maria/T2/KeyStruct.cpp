@@ -1,7 +1,7 @@
 #include "KeyStruct.hpp"
 #include "Delimeter.hpp"
 #include "StreamGuard.hpp"
-
+#include <iostream>
 
 std::istream& sukacheva::operator>>(std::istream& is, SllLit&& value)
 {

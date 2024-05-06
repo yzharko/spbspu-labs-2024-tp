@@ -8,7 +8,7 @@ std::istream& sukacheva::operator>>(std::istream& is, Delimeter&& val)
   {
     return is;
   }
-  char c = {};
+  char c = '0';
   is >> c;
   if (c != val.del)
   {

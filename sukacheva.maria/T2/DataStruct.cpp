@@ -16,7 +16,7 @@ namespace sukacheva {
     std::string key = "";
     DataStruct data;
     is >> Delimeter{ '(' } >> Delimeter{ ':' };
-    for (int i = 1; i <= 3; i++)
+    for (int i = 0; i < 3; i++)
     {
       is >> key;
       if (key == "key1")
@@ -62,7 +62,7 @@ namespace sukacheva {
     {
       return (left.key1 < right.key1);
     }
-    else if (left.key2 != right.key2)
+    else if (abs(left.key2) != abs(right.key2))
     {
       return (left.key2 < right.key2);
     }

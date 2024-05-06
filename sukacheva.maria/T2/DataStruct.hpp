@@ -1,6 +1,5 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
-#include <iostream>
 
 namespace sukacheva {
   struct DataStruct
