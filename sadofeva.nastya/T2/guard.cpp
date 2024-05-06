@@ -1,6 +1,6 @@
 #include "guard.hpp"
 
-sadofeva::iofmtguard::iofmtguard(std::basic_ios<char> & s):
+sadofeva::iofmtguard::iofmtguard(std::basic_ios< char > & s):
   s_(s),
   fill_(s.fill()),
   precision_(s.precision()),
