@@ -24,6 +24,11 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::Point& rhs)
   return out << '(' << rhs.x << ';' << rhs.y << ')';
 }
 
+bool miheev::operator==(const miheev::Point& lhs, const miheev::Point& rhs)
+{
+  return lhs.x == rhs.x && lhs.y == rhs.y;
+}
+
 std::istream& miheev::operator>>(std::istream& in, miheev::Polygon& rhs)
 {
   using size = miheev::SizeTIO;
@@ -59,6 +64,14 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::Polygon& rhs)
   }
   out << '\n';
   return out;
+}
+
+bool miheev::operator==(const Polygon& lhs, const Polygon& rhs)
+{
+  return std::equal(
+    std::begin(rhs.points), std::end(rhs.points),
+    std::begin(lhs.points), std::end(lhs.points)
+  );
 }
 
 miheev::GaussLacing::GaussLacing():

@@ -12,6 +12,7 @@ namespace miheev
   };
   std::istream& operator>>(std::istream& in, Point& rhs);
   std::ostream& operator<<(std::ostream& out, const Point& rhs);
+  bool operator==(const Point&, const Point&);
 
   struct Polygon
   {
@@ -19,6 +20,7 @@ namespace miheev
   };
   std::istream& operator>>(std::istream& in, Polygon& rhs);
   std::ostream& operator<<(std::ostream& out, const Polygon& rhs);
+  bool operator==(const Polygon&, const Polygon&);
 
   struct GaussLacing
   {

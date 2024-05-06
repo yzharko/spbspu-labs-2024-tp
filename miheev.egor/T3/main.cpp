@@ -1,7 +1,9 @@
 #include <iostream>
 #include <fstream>
+#include <functional>
 #include <iterator>
 #include <limits>
+#include <map>
 #include "geometry.hpp"
 #include "commands.hpp"
 
@@ -25,6 +27,12 @@ int main(int argc, char* argv[])
     std::cerr << "Error while opening your file\n";
     return 2;
   }
+  // Point testPoint1{1, 1};
+  // Point testPoint2{2, 2};
+  // Polygon p1, p2;
+  // p1.points = {testPoint1, testPoint2};
+  // p2.points = {testPoint1, testPoint2};
+  // std::cout << "offtop " << (p1 == p2) << '\n';
 
   std::vector< Polygon > polygons;
   while (!in.eof())
@@ -40,7 +48,20 @@ int main(int argc, char* argv[])
       in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-  areaCommand(std::cin, std::cout, polygons);
+  std::map< std::string, std::function< std::ostream&(std::istream&, std::ostream&, const std::vector< Polygon >&) > > commands;
+
+  {
+    using namespace std::placeholders;
+    commands["AREA"] = std::bind(miheev::areaCommand, _1, _2, _3);
+    commands["MAX"] = std::bind(miheev::maxCommand, _1, _2, _3);
+    commands["COUNT"] = std::bind(miheev::countCommand, _1, _2, _3);
+  }
+
+  std::string command = "";
+  while (std::cin >> command)
+  {
+    commands.at(command)(std::cin, std::cout, polygons);
+  }
 
   return 0;
 }
