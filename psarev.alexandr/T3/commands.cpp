@@ -46,12 +46,12 @@ std::ostream& psarev::chooseMaxOpt(std::vector< Polygon >& polyVec, std::istream
   std::string opt = "";
   in >> opt;
 
-  if (opt == "AREA")
+  if ((opt == "AREA") && !(polyVec.empty()))
   {
     out << std::fixed << std::setprecision(1);
     getMaxArea(polyVec, out);
   }
-  else if (opt == "VERTEXES")
+  else if ((opt == "VERTEXES") && !(polyVec.empty()))
   {
     out << std::fixed << std::setprecision(0);
     getMaxVerts(polyVec, out);
