@@ -1,4 +1,5 @@
 #include "polygon.hpp"
+#include <ostream>
 #include <algorithm>
 #include <iterator>
 #include <numeric>
@@ -13,7 +14,7 @@ std::istream& tellez::operator>>(std::istream& in, Polygon& rhs)
     return in;
   }
 
-  std::size_t n;
+  std::size_t n{};
   in >> n;
   if (n < 3)
   {
@@ -50,3 +51,4 @@ double tellez::get_area(const Polygon& rhs)
   auto acc_area = std::bind(AreaAccumulator{ rhs.points[1] }, _1, _2, rhs.points[0]);
   return std::accumulate(rhs.points.cbegin(), rhs.points.cend(), 0.0, acc_area);
 }
+

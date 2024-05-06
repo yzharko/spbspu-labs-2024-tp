@@ -1,28 +1,27 @@
 #include "commands.hpp"
+#include <algorithm>
 #include <iomanip>
 #include <numeric>
 #include <functional>
+#include "formatGuard.hpp"
 #include "polygon.hpp"
 #include "predicates.hpp"
-#include "formatGueard"
 
-void tellez::cmd::area(const subcommands_t& cmds, const poly_vec_t& vec, std::istream& in, std::ostream& out)
+void tellez::cmd::area(const area_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   std::string arg;
   in >> arg;
-
   std::function< double(double, const Polygon&) > area_accumulator;
-
   try
   {
     std::size_t size = std::stoul(arg);
     using namespace std::placeholders;
-    AreaPredicate acc_pred = std::bind(vertexes_count, _1, size);
+    Predicate acc_pred = std::bind(vertexes_count, _1, size);
     area_accumulator = std::bind(cmd::acc_area_if, _1, _2, acc_pred);
   }
   catch (const std::invalid_argument&)
   {
-    area_accumulator = cmds.at(arg);
+    area_accumulator = args.at(arg);
   }
 
   FormatGuard guard(out);
@@ -30,9 +29,9 @@ void tellez::cmd::area(const subcommands_t& cmds, const poly_vec_t& vec, std::is
   out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, area_accumulator) << "\n";
 }
 
-double tellez::cmd::acc_area_if(double val, const Polygon& rhs, AreaPredicate pred)
+double tellez::cmd::acc_area_if(double val, const Polygon& rhs, Predicate pred)
 {
-  return pred(rhs) ? val + get_area(rhs) : 0.0;
+  return pred(rhs) ? val + get_area(rhs) : val;
 }
 
 double tellez::cmd::acc_area_mean(double val, const Polygon& rhs, std::size_t size)
@@ -40,39 +39,68 @@ double tellez::cmd::acc_area_mean(double val, const Polygon& rhs, std::size_t si
   return val + get_area(rhs) / size;
 }
 
-/*
-void tellez::cmd::Area::operator()(const subcommands& cmds, const poly_vec& vec, std::istream& in, std::ostream& out)
+void tellez::cmd::max(const max_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   std::string arg;
   in >> arg;
-  double res{};
-  try
-  {
-    auto cmd_func = cmds.at(arg);
-    auto acc_func = std::bind(cmd_func, _1, get_area(_2));
-    res = std::accumulate(vec.cbegin(), vec.cend(), 0.0, acc_func);
-  }
-  catch (const std::out_of_range&)
-  {}
+  args.at(arg)(vec, out);
+}
+
+void tellez::cmd::max_area(const poly_vec_t& vec, std::ostream& out)
+{
+  FormatGuard guard(out);
+  auto res = std::max_element(vec.cbegin(), vec.cend(), compare_areas);
+  out << std::setprecision(1) << std::fixed;
+  out << (res != vec.cend() ? get_area(*res) : 0.0) << "\n";
+}
+
+void tellez::cmd::max_vertexes(const poly_vec_t& vec, std::ostream& out)
+{
+  FormatGuard guard(out);
+  auto res = std::max_element(vec.cbegin(), vec.cend(), compare_vertexes);
+  out << (res != vec.cend() ? res->points.size() : 0) << "\n";
+}
+
+void tellez::cmd::min(const min_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
+{
+  std::string arg;
+  in >> arg;
+  args.at(arg)(vec, out);
+}
+
+void tellez::cmd::min_area(const poly_vec_t& vec, std::ostream& out)
+{
+  FormatGuard guard(out);
+  auto res = std::min_element(vec.cbegin(), vec.cend(), compare_areas);
+  out << std::setprecision(1) << std::fixed;
+  out << (res != vec.cend() ? get_area(*res) : 0.0) << "\n";
+}
+
+void tellez::cmd::min_vertexes(const poly_vec_t& vec, std::ostream& out)
+{
+  FormatGuard guard(out);
+  auto res = std::min_element(vec.cbegin(), vec.cend(), compare_vertexes);
+  out << (res != vec.cend() ? res->points.size() : 0) << "\n";
+}
+
+void tellez::cmd::count(const count_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
+{
+  std::string arg;
+  in >> arg;
+
+  std::function< bool(const Polygon&) > count_pred;
+
   try
   {
     std::size_t size = std::stoul(arg);
     using namespace std::placeholders;
-    auto predicate = std::bind(vertexes_count, _1, size);
-    auto acc_func = std::bind(acc_area_if, _1, std::bind(get_area, _2), predicate);
-    res = std::accumulate(vec.cbegin(), vec.cend(), 0.0, acc_func);
+    count_pred = std::bind(vertexes_count, _1, size);
   }
   catch (const std::invalid_argument&)
   {
-    throw;
+    count_pred = args.at(arg);
   }
-  out << res << "\n";
+
+  FormatGuard guard(out);
+  out << std::count_if(vec.cbegin(), vec.cend(), count_pred) << "\n";
 }
-double tellez::cmd::acc_area_if(double val, const Polygon& rhs, bool(*pred)(const Polygon&))
-{
-  return pred(rhs) ? val + get_area(rhs) : 0.0;
-}
-double tellez::cmd::acc_area_mean(double val, const Polygon& rhs, std::size_t size)
-{
-  return val + get_area(rhs) / size;
-}*/
