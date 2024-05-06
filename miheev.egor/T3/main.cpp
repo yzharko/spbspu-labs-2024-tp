@@ -3,6 +3,7 @@
 #include <iterator>
 #include <limits>
 #include "geometry.hpp"
+#include "commands.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -18,13 +19,13 @@ int main(int argc, char* argv[])
     std::cout << "No input file specified\n";
     return 2;
   }
-
   std::ifstream in(argv[1]);
   if (!in)
   {
     std::cerr << "Error while opening your file\n";
     return 2;
   }
+
   std::vector< Polygon > polygons;
   while (!in.eof())
   {
@@ -39,6 +40,7 @@ int main(int argc, char* argv[])
       in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+  areaCommand(std::cin, std::cout, polygons);
 
   return 0;
 }

@@ -34,12 +34,14 @@ std::istream& miheev::operator>>(std::istream& in, miheev::Polygon& rhs)
   }
   size_t pointsAmount = 0;
   in >> size{pointsAmount};
+  std::vector< Point > polygon;
   for (size_t i = 0; i < pointsAmount; i++)
   {
     Point temp{};
     in >> temp;
-    rhs.points.push_back(temp);
+    polygon.push_back(temp);
   }
+  rhs = Polygon{polygon};
   return in;
 }
 
@@ -60,7 +62,7 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::Polygon& rhs)
 }
 
 miheev::GaussLacing::GaussLacing():
-  sign_(false),
+  sign_(1),
   prevPoint_(nullptr)
 {}
 
@@ -78,15 +80,13 @@ double miheev::GaussLacing::operator()(const miheev::Point& point)
     prevPoint_ = &point;
     return 0;
   }
-
   double dS = static_cast< double >(prevPoint_->x * point.y - prevPoint_->y * point.x) / 2;
   prevPoint_ = &point;
-  return dS * changeSign();
+  return dS;
 }
 
 double miheev::getArea(const miheev::Polygon& polygon)
 {
-  // подготавиваем вектор к особенностям шнуровки гаусса
   std::vector< double > areaDeltas(polygon.points.size());
 
   miheev::GaussLacing gaussLacing;
@@ -96,14 +96,14 @@ double miheev::getArea(const miheev::Polygon& polygon)
     std::back_inserter(areaDeltas),
     gaussLacing
   );
-
+  // особенности шнуровки гаусса - не забыть
   double lastDelta = gaussLacing(polygon.points.at(0));
   areaDeltas.push_back(lastDelta);
 
   double area = std::accumulate(
     std::begin(areaDeltas),
     std::end(areaDeltas),
-    0
+    0.0
   );
 
   return std::abs(area);
