@@ -25,7 +25,7 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
   }
   else
   {
-    if (isDigit(type)) {
+    if (isdigit(type[0])) {
       size_t numVerts = std::stoi(type);
       if (numVerts <= 2)
       {
@@ -120,20 +120,20 @@ using namespace std::placeholders;
 
 std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getRects, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, getRects) << '\n';
   return out;
 }
 
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusEvenArea, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, plusEvenArea) << '\n';
 }
 
 void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusOddArea, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, plusOddArea) << '\n';
 }
 
 void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)

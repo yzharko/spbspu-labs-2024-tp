@@ -12,7 +12,6 @@ namespace psarev
   size_t getEvenVerts(size_t summed, Polygon& poly);
   size_t getSpecVerts(size_t summed, Polygon& poly, size_t& numVerts);
 
-  bool isDigit(const std::string& str);
   bool isRect(Polygon& poly);
 
   double plusArea(double summed, Polygon& poly);

@@ -62,18 +62,6 @@ size_t psarev::getSpecVerts(size_t summed, Polygon& poly, size_t& numVerts)
   }
 }
 
-bool psarev::isDigit(const std::string& str)
-{
-  for (char c : str)
-  {
-    if (!std::isdigit(c))
-    {
-      return false;
-    }
-  }
-  return !str.empty();
-}
-
 bool psarev::isRect(Polygon& poly)
 {
   int confCred = 0;
@@ -88,11 +76,11 @@ bool psarev::isRect(Polygon& poly)
     int x4 = poly.points[3].x;
     int y4 = poly.points[3].y;
 
-    if ((x1 != x2) && (x1 != x3) && (x1 != x4) && (x2 != x3) && (x2 != x4) && (x3 != x4)
-      && (y1 != y2) && (y1 != y3) && (y1 != y4) && (y2 != y3) && (y2 != y4) && (y3 != y4))
-    {
-      confCred++;
-    }
+    //if ((x1 != x2) && (x1 != x3) && (x1 != x4) && (x2 != x3) && (x2 != x4) && (x3 != x4)
+    //  && (y1 != y2) && (y1 != y3) && (y1 != y4) && (y2 != y3) && (y2 != y4) && (y3 != y4))
+    //{
+    //  confCred++;
+    //}
 
     Point vecA = { x2 - x1, y2 - y1 };
     Point vecB = { x3 - x2, y3 - y2 };
@@ -115,7 +103,7 @@ bool psarev::isRect(Polygon& poly)
     }
   }
 
-  return confCred == 3 ? true : false;
+  return confCred == 2 ? true : false;
 }
 
 double psarev::plusArea(double summed, Polygon& poly)
