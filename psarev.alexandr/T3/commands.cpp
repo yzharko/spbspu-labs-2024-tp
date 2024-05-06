@@ -19,7 +19,7 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
   {
     getOddArea(polyVec, out);
   }
-  else if (type == "MEAN")
+  else if ((type == "MEAN") && (!polyVec.empty()))
   {
     getMeanArea(polyVec, out);
   }
@@ -144,6 +144,7 @@ void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 
 void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
 {
+  out << std::fixed << std::setprecision(1);
   out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
 
