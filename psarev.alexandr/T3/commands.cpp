@@ -100,7 +100,7 @@ std::ostream& psarev::chooseCountOpt(std::vector< Polygon >& polyVec, std::istre
   }
   else
   {
-    if (isDigit(opt)) {
+    if (isdigit(opt[0])) {
       size_t numVerts = std::stoi(opt);
       if (numVerts <= 2)
       {
