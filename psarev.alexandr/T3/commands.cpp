@@ -99,6 +99,10 @@ std::ostream& psarev::chooseCountOpt(std::vector< Polygon >& polyVec, std::istre
   {
     if (isDigit(opt)) {
       size_t numVerts = std::stoi(opt);
+      if (numVerts <= 2)
+      {
+        throw std::logic_error("<INVALID COMMAND>");
+      }
       countSpecVerts(polyVec, out, numVerts);
     }
     else

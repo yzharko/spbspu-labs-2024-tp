@@ -10,14 +10,14 @@
 
 int main(int argc, char* argv[])
 {
-  if (argc != 2)
-  {
-    std::cerr << "Error: Wrong parameters amount!\n";
-    return 2;
-  }
-  std::ifstream input(argv[1]);
-  //std::ifstream input;
-  //input.open("./x64/Debug/inputT2.txt");
+  //if (argc != 2)
+  //{
+  //  std::cerr << "Error: Wrong parameters amount!\n";
+  //  return 2;
+  //}
+  //std::ifstream input(argv[1]);
+  std::ifstream input;
+  input.open("./x64/Debug/inputT2.txt");
 
   std::vector< psarev::Polygon > polyVec;
 
