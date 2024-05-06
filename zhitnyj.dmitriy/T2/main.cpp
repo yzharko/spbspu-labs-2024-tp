@@ -8,9 +8,16 @@ int main()
 {
   std::vector< DataStruct > dataVector;
 
-  std::copy(std::istream_iterator< DataStruct >(std::cin),
+  while(!std::cin.eof())
+  {
+    std::copy(std::istream_iterator< DataStruct >(std::cin),
       std::istream_iterator< DataStruct >(),
       std::back_inserter(dataVector));
+    if(std::cin.rdstate() == std::ios::failbit)
+    {
+      std::cin.clear();
+    }
+  }
 
   std::sort(dataVector.begin(), dataVector.end());
 
