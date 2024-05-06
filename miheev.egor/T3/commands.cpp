@@ -198,3 +198,38 @@ std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const s
   out << *std::max_element(std::begin(countInARow), std::end(countInARow)) << '\n';
   return out;
 }
+
+miheev::Point makeVector(const miheev::Point& lhs, const miheev::Point& rhs)
+{
+  return miheev::Point{lhs.x - rhs.x, lhs.y - rhs.y};
+}
+
+bool arePerpendicular(const miheev::Point vec1, const miheev::Point vec2)
+{
+  return vec1.x * vec2.x - vec1.y * vec2.y == 0;
+}
+
+bool hasPerpendecular(const miheev::Polygon& polygon)
+{
+  std::vector< miheev::Point > vectors;
+  std::transform(
+    std::begin(polygon.points) + 1,
+    std::end(polygon.points),
+    std::begin(polygon.points),
+    std::back_inserter(vectors),
+    makeVector
+  );
+  std::vector< bool > vertexesPerpendicularity;
+  std::transform(
+    std::begin(vectors) + 1,
+    std::end(vectors),
+    std::begin(vectors),
+    std::back_inserter(vertexesPerpendicularity),
+    arePerpendicular
+  );
+}
+
+std::ostream& rightshapesCommand(std::ostream& out, const std::vector< miheev::Polygon >& d)
+{
+  return out;
+}

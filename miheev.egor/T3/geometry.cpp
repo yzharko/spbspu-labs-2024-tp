@@ -66,7 +66,7 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::Polygon& rhs)
   return out;
 }
 
-bool miheev::operator==(const Polygon& lhs, const Polygon& rhs)
+bool miheev::operator==(const Polygon& lhs, const Polygon& rhs) //TODO: rework
 {
   return std::equal(
     std::begin(rhs.points), std::end(rhs.points),

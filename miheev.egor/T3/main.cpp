@@ -27,12 +27,6 @@ int main(int argc, char* argv[])
     std::cerr << "Error while opening your file\n";
     return 2;
   }
-  // Point testPoint1{1, 1};
-  // Point testPoint2{2, 2};
-  // Polygon p1, p2;
-  // p1.points = {testPoint1, testPoint2};
-  // p2.points = {testPoint1, testPoint2};
-  // std::cout << "offtop " << (p1 == p2) << '\n';
 
   std::vector< Polygon > polygons;
   while (!in.eof())
@@ -55,6 +49,7 @@ int main(int argc, char* argv[])
     commands["AREA"] = std::bind(miheev::areaCommand, _1, _2, _3);
     commands["MAX"] = std::bind(miheev::maxCommand, _1, _2, _3);
     commands["COUNT"] = std::bind(miheev::countCommand, _1, _2, _3);
+    commands["MAXSEQ"] = std::bind(miheev::maxseqCommand, _1, _2, _3);
   }
 
   std::string command = "";
