@@ -3,6 +3,8 @@
 #include <map>
 #include <functional>
 #include <limits>
+#include <iterator>
+#include "polygon.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -17,6 +19,21 @@ int main(int argc, char * argv[])
   {
     std::cerr << "Error: unable to open the file\n";
     return 2;
+  }
+
+  std::vector< ponomarev::Polygon > data;
+  while (!input.eof())
+  {
+    std::copy(
+      std::istream_iterator< ponomarev::Polygon >(input),
+      std::istream_iterator< ponomarev::Polygon >(),
+      std::back_inserter(data)
+    );
+    if (input.fail() && !input.eof())
+    {
+      input.clear();
+      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
   }
   return 0;
 }

@@ -15,6 +15,9 @@ namespace ponomarev
   {
     std::vector< Point > points;
   };
+
+  std::istream & operator>>(std::istream & in, Point & dest);
+  std::istream & operator>>(std::istream & in, Polygon & dest);
 }
 
 #endif
