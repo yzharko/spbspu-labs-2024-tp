@@ -180,11 +180,21 @@ size_t SamePolygonSeries::operator()(const miheev::Polygon& polygon, const mihee
   return series_;
 }
 
-
-std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon>& d)
+std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
   Polygon arg;
   in >> arg;
-  
+  std::vector< size_t > countInARow;
+  SamePolygonSeries series;
+  {
+    using namespace std::placeholders;
+    std::transform(
+      std::begin(d),
+      std::end(d),
+      std::back_inserter(countInARow),
+      std::bind(series, _1, arg)
+    );
+  }
+  out << *std::max_element(std::begin(countInARow), std::end(countInARow)) << '\n';
   return out;
 }
