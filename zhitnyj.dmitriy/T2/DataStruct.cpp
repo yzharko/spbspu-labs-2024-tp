@@ -130,7 +130,7 @@ std::ostream& operator<<(std::ostream& out, const DataStruct& src)
 
   iofmtguard fmtguard(out);
   out << "(:key1 " << src.key1 << "ull";
-  out << ":key2 0x" << std::hex << src.key2 << std::dec;
+  out << ":key2 0x" << std::uppercase << std::hex << src.key2 << std::dec;
   out << ":key3 \"" << src.key3 << "\":)";
   return out;
 }
