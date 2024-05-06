@@ -1,4 +1,5 @@
 #include <iomanip>
+#include "DataStruct.hpp"
 #include "iofmtguard.hpp"
 #include "DelimiterIO.hpp"
 #include "UllLitIO.hpp"
