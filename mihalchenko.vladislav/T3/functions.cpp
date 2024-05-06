@@ -122,3 +122,88 @@ void mihalchenko::printArea(const std::vector<Polygon> &polygons, std::istream &
     throw std::logic_error("Something wrong...");
   }
 }
+
+int mihalchenko::getNumOfVertexes(const Polygon &polygons)
+{
+  return polygons.points.size();
+}
+
+std::ostream &mihalchenko::getMaxArea(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  std::vector<double> areas(polygons.size());
+  // areas.reserve(polygons.size());
+  std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
+  double maxArea = *std::max_element(areas.cbegin(), areas.cend());
+  out << std::fixed << std::setprecision(1);
+  out << maxArea << '\n';
+  return out;
+}
+
+std::ostream &mihalchenko::getMaxVertexes(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  // std::vector<int> numsOfVertexes(polygons.size());
+  std::vector<int> numsOfVertexes(polygons.size());
+  // numsOfVertexes.resize(polygons.size());
+  std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
+  int maxVertexes = *std::max_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
+  out << maxVertexes << '\n';
+  return out;
+}
+
+void mihalchenko::printMax(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+{
+  std::string partOfCmd;
+  is >> partOfCmd;
+  if (partOfCmd == "AREA")
+  {
+    getMaxArea(polygons, out);
+  }
+  else if (partOfCmd == "VERTEXES")
+  {
+    getMaxVertexes(polygons, out);
+  }
+  else
+  {
+    throw std::logic_error("Something wrong...");
+  }
+}
+
+std::ostream &mihalchenko::getMinArea(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  std::vector<double> areas(polygons.size());
+  // areas.reserve(polygons.size());
+  std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
+  double maxArea = *std::min_element(areas.cbegin(), areas.cend());
+  out << std::fixed << std::setprecision(1);
+  out << maxArea << '\n';
+  return out;
+}
+
+std::ostream &mihalchenko::getMinVertexes(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  // std::vector<int> numsOfVertexes(polygons.size());
+  std::vector<int> numsOfVertexes(polygons.size());
+  // numsOfVertexes.resize(polygons.size());
+  std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
+  int maxVertexes = *std::min_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
+  out << maxVertexes << '\n';
+  return out;
+}
+
+void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+{
+  std::string partOfCmd;
+  is >> partOfCmd;
+  if (partOfCmd == "AREA")
+  {
+    getMinArea(polygons, out);
+  }
+  else if (partOfCmd == "VERTEXES")
+  {
+    getMinVertexes(polygons, out);
+  }
+  else
+  {
+    throw std::logic_error("Something wrong...");
+  }
+}

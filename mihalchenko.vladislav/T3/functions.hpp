@@ -18,6 +18,13 @@ namespace mihalchenko
   void getAreaVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out);
   std::ostream &getAreaResult(const std::vector<Polygon> &polygons, bool predicate, std::ostream &out);
   void printArea(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
+  int getNumOfVertexes(const Polygon &polygons);
+  std::ostream &getMaxArea(const std::vector<Polygon> &polygons, std::ostream &out);
+  std::ostream &getMaxVertexes(const std::vector<Polygon> &polygons, std::ostream &out);
+  void printMax(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
+  std::ostream &getMinArea(const std::vector<Polygon> &polygons, std::ostream &out);
+  std::ostream &getMinVertexes(const std::vector<Polygon> &polygons, std::ostream &out);
+  void printMin(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
 }
 
 #endif

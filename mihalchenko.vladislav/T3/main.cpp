@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
   }
   using namespace mihalchenko;
   std::vector<Polygon> polygons;
-  using del = DelimiterIO;
+  // using del = DelimiterIO;
   while (!inputFile.eof())
   {
     std::copy(std::istream_iterator<Polygon>(inputFile),
@@ -34,63 +34,18 @@ int main(int argc, char *argv[])
       inputFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
   }
-  std::map<std::string, std::function<void(const std::vector<Polygon> &vec,
-                                           std::istream &in, std::ostream &out)>>
+  std::map<std::string, std::function<void(const std::vector<Polygon> &polygon,
+                                           std::istream &is, std::ostream &out)>>
       cmds;
   {
     using namespace std::placeholders;
+    // cmds["AREA"] = std::bind(printArea, _1, _2, _3);
     cmds["AREA"] = std::bind(printArea, _1, _2, _3);
+    cmds["MAX"] = std::bind(printMax, _1, _2, _3);
+    cmds["MIN"] = std::bind(printMin, _1, _2, _3);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";
-  // int n = 0;
-  /*std::string firstPartOfCmd = "";
-  std::string secondPartOfCmd = "";
-  std::cin >> firstPartOfCmd;
-  command = firstPartOfCmd;*/
-
-  // std::getline(std::cin, secondPartOfCmd);
-  // secondPartOfCmd.erase(0, 1);
-  // command = firstPartOfCmd + " " + secondPartOfCmd;
-  // std::cout << command << "\n";
-  // bool isCmdWithTwoWords = false;
-  /*try
-  {
-    if (names::cmdWithStrings.count(command))
-    {
-      doCmdWithStrings(command, polygons, std::cout << '\n');
-      // std::cout << '\n';
-    }
-    if (names::cmdwithStringAndDigit.count(command))
-    {
-      n = std::stoi(secondPartOfCmd);
-      doCmdWithStringAndDigit(command, polygons, n, std::cout << '\n');
-      // std::cout << '\n';
-    }
-    if (names::cmdwithPolygon.count(command))
-    {
-      if (isCmdWithTwoWords)
-      {
-        std::cin >> polygon >> del{'\n'};
-        if (!std::cin)
-        {
-          std::cout << "<INVALID COMMAND>";
-          std::cin.clear();
-          std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
-      }
-      else
-      {
-        // polygon = stringToPolygon(secondPartOfCmd);
-      }
-      doCmdWithDigitAndPolygon(command, polygons, polygon, std::cout << '\n');
-      // std::cout << '\n';
-    }
-  }
-  catch (const std::exception &e)
-  {
-    std::cerr << "<INVALID COMMAND>" << '\n';
-  }*/
   while (std::cin >> command)
   {
     try
