@@ -145,7 +145,7 @@ void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
 {
   out << std::fixed << std::setprecision(1);
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusSameArea, _1, _2, numOfVerts)) << '\n';
 }
 
 void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
