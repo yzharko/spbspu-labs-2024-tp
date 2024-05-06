@@ -25,6 +25,10 @@ namespace mihalchenko
   std::ostream &getMinArea(const std::vector<Polygon> &polygons, std::ostream &out);
   std::ostream &getMinVertexes(const std::vector<Polygon> &polygons, std::ostream &out);
   void printMin(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
+  std::ostream &countEven(const std::vector<Polygon> &polygons, std::ostream &out);
+  std::ostream &countOdd(const std::vector<Polygon> &polygons, std::ostream &out);
+  std::ostream &countVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out);
+  void printCount(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
 }
 
 #endif

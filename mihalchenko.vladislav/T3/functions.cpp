@@ -207,3 +207,40 @@ void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &i
     throw std::logic_error("Something wrong...");
   }
 }
+
+std::ostream &mihalchenko::countOdd(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2)) << '\n';
+}
+
+std::ostream &mihalchenko::countEven(const std::vector<Polygon> &polygons, std::ostream &out)
+{
+  out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(std::logical_not<bool>{}, std::bind(std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2), _1))) << '\n';
+}
+
+std::ostream &mihalchenko::countVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out)
+{
+  out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(std::bind(std::equal_to<size_t>{}, std::bind(getSize, _1), _2), _1, num)) << '\n';
+}
+
+void mihalchenko::printCount(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+{
+  std::string partOfCmd;
+  is >> partOfCmd;
+  if (partOfCmd == "EVEN")
+  {
+    countEven(polygons, out);
+  }
+  else if (partOfCmd == "ODD")
+  {
+    countOdd(polygons, out);
+  }
+  else if ((partOfCmd[0]) && stoull(partOfCmd) >= 3)
+  {
+    countVertexes(polygons, stoull(partOfCmd), out);
+  }
+  else
+  {
+    throw std::logic_error("Something wrong...");
+  }
+}

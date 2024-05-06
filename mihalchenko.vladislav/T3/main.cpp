@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
       cmds;
   {
     using namespace std::placeholders;
-    // cmds["AREA"] = std::bind(printArea, _1, _2, _3);
     cmds["AREA"] = std::bind(printArea, _1, _2, _3);
     cmds["MAX"] = std::bind(printMax, _1, _2, _3);
     cmds["MIN"] = std::bind(printMin, _1, _2, _3);
+    cmds["COUNT"] = std::bind(printCount, _1, _2, _3);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";
