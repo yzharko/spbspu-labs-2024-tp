@@ -15,9 +15,9 @@ int main(int argc, char* argv[])
     std::cerr << "Error: Wrong parameters amount!\n";
     return 2;
   }
-  //std::ifstream input(argv[1]);
-  std::ifstream input;
-  input.open("./x64/Debug/inputT2.txt");
+  std::ifstream input(argv[1]);
+  //std::ifstream input;
+  //input.open("./x64/Debug/inputT2.txt");
 
   std::vector< psarev::Polygon > polyVec;
 
@@ -55,11 +55,7 @@ int main(int argc, char* argv[])
     catch (const std::logic_error& e)
     {
       std::cerr << e.what() << "\n";
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-    catch (const std::out_of_range&)
-    {
-      std::cerr << "<INVALID COMMAND>\n";
+      std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
