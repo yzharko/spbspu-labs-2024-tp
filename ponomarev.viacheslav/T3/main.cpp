@@ -18,4 +18,5 @@ int main(int argc, char * argv[])
     std::cerr << "Error: unable to open the file\n";
     return 2;
   }
+  return 0;
 }
