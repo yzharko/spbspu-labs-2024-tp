@@ -139,7 +139,7 @@ void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusArea, _1, _2)) / polyVec.size() << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, plusArea) / polyVec.size() << '\n';
 }
 
 void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
@@ -151,7 +151,7 @@ void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
   std::vector< double > areaVec(polyVec.size());
-  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
+  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), getArea);
   double maxArea = *(std::max_element(areaVec.begin(), areaVec.end()));
   out << maxArea << '\n';
 }
@@ -160,7 +160,7 @@ void psarev::getMinArea(std::vector < Polygon >& polyVec, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
   std::vector< double > areaVec(polyVec.size());
-  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
+  std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), getArea);
   double minArea = *(std::min_element(areaVec.begin(), areaVec.end()));
   out << minArea << '\n';
 }
@@ -168,7 +168,7 @@ void psarev::getMinArea(std::vector < Polygon >& polyVec, std::ostream& out)
 void psarev::getMaxVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
   std::vector< int > numsVerts(polyVec.size());
-  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), std::bind(getNumVerts, _1));
+  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), getNumVerts);
   int maxNum = *(std::max_element(numsVerts.begin(), numsVerts.end()));
   out << maxNum << '\n';
 }
@@ -176,19 +176,19 @@ void psarev::getMaxVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 void psarev::getMinVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
   std::vector< int > numsVerts(polyVec.size());
-  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), std::bind(getNumVerts, _1));
+  std::transform(polyVec.begin(), polyVec.end(), numsVerts.begin(), getNumVerts);
   int minNum = *(std::min_element(numsVerts.begin(), numsVerts.end()));
   out << minNum << '\n';
 }
 
 void psarev::countEvenVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getEvenVerts, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, getEvenVerts) << '\n';
 }
 
 void psarev::countOddVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getOddVerts, _1, _2)) << '\n';
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, getOddVerts) << '\n';
 }
 
 void psarev::countSpecVerts(std::vector < Polygon >& polyVec, std::ostream& out, size_t& numVerts)
