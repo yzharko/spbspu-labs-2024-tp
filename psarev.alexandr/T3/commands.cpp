@@ -137,11 +137,11 @@ std::ostream& psarev::checkInframe(std::vector< Polygon >& polyVec, std::istream
   int curMinX = getMinX(curPoly);
   int curMinY = getMinY(curPoly);
   if ((curMaxX <= frame.points[0].x) && (curMaxY <= frame.points[0].y) &&
-    (curMinX >= frame.points[1].x) && (curMinY >= frame.points[1].y))
+    (curMinX >= frame.points[1].x) && (curMinY >= frame.points[1].y) && curPoly.points.size() != 3)
   {
     out << "<TRUE>\n";
   }
-  else
+  else if (curPoly.points.size() != 3)
   {
     out << "<FALSE>\n";
   }
