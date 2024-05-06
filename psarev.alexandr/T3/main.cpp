@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
       std::istream_iterator< psarev::Polygon >(),
       std::back_inserter(polyVec)
     );
-    if (input.fail() && !input.eof())
+    if (input.fail())
     {
       input.clear();
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
