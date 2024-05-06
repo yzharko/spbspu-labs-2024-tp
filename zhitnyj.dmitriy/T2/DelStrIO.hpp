@@ -8,4 +8,4 @@ struct DelStrIO
     std::string exp;
 };
 
-#endif DELSTRIO_HPP
+#endif
