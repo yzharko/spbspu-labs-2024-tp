@@ -1,6 +1,10 @@
 #include <iomanip>
-#include "DataStruct.hpp"
 #include "iofmtguard.hpp"
+#include "DelimiterIO.hpp"
+#include "UllLitIO.hpp"
+#include "UllHexIO.hpp"
+#include "StringIO.hpp"
+#include "DelStrIO.hpp"
 
 bool DataStruct::operator<(const DataStruct& other) const
 {
