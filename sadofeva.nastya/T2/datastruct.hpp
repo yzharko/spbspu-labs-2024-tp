@@ -13,10 +13,6 @@ namespace sadofeva
   };
   std::istream & operator>>(std::istream & is, DataStruct& value);
   std::ostream & operator<<(std::ostream & out, const DataStruct & src);
-  std::istream & operator>>(std::istream & is, DoubleIO && dest);
-  std::istream & operator>>(std::istream & is, DelimiterIO && dest);
-  std::istream & operator>>(std::istream & is, UnsignedLongLongIO && dest);
-  std::istream & operator>>(std::istream & is, StringIO && dest);
   bool operator<(const DataStruct & one, const DataStruct & two);
 }
 

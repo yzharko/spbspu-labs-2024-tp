@@ -20,6 +20,10 @@ namespace sadofeva
   {
     std::string & ref;
   };
+  std::istream & operator>>(std::istream & is, DoubleIO && dest);
+  std::istream & operator>>(std::istream & is, DelimiterIO && dest);
+  std::istream & operator>>(std::istream & is, UnsignedLongLongIO && dest);
+  std::istream & operator>>(std::istream & is, StringIO && dest);
 }
 
 #endif
