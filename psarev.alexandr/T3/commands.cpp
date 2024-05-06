@@ -10,7 +10,6 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
 {
   std::string type = "";
   in >> type;
-  out << std::fixed << std::setprecision(1);
 
   if (type == "EVEN")
   {
@@ -28,6 +27,10 @@ std::ostream& psarev::chooseAreaType(std::vector< Polygon >& polyVec, std::istre
   {
     if (isDigit(type)) {
       size_t numVerts = std::stoi(type);
+      if (numVerts <= 2)
+      {
+        throw std::logic_error("<INVALID COMMAND>");
+      }
       getAreaNumVerts(polyVec, out, numVerts);
     }
     else
@@ -123,18 +126,20 @@ std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream&,
 
 void psarev::getEvenArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusEvenArea, _1, _2)) << '\n';
+  out << std::fixed << std::setprecision(1);
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusEvenArea, _1, _2)) << '\n';
 }
 
 void psarev::getOddArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusOddArea, _1, _2)) << '\n';
+  out << std::fixed << std::setprecision(1);
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusOddArea, _1, _2)) << '\n';
 }
 
 void psarev::getMeanArea(std::vector< Polygon >& polyVec, std::ostream& out)
 {
-  double areaSum = std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(plusArea, _1, _2)) << '\n';
-  out << areaSum / polyVec.size();
+  out << std::fixed << std::setprecision(1);
+  out << std::accumulate(polyVec.begin(), polyVec.end(), 0.0, std::bind(plusArea, _1, _2)) / polyVec.size() << '\n';
 }
 
 void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numOfVerts)
@@ -144,6 +149,7 @@ void psarev::getAreaNumVerts(std::vector< Polygon >& polyVec, std::ostream& out,
 
 void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
 {
+  out << std::fixed << std::setprecision(1);
   std::vector< double > areaVec(polyVec.size());
   std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
   double maxArea = *(std::max_element(areaVec.begin(), areaVec.end()));
@@ -152,6 +158,7 @@ void psarev::getMaxArea(std::vector < Polygon >& polyVec, std::ostream& out)
 
 void psarev::getMinArea(std::vector < Polygon >& polyVec, std::ostream& out)
 {
+  out << std::fixed << std::setprecision(1);
   std::vector< double > areaVec(polyVec.size());
   std::transform(polyVec.begin(), polyVec.end(), areaVec.begin(), std::bind(getArea, _1));
   double minArea = *(std::min_element(areaVec.begin(), areaVec.end()));

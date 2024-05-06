@@ -10,6 +10,7 @@ double psarev::getArea(Polygon& poly)
   using namespace std::placeholders;
 
   std::transform(++(poly.points.begin()), poly.points.end(), poly.points.begin(), interValues.begin(), std::bind(getInterValue, _1, _2));
+  interValues.push_back(getInterValue(poly.points.front(), poly.points.back()));
   int area = std::accumulate(interValues.begin(), interValues.end(), 0);
   double result = abs(area) / 2.0;
   return result;
