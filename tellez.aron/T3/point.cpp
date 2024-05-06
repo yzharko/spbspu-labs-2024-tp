@@ -1,7 +1,7 @@
-k#include "point.hpp"
+#include "point.hpp"
 #include <cmath>
 #include <ostream>
-#include <delimiterI.hpp>
+#include "delimiter.hpp"
 
 std::istream& tellez::operator>>(std::istream& in, Point& rhs)
 {
