@@ -1,6 +1,5 @@
 #ifndef INTERNAL_FUNCS_HPP
 #define INTERNAL_FUNCS_HPP
-#include <iostream>
 #include "polygon.hpp"
 
 namespace psarev

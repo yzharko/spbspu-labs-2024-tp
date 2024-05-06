@@ -87,7 +87,8 @@ bool psarev::isRect(Polygon& poly)
     int x4 = poly.points[3].x;
     int y4 = poly.points[3].y;
 
-    if ((x1 != x2 != x3 != x4) && (y1 != y2 != y3 != y4))
+    if ((x1 != x2) && (x1 != x3) && (x1 != x4) && (x2 != x3) && (x2 != x4) && (x3 != x4)
+      && (y1 != y2) && (y1 != y3) && (y1 != y4) && (y2 != y3) && (y2 != y4) && (y3 != y4))
     {
       confCred++;
     }

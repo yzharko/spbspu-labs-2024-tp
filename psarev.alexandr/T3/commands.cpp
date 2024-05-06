@@ -111,7 +111,7 @@ std::ostream& psarev::chooseCountOpt(std::vector< Polygon >& polyVec, std::istre
 
 using namespace std::placeholders;
 
-std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream& in, std::ostream& out)
+std::ostream& psarev::countRects(std::vector< Polygon >& polyVec, std::istream&, std::ostream& out)
 {
   out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getRects, _1, _2)) << '\n';
   return out;
