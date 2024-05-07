@@ -1,7 +1,5 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
-#include <iostream>
-#include "polygon.hpp"
 #include "internalFuncs.hpp"
 
 namespace psarev
