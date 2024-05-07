@@ -8,6 +8,7 @@
 #include "commands.hpp"
 #include "polygon.hpp"
 #include "predicates.hpp"
+
 int main(int argc, const char *argv[])
 {
   if (argc != 2)
@@ -15,14 +16,17 @@ int main(int argc, const char *argv[])
     std::cerr << "Error: invalid argument provided!\n";
     return 1;
   }
+
   std::ifstream file(argv[1]);
   if (!file.is_open())
   {
     std::cerr << "Error: can't open the file!\n";
     return 2;
   }
+
   using namespace tellez;
   std::vector< Polygon > polygons;
+
   while (!file.eof())
   {
     using input_it_t = std::istream_iterator< Polygon >;
@@ -33,31 +37,40 @@ int main(int argc, const char *argv[])
       file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
   cmd::area_args_t area_arguments;
 
   using namespace std::placeholders;
-  area_arguments["EVEN"] = cmd::AccumulateArea{ std::bind(cmd::acc_area_if, _1, _2, even_vertexes), true };
-  area_arguments["ODD"] = cmd::AccumulateArea{ std::bind(cmd::acc_area_if, _1, _2, odd_vertexes), true };
-  area_arguments["MEAN"] = cmd::AccumulateArea{ std::bind(cmd::acc_area_mean, _1, _2, polygons.size()), false };
+  area_arguments["EVEN"] = cmd::AccumulateArea{ std::bind(cmd::accAreaIf, _1, _2, hasEvenVertexesCount), cmd::EmptyVectors::Enabled };
+  area_arguments["ODD"] = cmd::AccumulateArea{ std::bind(cmd::accAreaIf, _1, _2, hasOddVertexesCount), cmd::EmptyVectors::Enabled };
+  area_arguments["MEAN"] = cmd::AccumulateArea{ std::bind(cmd::accAreaMean, _1, _2, polygons.size()), cmd::EmptyVectors::Disabled };
 
-  cmd::max_args_t max_arguments;
+  cmd::minmax_args_t max_arguments;
 
-  max_arguments["AREA"] = std::bind(cmd::max_area, _1, _2);
-  max_arguments["VERTEXES"] = std::bind(cmd::max_vertexes, _1, _2);
-  cmd::min_args_t min_arguments;
-  min_arguments["AREA"] = std::bind(cmd::min_area, _1, _2);
-  min_arguments["VERTEXES"] = std::bind(cmd::min_vertexes, _1, _2);
+  max_arguments["AREA"] = std::bind(cmd::minmaxArea< cmd::Max >, _1, _2);
+  max_arguments["VERTEXES"] = std::bind(cmd::minmaxVertexes< cmd::Max >, _1, _2);
+
+  cmd::minmax_args_t min_arguments;
+
+  min_arguments["AREA"] = std::bind(cmd::minmaxArea< cmd::Min >, _1, _2);
+  min_arguments["VERTEXES"] = std::bind(cmd::minmaxVertexes< cmd::Min >, _1, _2);
+
   cmd::count_args_t count_arguments;
-  count_arguments["EVEN"] = even_vertexes;
-  count_arguments["ODD"] = odd_vertexes;
+
+  count_arguments["EVEN"] = hasEvenVertexesCount;
+  count_arguments["ODD"] = hasOddVertexesCount;
+
   std::unordered_map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;
+
   commands["AREA"] = std::bind(cmd::area, std::cref(area_arguments), std::cref(polygons), _1, _2);
-  commands["MAX"] = std::bind(cmd::max, std::cref(max_arguments), std::cref(polygons), _1, _2);
-  commands["MIN"] = std::bind(cmd::min, std::cref(min_arguments), std::cref(polygons), _1, _2);
+  commands["MAX"] = std::bind(cmd::minmax, std::cref(max_arguments), std::cref(polygons), _1, _2);
+  commands["MIN"] = std::bind(cmd::minmax, std::cref(min_arguments), std::cref(polygons), _1, _2);
   commands["COUNT"] = std::bind(cmd::count, std::cref(count_arguments), std::cref(polygons), _1, _2);
   commands["ECHO"] = std::bind(cmd::echo, std::ref(polygons), _1, _2);
-  commands["INFRAME"] = std::bind(cmd::in_frame, std::cref(polygons), _1, _2);
+  commands["INFRAME"] = std::bind(cmd::inFrame, std::cref(polygons), _1, _2);
+
   std::string cmd;
+
   while (std::cin >> cmd)
   {
     try
@@ -75,6 +88,8 @@ int main(int argc, const char *argv[])
     std::cin.clear();
     std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   }
+
   file.close();
+
   return 0;
 }

@@ -1,6 +1,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 #include <istream>
+
 namespace tellez
 {
   struct Point
@@ -11,10 +12,11 @@ namespace tellez
   std::ostream& operator<<(std::ostream& out, const Point& rhs);
   bool operator==(const Point& lhs, const Point& rhs);
 
-  struct AccumulatePolygonArea
+  struct AccumulateArea
   {
     Point p1;
     double operator()(double val, const Point& p2, const Point& p3);
   };
 }
+
 #endif

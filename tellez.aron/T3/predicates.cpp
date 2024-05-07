@@ -1,71 +1,69 @@
 #include "predicates.hpp"
-#include "polygon.hpp"
 #include <algorithm>
-#include <vector>
 
-bool tellez::even_vertexes(const Polygon& rhs)
+bool tellez::hasEvenVertexesCount(const Polygon& rhs)
 {
   return rhs.points.size() % 2 == 0;
 }
 
-bool tellez::odd_vertexes(const Polygon& rhs)
+bool tellez::hasOddVertexesCount(const Polygon& rhs)
 {
-  return !even_vertexes(rhs);
+  return !hasEvenVertexesCount(rhs);
 }
 
-bool tellez::vertexes_count(const Polygon& rhs, std::size_t num)
+bool tellez::vertexesCount(const Polygon& rhs, std::size_t num)
 {
   return rhs.points.size() == num;
 }
 
-bool tellez::compare_areas(const Polygon& lhs, const Polygon& rhs)
+bool tellez::compareAreas(const Polygon& lhs, const Polygon& rhs)
 {
-  return get_area(lhs) < get_area(rhs);
+  return getArea(lhs) < getArea(rhs);
 }
 
-bool tellez::compare_vertexes(const Polygon& lhs, const Polygon& rhs)
+bool tellez::compareVertexes(const Polygon& lhs, const Polygon& rhs)
 {
   return lhs.points.size() < rhs.points.size();
 }
 
-bool tellez::compare_points_x(const Point& lhs, const Point& rhs)
+bool tellez::comparePointsX(const Point& lhs, const Point& rhs)
 {
   return lhs.x < rhs.x;
 }
 
-bool tellez::compare_points_y(const Point& lhs, const Point& rhs)
+bool tellez::comparePointsY(const Point& lhs, const Point& rhs)
 {
   return lhs.y < rhs.y;
 }
 
-bool tellez::compare_polygons_min_x(const Polygon& lhs, const Polygon& rhs)
+bool tellez::comparePolygonsMinX(const Polygon& lhs, const Polygon& rhs)
 {
-  auto lhs_min = std::min_element(lhs.points.cbegin(), lhs.points.cend(), compare_points_x);
-  auto rhs_min = std::min_element(rhs.points.cbegin(), rhs.points.cend(), compare_points_x);
+  auto lhs_min = std::min_element(lhs.points.cbegin(), lhs.points.cend(), comparePointsX);
+  auto rhs_min = std::min_element(rhs.points.cbegin(), rhs.points.cend(), comparePointsY);
 
-  return compare_points_x(*lhs_min, *rhs_min);
+  return comparePointsX(*lhs_min, *rhs_min);
 }
 
-bool tellez::compare_polygons_min_y(const Polygon& lhs, const Polygon& rhs)
+bool tellez::comparePolygonsMinY(const Polygon& lhs, const Polygon& rhs)
 {
-  auto lhs_min = std::min_element(lhs.points.cbegin(), lhs.points.cend(), compare_points_y);
-  auto rhs_min = std::min_element(rhs.points.cbegin(), rhs.points.cend(), compare_points_y);
+  auto lhs_min = std::min_element(lhs.points.cbegin(), lhs.points.cend(), comparePointsY);
+  auto rhs_min = std::min_element(rhs.points.cbegin(), rhs.points.cend(), comparePointsY);
 
-  return compare_points_y(*lhs_min, *rhs_min);
+  return comparePointsY(*lhs_min, *rhs_min);
 }
 
-bool tellez::compare_polygons_max_x(const Polygon& lhs, const Polygon& rhs)
+bool tellez::comparePolygonsMaxX(const Polygon& lhs, const Polygon& rhs)
 {
-  auto lhs_max = std::max_element(lhs.points.cbegin(), lhs.points.cend(), compare_points_x);
-  auto rhs_max = std::max_element(rhs.points.cbegin(), rhs.points.cend(), compare_points_x);
+  auto lhs_max = std::max_element(lhs.points.cbegin(), lhs.points.cend(), comparePointsX);
+  auto rhs_max = std::max_element(rhs.points.cbegin(), rhs.points.cend(), comparePointsX);
 
-  return compare_points_x(*lhs_max, *rhs_max);
+  return comparePointsX(*lhs_max, *rhs_max);
 }
 
-bool tellez::compare_polygons_max_y(const Polygon& lhs, const Polygon& rhs)
+bool tellez::comparePolygonsMaxY(const Polygon& lhs, const Polygon& rhs)
 {
-  auto lhs_max = std::max_element(lhs.points.cbegin(), lhs.points.cend(), compare_points_y);
-  auto rhs_max = std::max_element(rhs.points.cbegin(), rhs.points.cend(), compare_points_y);
+  auto lhs_max = std::max_element(lhs.points.cbegin(), lhs.points.cend(), comparePointsY);
+  auto rhs_max = std::max_element(rhs.points.cbegin(), rhs.points.cend(), comparePointsY);
 
-  return compare_points_y(*lhs_max, *rhs_max);
+  return comparePointsY(*lhs_max, *rhs_max);
 }

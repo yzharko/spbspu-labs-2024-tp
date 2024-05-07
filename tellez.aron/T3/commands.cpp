@@ -1,20 +1,22 @@
 #include "commands.hpp"
 #include <algorithm>
-#include <iomanip>
+#include <iterator>
 #include <numeric>
 #include <functional>
-#include "formatGuard.hpp"
-#include "polygon.hpp"
-#include "predicates.hpp"
+#include <utility>
+
 double tellez::cmd::AccumulateArea::operator()(double val, const Polygon& rhs)
 {
   return func(val, rhs);
 }
+
 void tellez::cmd::area(const area_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   std::string arg;
   in >> arg;
+
   AccumulateArea area_accumulator;
+
   try
   {
     std::size_t size = std::stoul(arg);
@@ -23,33 +25,44 @@ void tellez::cmd::area(const area_args_t& args, const poly_vec_t& vec, std::istr
       throw std::invalid_argument("<INVALID COMMAND>");
     }
     using namespace std::placeholders;
-    Predicate acc_pred = std::bind(vertexes_count, _1, size);
-    area_accumulator.func = std::bind(cmd::acc_area_if, _1, _2, acc_pred);
+    predicate_t acc_pred = std::bind(vertexesCount, _1, size);
+    area_accumulator.func = std::bind(cmd::accAreaIf, _1, _2, acc_pred);
   }
   catch (const std::invalid_argument&)
   {
     area_accumulator = args.at(arg);
-    if (!area_accumulator.has_empty_vector_support && vec.empty())
+    if (!area_accumulator.empty_vector_support && vec.empty())
     {
       throw std::invalid_argument("<INVALID COMMAND>");
     }
   }
+
   FormatGuard guard(out);
   out << std::setprecision(1) << std::fixed;
   out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, area_accumulator) << "\n";
 }
 
-double tellez::cmd::acc_area_if(double val, const Polygon& rhs, Predicate pred)
+double tellez::cmd::accAreaIf(double val, const Polygon& rhs, predicate_t pred)
 {
-  return val + get_area(rhs) * pred(rhs);
+  return val + getArea(rhs) * pred(rhs);
 }
 
-double tellez::cmd::acc_area_mean(double val, const Polygon& rhs, std::size_t size)
+double tellez::cmd::accAreaMean(double val, const Polygon& rhs, std::size_t size)
 {
-  return val + get_area(rhs) / size;
+  return val + getArea(rhs) / size;
 }
 
-void tellez::cmd::max(const max_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
+tellez::cmd::poly_vec_it_t tellez::cmd::Max::operator()(poly_vec_it_t begin, poly_vec_it_t end, comparator_t comp)
+{
+  return std::max_element(begin, end, comp);
+}
+
+tellez::cmd::poly_vec_it_t tellez::cmd::Min::operator()(poly_vec_it_t begin, poly_vec_it_t end, comparator_t comp)
+{
+  return std::min_element(begin, end, comp);
+}
+
+void tellez::cmd::minmax(const minmax_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   if (vec.empty())
   {
@@ -58,54 +71,15 @@ void tellez::cmd::max(const max_args_t& args, const poly_vec_t& vec, std::istrea
   std::string arg;
   in >> arg;
   args.at(arg)(vec, out);
-}
-
-void tellez::cmd::max_area(const poly_vec_t& vec, std::ostream& out)
-{
-  FormatGuard guard(out);
-  auto res = std::max_element(vec.cbegin(), vec.cend(), compare_areas);
-  out << std::setprecision(1) << std::fixed;
-  out << get_area(*res) << "\n";
-}
-
-void tellez::cmd::max_vertexes(const poly_vec_t& vec, std::ostream& out)
-{
-  FormatGuard guard(out);
-  auto res = std::max_element(vec.cbegin(), vec.cend(), compare_vertexes);
-  out << res->points.size() << "\n";
-}
-
-void tellez::cmd::min(const min_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
-{
-  if (vec.empty())
-  {
-    throw std::invalid_argument("<INVALID COMMAND>");
-  }
-  std::string arg;
-  in >> arg;
-  args.at(arg)(vec, out);
-}
-
-void tellez::cmd::min_area(const poly_vec_t& vec, std::ostream& out)
-{
-  FormatGuard guard(out);
-  auto res = std::min_element(vec.cbegin(), vec.cend(), compare_areas);
-  out << std::setprecision(1) << std::fixed;
-  out << get_area(*res) << "\n";
-}
-
-void tellez::cmd::min_vertexes(const poly_vec_t& vec, std::ostream& out)
-{
-  FormatGuard guard(out);
-  auto res = std::min_element(vec.cbegin(), vec.cend(), compare_vertexes);
-  out << res->points.size() << "\n";
 }
 
 void tellez::cmd::count(const count_args_t& args, const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   std::string arg;
   in >> arg;
+
   std::function< bool(const Polygon&) > count_pred;
+
   try
   {
     std::size_t size = std::stoul(arg);
@@ -113,15 +87,26 @@ void tellez::cmd::count(const count_args_t& args, const poly_vec_t& vec, std::is
     {
       throw std::invalid_argument("<INVALID COMMAND>");
     }
-    count_pred = std::bind(vertexes_count, std::placeholders::_1, size);
+    count_pred = std::bind(vertexesCount, std::placeholders::_1, size);
   }
   catch (const std::invalid_argument&)
   {
     count_pred = args.at(arg);
   }
+
   FormatGuard guard(out);
   out << std::count_if(vec.cbegin(), vec.cend(), count_pred) << "\n";
 }
+
+tellez::Polygon tellez::cmd::EntryDuplicator::operator()(Polygon&& rhs)
+{
+  if (arg == rhs)
+  {
+    vec.push_back(rhs);
+  }
+  return rhs;
+}
+
 void tellez::cmd::echo(poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   if (vec.empty())
@@ -130,26 +115,21 @@ void tellez::cmd::echo(poly_vec_t& vec, std::istream& in, std::ostream& out)
   }
   Polygon arg;
   in >> arg;
-  if (!in)
+  if (!in || in.peek() != '\n' || in.peek() != ' ')
   {
     throw std::invalid_argument("<INVALID COMMAND>");
   }
   std::size_t count = std::count(vec.cbegin(), vec.cend(), arg);
   FormatGuard guard(out);
   out << count << "\n";
-  std::vector< Polygon > temp;
-  for (auto it = vec.cbegin(); it != vec.cend(); ++it)
-  {
-    temp.push_back(*it);
-    if (*it == arg)
-    {
-      temp.push_back(*it);
-    }
-  }
+  EntryDuplicator duplicator{ vec, arg };
+  poly_vec_t temp;
+  auto make_it = std::make_move_iterator< poly_vec_t::iterator >;
+  std::transform(make_it(vec.begin()), make_it(vec.end()), std::back_inserter(temp), std::ref(duplicator));
   vec = std::move(temp);
 }
 
-void tellez::cmd::in_frame(const poly_vec_t& vec, std::istream& in, std::ostream& out)
+void tellez::cmd::inFrame(const poly_vec_t& vec, std::istream& in, std::ostream& out)
 {
   if (vec.empty())
   {
@@ -157,39 +137,39 @@ void tellez::cmd::in_frame(const poly_vec_t& vec, std::istream& in, std::ostream
   }
   Polygon arg;
   in >> arg;
-  if (!in)
+  if (!in || in.peek() != '\n' || in.peek() != ' ')
   {
     throw std::invalid_argument("<INVALID COMMAND>");
   }
 
-  int min_arg_x = min_x(arg);
-  int min_arg_y = min_y(arg);
-  int max_arg_x = max_x(arg);
-  int max_arg_y = max_x(arg);
+  int min_arg_x = minX(arg);
+  int min_arg_y = minY(arg);
+  int max_arg_x = maxX(arg);
+  int max_arg_y = maxY(arg);
 
-  Polygon rect = get_frame_rect(vec);
+  Polygon rect = getFrameRect(vec);
 
-  int min_rect_x = min_x(rect);
-  int min_rect_y = min_y(rect);
-  int max_rect_x = max_x(rect);
-  int max_rect_y = max_y(rect);
+  int min_rect_x = minX(rect);
+  int min_rect_y = minY(rect);
+  int max_rect_x = maxX(rect);
+  int max_rect_y = maxY(rect);
 
   bool res = min_arg_x >= min_rect_x && max_arg_x <= max_rect_x && min_arg_y >= min_rect_y && max_arg_y <= max_rect_y;
 
   out << (res ? "<TRUE>" : "<FALSE>") << "\n";
 }
 
-tellez::Polygon tellez::cmd::get_frame_rect(const poly_vec_t& vec)
+tellez::Polygon tellez::cmd::getFrameRect(const poly_vec_t& vec)
 {
-  Polygon min_x_polygon = *std::min_element(vec.cbegin(), vec.cend(), compare_polygons_min_x);
-  Polygon min_y_polygon = *std::min_element(vec.cbegin(), vec.cend(), compare_polygons_min_y);
-  Polygon max_x_polygon = *std::max_element(vec.cbegin(), vec.cend(), compare_polygons_max_x);
-  Polygon max_y_polygon = *std::max_element(vec.cbegin(), vec.cend(), compare_polygons_max_y);
+  Polygon min_x_polygon = *std::min_element(vec.cbegin(), vec.cend(), comparePolygonsMinX);
+  Polygon min_y_polygon = *std::min_element(vec.cbegin(), vec.cend(), comparePolygonsMinY);
+  Polygon max_x_polygon = *std::max_element(vec.cbegin(), vec.cend(), comparePolygonsMaxX);
+  Polygon max_y_polygon = *std::max_element(vec.cbegin(), vec.cend(), comparePolygonsMaxY);
 
-  int minx = min_x(min_x_polygon);
-  int miny = min_y(min_y_polygon);
-  int maxx = max_x(max_x_polygon);
-  int maxy = max_y(max_y_polygon);
+  int min_x = minX(min_x_polygon);
+  int min_y = minY(min_y_polygon);
+  int max_x = maxX(max_x_polygon);
+  int max_y = maxY(max_y_polygon);
 
-  return Polygon{ { { minx, miny }, { minx, maxy }, { maxx, maxy }, { maxx, miny } } };
+  return Polygon{ { { min_x, min_y }, { min_x, max_y }, { max_x, max_y }, { max_x, min_y } } };
 }
