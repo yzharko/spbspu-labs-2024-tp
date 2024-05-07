@@ -216,7 +216,7 @@ void psarev::countEvenVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 
 void psarev::countOddVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
-  out << std::count_if(polyVec.begin(), polyVec.end(), checkEvenVerts) << '\n';
+  out << std::count_if(polyVec.begin(), polyVec.end(), checkOddVerts) << '\n';
 }
 
 void psarev::countSpecVerts(std::vector < Polygon >& polyVec, std::ostream& out, size_t& numVerts)
