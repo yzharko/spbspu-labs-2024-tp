@@ -7,7 +7,7 @@
 // #include <algorithm>
 // #include <functional>
 // #include "mapOfCommands.hpp"
-
+#include "../common/scopeGuard.hpp"
 // using namespace mihalchenko;
 using namespace std::placeholders;
 
@@ -24,11 +24,8 @@ double mihalchenko::getPoints(const Point &first, const Point &second)
 double mihalchenko::sumArea(double area, const Point &startPoint)
 {
   auto nextPoint = *std::next(&startPoint);
-  // auto triangleArea = ((startPoint.x * nextPoint.y) - (nextPoint.x * startPoint.y));
   auto triangleArea = getPoints(startPoint, nextPoint);
-  // auto newArea = area + triangleArea;
   return area += triangleArea;
-  // return newArea;
 }
 
 double mihalchenko::countArea(const Polygon &polygon)
@@ -44,7 +41,6 @@ double mihalchenko::countArea(const Polygon &polygon)
 void mihalchenko::getAreaOdd(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   std::vector<Polygon> copyOddPolygons;
-  // Polygon polygon = *copyEvenPolygons.begin();
   std::copy_if(polygons.cbegin(), polygons.cend(),
                std::back_inserter(copyOddPolygons),
                std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2));
@@ -54,7 +50,6 @@ void mihalchenko::getAreaOdd(const std::vector<Polygon> &polygons, std::ostream 
 void mihalchenko::getAreaEven(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   std::vector<Polygon> copyEvenPolygons;
-  // Polygon polygon = *copyOddPolygons.begin();
   std::copy_if(polygons.cbegin(),
                polygons.cend(),
                std::back_inserter(copyEvenPolygons),
@@ -65,7 +60,9 @@ void mihalchenko::getAreaEven(const std::vector<Polygon> &polygons, std::ostream
 void mihalchenko::getAreaMean(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   std::vector<Polygon> copyPolygons;
-  std::copy(polygons.cbegin(), polygons.cend(), std::back_inserter(copyPolygons));
+  std::copy(polygons.cbegin(),
+            polygons.cend(),
+            std::back_inserter(copyPolygons));
   getAreaResult(copyPolygons, true, out);
 }
 
@@ -73,13 +70,16 @@ void mihalchenko::getAreaVertexes(const std::vector<Polygon> &polygons, size_t n
 {
   std::vector<Polygon> copyPolygonIfEqual;
   std::copy_if(
-      polygons.cbegin(), polygons.cend(), std::back_inserter(copyPolygonIfEqual),
+      polygons.cbegin(),
+      polygons.cend(),
+      std::back_inserter(copyPolygonIfEqual),
       std::bind(std::bind(std::equal_to<size_t>{}, std::bind(getSize, _1), _2), _1, num));
   getAreaResult(copyPolygonIfEqual, false, out);
 }
 
 std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygons, bool isMeanPredicate, std::ostream &out)
 {
+  iofmtguard streamGuard(out);
   out << std::fixed << std::setprecision(1);
   if (isMeanPredicate == false)
   {
@@ -134,6 +134,7 @@ std::ostream &mihalchenko::getMaxArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::max_element(areas.cbegin(), areas.cend());
+  iofmtguard streamGuard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -174,6 +175,7 @@ std::ostream &mihalchenko::getMinArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::min_element(areas.cbegin(), areas.cend());
+  iofmtguard streamGuard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -210,7 +212,10 @@ void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &i
 
 std::ostream &mihalchenko::countOdd(const std::vector<Polygon> &polygons, std::ostream &out)
 {
-  out << std::count_if(polygons.cbegin(), polygons.cend(), std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2)) << '\n';
+  out << std::count_if(polygons.cbegin(),
+                       polygons.cend(),
+                       std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2))
+      << '\n';
 }
 
 std::ostream &mihalchenko::countEven(const std::vector<Polygon> &polygons, std::ostream &out)
@@ -243,4 +248,108 @@ void mihalchenko::printCount(const std::vector<Polygon> &polygons, std::istream 
   {
     throw std::logic_error("Something wrong...");
   }
+}
+
+size_t mihalchenko::getLength(const Polygon & polygon)
+{
+  return polygon.points.size();
+}
+
+bool mihalchenko::isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsPolygon)
+{
+  if (lhsPolygon.points.size() == std::count_if(rhsPolygon.points.begin(), rhsPolygon.points.end(), std::bind(arePointsCorrect, lhsPolygon, _1)))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool mihalchenko::isPointCorrect(const Point &lhsPoint, const Point &rhsPoint)
+{
+  if (((lhsPoint.x == rhsPoint.x) && (lhsPoint.y == rhsPoint.y)) || ((lhsPoint.x == rhsPoint.y) && (lhsPoint.y == rhsPoint.x)))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool mihalchenko::arePointsCorrect(const Polygon &polygon, const Point &point)
+{
+  return std::find_if(polygon.points.begin(), polygon.points.end(), std::bind(isPointCorrect, point, _1)) != polygon.points.end();
+}
+
+void mihalchenko::printPerms(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+{
+  Polygon copyPolygon;
+  is >> copyPolygon;
+  size_t numOfVertexes = copyPolygon.points.size();
+  std::vector<Polygon> copyVectorOfPolygons;
+  copy_if(polygons.begin(),
+          polygons.end(),
+          std::back_inserter(copyVectorOfPolygons),
+          std::bind(std::equal_to<size_t>{}, std::bind(getLength, _1), numOfVertexes));
+  if (!copyVectorOfPolygons.empty())
+  {
+    out << std::count_if(polygons.begin(), polygons.end(), std::bind(isLengthCorrect, copyPolygon, _1)) << '\n';
+  }
+  else
+  {
+    out << "<INVALID COMMAND>" << '\n';
+  }
+}
+
+mihalchenko::Point mihalchenko::getVector(const Point &lhsPoint, const Point &rhsPoint)
+{
+  return Point{rhsPoint.x - lhsPoint.x, rhsPoint.y - lhsPoint.y};
+}
+
+double mihalchenko::getCos(const Point &lhsVect, const Point &rhsVect)
+{
+  double scalarProduct = lhsVect.x * rhsVect.x + rhsVect.y * rhsVect.y;
+  double lengthOfLhsVector = sqrt(pow(lhsVect.x, 2) + pow(lhsVect.y, 2));
+  double lengthOfRhsVector = sqrt(pow(rhsVect.x, 2) + pow(rhsVect.y, 2));
+  return scalarProduct / (lengthOfLhsVector * lengthOfRhsVector);
+}
+
+bool mihalchenko::isZeroCos(const double &cos)
+{
+  return cos == 0;
+}
+
+bool mihalchenko::isRightPolygon(const Polygon &polygon)
+{
+  std::vector<Point> vectorOfPoints;
+
+  std::transform(
+      polygon.points.cbegin(),
+      std::prev(polygon.points.cend()),
+      std::next(polygon.points.cbegin()),
+      std::back_inserter(vectorOfPoints),
+      std::bind(getVector, _1, _2));
+  vectorOfPoints.push_back(std::bind(getVector, _1, _2)(polygon.points.back(), polygon.points.front()));
+  std::vector<double> cosOfVectors;
+  std::transform(
+      vectorOfPoints.cbegin(),
+      std::prev(vectorOfPoints.cend()),
+      std::next(vectorOfPoints.cbegin()),
+      std::back_inserter(cosOfVectors),
+      std::bind(getCos, _1, _2));
+  cosOfVectors.push_back(std::bind(getCos, _1, _2)(vectorOfPoints.back(), vectorOfPoints.front()));
+  return std::find_if(
+             cosOfVectors.cbegin(),
+             cosOfVectors.cend(),
+             isZeroCos) != cosOfVectors.cend();
+  /*return std::bind(std::bind(std::not_equal_to<size_t>{}, std::find_if(cosOfVectors.begin(),
+             cosOfVectors.end(), std::bind(getVector, _1), _2), _1, cosOfVectors.end()));*/
+}
+
+void mihalchenko::countRightShapes(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+{
+  out << std::count_if(polygons.cbegin(), polygons.cend(), isRightPolygon) << '\n';
 }

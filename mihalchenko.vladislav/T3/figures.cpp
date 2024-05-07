@@ -27,7 +27,7 @@ std::istream &mihalchenko::operator>>(std::istream &is, Point &rhs)
   {
     return is;
   }
-  Point input{0, 0};
+  Point input;
   using del = DelimiterIO;
   is >> del{'('} >> input.x >> del{';'} >> input.y >> del{')'};
   if (is)
@@ -57,13 +57,13 @@ std::istream &mihalchenko::operator>>(std::istream &is, Polygon &rhs)
   Polygon polygon;
   size_t counterOfPoints = 0;
   is >> counterOfPoints;
-  if (counterOfPoints < 3)
+  if (!(is >> counterOfPoints) || (counterOfPoints < 3))
   {
     is.setstate(std::ios::failbit);
   }
   else
   {
-    // polygon.points.reserve(counterOfPoints);
+    polygon.points.reserve(counterOfPoints);
     std::copy_n(std::istream_iterator<Point>(is),
                 counterOfPoints,
                 std::back_inserter(polygon.points));
