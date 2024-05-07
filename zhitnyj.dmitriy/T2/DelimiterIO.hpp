@@ -6,4 +6,6 @@ struct DelimiterIO
     char exp;
 };
 
+std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
+
 #endif
