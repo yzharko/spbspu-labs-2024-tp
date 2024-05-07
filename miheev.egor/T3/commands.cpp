@@ -227,9 +227,30 @@ bool hasPerpendecular(const miheev::Polygon& polygon)
     std::back_inserter(vertexesPerpendicularity),
     arePerpendicular
   );
+  return std::any_of(
+    std::begin(vertexesPerpendicularity),
+    std::end(vertexesPerpendicularity),
+    [] (bool val)
+    {
+      return val;
+    }
+  );
 }
 
-std::ostream& rightshapesCommand(std::ostream& out, const std::vector< miheev::Polygon >& d)
+std::ostream& miheev::rightshapesCommand(std::istream&, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
+  std::vector< bool > hasPerp;
+  std::transform(
+    std::begin(d),
+    std::end(d),
+    std::back_inserter(hasPerp),
+    hasPerpendecular
+  );
+  size_t rightsTotal = std::count(
+    std::begin(hasPerp),
+    std::end(hasPerp),
+    true
+  );
+  out << rightsTotal << '\n';
   return out;
 }

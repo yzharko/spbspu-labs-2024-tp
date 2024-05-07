@@ -43,13 +43,13 @@ int main(int argc, char* argv[])
     }
   }
   std::map< std::string, std::function< std::ostream&(std::istream&, std::ostream&, const std::vector< Polygon >&) > > commands;
-
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(miheev::areaCommand, _1, _2, _3);
     commands["MAX"] = std::bind(miheev::maxCommand, _1, _2, _3);
     commands["COUNT"] = std::bind(miheev::countCommand, _1, _2, _3);
     commands["MAXSEQ"] = std::bind(miheev::maxseqCommand, _1, _2, _3);
+    commands["RIGHTSHAPES"] = std::bind(miheev::rightshapesCommand, _1, _2, _3);
   }
 
   std::string command = "";
