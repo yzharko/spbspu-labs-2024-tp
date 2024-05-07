@@ -1,6 +1,7 @@
 #ifndef DELSTRIO_HPP
 #define DELSTRIO_HPP
 
+#include <iosfwd>
 #include <string>
 
 struct DelStrIO
