@@ -2,7 +2,7 @@
 
 namespace sukacheva
 {
-  StreamGuard::StreamGuard(std::basic_ios<char>& s) noexcept :
+  StreamGuard::StreamGuard(std::basic_ios< char >& s) noexcept :
     s_(s),
     precision_(s.precision()),
     flags_(s.flags())

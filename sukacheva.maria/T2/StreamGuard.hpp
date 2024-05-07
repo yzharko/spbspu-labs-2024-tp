@@ -10,9 +10,9 @@ namespace sukacheva
     explicit StreamGuard(std::basic_ios< char >& s) noexcept;
     ~StreamGuard();
   private:
-    std::basic_ios<char>& s_;
+    std::basic_ios< char >& s_;
     std::streamsize precision_;
-    std::basic_ios<char>::fmtflags flags_;
+    std::basic_ios< char >::fmtflags flags_;
   };
 }
 
