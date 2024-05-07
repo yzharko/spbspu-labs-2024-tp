@@ -19,11 +19,6 @@ struct DataStruct
     bool operator<(const DataStruct& other) const;
 };
 
-std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
-std::istream& operator>>(std::istream& in, UllLitIO&& dest);
-std::istream& operator>>(std::istream& in, UllHexIO&& dest);
-std::istream& operator>>(std::istream& in, StringIO&& dest);
-std::istream& operator>>(std::istream& in, DelStrIO&& dest);
 std::istream& operator>>(std::istream& in, DataStruct& dest);
 std::ostream& operator<<(std::ostream& out, const DataStruct& src);
 
