@@ -248,6 +248,7 @@ bool hasPerpendecular(const miheev::Polygon& polygon)
     std::back_inserter(vectors),
     makeVector
   );
+  vectors.push_back(makeVector(polygon.points.front(), polygon.points.back()));
   std::vector< bool > vertexesPerpendicularity;
   std::transform(
     std::begin(vectors) + 1,
@@ -256,6 +257,7 @@ bool hasPerpendecular(const miheev::Polygon& polygon)
     std::back_inserter(vertexesPerpendicularity),
     arePerpendicular
   );
+  vertexesPerpendicularity.push_back(arePerpendicular(vectors.front(), vectors.back()));
   return std::any_of(
     std::begin(vertexesPerpendicularity),
     std::end(vertexesPerpendicularity),
