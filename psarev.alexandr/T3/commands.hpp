@@ -24,6 +24,8 @@ namespace psarev
   void countEvenVerts(std::vector< Polygon >& polyVec, std::ostream& out);
   void countOddVerts(std::vector< Polygon >& polyVec, std::ostream& out);
   void countSpecVerts(std::vector< Polygon >& polyVec, std::ostream& out, size_t& numVerts);
+
+  std::ostream& outError(std::ostream& out, const std::string& errText);
 }
 
 #endif

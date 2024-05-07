@@ -5,6 +5,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <iostream>
 #include "polygon.hpp"
 #include "commands.hpp"
 
@@ -53,7 +54,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::logic_error&)
     {
-      std::cout << "<INVALID COMMAND>" << "\n";
+      psarev::outError(std::cout, "<INVALID COMMAND>");
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

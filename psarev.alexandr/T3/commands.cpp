@@ -211,15 +211,21 @@ void psarev::getMinVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 
 void psarev::countEvenVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, getEvenVerts) << '\n';
+  out << std::count_if(polyVec.begin(), polyVec.end(), checkEvenVerts) << '\n';
 }
 
 void psarev::countOddVerts(std::vector < Polygon >& polyVec, std::ostream& out)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, getOddVerts) << '\n';
+  out << std::count_if(polyVec.begin(), polyVec.end(), checkEvenVerts) << '\n';
 }
 
 void psarev::countSpecVerts(std::vector < Polygon >& polyVec, std::ostream& out, size_t& numVerts)
 {
-  out << std::accumulate(polyVec.begin(), polyVec.end(), 0, std::bind(getSpecVerts, _1, _2, numVerts)) << '\n';
+  out << std::count_if(polyVec.begin(), polyVec.end(), std::bind(checkSpecVerts, _1, numVerts)) << '\n';
+}
+
+std::ostream& psarev::outError(std::ostream& out, const std::string& errText)
+{
+  out << errText << '\n';
+  return out;
 }
