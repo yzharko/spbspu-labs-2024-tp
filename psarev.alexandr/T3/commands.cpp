@@ -130,7 +130,7 @@ std::ostream& psarev::checkInframe(std::vector< Polygon >& polyVec, std::istream
   {
     throw std::logic_error("<INVALID COMMAND>");
   }
-  if (curPoly.points.size() != 3)
+  if (curPoly.points.size() == 3)
   {
     return out;
   }
