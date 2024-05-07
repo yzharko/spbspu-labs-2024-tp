@@ -26,11 +26,10 @@ namespace miheev
   {
   public:
     GaussLacing();
+    // ~GaussLacing();
     double operator()(const Point&);
 
   private:
-    int changeSign();
-    int sign_;
     const Point* prevPoint_;
   };
   double getArea(const Polygon&);

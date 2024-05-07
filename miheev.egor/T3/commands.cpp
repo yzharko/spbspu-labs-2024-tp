@@ -47,6 +47,10 @@ std::ostream& miheev::areaCommand(std::istream& in, std::ostream& out, const std
   out << std::fixed << std::setprecision(1);
   if (arg == "MEAN")
   {
+    if (d.empty())
+    {
+      throw std::logic_error("Zero division: no shapes to calc mean causes zero division");
+    }
     out << std::accumulate(std::cbegin(d), std::cend(d), 0.0, addArea) / d.size() << '\n';
   }
   else if (arg == "ODD")
@@ -74,6 +78,10 @@ std::ostream& miheev::areaCommand(std::istream& in, std::ostream& out, const std
 
 std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon>& d)
 {
+  if (d.empty())
+  {
+    throw std::logic_error("Empty list of shapes passed");
+  }
   std::string arg = "";
   in >> arg;
   out << std::fixed << std::setprecision(1);
@@ -90,6 +98,10 @@ std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std:
     std::transform(std::begin(d), std::end(d), std::back_inserter(vertexesCounts), miheev::countVertexes);
     size_t maximum = *std::max_element(vertexesCounts.begin(), vertexesCounts.end());
     out << maximum << '\n';
+  }
+  else
+  {
+    throw std::logic_error("No such parameter");
   }
   return out;
 }
@@ -188,6 +200,14 @@ std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const s
   }
   Polygon arg;
   in >> arg;
+  if (in.fail())
+  {
+    throw std::logic_error("Inappropriate input format");
+  }
+  if (arg.points.size() < 3)
+  {
+    throw std::logic_error("Inappropriate size");
+  }
   std::vector< size_t > countInARow;
   SamePolygonSeries series;
   {
@@ -199,7 +219,12 @@ std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const s
       std::bind(series, _1, arg)
     );
   }
-  out << *std::max_element(std::begin(countInARow), std::end(countInARow)) << '\n';
+  size_t maximum = *std::max_element(std::begin(countInARow), std::end(countInARow));
+  if (maximum == 0)
+  {
+    throw std::runtime_error("Such rect Doesnt exist");
+  }
+  out << maximum << '\n';
   return out;
 }
 

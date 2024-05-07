@@ -3,6 +3,7 @@
 #include <functional>
 #include <iterator>
 #include <limits>
+#include <sstream> //debug purps, remove it
 #include <map>
 #include "geometry.hpp"
 #include "commands.hpp"
@@ -10,6 +11,13 @@
 int main(int argc, char* argv[])
 {
   using namespace miheev;
+
+  // std::stringstream ss("8 (0;2) (0;4) (2;6) (4;6) (6;4) (6;2) (4;0) (2;0)");
+  // std::stringstream ss("5 (3;4) (5;11) (12;8) (9;5) (5;6)");
+  // Polygon test;
+  // ss >> test;
+  // std::cout << test;
+  // std::cout << getArea(test) << '\n';
 
   if (argc > 2)
   {
@@ -36,7 +44,7 @@ int main(int argc, char* argv[])
       std::istream_iterator< Polygon >(),
       std::back_inserter(polygons)
     );
-    if (in.fail())
+    if (in.fail() && !in.eof())
     {
       in.clear();
       in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');

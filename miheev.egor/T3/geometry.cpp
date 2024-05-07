@@ -39,6 +39,10 @@ std::istream& miheev::operator>>(std::istream& in, miheev::Polygon& rhs)
   }
   size_t pointsAmount = 0;
   in >> size{pointsAmount};
+  if (pointsAmount < 3)
+  {
+    in.setstate(std::ios::failbit);
+  }
   std::vector< Point > polygon;
   for (size_t i = 0; i < pointsAmount; i++)
   {
@@ -66,24 +70,21 @@ std::ostream& miheev::operator<<(std::ostream& out, const miheev::Polygon& rhs)
   return out;
 }
 
+miheev::GaussLacing::GaussLacing():
+  prevPoint_(nullptr)
+{}
+
+// miheev::GaussLacing::~GaussLacing()
+// {
+//   prevPoint_ = nullptr;
+// }
+
 bool miheev::operator==(const Polygon& lhs, const Polygon& rhs) //TODO: rework
 {
   return std::equal(
     std::begin(rhs.points), std::end(rhs.points),
     std::begin(lhs.points), std::end(lhs.points)
   );
-}
-
-miheev::GaussLacing::GaussLacing():
-  sign_(1),
-  prevPoint_(nullptr)
-{}
-
-int miheev::GaussLacing::changeSign()
-{
-  int sign = sign_;
-  sign_ = -1;
-  return sign;
 }
 
 double miheev::GaussLacing::operator()(const miheev::Point& point)
@@ -93,13 +94,18 @@ double miheev::GaussLacing::operator()(const miheev::Point& point)
     prevPoint_ = &point;
     return 0;
   }
+  // добавляем котыль
+  // std::cout << "prev " << *prevPoint_ << '\n';
+  // std::cout << "curr " << point;
   double dS = static_cast< double >(prevPoint_->x * point.y - prevPoint_->y * point.x) / 2;
+  // std::cout << ' ' << dS << '\n';
   prevPoint_ = &point;
   return dS;
 }
 
 double miheev::getArea(const miheev::Polygon& polygon)
 {
+  // std::cout << "cur polygon " << polygon;
   std::vector< double > areaDeltas(polygon.points.size());
 
   miheev::GaussLacing gaussLacing;
@@ -109,8 +115,13 @@ double miheev::getArea(const miheev::Polygon& polygon)
     std::back_inserter(areaDeltas),
     gaussLacing
   );
+
   // особенности шнуровки гаусса - не забыть
-  double lastDelta = gaussLacing(polygon.points.at(0));
+  miheev::Point first = polygon.points.front();
+  miheev::Point last = polygon.points.back();
+  gaussLacing(last);
+  double lastDelta = gaussLacing(first);
+  // std::cout << "last delta = " << lastDelta << '\n';
   areaDeltas.push_back(lastDelta);
 
   double area = std::accumulate(
@@ -119,6 +130,7 @@ double miheev::getArea(const miheev::Polygon& polygon)
     0.0
   );
 
+  // std::cout << "it's area = " << area << '\n';
   return std::abs(area);
 }
 
