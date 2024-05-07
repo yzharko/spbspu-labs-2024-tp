@@ -5,7 +5,7 @@
 #include <string>
 // #include <vector>
 #include "functions.hpp"
-#include "mapOfCommands.hpp"
+// #include "mapOfCommands.hpp"
 
 int main(int argc, char *argv[])
 {
