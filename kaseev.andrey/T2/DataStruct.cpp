@@ -81,3 +81,13 @@ std::istream & kaseev::operator>>(std::istream & in, DblLit && data)
   }
   return in;
 }
+
+std::istream & kaseev::operator>>(std::istream & in, UllOct && data)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  return in >> data.ref;
+}
