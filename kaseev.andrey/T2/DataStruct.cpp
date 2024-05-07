@@ -68,3 +68,16 @@ bool kaseev::operator<(const DataStruct& first, const DataStruct& second)
     return first.key3.size() < second.key3.size();
   }
 }
+std::istream & kaseev::operator>>(std::istream & in, DblLit && data)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  if (!(in >> data.ref >> Delimiter{ 'd' }) && !std::isdigit(data.ref))
+  {
+    in.setstate(std::ios::failbit);
+  }
+  return in;
+}

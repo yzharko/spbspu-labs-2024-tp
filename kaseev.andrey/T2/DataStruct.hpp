@@ -1,6 +1,8 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 #include <iostream>
+#include "Delimetor.hpp"
+#include "ScopeGuard.hpp"
 
 namespace kaseev {
   struct DataStruct {
@@ -12,5 +14,6 @@ namespace kaseev {
   std::istream & operator>>(std::istream& in, DataStruct& data);
   std::ostream& operator<<(std::ostream& out, const DataStruct& data);
   bool operator<(const DataStruct& lhs, const DataStruct& rhs);
+  std::istream & operator>>(std::istream & in, DblLit && data);
 }
 #endif
