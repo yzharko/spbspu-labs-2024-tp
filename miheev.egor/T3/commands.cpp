@@ -96,6 +96,22 @@ std::ostream& miheev::areaCommand(std::istream& in, std::ostream& out, const std
   return out;
 }
 
+double maxArea(const std::vector< miheev::Polygon >& data)
+{
+  std::vector< double > areas;
+  std::transform(std::begin(data), std::end(data), std::back_inserter(areas), miheev::getArea);
+  double maximum = *std::max_element(areas.begin(), areas.end());
+  return maximum;
+}
+
+size_t maxVertexes(const std::vector< miheev::Polygon >& data)
+{
+  std::vector< size_t > vertexesCounts;
+  std::transform(std::begin(data), std::end(data), std::back_inserter(vertexesCounts), miheev::countVertexes);
+  size_t maximum = *std::max_element(vertexesCounts.begin(), vertexesCounts.end());
+  return maximum;
+}
+
 std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon>& d)
 {
   if (d.empty())
@@ -104,20 +120,15 @@ std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std:
   }
   std::string arg = "";
   in >> arg;
+  iofmtguard fguard(out);
   out << std::fixed << std::setprecision(1);
   if (arg == "AREA")
   {
-    std::vector< double > areas;
-    std::transform(std::begin(d), std::end(d), std::back_inserter(areas), miheev::getArea);
-    double maximum = *std::max_element(areas.begin(), areas.end());
-    out << maximum << '\n';
+    sendMessage(out, maxArea(d));
   }
   else if (arg == "VERTEXES")
   {
-    std::vector< size_t > vertexesCounts;
-    std::transform(std::begin(d), std::end(d), std::back_inserter(vertexesCounts), miheev::countVertexes);
-    size_t maximum = *std::max_element(vertexesCounts.begin(), vertexesCounts.end());
-    out << maximum << '\n';
+    sendMessage(out, std::to_string(maxVertexes(d)));
   }
   else
   {
@@ -126,6 +137,21 @@ std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std:
   return out;
 }
 
+double minArea(const std::vector< miheev::Polygon >& data)
+{
+  std::vector< double > areas;
+  std::transform(std::begin(data), std::end(data), std::back_inserter(areas), miheev::getArea);
+  double minimum = *std::min_element(areas.begin(), areas.end());
+  return minimum;
+}
+
+size_t minVertexes(const std::vector< miheev::Polygon >& data)
+{
+  std::vector< size_t > vertexesCounts;
+  std::transform(std::begin(data), std::end(data), std::back_inserter(vertexesCounts), miheev::countVertexes);
+  size_t minimum = *std::min_element(vertexesCounts.begin(), vertexesCounts.end());
+  return minimum;
+}
 std::ostream& miheev::minCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon>& d)
 {
   std::string arg = "";
@@ -133,17 +159,11 @@ std::ostream& miheev::minCommand(std::istream& in, std::ostream& out, const std:
   out << std::fixed << std::setprecision(1);
   if (arg == "AREA")
   {
-    std::vector< double > areas;
-    std::transform(std::begin(d), std::end(d), std::back_inserter(areas), miheev::getArea);
-    double maximum = *std::min_element(areas.begin(), areas.end());
-    out << maximum;
+    sendMessage(out, minArea(d));
   }
   else if (arg == "VERTEXES")
   {
-    std::vector< size_t > vertexesCounts;
-    std::transform(std::begin(d), std::end(d), std::back_inserter(vertexesCounts), miheev::countVertexes);
-    size_t maximum = *std::min_element(vertexesCounts.begin(), vertexesCounts.end());
-    out << maximum << '\n';
+    sendMessage(out, minVertexes(d));
   }
   return out;
 }
@@ -163,29 +183,42 @@ bool isEqualVertexes(const miheev::Polygon& polygon, size_t vertexes)
   return miheev::countVertexes(polygon) == vertexes;
 }
 
+size_t countEven(const std::vector< miheev::Polygon >& data)
+{
+  return std::count_if(std::begin(data), std::end(data), isEvenVertexes);
+}
+
+size_t countOdd(const std::vector< miheev::Polygon >& data)
+{
+  return std::count_if(std::begin(data), std::end(data), isOddVertexes);
+}
+
+size_t countPolysWithVertexes(const std::vector< miheev::Polygon >& data, size_t vertexes)
+{
+  if (vertexes < 3)
+  {
+    throw std::logic_error("Too few vertexes\n");
+  }
+  using namespace std::placeholders;
+  return std::count_if(std::begin(data), std::end(data), std::bind(isEqualVertexes, _1, vertexes));
+}
+
 std::ostream& miheev::countCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon>& d)
 {
   std::string arg = "";
   in >> arg;
   if (arg == "EVEN")
   {
-    out << std::count_if(std::begin(d), std::end(d), isEvenVertexes) << '\n';
+    sendMessage(out, std::to_string(countEven(d)));
   }
   else if (arg == "ODD")
   {
-    out << std::count_if(std::begin(d), std::end(d), isOddVertexes) << '\n';
+    sendMessage(out, std::to_string(countOdd(d)));
   }
   else
   {
     size_t vetrCount = std::stoull(arg);
-    if (vetrCount < 3)
-    {
-      throw std::logic_error("Too few vertexes\n");
-    }
-    {
-      using namespace std::placeholders;
-      out << std::count_if(std::begin(d), std::end(d), std::bind(isEqualVertexes, _1, vetrCount)) << '\n';
-    }
+    sendMessage(out, std::to_string(countPolysWithVertexes(d, vetrCount)));
   }
   return out;
 }
@@ -212,6 +245,23 @@ size_t SamePolygonSeries::operator()(const miheev::Polygon& polygon, const mihee
   return series_;
 }
 
+size_t maxSeries(const std::vector< miheev::Polygon >& data, const miheev::Polygon& benchmark)
+{
+  std::vector< size_t > countInARow;
+  SamePolygonSeries series;
+  {
+    using namespace std::placeholders;
+    std::transform(
+      std::begin(data),
+      std::end(data),
+      std::back_inserter(countInARow),
+      std::bind(series, _1, benchmark)
+    );
+  }
+  size_t maximum = *std::max_element(std::begin(countInARow), std::end(countInARow));
+  return maximum;
+}
+
 std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
   if (d.empty())
@@ -228,23 +278,12 @@ std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const s
   {
     throw std::logic_error("Inappropriate size");
   }
-  std::vector< size_t > countInARow;
-  SamePolygonSeries series;
-  {
-    using namespace std::placeholders;
-    std::transform(
-      std::begin(d),
-      std::end(d),
-      std::back_inserter(countInARow),
-      std::bind(series, _1, arg)
-    );
-  }
-  size_t maximum = *std::max_element(std::begin(countInARow), std::end(countInARow));
+  size_t maximum = maxSeries(d, arg);
   if (maximum == 0)
   {
     throw std::runtime_error("Such rect Doesnt exist");
   }
-  out << maximum << '\n';
+  sendMessage(out, std::to_string(maximum));
   return out;
 }
 
@@ -308,7 +347,6 @@ std::ostream& miheev::rightshapesCommand(std::istream&, std::ostream& out, const
 
 std::ostream& miheev::sendMessage(std::ostream& out, const std::string& message)
 {
-  iofmtguard fguard(out);
   out << message << '\n';
   return out;
 }
@@ -316,5 +354,6 @@ std::ostream& miheev::sendMessage(std::ostream& out, const std::string& message)
 std::ostream& miheev::sendMessage(std::ostream& out, double message)
 {
   iofmtguard fguard(out);
+  out << std::fixed << std::setprecision(1);
   return out << message << '\n';
 }
