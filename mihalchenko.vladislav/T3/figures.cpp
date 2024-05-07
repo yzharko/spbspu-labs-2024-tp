@@ -1,5 +1,5 @@
 #include "figures.hpp"
-#include "../common/scopeGuard.hpp"
+#include "scopeGuard.hpp"
 
 // #include <iterator>
 // #include <iostream>
@@ -90,32 +90,3 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
               std::ostream_iterator<Point>(out << ' ', " "));
   return out; // << rhs.points.back();
 }
-
-/*std::istream &mihalchenko::operator>>(std::istream &is, std::string &rhs)
-{
-  std::istream::sentry guard(is);
-  if (!guard)
-  {
-    return is;
-  }
-  std::string rez = "";
-  using del = DelimiterIO;
-  is >> rez >> del{' '};
-  rez += ';';
-  is >> rez;
-  if (is)
-  {
-    rhs = rez;
-  }
-  return is;
-}*/
-
-/*bool mihalchenko::operator==(const Polygon& lhs, const Polygon& rhs)
-{
-  auto firstLhs = lhs.points.begin();
-  auto lastLhs = lhs.points.end();
-  auto firstRhs = rhs.points.begin();
-  auto lastRhs = rhs.points.end();
-  bool result = std::equal(firstLhs, lastLhs, firstRhs, lastRhs);
-  return result;
-}*/

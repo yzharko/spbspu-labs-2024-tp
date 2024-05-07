@@ -40,8 +40,6 @@ namespace mihalchenko
   std::ostream &operator<<(std::ostream &out, const Point &rhs);
   std::istream &operator>>(std::istream &is, Polygon &rhs);
   std::ostream &operator<<(std::ostream &out, const Polygon &rhs);
-  // std::istream &operator>>(std::istream &is, std::string &rhs);
-  // bool operator==(const Polygon &lhs, const Polygon &rhs);
 }
 
 #endif

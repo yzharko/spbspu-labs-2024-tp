@@ -7,7 +7,7 @@
 // #include <algorithm>
 // #include <functional>
 // #include "mapOfCommands.hpp"
-#include "../common/scopeGuard.hpp"
+#include "scopeGuard.hpp"
 // using namespace mihalchenko;
 using namespace std::placeholders;
 
