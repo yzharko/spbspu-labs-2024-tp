@@ -9,6 +9,21 @@ namespace kaseev
     char expected;
   };
 
+  struct DblLit
+  {
+    double & ref;
+  };
+
+  struct UllOct
+  {
+    unsigned long long & ref;
+  };
+
+  struct String
+  {
+    std::string & ref;
+  };
+
   std::istream &operator>>(std::istream &is, Delimiter &&exp);
 }
 
