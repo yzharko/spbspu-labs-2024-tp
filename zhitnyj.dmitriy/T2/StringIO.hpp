@@ -1,6 +1,7 @@
 #ifndef STRINGIO_HPP
 #define STRINGIO_HPP
 
+#include <iosfwd>
 #include <string>
 
 struct StringIO
