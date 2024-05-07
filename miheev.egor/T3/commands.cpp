@@ -5,7 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <functional>
-#include "scopeguard.hpp"
+#include <scopeguard.hpp>
 
 double addArea(double accumulator, const miheev::Polygon& polygon)
 {

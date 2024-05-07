@@ -2,9 +2,9 @@
 #include <algorithm>
 #include <numeric>
 #include <cmath>
-#include "delimiters.hpp"
+#include <scopeguard.hpp>
+#include <delimiters.hpp>
 #include "dataTypes.hpp"
-#include "scopeguard.hpp"
 
 std::istream& miheev::operator>>(std::istream& in, miheev::Point& rhs)
 {
