@@ -25,10 +25,10 @@ namespace jirkov
     std::string &str;
   };
 
-  std::istream & operator>>(std::istream & is, DelimiterIO && value);
-  std::istream & operator>>(std::istream & is, /*ke1*/ && value);
-  std::istream & operator>>(std::istream & is, /*key2*/ && value);
-  std::istream & operator>>(std::istream & is, StringIO && value);
+  std::istream & operator>>(std::istream & in, DelimiterIO && value);
+  std::istream & operator>>(std::istream & in, /*ke1*/ && value);
+  std::istream & operator>>(std::istream & in, /*key2*/ && value);
+  std::istream & operator>>(std::istream & in, StringIO && value);
 
   using Del = DelimiterIO;
   //key1
