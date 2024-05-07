@@ -91,3 +91,13 @@ std::istream & kaseev::operator>>(std::istream & in, UllOct && data)
   }
   return in >> data.ref;
 }
+
+std::istream& kaseev::operator>>(std::istream& in, String&& dest)
+{
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  return std::getline(in >> Delimiter{ '"' }, dest.ref, '"');
+}
