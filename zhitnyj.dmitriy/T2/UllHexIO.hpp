@@ -1,6 +1,8 @@
 #ifndef ULLHEXIO_HPP
 #define ULLHEXIO_HPP
 
+#include <iosfwd>
+
 struct UllHexIO
 {
     unsigned long long& ref;
