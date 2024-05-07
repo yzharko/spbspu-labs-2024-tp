@@ -74,11 +74,6 @@ miheev::GaussLacing::GaussLacing():
   prevPoint_(nullptr)
 {}
 
-
-
-
-
-
 bool miheev::operator==(const Polygon& lhs, const Polygon& rhs) //TODO: rework
 {
   return std::equal(
@@ -94,18 +89,18 @@ double miheev::GaussLacing::operator()(const miheev::Point& point)
     prevPoint_ = &point;
     return 0;
   }
-  
-  
-  
+
+
+
   double dS = static_cast< double >(prevPoint_->x * point.y - prevPoint_->y * point.x) / 2;
-  
+
   prevPoint_ = &point;
   return dS;
 }
 
 double miheev::getArea(const miheev::Polygon& polygon)
 {
-  
+
   std::vector< double > areaDeltas(polygon.points.size());
 
   miheev::GaussLacing gaussLacing;
@@ -116,12 +111,12 @@ double miheev::getArea(const miheev::Polygon& polygon)
     gaussLacing
   );
 
-  
+
   miheev::Point first = polygon.points.front();
   miheev::Point last = polygon.points.back();
   gaussLacing(last);
   double lastDelta = gaussLacing(first);
-  
+
   areaDeltas.push_back(lastDelta);
 
   double area = std::accumulate(
@@ -130,7 +125,7 @@ double miheev::getArea(const miheev::Polygon& polygon)
     0.0
   );
 
-  
+
   return std::abs(area);
 }
 

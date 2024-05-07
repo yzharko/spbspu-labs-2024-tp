@@ -39,6 +39,37 @@ double addEqualVertexes(double accumulator, const miheev::Polygon& polygon, size
   return accumulator;
 }
 
+double calcMeanArea(const std::vector< miheev::Polygon >& data)
+{
+    if (data.empty())
+    {
+      throw std::logic_error("Zero division: no shapes to calc mean causes zero division");
+    }
+    return std::accumulate(std::cbegin(data), std::cend(data), 0.0, addArea) / data.size();
+}
+
+double calcOddArea(const std::vector< miheev::Polygon >& data)
+{
+  return std::accumulate(std::begin(data), std::end(data), 0.0, addOddArea);
+}
+
+double calcEvenArea(const std::vector< miheev::Polygon >& data)
+{
+  return std::accumulate(std::begin(data), std::end(data), 0.0, addEvenArea);
+}
+
+double calcVertexesArea(const std::vector< miheev::Polygon >& data, size_t vertexes)
+{
+    if (vertexes < 3)
+    {
+      throw std::logic_error("Too few vertexes\n");
+    }
+    {
+      using namespace std::placeholders;
+      return std::accumulate(std::begin(data), std::end(data), 0.0, std::bind(addEqualVertexes, _1, _2, vertexes));
+    }
+}
+
 std::ostream& miheev::areaCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
   iofmtguard fguard(out);
@@ -47,31 +78,20 @@ std::ostream& miheev::areaCommand(std::istream& in, std::ostream& out, const std
   out << std::fixed << std::setprecision(1);
   if (arg == "MEAN")
   {
-    if (d.empty())
-    {
-      throw std::logic_error("Zero division: no shapes to calc mean causes zero division");
-    }
-    out << std::accumulate(std::cbegin(d), std::cend(d), 0.0, addArea) / d.size() << '\n';
+    sendMessage(out, calcMeanArea(d));
   }
   else if (arg == "ODD")
   {
-    out << std::accumulate(std::begin(d), std::end(d), 0.0, addOddArea) << '\n';
+    sendMessage(out, calcOddArea(d));
   }
   else if (arg == "EVEN")
   {
-    out << std::accumulate(std::begin(d), std::end(d), 0.0, addEvenArea) << '\n';
+    sendMessage(out, calcEvenArea(d));
   }
   else
   {
-    size_t vetrCount = std::stoull(arg);
-    if (vetrCount < 3)
-    {
-      throw std::logic_error("Too few vertexes\n");
-    }
-    {
-      using namespace std::placeholders;
-      out << std::accumulate(std::begin(d), std::end(d), 0.0, std::bind(addEqualVertexes, _1, _2, vetrCount)) << '\n';
-    }
+    size_t vertCount = std::stoull(arg);
+    sendMessage(out, calcVertexesArea(d, vertCount));
   }
   return out;
 }
@@ -288,6 +308,13 @@ std::ostream& miheev::rightshapesCommand(std::istream&, std::ostream& out, const
 
 std::ostream& miheev::sendMessage(std::ostream& out, const std::string& message)
 {
+  iofmtguard fguard(out);
   out << message << '\n';
   return out;
+}
+
+std::ostream& miheev::sendMessage(std::ostream& out, double message)
+{
+  iofmtguard fguard(out);
+  return out << message << '\n';
 }

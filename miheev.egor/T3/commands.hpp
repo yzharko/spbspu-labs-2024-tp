@@ -13,6 +13,7 @@ namespace miheev
   std::ostream& maxseqCommand(std::istream&, std::ostream&, const std::vector< Polygon >&);
   std::ostream& rightshapesCommand(std::istream&, std::ostream&, const std::vector< Polygon >&);
   std::ostream& sendMessage(std::ostream&, const std::string& message);
+  std::ostream& sendMessage(std::ostream&, double message);
 }
 
 #endif
