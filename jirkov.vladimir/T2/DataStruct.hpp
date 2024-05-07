@@ -4,7 +4,7 @@
 #include <utility>
 #include <iostream>
 #include "ScopeGuard.hpp"
-
+#include "IOstructures.hpp"
 namespace jirkov
 {
   struct DataStruct
