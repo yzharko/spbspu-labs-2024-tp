@@ -15,18 +15,18 @@ std::istream& kaseev::operator>>(std::istream& in, DataStruct& data)
     std::string KeyNum;
     for (size_t i = 0; i < 3 && in; ++i)
     {
-      in >> delimimitr{ ':' } >> KeyNum;
+      in >> KeyNum;
       if (KeyNum == "key1")
       {
         in >> DblLit{ keeper.key1 } >> delimimitr{ 'd' };
       }
       else if (KeyNum == "key2")
       {
-        in >> UllOct{ keeper.key2 };
+        in >> UllOct{ keeper.key2 } >> delimimitr{ ':' };
       }
       else if (KeyNum == "key3")
       {
-        in >> String{ keeper.key3 };
+        in >> String{ keeper.key3 } >> delimimitr{ ':' };
       }
     }
     in >> delimimitr{ ':' } >> delimimitr{ ')' };
@@ -75,11 +75,8 @@ std::istream & kaseev::operator>>(std::istream & in, DblLit && data)
   {
     return in;
   }
-  if (!(in >> data.ref >> Delimiter{ 'd' }) && !std::isdigit(data.ref))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
+
+  return in >> data.ref;
 }
 
 std::istream & kaseev::operator>>(std::istream & in, UllOct && data)
