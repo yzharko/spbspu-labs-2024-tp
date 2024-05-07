@@ -26,7 +26,6 @@ namespace miheev
   {
   public:
     GaussLacing();
-    // ~GaussLacing();
     double operator()(const Point&);
 
   private:

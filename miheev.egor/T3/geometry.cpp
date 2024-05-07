@@ -74,10 +74,10 @@ miheev::GaussLacing::GaussLacing():
   prevPoint_(nullptr)
 {}
 
-// miheev::GaussLacing::~GaussLacing()
-// {
-//   prevPoint_ = nullptr;
-// }
+
+
+
+
 
 bool miheev::operator==(const Polygon& lhs, const Polygon& rhs) //TODO: rework
 {
@@ -94,18 +94,18 @@ double miheev::GaussLacing::operator()(const miheev::Point& point)
     prevPoint_ = &point;
     return 0;
   }
-  // добавляем котыль
-  // std::cout << "prev " << *prevPoint_ << '\n';
-  // std::cout << "curr " << point;
+  
+  
+  
   double dS = static_cast< double >(prevPoint_->x * point.y - prevPoint_->y * point.x) / 2;
-  // std::cout << ' ' << dS << '\n';
+  
   prevPoint_ = &point;
   return dS;
 }
 
 double miheev::getArea(const miheev::Polygon& polygon)
 {
-  // std::cout << "cur polygon " << polygon;
+  
   std::vector< double > areaDeltas(polygon.points.size());
 
   miheev::GaussLacing gaussLacing;
@@ -116,12 +116,12 @@ double miheev::getArea(const miheev::Polygon& polygon)
     gaussLacing
   );
 
-  // особенности шнуровки гаусса - не забыть
+  
   miheev::Point first = polygon.points.front();
   miheev::Point last = polygon.points.back();
   gaussLacing(last);
   double lastDelta = gaussLacing(first);
-  // std::cout << "last delta = " << lastDelta << '\n';
+  
   areaDeltas.push_back(lastDelta);
 
   double area = std::accumulate(
@@ -130,7 +130,7 @@ double miheev::getArea(const miheev::Polygon& polygon)
     0.0
   );
 
-  // std::cout << "it's area = " << area << '\n';
+  
   return std::abs(area);
 }
 

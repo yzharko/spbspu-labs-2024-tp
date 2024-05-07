@@ -12,6 +12,7 @@ namespace miheev
   std::ostream& countCommand(std::istream&, std::ostream&, const std::vector< Polygon >&);
   std::ostream& maxseqCommand(std::istream&, std::ostream&, const std::vector< Polygon >&);
   std::ostream& rightshapesCommand(std::istream&, std::ostream&, const std::vector< Polygon >&);
+  std::ostream& sendMessage(std::ostream&, const std::string& message);
 }
 
 #endif

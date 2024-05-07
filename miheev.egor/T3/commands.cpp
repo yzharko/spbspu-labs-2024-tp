@@ -285,3 +285,9 @@ std::ostream& miheev::rightshapesCommand(std::istream&, std::ostream& out, const
   out << rightsTotal << '\n';
   return out;
 }
+
+std::ostream& miheev::sendMessage(std::ostream& out, const std::string& message)
+{
+  out << message << '\n';
+  return out;
+}
