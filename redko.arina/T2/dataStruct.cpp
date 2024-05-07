@@ -1,5 +1,5 @@
 #include "dataStruct.hpp"
-#include "delimeter.hpp"
+#include "delimiter.hpp"
 #include "structures.hpp"
 #include "iofmtguard.hpp"
 #include <iomanip>
