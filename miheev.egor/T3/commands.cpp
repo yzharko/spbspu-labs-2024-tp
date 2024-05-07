@@ -292,7 +292,7 @@ miheev::Point makeVector(const miheev::Point& lhs, const miheev::Point& rhs)
   return miheev::Point{lhs.x - rhs.x, lhs.y - rhs.y};
 }
 
-bool arePerpendicular(const miheev::Point vec1, const miheev::Point vec2)
+bool arePerpendicular(const miheev::Point& vec1, const miheev::Point& vec2)
 {
   return vec1.x * vec2.x - vec1.y * vec2.y == 0;
 }
@@ -327,21 +327,31 @@ bool hasPerpendecular(const miheev::Polygon& polygon)
   );
 }
 
+void allHavePerpendeculars(const std::vector< miheev::Polygon >& data, std::vector< bool >& bools)
+{
+  std::transform(
+    std::begin(data),
+    std::end(data),
+    std::back_inserter(bools),
+    hasPerpendecular
+  );
+}
+
+size_t countTotalRights(const std::vector< bool >& bools)
+{
+  size_t rightsTotal = std::count(
+    std::begin(bools),
+    std::end(bools),
+    true
+  );
+  return rightsTotal;
+}
+
 std::ostream& miheev::rightshapesCommand(std::istream&, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
   std::vector< bool > hasPerp;
-  std::transform(
-    std::begin(d),
-    std::end(d),
-    std::back_inserter(hasPerp),
-    hasPerpendecular
-  );
-  size_t rightsTotal = std::count(
-    std::begin(hasPerp),
-    std::end(hasPerp),
-    true
-  );
-  out << rightsTotal << '\n';
+  allHavePerpendeculars(d, hasPerp);
+  sendMessage(out, std::to_string(countTotalRights(hasPerp)));
   return out;
 }
 
