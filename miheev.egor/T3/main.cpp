@@ -47,6 +47,7 @@ int main(int argc, char* argv[])
     using namespace std::placeholders;
     commands["AREA"] = std::bind(miheev::areaCommand, _1, _2, _3);
     commands["MAX"] = std::bind(miheev::maxCommand, _1, _2, _3);
+    commands["MIN"] = std::bind(miheev::minCommand, _1, _2, _3);
     commands["COUNT"] = std::bind(miheev::countCommand, _1, _2, _3);
     commands["MAXSEQ"] = std::bind(miheev::maxseqCommand, _1, _2, _3);
     commands["RIGHTSHAPES"] = std::bind(miheev::rightshapesCommand, _1, _2, _3);
@@ -55,7 +56,16 @@ int main(int argc, char* argv[])
   std::string command = "";
   while (std::cin >> command)
   {
-    commands.at(command)(std::cin, std::cout, polygons);
+    try
+    {
+      commands.at(command)(std::cin, std::cout, polygons);
+    }
+    catch(const std::exception& e)
+    {
+      std::cout << "<INVALID COMMAND>\n";
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max() , '\n');
+    }
   }
 
   return 0;

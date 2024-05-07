@@ -14,7 +14,7 @@ double addArea(double accumulator, const miheev::Polygon& polygon)
 
 double addOddArea(double accumulator, const miheev::Polygon& polygon)
 {
-  if (!(miheev::countVertexes(polygon) % 2))
+  if (miheev::countVertexes(polygon) % 2)
   {
     return accumulator + miheev::getArea(polygon);
   }
@@ -23,7 +23,7 @@ double addOddArea(double accumulator, const miheev::Polygon& polygon)
 
 double addEvenArea(double accumulator, const miheev::Polygon& polygon)
 {
-  if (miheev::countVertexes(polygon) % 2)
+  if (!(miheev::countVertexes(polygon) % 2))
   {
     return accumulator + miheev::getArea(polygon);
   }
@@ -82,7 +82,7 @@ std::ostream& miheev::maxCommand(std::istream& in, std::ostream& out, const std:
     std::vector< double > areas;
     std::transform(std::begin(d), std::end(d), std::back_inserter(areas), miheev::getArea);
     double maximum = *std::max_element(areas.begin(), areas.end());
-    out << maximum;
+    out << maximum << '\n';
   }
   else if (arg == "VERTEXES")
   {
@@ -118,7 +118,7 @@ std::ostream& miheev::minCommand(std::istream& in, std::ostream& out, const std:
 
 bool isOddVertexes(const miheev::Polygon& polygon)
 {
-  return !(miheev::countVertexes(polygon) % 2);
+  return miheev::countVertexes(polygon) % 2;
 }
 
 bool isEvenVertexes(const miheev::Polygon& polygon)
@@ -182,6 +182,10 @@ size_t SamePolygonSeries::operator()(const miheev::Polygon& polygon, const mihee
 
 std::ostream& miheev::maxseqCommand(std::istream& in, std::ostream& out, const std::vector< miheev::Polygon >& d)
 {
+  if (d.empty())
+  {
+    throw std::logic_error("No shapes passed");
+  }
   Polygon arg;
   in >> arg;
   std::vector< size_t > countInARow;
