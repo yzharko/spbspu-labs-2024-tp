@@ -199,32 +199,37 @@ namespace nikiforov
   void takingIntersections(const std::vector< Polygon >& shapes, std::istream& input, std::ostream& out)
   {
     std::vector< std::pair< Point, Point > > vectorsIntersectios;
-
     nikiforov::Polygon shapeIntersectios;
-    input >> shapeIntersectios;
 
-    std::transform(++shapeIntersectios.points.cbegin(), shapeIntersectios.points.cend(),
-      shapeIntersectios.points.cbegin(),
-      std::back_inserter(vectorsIntersectios),
-      std::bind(getPointsInter, _2, _1)
-    );
+    if (input >> shapeIntersectios)
+    {
+      std::transform(++shapeIntersectios.points.cbegin(), shapeIntersectios.points.cend(),
+        shapeIntersectios.points.cbegin(),
+        std::back_inserter(vectorsIntersectios),
+        std::bind(getPointsInter, _2, _1)
+      );
 
-    size_t sizePol = shapeIntersectios.points.size();
-    vectorsIntersectios.push_back(getPointsInter(shapeIntersectios.points.at(0), shapeIntersectios.points.at(sizePol - 1)));
+      size_t sizePol = shapeIntersectios.points.size();
+      vectorsIntersectios.push_back(getPointsInter(shapeIntersectios.points.at(0), shapeIntersectios.points.at(sizePol - 1)));
 
-    std::vector< size_t > resultsIntersectios;
-    std::transform(
-      std::begin(shapes), std::end(shapes),
-      std::back_inserter(resultsIntersectios),
-      std::bind(intersectingLines, vectorsIntersectios, _1)
-    );
+      std::vector< size_t > resultsIntersectios;
+      std::transform(
+        std::begin(shapes), std::end(shapes),
+        std::back_inserter(resultsIntersectios),
+        std::bind(intersectingLines, vectorsIntersectios, _1)
+      );
 
-    out << std::count_if(std::begin(resultsIntersectios), std::end(resultsIntersectios),
-      [](size_t countIntersections)
-      {
-        return countIntersections > 0;
-      });
-    out << "\n";
+      out << std::count_if(std::begin(resultsIntersectios), std::end(resultsIntersectios),
+        [](size_t countIntersections)
+        {
+          return countIntersections > 0;
+        });
+      out << "\n";
+    }
+    else
+    {
+      throw std::out_of_range("");
+    }
   }
 
   std::pair< Point, Point > getPointsInter(const Point& first, const Point& second)
