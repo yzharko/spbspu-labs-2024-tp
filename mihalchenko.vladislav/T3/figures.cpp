@@ -4,22 +4,6 @@
 #include <delimiters.hpp>
 #include <dataStruct.hpp>
 
-std::istream &mihalchenko::operator>>(std::istream &is, DelimiterIO &&exp)
-{
-  std::istream::sentry guard(is);
-  if (!guard)
-  {
-    return is;
-  }
-  char c = 0;
-  is >> c;
-  if (c != exp.expected)
-  {
-    is.setstate(std::ios::failbit);
-  }
-  return is;
-}
-
 std::istream &mihalchenko::operator>>(std::istream &is, Point &rhs)
 {
   std::istream::sentry guard(is);
