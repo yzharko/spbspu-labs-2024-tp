@@ -25,17 +25,17 @@ namespace mihalchenko
     std::vector<Point> points;
   };
 
-  struct DelimiterIO
+  /*struct DelimiterIO
   {
     char expected;
-  };
+  };*/
 
-  struct ComplexIO
+  /*struct ComplexIO
   {
     std::pair<double, double> &ref;
-  };
+  };*/
 
-  std::istream &operator>>(std::istream &is, DelimiterIO &&exp);
+  // std::istream &operator>>(std::istream &is, DelimiterIO &&exp);
   std::istream &operator>>(std::istream &is, Point &rhs);
   std::ostream &operator<<(std::ostream &out, const Point &rhs);
   std::istream &operator>>(std::istream &is, Polygon &rhs);

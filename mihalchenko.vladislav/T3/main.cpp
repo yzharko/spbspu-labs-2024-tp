@@ -6,6 +6,7 @@
 // #include <vector>
 #include "functions.hpp"
 // #include "mapOfCommands.hpp"
+#include "figures.hpp"
 
 int main(int argc, char *argv[])
 {
