@@ -33,9 +33,16 @@ std::istream & jirkov::operator>>(std::istream & in, UllLitIO && value)
 }
 }
 
-std::istream & jirkov::operator>>(std::istream & in, /*key2*/ && value)
+std::istream & jirkov::operator>>(std::istream & in, UllOctIO && value)
 {
-  return in;
+  std::istream::sentry sentry(in);
+  if (!sentry)
+  {
+    return in;
+  }
+  using del = DelimiterIO;
+  in >> del{'0'};
+  return is >> std::oct >> value.ref;
 }
 
 std::istream & jirkov::operator>>(std::istream & in, StringIO && value)

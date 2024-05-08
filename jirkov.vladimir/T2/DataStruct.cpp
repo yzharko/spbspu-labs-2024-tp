@@ -20,11 +20,11 @@ std::istream & jirkov::operator>>(std::istream &in, DataStruct &value)
     }
     else if(key == "key2")
     {
-      is >> /*name key2*/{input.key2} >> Del{':'};
+      in >> UllOct{input.key2} >> Del{':'};
     }
     else if(key == "key3")
     {
-      is >> Str{input.key3} >> Del{':'};
+      in >> Str{input.key3} >> Del{':'};
     }
     else
     {
