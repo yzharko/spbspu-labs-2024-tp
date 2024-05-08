@@ -5,20 +5,11 @@
 
 namespace kovshikov
 {
-  struct IntegerIO
-  {
-    int& value;
-  };
-
   struct Point
   {
     int x, y;
   };
-
-  using Int = IntegerIO;
   std::istream& operator>>(std::istream& is, Point& value);
-  std::istream& operator>>(std::istream & is, Int&& integer);
-
   std::ostream& operator<<(std::ostream& out, const Point& value);
 }
 

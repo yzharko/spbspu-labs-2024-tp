@@ -1,29 +1,18 @@
 #include <iostream>
-#include <utility>
 #include "point.hpp"
-
-std::istream& kovshikov::operator>>(std::istream & is, Int&& integer)
-{
-  std::istream::sentry sentry(is);
-  if (!sentry)
-  {
-    return is;
-  }
-  return is >> integer.value;
-}
 
 std::istream& kovshikov::operator>>(std::istream& is, Point& value)
 {
-  std::istream::sentry guard(is); // библиотека?
+  std::istream::sentry guard(is);
   if(!guard)
   {
     return is;
   }
-  iofmtguard fmtguard(is); //защита потока
+  iofmtguard fmtguard(is);
   Point point;
   is >> Del{'('};
-  is >> Int{point.x} >> Del{';'};
-  is >> Int{point.y} >> Del{')'};
+  is >> point.x >> Del{';'};
+  is >> point.y >> Del{')'};
   if(is)
   {
     value = point;

@@ -22,8 +22,8 @@
 int main()    //int argc, char ** argv)
 {
   using namespace kovshikov;
-  std::vector< Point > allData;
-  using input_it = std::istream_iterator< Point >;  //блок ввода, нужно перегрузить оператор >> для struct Polygon
+  std::vector< Polygon > allData;
+  using input_it = std::istream_iterator< Polygon >;  //блок ввода, нужно перегрузить оператор >> для struct Polygon
   while(!std::cin.eof())
   {
     std::copy(input_it{std::cin}, input_it{}, std::back_inserter(allData));
@@ -34,7 +34,7 @@ int main()    //int argc, char ** argv)
     }
   }
 
-  using output_it = std::ostream_iterator< Point >;
+  using output_it = std::ostream_iterator< Polygon >;
   std::copy(allData.cbegin(), allData.cend(), output_it{std::cout, "\n"});
 
 
