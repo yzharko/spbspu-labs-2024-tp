@@ -98,9 +98,13 @@ namespace nikiforov
     in >> option;
     out << std::fixed << std::setprecision(1);
 
-    if ((option == "AREA" || option == "VERTEXES") && !shapes.empty())
+    if (option == "AREA" && !shapes.empty())
     {
       out << getAreaResult(shapes, "max") << "\n";
+    }
+    else if (option == "VERTEXES" && !shapes.empty())
+    {
+      out << getVertexesResult(shapes, "min") << "\n";
     }
     else
     {
@@ -119,7 +123,7 @@ namespace nikiforov
     in >> option;
     out << std::fixed << std::setprecision(1);
 
-    if ((option == "AREA" || option == "VERTEXES") && !shapes.empty())
+    if (option == "AREA" && !shapes.empty())
     {
       out << getAreaResult(shapes, "min") << "\n";
     }
@@ -321,5 +325,10 @@ namespace nikiforov
       return true;
     }
     return false;
+  }
+
+  void takingError(std::ostream& out, const std::string& errorStr)
+  {
+    out << errorStr << "\n";
   }
 }

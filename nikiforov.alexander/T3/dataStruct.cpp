@@ -16,13 +16,19 @@ namespace nikiforov
       using sep = DelimiterIO;
       size_t countPoints = 0;
 
-      if (!(in >> countPoints))
+      if (!(in >> countPoints) || countPoints <= 2)
       {
         in.setstate(std::ios::failbit);
+        return in;
       }
 
       for (size_t i = 0; i < countPoints; i++)
       {
+        if (in.get() == '\n')
+        {
+          in.setstate(std::ios::failbit);
+          return in;
+        }
         in >> sep{ '(' } >> inputCoord.x;
         in >> sep{ ';' } >> inputCoord.y;
         in >> sep{ ')' };
@@ -32,7 +38,7 @@ namespace nikiforov
         }
       }
 
-      if (countPoints != resPolygon.points.size() || resPolygon.points.size() <= 2)
+      if (countPoints != resPolygon.points.size() || in.get() != '\n')
       {
         in.setstate(std::ios::failbit);
       }
