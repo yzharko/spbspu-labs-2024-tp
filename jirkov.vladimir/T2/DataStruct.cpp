@@ -16,7 +16,7 @@ std::istream & jirkov::operator>>(std::istream &in, DataStruct &value)
     in >> key;
     if(key == "key1")
     {
-      in >> /*name key1*/{input.key1} >> Del{':'};
+      in >> UllLit{input.key1} >> Del{':'};
     }
     else if(key == "key2")
     {
@@ -55,11 +55,11 @@ bool jirkov::operator>(const DataStruct &left, const DataStruct &right)
 {
   if(left.key1 != right.key1)
   {
-    //return
+    return left.key2 > right.key2;
   }
   else if (left.key2 != right.key2)
   {
-    //return
+    return left.key2 > right.key2;
   }
   else if (left.key3.length() != right.key3.length())
   {

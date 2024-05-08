@@ -9,7 +9,7 @@ namespace jirkov
 {
   struct DataStruct
   {
-    //key1;
+    unsigned long long key1;
     //key2;
     std::string key3;
   };

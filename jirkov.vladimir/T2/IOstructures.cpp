@@ -17,9 +17,20 @@ std::istream & jirkov::operator>>(std::istream & in, DelimiterIO && value)
   return in;
 }
 
-std::istream & jirkov::operator>>(std::istream & in, /*key1*/ && value)
+std::istream & jirkov::operator>>(std::istream & in, UllLitIO && value)
 {
-  //return
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  in >> value.ref >> DelimiterIO{'u'} >> DelimiterIO{'l'} >> DelimiterIO{'l'};
+  if (!in)
+  {
+    in.setstate(std::ios::failbit);
+  }
+  return in;
+}
 }
 
 std::istream & jirkov::operator>>(std::istream & in, /*key2*/ && value)

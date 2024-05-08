@@ -10,9 +10,9 @@ namespace jirkov
     char exp;
   };
 
-  struct //key1
+  struct UllLitIO
   {
-    //key1
+    unsigned long long &ref;
   };
 
   struct //key2
@@ -26,12 +26,12 @@ namespace jirkov
   };
 
   std::istream & operator>>(std::istream & in, DelimiterIO && value);
-  std::istream & operator>>(std::istream & in, /*ke1*/ && value);
+  std::istream & operator>>(std::istream & in, UllLitIO && value);
   std::istream & operator>>(std::istream & in, /*key2*/ && value);
   std::istream & operator>>(std::istream & in, StringIO && value);
 
   using Del = DelimiterIO;
-  //key1
+  using UllLit = UllLitIO;
   //key2
   using Str = StringIO;
 }
