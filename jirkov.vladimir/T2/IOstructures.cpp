@@ -19,10 +19,10 @@ std::istream & jirkov::operator>>(std::istream & in, DelimiterIO && value)
 
 std::istream & jirkov::operator>>(std::istream & in, UllLitIO && value)
 {
-  std::istream::sentry sentry(is);
+  std::istream::sentry sentry(in);
   if (!sentry)
   {
-    return is;
+    return in;
   }
   in >> value.ref >> DelimiterIO{'u'} >> DelimiterIO{'l'} >> DelimiterIO{'l'};
   if (!in)
@@ -30,7 +30,6 @@ std::istream & jirkov::operator>>(std::istream & in, UllLitIO && value)
     in.setstate(std::ios::failbit);
   }
   return in;
-}
 }
 
 std::istream & jirkov::operator>>(std::istream & in, UllOctIO && value)
@@ -42,7 +41,7 @@ std::istream & jirkov::operator>>(std::istream & in, UllOctIO && value)
   }
   using del = DelimiterIO;
   in >> del{'0'};
-  return is >> std::oct >> value.ref;
+  return in >> std::oct >> value.ref;
 }
 
 std::istream & jirkov::operator>>(std::istream & in, StringIO && value)

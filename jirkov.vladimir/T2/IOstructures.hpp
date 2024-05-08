@@ -32,7 +32,7 @@ namespace jirkov
 
   using Del = DelimiterIO;
   using UllLit = UllLitIO;
-  using UllOct = UllOctIO
+  using UllOct = UllOctIO;
   using Str = StringIO;
 }
 
