@@ -1,4 +1,4 @@
-#include "delimeter.hpp"
+#include "delimiter.hpp"
 
 std::istream & redko::operator>>(std::istream & in, DelimiterIO && dest)
 {
