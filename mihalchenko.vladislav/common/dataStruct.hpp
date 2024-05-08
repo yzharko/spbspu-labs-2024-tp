@@ -11,7 +11,7 @@ namespace mihalchenko
   struct DataStruct
   {
     std::string key1_;
-    std::complex<double> key2_;
+    std::complex< double > key2_;
     std::string key3_;
   };
 

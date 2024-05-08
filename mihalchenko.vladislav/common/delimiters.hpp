@@ -19,7 +19,7 @@ namespace mihalchenko
 
   struct ComplexIO
   {
-    std::complex<double> &ref;
+    std::complex< double > &ref;
   };
 
   struct StringIO

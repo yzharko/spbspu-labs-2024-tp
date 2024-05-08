@@ -1,22 +1,20 @@
-#ifndef SCOPEGUARD_HPP
-#define SCOPEGUARD_HPP
-
+#ifndef IOFMTGUERD_HPP
+#define IOFMTGUARD_HPP
 #include <ios>
 
-namespace mihalchenko
+namespace hohlova
 {
   class iofmtguard
   {
   public:
-    explicit iofmtguard(std::basic_ios< char > &s);
+    explicit iofmtguard(std::basic_ios< char >& s);
     ~iofmtguard();
-
   private:
-    std::basic_ios< char > &s_;
+    std::basic_ios< char >& s_;
     char fill_;
     std::streamsize precision_;
     std::basic_ios< char >::fmtflags fmt_;
   };
-}
+};
 
 #endif

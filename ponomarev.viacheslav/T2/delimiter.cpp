@@ -1,15 +1,17 @@
-#include "delim.hpp"
+#include "delimiter.hpp"
+#include <iostream>
 
-std::istream& psarev::operator>>(std::istream& in, DelimiterIO&& dest)
+std::istream &ponomarev::operator>>(std::istream &in, DelimiterIO &&dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
   {
     return in;
   }
+
   char c = '0';
   in >> c;
-  if (in && (c != dest.exp))
+  if (tolower(c) != dest.exp)
   {
     in.setstate(std::ios::failbit);
   }

@@ -1,13 +1,13 @@
-#include "scopeGuard.hpp"
+#include "scopeguard.hpp"
 
-mihalchenko::iofmtguard::iofmtguard(std::basic_ios< char > &s):
+litsinger::iofmtguard::iofmtguard(std::basic_ios< char >& s):
   s_(s),
   fill_(s.fill()),
   precision_(s.precision()),
   fmt_(s.flags())
 {}
 
-mihalchenko::iofmtguard::~iofmtguard()
+litsinger::iofmtguard::~iofmtguard()
 {
   s_.fill(fill_);
   s_.precision(precision_);
