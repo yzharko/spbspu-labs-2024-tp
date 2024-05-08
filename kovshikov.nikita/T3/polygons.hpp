@@ -15,4 +15,6 @@ namespace kovshikov
   };
 }
 
+std::istream& kovshikov::operator>>(std::istream& is, Point& value);
+
 #endif

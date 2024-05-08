@@ -3,6 +3,7 @@
 #include <fstream>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 #include "polygons.hpp"
 
 // НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ ЦИКЛЫ
@@ -23,9 +24,17 @@ int main(int argc, char ** argv)
   std::vector< Polygon > allData;
 
   std::fstream input(argv[1]);
-  readFile(input, allData);
 
-  //1)readFile - чтение файла
+  using input_it = std::istream_iterator< Polygon >;  //блок ввода, нужно перегрузить оператор >> для struct Polygon
+  while(!input.eof())
+  {
+    std::copy(input_it{std::cin}, input_it{}, std::back_inserter(allData));
+    if(input.fail())
+    {
+      input.clear();
+      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 
   //контекст для каждой команды
   while(std::cin >> cmd)
