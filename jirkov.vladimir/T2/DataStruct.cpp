@@ -7,7 +7,7 @@ std::istream & jirkov::operator>>(std::istream &in, DataStruct &value)
   {
     return in;
   }
-  StreamGuard fmtguard(in);
+  StreamGuard StreamGuard(in);
   std::string key = "";
   DataStruct input;
   in >> Del{'('} >> Del{':'};
@@ -46,7 +46,7 @@ std::ostream & jirkov::operator<<(std::ostream & out, const DataStruct &value)
   {
     return out;
   }
-  StreamGuard fmtguard(out);
+  StreamGuard StreamGuard(out);
   out << "(:key1 " << '\'' << value.key1 << '\'' << ":key2 (:N " << value.key2 << ":):key3 " << "\"" << value.key3 << "\":)";
   return out;
 }
