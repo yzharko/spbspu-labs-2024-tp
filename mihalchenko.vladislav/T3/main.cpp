@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     cmds["MIN"] = std::bind(printMin, _1, _2, _3);
     cmds["COUNT"] = std::bind(printCount, _1, _2, _3);
     cmds["PERMS"] = std::bind(printPerms, _1, _2, _3);
-    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _2, _3);
+    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _3);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";

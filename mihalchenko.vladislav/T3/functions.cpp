@@ -275,7 +275,7 @@ void mihalchenko::printCount(const std::vector<Polygon> &polygons,
   }
 }
 
-size_t mihalchenko::getLength(const Polygon &polygon)
+long long mihalchenko::getLength(const Polygon &polygon)
 {
   return polygon.points.size();
 }
@@ -387,8 +387,7 @@ bool mihalchenko::isRightPolygon(const Polygon &polygon)
              cosOfVectors.end(), std::bind(getVector, _1), _2), _1, cosOfVectors.end()));*/
 }
 
-void mihalchenko::countRightShapes(const std::vector<Polygon> &polygons,
-                                   std::istream &is, std::ostream &out)
+void mihalchenko::countRightShapes(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   out << std::count_if(polygons.cbegin(), polygons.cend(), isRightPolygon) << '\n';
 }

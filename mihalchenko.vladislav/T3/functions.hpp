@@ -29,7 +29,7 @@ namespace mihalchenko
   std::ostream &countOdd(const std::vector<Polygon> &polygons, std::ostream &out);
   std::ostream &countVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out);
   void printCount(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
-  size_t getLength(const Polygon & polygon);
+  long long getLength(const Polygon & polygon);
   bool isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsPolygon);
   bool isPointCorrect(const Point &lhsPoint, const Point &rhsPoint);
   bool arePointsCorrect(const Polygon &polygon, const Point &point);
@@ -38,7 +38,7 @@ namespace mihalchenko
   double getCos(const Point &lhs, const Point &rhs);
   bool isZeroCos(const double &cos);
   bool isRightPolygon(const Polygon &polygon);
-  void countRightShapes(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out);
+  void countRightShapes(const std::vector<Polygon> &polygons, std::ostream &out);
 }
 
 #endif
