@@ -98,13 +98,9 @@ namespace nikiforov
     in >> option;
     out << std::fixed << std::setprecision(1);
 
-    if (option == "AREA" && !shapes.empty())
+    if ((option == "AREA" || option == "VERTEXES") && !shapes.empty())
     {
       out << getAreaResult(shapes, "max") << "\n";
-    }
-    else if (option == "VERTEXES" && !shapes.empty())
-    {
-      out << getVertexesResult(shapes, "max") << "\n";
     }
     else
     {
@@ -123,7 +119,7 @@ namespace nikiforov
     in >> option;
     out << std::fixed << std::setprecision(1);
 
-    if (option == "AREA" && !shapes.empty())
+    if ((option == "AREA" || option == "VERTEXES") && !shapes.empty())
     {
       out << getAreaResult(shapes, "min") << "\n";
     }
@@ -198,5 +194,127 @@ namespace nikiforov
     {
       return *std::min_element(std::begin(vectOfAllVertexes), std::end(vectOfAllVertexes));
     }
+  }
+
+  void takingIntersections(const std::vector< Polygon >& shapes, std::istream& input, std::ostream& out)
+  {
+    std::vector< std::pair< Point, Point > > vectorsIntersectios;
+
+    nikiforov::Polygon shapeIntersectios;
+    input >> shapeIntersectios;
+
+    std::transform(++shapeIntersectios.points.cbegin(), shapeIntersectios.points.cend(),
+      shapeIntersectios.points.cbegin(),
+      std::back_inserter(vectorsIntersectios),
+      std::bind(getPointsInter, _2, _1)
+    );
+
+    size_t sizePol = shapeIntersectios.points.size();
+    vectorsIntersectios.push_back(getPointsInter(shapeIntersectios.points.at(0), shapeIntersectios.points.at(sizePol - 1)));
+
+    std::vector< size_t > resultsIntersectios;
+    std::transform(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(resultsIntersectios),
+      std::bind(intersectingLines, vectorsIntersectios, _1)
+    );
+
+    out << std::count_if(std::begin(resultsIntersectios), std::end(resultsIntersectios),
+      [](size_t countIntersections)
+      {
+        return countIntersections > 0;
+      });
+    out << "\n";
+  }
+
+  std::pair< Point, Point > getPointsInter(const Point& first, const Point& second)
+  {
+    return std::make_pair(first, second);
+  }
+
+  size_t intersectingLines(const std::vector< std::pair< Point, Point > >& vectorsIntersectios, const Polygon& shapes)
+  {
+    return std::count_if(std::begin(vectorsIntersectios), std::end(vectorsIntersectios),
+      std::bind(intersectingShapes, _1, shapes)
+    );
+  }
+
+  bool intersectingShapes(const std::pair < Point, Point >& vectIntersectios, const Polygon& polygon)
+  {
+    std::vector< std::pair< Point, Point > > vectorsPolygon;
+
+    size_t sizePol = polygon.points.size();
+
+    std::transform(++polygon.points.cbegin(), polygon.points.cend(),
+      polygon.points.cbegin(),
+      std::back_inserter(vectorsPolygon),
+      std::bind(getPointsInter, _2, _1)
+    );
+
+    vectorsPolygon.push_back(getPointsInter(polygon.points.at(0), polygon.points.at(sizePol - 1)));
+
+    return std::count_if(std::begin(vectorsPolygon), std::end(vectorsPolygon),
+      std::bind(intersecting, _1, vectIntersectios)
+    );
+  }
+
+  bool intersecting(const std::pair < Point, Point >& vectPolygon, const std::pair < Point, Point >& vectIntersectios)
+  {
+    return doIntersect(vectPolygon.first, vectPolygon.second, vectIntersectios.first, vectIntersectios.second);
+  }
+
+  bool doIntersect(Point begin1, Point end1, Point begin2, Point end2)
+  {
+    int o1 = orientation(begin1, end1, begin2);
+    int o2 = orientation(begin1, end1, end2);
+    int o3 = orientation(begin2, end2, begin1);
+    int o4 = orientation(begin2, end2, end1);
+
+    if (o1 != o2 && o3 != o4)
+    {
+      return true;
+    }
+
+    if (o1 == 0 && onSegment(begin1, begin2, end1))
+    {
+      return true;
+    }
+
+    if (o2 == 0 && onSegment(begin1, end2, end1))
+    {
+      return true;
+    }
+
+    if (o3 == 0 && onSegment(begin2, begin1, end2))
+    {
+      return true;
+    }
+
+    if (o4 == 0 && onSegment(begin2, end1, end2))
+    {
+      return true;
+    }
+    return false;
+  }
+
+  int orientation(Point p, Point q, Point r)
+  {
+    int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+
+    if (val == 0)
+    {
+      return 0;
+    }
+    return (val > 0) ? 1 : 2;
+  }
+
+  bool onSegment(Point p, Point q, Point r)
+  {
+    if (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
+      q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y))
+    {
+      return true;
+    }
+    return false;
   }
 }

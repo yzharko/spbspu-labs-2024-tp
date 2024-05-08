@@ -10,9 +10,8 @@ namespace nikiforov
     {
       return in;
     }
-    std::vector< Polygon > figure;
-    Polygon result;
-    Point input;
+    Polygon resPolygon;
+    Point inputCoord;
     {
       using sep = DelimiterIO;
       size_t countPoints = 0;
@@ -24,23 +23,23 @@ namespace nikiforov
 
       for (size_t i = 0; i < countPoints; i++)
       {
-        in >> sep{ '(' } >> input.x;
-        in >> sep{ ';' } >> input.y;
+        in >> sep{ '(' } >> inputCoord.x;
+        in >> sep{ ';' } >> inputCoord.y;
         in >> sep{ ')' };
         if (in)
         {
-          result.points.emplace_back(input);
+          resPolygon.points.emplace_back(inputCoord);
         }
       }
 
-      if (countPoints != result.points.size() || result.points.size() <= 2)
+      if (countPoints != resPolygon.points.size() || resPolygon.points.size() <= 2)
       {
         in.setstate(std::ios::failbit);
       }
     }
     if (in)
     {
-      dest = result;
+      dest = resPolygon;
     }
     return in;
   }

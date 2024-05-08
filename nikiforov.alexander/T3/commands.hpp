@@ -23,6 +23,15 @@ namespace nikiforov
 
   double getAreaResult(const std::vector< Polygon >& shapes, std::string mode);
   size_t getVertexesResult(const std::vector< Polygon >& shapes, std::string mode);
+
+  void takingIntersections(const std::vector< Polygon >& shapes, std::istream& input, std::ostream& out);
+  std::pair< Point, Point > getPointsInter(const Point& first, const Point& second);
+  size_t intersectingLines(const std::vector< std::pair< Point, Point > >& vectorsIntersectios, const Polygon& shapes);
+  bool intersectingShapes(const std::pair < Point, Point >& vectIntersectios, const Polygon& polygon);
+  bool intersecting(const std::pair < Point, Point >& vectPolygon, const std::pair < Point, Point >& vectIntersectios);
+  bool doIntersect(Point p1, Point q1, Point p2, Point q2);
+  int orientation(Point p, Point q, Point r);
+  bool onSegment(Point p, Point q, Point r);
 }
 
 #endif
