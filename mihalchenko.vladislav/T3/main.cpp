@@ -3,9 +3,7 @@
 #include <limits>
 #include <map>
 #include <string>
-// #include <vector>
 #include "functions.hpp"
-// #include "mapOfCommands.hpp"
 #include "figures.hpp"
 
 int main(int argc, char *argv[])
@@ -23,7 +21,6 @@ int main(int argc, char *argv[])
   }
   using namespace mihalchenko;
   std::vector<Polygon> polygons;
-  // using del = DelimiterIO;
   while (!inputFile.eof())
   {
     std::copy(std::istream_iterator<Polygon>(inputFile),

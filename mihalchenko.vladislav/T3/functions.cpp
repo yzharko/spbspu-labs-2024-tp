@@ -1,16 +1,10 @@
 #include "functions.hpp"
-// #include <iostream>
 #include <iomanip>
 #include <cmath>
-// #include <stdexcept>
 #include <numeric>
-// #include <algorithm>
-// #include <functional>
-// #include "mapOfCommands.hpp"
 #include <scopeGuard.hpp>
 #include <delimiters.hpp>
 
-// using namespace mihalchenko;
 using namespace std::placeholders;
 
 size_t mihalchenko::getSize(const Polygon &polygon)
@@ -152,9 +146,7 @@ std::ostream &mihalchenko::getMaxArea(const std::vector<Polygon> &polygons, std:
 
 std::ostream &mihalchenko::getMaxVertexes(const std::vector<Polygon> &polygons, std::ostream &out)
 {
-  // std::vector<int> numsOfVertexes(polygons.size());
   std::vector<int> numsOfVertexes(polygons.size());
-  // numsOfVertexes.resize(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::max_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
   out << maxVertexes << '\n';
@@ -193,9 +185,7 @@ std::ostream &mihalchenko::getMinArea(const std::vector<Polygon> &polygons, std:
 
 std::ostream &mihalchenko::getMinVertexes(const std::vector<Polygon> &polygons, std::ostream &out)
 {
-  // std::vector<int> numsOfVertexes(polygons.size());
   std::vector<int> numsOfVertexes(polygons.size());
-  // numsOfVertexes.resize(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::min_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
   out << maxVertexes << '\n';
@@ -282,7 +272,7 @@ long long mihalchenko::getLength(const Polygon &polygon)
 
 bool mihalchenko::isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsPolygon)
 {
-  if (lhsPolygon.points.size() == std::count_if(rhsPolygon.points.begin(),
+  if (getLength(lhsPolygon) == std::count_if(rhsPolygon.points.begin(),
                                                 rhsPolygon.points.end(),
                                                 std::bind(arePointsCorrect,
                                                           lhsPolygon, _1)))

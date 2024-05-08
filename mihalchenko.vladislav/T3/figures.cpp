@@ -4,9 +4,6 @@
 #include <delimiters.hpp>
 #include <dataStruct.hpp>
 
-// #include <iterator>
-// #include <iostream>
-
 std::istream &mihalchenko::operator>>(std::istream &is, DelimiterIO &&exp)
 {
   std::istream::sentry guard(is);
@@ -91,5 +88,5 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
   std::copy_n(rhs.points.begin(),
               counterOfPoints - 1,
               std::ostream_iterator<Point>(out << ' ', " "));
-  return out; // << rhs.points.back();
+  return out;
 }
