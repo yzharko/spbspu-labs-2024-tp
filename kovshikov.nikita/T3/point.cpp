@@ -10,9 +10,7 @@ std::istream& kovshikov::operator>>(std::istream& is, Point& value)
   }
   iofmtguard fmtguard(is);
   Point point;
-  is >> Del{'('};
-  is >> point.x >> Del{';'};
-  is >> point.y >> Del{')'};
+  is >> Del{'('} >> point.x >> Del{';'} >> point.y >> Del{')'};
   if(is)
   {
     value = point;
