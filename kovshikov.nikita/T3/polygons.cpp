@@ -10,14 +10,22 @@ std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
     return is;
   }
   iofmtguard fmtguard(is);
-  int count = 0;
+  size_t count = 0;
   Point point;
   Polygon temp;
   is >> count;
-  for(int i = 0; i < count; i++)
+  if(!is || count < 3)
+  {
+    is.setstate(std::ios::failbit);
+  }
+  for(size_t i = 0; i < count; i++)
   {
     is >> point;
     temp.points.push_back(point);
+  }
+  if(count != temp.points.size())
+  {
+    is.setstate(std::ios::failbit);
   }
   if(is)
   {

@@ -23,7 +23,7 @@ int main()    //int argc, char ** argv)
 {
   using namespace kovshikov;
   std::vector< Polygon > allData;
-  using input_it = std::istream_iterator< Polygon >;  //блок ввода, нужно перегрузить оператор >> для struct Polygon
+  using input_it = std::istream_iterator< Polygon >;
   while(!std::cin.eof())
   {
     std::copy(input_it{std::cin}, input_it{}, std::back_inserter(allData));
