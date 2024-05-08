@@ -1,20 +1,15 @@
 #ifndef POLYGON_HPP
 #define POLYGON_HPP
 #include <vector>
+#include "point.hpp"
 
 namespace kovshikov
 {
-  struct Point
-  {
-    int x, y;
-  };
-
   struct Polygon
   {
     std::vector< Point > points;
   };
+ //std::istream& operator>>(std::istream& is, Polygon& value);
 }
-
-std::istream& kovshikov::operator>>(std::istream& is, Point& value);
 
 #endif
