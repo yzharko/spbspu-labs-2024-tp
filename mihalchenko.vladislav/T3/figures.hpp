@@ -11,6 +11,7 @@
 // #include <algorithm>
 
 // #include <functional>
+
 #include <numeric>
 
 namespace mihalchenko

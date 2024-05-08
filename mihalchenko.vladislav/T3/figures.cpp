@@ -1,7 +1,8 @@
 #include "figures.hpp"
-#include "scopeGuard.hpp"
-#include "delimiters.hpp"
-#include "dataStruct.hpp"
+
+#include <scopeGuard.hpp>
+#include <delimiters.hpp>
+#include <dataStruct.hpp>
 
 // #include <iterator>
 // #include <iostream>

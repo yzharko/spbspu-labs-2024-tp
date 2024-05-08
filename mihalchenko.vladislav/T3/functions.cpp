@@ -7,8 +7,9 @@
 // #include <algorithm>
 // #include <functional>
 // #include "mapOfCommands.hpp"
-#include "scopeGuard.hpp"
-// #include "delimiters.hpp"
+#include <scopeGuard.hpp>
+#include <delimiters.hpp>
+
 // using namespace mihalchenko;
 using namespace std::placeholders;
 
@@ -87,7 +88,7 @@ void mihalchenko::getAreaVertexes(const std::vector<Polygon> &polygons,
 std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygons,
                                          bool isMeanPredicate, std::ostream &out)
 {
-  iofmtguard streamGuard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   if (isMeanPredicate == false)
   {
@@ -143,7 +144,7 @@ std::ostream &mihalchenko::getMaxArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::max_element(areas.cbegin(), areas.cend());
-  iofmtguard streamGuard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -184,7 +185,7 @@ std::ostream &mihalchenko::getMinArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::min_element(areas.cbegin(), areas.cend());
-  iofmtguard streamGuard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -225,6 +226,7 @@ std::ostream &mihalchenko::countOdd(const std::vector<Polygon> &polygons, std::o
                        polygons.cend(),
                        std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2))
       << '\n';
+  return out;
 }
 
 std::ostream &mihalchenko::countEven(const std::vector<Polygon> &polygons, std::ostream &out)
@@ -235,6 +237,7 @@ std::ostream &mihalchenko::countEven(const std::vector<Polygon> &polygons, std::
                                                      std::bind(getSize, _1), 2),
                                            _1)))
       << '\n';
+  return out;
 }
 
 std::ostream &mihalchenko::countVertexes(const std::vector<Polygon> &polygons,
@@ -246,6 +249,7 @@ std::ostream &mihalchenko::countVertexes(const std::vector<Polygon> &polygons,
                                            std::bind(getSize, _1), _2),
                                  _1, num))
       << '\n';
+  return out;
 }
 
 void mihalchenko::printCount(const std::vector<Polygon> &polygons,

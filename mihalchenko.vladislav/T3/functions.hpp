@@ -1,10 +1,10 @@
 #ifndef FUNCTIONS_HPP
 #define FUNCTIONS_HPP
 
-// #include <vector>
 #include <algorithm>
 #include <functional>
 #include "figures.hpp"
+#include <scopeGuard.hpp>
 
 namespace mihalchenko
 {
