@@ -1,3 +1,5 @@
+#ifndef IOFMTGUARD_HPP
+#define IOFMTGUARD_HPP
 #include <ios>
 
 namespace zheleznyakov
@@ -14,3 +16,4 @@ namespace zheleznyakov
     std::basic_ios< char >::fmtflags fmt_;
   };
 };
+#endif
