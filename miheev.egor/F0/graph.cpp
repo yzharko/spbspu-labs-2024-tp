@@ -266,3 +266,25 @@ void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int par
   nodesParrents.erase(node);
   nodesParrents.insert({node, parrentNode});
 }
+
+std::istream& operator>>(std::istream& in, miheev::Graph& graph)
+{
+  // ребро выглядит так: a-b:w
+  using del = miheev::DelimiterIO;
+  int lnode = -1, rnode = -1;
+  size_t weight;
+  while(!in.eof())
+  {
+    in >> lnode >> del{'-'} >> lnode >> del{':'} >> weight;
+    if (in.fail())
+    {
+      std::cerr << "Warning: failed to read one of the nodes in file";
+      in.clear();
+      in.ignore(std::numeric_limits< std::streamsize >::max(), ' ');
+      continue;
+    }
+    graph.addNode(lnode);
+    graph.addNode(rnode);
+    graph.addEdge(lnode, rnode, weight);
+  }
+}

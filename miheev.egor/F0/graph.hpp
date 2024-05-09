@@ -31,15 +31,14 @@ namespace miheev
     std::ostream& printNodes(std::ostream&);
     std::ostream& printAllEdges(std::ostream&);
 
-
+    std::string name;
+    std::string filename;
   private:
-    std::string name_;
-    std::string filename_;
     std::map< int, Node > nodes_;
 
-    friend std::istream& operator>>(std::istream&, const Graph&);
     struct Printer;
     struct Dextra;
+    friend std::istream& operator>>(std::istream&, const Graph&);
   };
 
   struct Graph::Path
@@ -93,8 +92,7 @@ namespace miheev
     std::unordered_set< Edge, Edge::HashFunction > edges;
     std::map< int, Edge > backLinks;
   };
-  std::istream& operator>>(std::istream&, const Graph&);
-
+  std::istream& operator>>(std::istream&, Graph&);
 }
 
 #endif
