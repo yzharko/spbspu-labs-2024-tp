@@ -18,7 +18,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   {
     using namespace std::placeholders;
     area["EVEN"] = std::bind(kovshikov::getAreaEven, _1, _2);
-   // area["ODD"] = std::bind(kovshikov::getOdd, allData, _1);
+    area["ODD"] = std::bind(kovshikov::getAreaOdd, _1, _2);
    // area["MEAN"] = std::bind(kovshikov::getMean, allData, _1);
   }
   out << "getArea" << "\n";
@@ -92,20 +92,30 @@ bool kovshikov::isEven(const Polygon& polygon)
   return polygon.points.size() % 2 == 0;
 }
 
+bool kovshikov::isOdd(const Polygon& polygon)
+{
+  return !isEven(polygon);
+}
+
 double kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > even;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), isEven);
   double area = std::accumulate(even.begin(), even.end(), 0, resultArea);
+  out << "even area " << area << "\n"; //
   return area;
 }
 
-/*void kovshikov::getOdd(std::ostream& out)
+double kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
 {
-  out << "getOdd" << "\n";
+  std::vector< Polygon > odd;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), isOdd);
+  double area = std::accumulate(odd.begin(), odd.end(), 0, resultArea);
+  out << "odd area " << area << "\n"; //
+  return area;
 }
 
-
+/*
 void kovshikov::getMean(std::ostream& out)
 {
   out << "getMean" << "\n";
