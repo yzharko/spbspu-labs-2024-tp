@@ -81,10 +81,23 @@ double kovshikov::countArea(const Polygon polygon) // для одной фигу
   return std::abs(area / 2.0);
 }
 
-void kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+double kovshikov::resultArea(double summa, const Polygon polygon) //для накапливания суммы
 {
-  double area = countArea(allData.front());
-  out << area << "\n";
+  summa += countArea(polygon);
+  return summa;
+}
+
+bool kovshikov::isEven(const Polygon& polygon)
+{
+  return polygon.points.size() % 2 == 0;
+}
+
+double kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > even;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), isEven);
+  double area = std::accumulate(even.begin(), even.end(), 0, resultArea);
+  return area;
 }
 
 /*void kovshikov::getOdd(std::ostream& out)
