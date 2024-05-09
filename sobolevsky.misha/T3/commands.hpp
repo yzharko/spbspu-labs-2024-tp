@@ -29,6 +29,8 @@ namespace sobolevsky
   bool isSamePolyg(const Polygon & polyg1, const Polygon & polyg2);
   bool isEqual(const Polygon & polyg1, const Polygon & polyg2);
   void error(std::ostream & out, const std::string & text);
+  void areaOutput(const std::vector< Polygon > & vec, std::ostream & out, int mode1, bool mode2);
+  void countOutput(const std::vector< Polygon > & vec, std::ostream & out, int mode1, bool mode2);
 }
 
 #endif

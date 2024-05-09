@@ -7,7 +7,10 @@
 
 double sobolevsky::areaIf(double result, const Polygon & polygon, size_t mode, bool inpMode)
 {
-  if ((inpMode && polygon.points.size() == mode) || (mode == 2 && !inpMode) || (mode == (polygon.points.size() % 2) && !inpMode))
+  bool mode1 = (inpMode && polygon.points.size() == mode);
+  bool mode2 = (mode == 2 && !inpMode);
+  bool mode3 = (mode == (polygon.points.size() % 2) && !inpMode);
+  if (mode1 || mode2 || mode3)
   {
     result += getArea(polygon);
   }
@@ -26,8 +29,10 @@ bool sobolevsky::getMaxMinVertex(const Polygon & polygon1, const Polygon & polyg
 
 bool sobolevsky::countIf(const Polygon & polygon, size_t mode, bool inpMode)
 {
-  if ((inpMode && polygon.points.size() == mode) || (!inpMode && mode == (polygon.points.size()) % 2)
-  || (!inpMode && mode == (polygon.points.size()) % 2))
+  bool mode1 = (inpMode && polygon.points.size() == mode);
+  bool mode2 = (!inpMode && mode == (polygon.points.size()) % 2);
+  bool mode3 = (!inpMode && mode == (polygon.points.size()) % 2);
+  if (mode1 || mode2 || mode3)
   {
     return true;
   }
@@ -63,10 +68,11 @@ bool sobolevsky::intersectVectors(Point a, Point b, const Polygon & polygon, siz
 {
   Point c = polygon.points[i];
   Point d = polygon.points[(i + 1) % polygon.points.size()];
-  return (intersect_1(a.x, b.x, c.x, d.x) && intersect_1(a.y, b.y, c.y, d.y)
-  && areaTriangl(a,b,c) * areaTriangl(a,b,d) <= 0 && areaTriangl(c,d,a) * areaTriangl(c,d,b) <= 0)
-  || intersectVectorPointOnLine(a, b, c) || intersectVectorPointOnLine(a, b, d)
+  bool intersect_1Checks = intersect_1(a.x, b.x, c.x, d.x) && intersect_1(a.y, b.y, c.y, d.y);
+  bool areaTrianglChecks = areaTriangl(a,b,c) * areaTriangl(a,b,d) <= 0 && areaTriangl(c,d,a) * areaTriangl(c,d,b) <= 0;
+  bool pointOnLineChecks = intersectVectorPointOnLine(a, b, c) || intersectVectorPointOnLine(a, b, d)
   || intersectVectorPointOnLine(c, d, a) || intersectVectorPointOnLine(c, d, b);
+  return (intersect_1Checks && areaTrianglChecks) || pointOnLineChecks;
 }
 
 bool sobolevsky::intersectPolygAndVect(const Polygon & polygon1, const Polygon & polygon2, size_t i)
@@ -130,21 +136,31 @@ void sobolevsky::error(std::ostream & out, const std::string & text)
   out << text;
 }
 
+void sobolevsky::areaOutput(const std::vector< Polygon > & vec, std::ostream & out, int mode1, bool mode2)
+{
+  using namespace std::placeholders;
+  std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, mode1, mode2);
+  if (!mode2 && mode1 == 2)
+  {
+    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) / vec.size() << "\n";
+  }
+  else
+  {
+    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
+  }
+}
+
 void sobolevsky::area(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
   if (arg == "EVEN")
   {
-    using namespace std::placeholders;
-    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 0, false);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
+    areaOutput(vec, out, 0, false);
   }
   else if (arg == "ODD")
   {
-    using namespace std::placeholders;
-    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 1, false);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
+    areaOutput(vec, out, 1, false);
   }
   else if (arg == "MEAN")
   {
@@ -152,9 +168,7 @@ void sobolevsky::area(const std::vector< Polygon > & vec, std::istream & in, std
     {
       throw std::exception();
     }
-    using namespace std::placeholders;
-    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, 2, false);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) / vec.size() << "\n";
+    areaOutput(vec, out, 2, false);
   }
   else
   {
@@ -162,9 +176,7 @@ void sobolevsky::area(const std::vector< Polygon > & vec, std::istream & in, std
     {
       throw std::exception();
     }
-    using namespace std::placeholders;
-    std::function< double(double, const Polygon &) > bindareaIf = std::bind(areaIf, _1, _2, stoll(arg), true);
-    out << std::accumulate(vec.cbegin(), vec.cend(), 0.0, bindareaIf) << "\n";
+    areaOutput(vec, out, stoll(arg), true);
   }
 }
 
@@ -204,21 +216,24 @@ void sobolevsky::getMin(const std::vector< Polygon > & vec, std::istream & in, s
   }
 }
 
+void sobolevsky::countOutput(const std::vector< Polygon > & vec, std::ostream & out, int mode1, bool mode2)
+{
+  using namespace std::placeholders;
+  std::function< bool(const Polygon &) > bindVertEven = std::bind(countIf, _1, mode1, mode2);
+  out << std::count_if(vec.cbegin(), vec.cend(), bindVertEven) << "\n";
+}
+
 void sobolevsky::count(const std::vector< Polygon > & vec, std::istream & in, std::ostream & out)
 {
   std::string arg;
   in >> arg;
   if (arg == "EVEN")
   {
-    using namespace std::placeholders;
-    std::function< bool(const Polygon &) > bindVertEven = std::bind(countIf, _1, 0, false);
-    out << std::count_if(vec.cbegin(), vec.cend(), bindVertEven) << "\n";
+    countOutput(vec, out, 0, false);
   }
   else if (arg == "ODD")
   {
-    using namespace std::placeholders;
-    std::function< bool(const Polygon &) > bindVertOdd = std::bind(countIf, _1, 1, false);
-    out << std::count_if(vec.cbegin(), vec.cend(), bindVertOdd) << "\n";
+    countOutput(vec, out, 1, false);
   }
   else
   {
@@ -226,9 +241,7 @@ void sobolevsky::count(const std::vector< Polygon > & vec, std::istream & in, st
     {
       throw std::exception();
     }
-    using namespace std::placeholders;
-    std::function< bool(const Polygon &) > bindVertNum = std::bind(countIf, _1, stoll(arg), true);
-    out << std::count_if(vec.cbegin(), vec.cend(), bindVertNum) << "\n";
+    countOutput(vec, out, stoll(arg), true);
   }
 }
 
