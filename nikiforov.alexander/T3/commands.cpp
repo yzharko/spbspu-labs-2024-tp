@@ -340,7 +340,7 @@ namespace nikiforov
     {
       throw std::out_of_range("");
     }
-    
+
   }
 
   bool countSame(const Polygon& polygonSame, const Polygon& polygonShape)
@@ -362,7 +362,7 @@ namespace nikiforov
       return false;
     }
   }
-  
+
   int pointsSame(const Point& first, const Point& second)
   {
     return (first.x - second.x) + (first.y - second.y);
