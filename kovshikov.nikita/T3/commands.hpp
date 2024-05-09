@@ -9,6 +9,7 @@ namespace kovshikov
   void getEven(std::ostream& out);
   void getOdd(std::ostream& out);
   void getMean(std::ostream& out);
+  void getVertex(std::ostream& out);
  }
 
 #endif

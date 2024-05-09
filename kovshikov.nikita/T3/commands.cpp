@@ -33,9 +33,26 @@ void kovshikov::getArea(std::istream& is, std::ostream& out)
   }
   catch(const std::out_of_range& error)
   {
-    std::cerr << "INVALID COMMAND" << "\n";
-    is.clear();
-    is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    size_t size = command.length();
+    bool isDigit = true;
+    for(size_t i = 0; i < size; i++)
+    {
+      if(!std::isdigit(command[i]))
+      {
+        isDigit = false;
+      }
+    }
+    if(isDigit == true)
+    {
+      std::cout << std::stoll(command);
+      getVertex(out);
+    }
+    else
+    {
+      std::cerr << "INVALID COMMAND" << "\n";
+      is.clear();
+      is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
   }
 }
 
@@ -55,4 +72,9 @@ void kovshikov::getOdd(std::ostream& out)
 void kovshikov::getMean(std::ostream& out)
 {
   out << "getMean" << "\n";
+}
+
+void kovshikov::getVertex(std::ostream& out)
+{
+  out << "getVertex" << "\n";
 }
