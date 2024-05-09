@@ -12,13 +12,12 @@ namespace kovshikov
   bool isOdd(const Polygon& polygon);
   bool isThisVertex(unsigned long long num, Polygon polygon);
 
-  double getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
-  double getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);
-  double getAreaMean(const std::vector< Polygon >& allData, std::ostream& out);
-  double getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
+  void getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
+  void getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);
+  void getAreaMean(const std::vector< Polygon >& allData, std::ostream& out);
+  void getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
 
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
-  void getVertex(std::ostream& out);
 }
 
 #endif

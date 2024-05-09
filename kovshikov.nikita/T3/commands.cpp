@@ -27,7 +27,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   {
     area.at(command)(allData, out);
   }
-  catch(const std::out_of_range& error)
+  catch(const std::out_of_range& error) // не учитывается формат просто AREA
   {
     size_t size = command.length();
     bool isDigit = true;
@@ -41,13 +41,18 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
     if(isDigit == true)
     {
       unsigned long long num = std::stoll(command);
-      getAreaVertex(num, allData, out);
+      try
+      {
+        getAreaVertex(num, allData, out);
+      }
+      catch(const std::out_of_range& error)
+      {
+        throw;
+      }
     }
     else
     {
-      std::cerr << "INVALID COMMAND" << "\n";
-      is.clear();
-      is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      throw;
     }
   }
 }
@@ -96,30 +101,27 @@ bool kovshikov::isOdd(const Polygon& polygon)
   return !isEven(polygon);
 }
 
-double kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+void kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > even;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), isEven);
   double area = std::accumulate(even.begin(), even.end(), 0, resultArea);
-  out << "even area " << area << "\n"; //
-  return area;
+  out << area << "\n";
 }
 
-double kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
+void kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > odd;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), isOdd);
   double area = std::accumulate(odd.begin(), odd.end(), 0, resultArea);
-  out << "odd area " << area << "\n"; //
-  return area;
+  out << area << "\n";
 }
 
-double kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
+void kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
   double area = std::accumulate(allData.begin(), allData.end(), 0, resultArea);
   double result = area / allData.size();
-  out << "mean area " << result << "\n"; //
-  return result;
+  out << result << "\n";
 }
 
 bool kovshikov::isThisVertex(unsigned long long num, Polygon polygon)
@@ -127,11 +129,14 @@ bool kovshikov::isThisVertex(unsigned long long num, Polygon polygon)
   return polygon.points.size() == num;
 }
 
-double kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
+void kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
 {
   using namespace std::placeholders;
   std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+  if(detected == allData.end())
+  {
+    throw std::out_of_range("");
+  }
   double result = countArea(*detected);
-  out << "vertex " << num << "area " << result << "\n";
-  return result;
+  out << result << "\n";
 }
