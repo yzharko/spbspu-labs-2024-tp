@@ -4,7 +4,6 @@
 #include <unordered_set>
 #include <map>
 #include <forward_list>
-#include <vector>
 #include <ios>
 
 namespace miheev
@@ -22,20 +21,29 @@ namespace miheev
     void setName(const std::string& name);
 
     void addNode(int name);
-    void addEdge(int lnode, int rnode, size_t weight = 1);
+    void addEdge(int lnode, int rnode, size_t weight = 2);
     void rmNode(int name);
     void rmEdge(int lnode, int rnode);
 
     std::forward_list< const Node& > navigate(); // если существует возможность, не допускать такого копирования
 
     std::ostream& printNodes(std::ostream&);
-    std::ostream& printEdges(std::ostream&);
+    std::ostream& printAllEdges(std::ostream&);
 
   private:
     std::string name_;
     std::string filename_;
     std::map< int, Node > nodes_;
+
     friend std::istream& operator>>(std::istream&, const Graph&);
+    struct Printer;
+  };
+
+  struct Graph::Printer
+  {
+    std::ostream& printUniqueEdges(const Node&, std::ostream&);
+    std::unordered_set< int > visitedNodes;
+    bool somethingPrinted;
   };
 
   struct Graph::Edge
