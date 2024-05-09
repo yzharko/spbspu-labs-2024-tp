@@ -25,7 +25,7 @@ namespace miheev
     void rmNode(int name);
     void rmEdge(int lnode, int rnode);
 
-    std::forward_list< const Node& > navigate(); // если существует возможность, не допускать такого копирования
+    void navigate(); // как плейсхолдер для функции
 
     std::ostream& printNodes(std::ostream&);
     std::ostream& printAllEdges(std::ostream&);
@@ -37,6 +37,7 @@ namespace miheev
 
     friend std::istream& operator>>(std::istream&, const Graph&);
     struct Printer;
+    struct Dextra;
   };
 
   struct Graph::Printer
@@ -44,6 +45,24 @@ namespace miheev
     std::ostream& printUniqueEdges(const Node&, std::ostream&);
     std::unordered_set< int > visitedNodes;
     bool somethingPrinted;
+  };
+
+  struct Graph::Dextra
+  {
+    Dextra(const Graph&);
+
+    void operator()(int begin, int end);
+
+    void calcMinTimeToEach();
+    int getNodeWithMinimumTimeToIt();
+    std::forward_list< int > findShortestPath(int finish, int start);
+
+    void updateNodeState(int node, size_t timeToNode, int parrentNode = -1);
+
+    const Graph& graph;
+    std::unordered_set< int > unprocessedNodes;
+    std::map <int, int> nodesParrents; // first - node, second - it' pair
+    std::map< int, size_t > timeToNodes;
   };
 
   struct Graph::Edge

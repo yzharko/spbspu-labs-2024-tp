@@ -15,6 +15,8 @@ int main()
   g.addEdge(1, 4);
   g.addEdge(2, 4);
   g.addEdge(1, 3);
+  // g.addEdge(7, 8);
+  g.rmNode(2);
   g.printNodes(std::cout);
   g.printAllEdges(std::cout);
   return 0;

@@ -1,5 +1,9 @@
 #include "graph.hpp"
 #include <delimiters.hpp>
+#include <algorithm>
+#include <utility>
+#include <vector>
+#include <limits>
 #include <iterator>
 
 const std::string& miheev::Graph::getName() const noexcept
@@ -19,6 +23,18 @@ void miheev::Graph::addNode(int name)
     throw std::invalid_argument("Insertion error: the node you want to add already exists\n");
   }
   nodes_.insert({name, Node{name}});
+}
+
+void miheev::Graph::rmNode(int name)
+{
+  Node& node = nodes_.at(name);
+  auto iter(node.edges.begin());
+  for (auto iter(node.edges.begin()); iter != node.edges.end(); iter = node.edges.begin())
+  {
+    int neighbourName = iter->dest->name;
+    rmEdge(name, neighbourName);
+  }
+  nodes_.erase(name);
 }
 
 void miheev::Graph::addEdge(int lnode, int rnode, size_t weight)
@@ -134,4 +150,76 @@ size_t miheev::Graph::Edge::HashFunction::operator()(const Edge& rhs) const
 bool miheev::Graph::Edge::operator==(const Edge& rhs) const
 {
   return dest == rhs.dest && weight == rhs.weight;
+}
+
+miheev::Graph::Dextra::Dextra(const Graph& curGraph):
+  graph(curGraph)
+{
+  for (auto cIter(curGraph.nodes_.begin()); cIter != curGraph.nodes_.end(); cIter++)
+  {
+    const Node& node = cIter->second;
+    unprocessedNodes.insert(node.name);
+    timeToNodes.insert({node.name, std::numeric_limits< size_t >::max()});
+  }
+}
+
+void miheev::Graph::Dextra::operator()(int start, int finish)
+{
+  bool startDoesntExist = graph.nodes_.count(start) == 0;
+  bool finishDoesntExist = graph.nodes_.count(finish) == 0;
+  if (startDoesntExist)
+  {
+    throw std::invalid_argument("Navigation error: no node " + std::to_string(start) + "\n");
+  }
+  if (finishDoesntExist)
+  {
+    throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
+  }
+  updateNodeState(start, 0);
+}
+
+void miheev::Graph::Dextra::calcMinTimeToEach()
+{
+  while(!unprocessedNodes.empty())
+  {
+    std::vector< size_t > lenghts;
+  }
+}
+
+int miheev::Graph::Dextra::getNodeWithMinimumTimeToIt()
+{
+  size_t minTime = std::numeric_limits< size_t >::max();
+  int node = -1;
+  for (auto iter(timeToNodes.cbegin()); iter != timeToNodes.cend(); iter++)
+  {
+    if (iter->second < minTime)
+    {
+      node = iter->first;
+      minTime = iter->second;
+    }
+  }
+  return node;
+}
+
+void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int parrentNode)
+{
+  bool nodeIsProcessed = unprocessedNodes.count(node) > 0;
+  if (!nodeIsProcessed)
+  {
+    timeToNodes.insert({node, timeToNode});
+    if (parrentNode >= 0)
+    {
+      nodesParrents.insert({node, parrentNode});
+    }
+    unprocessedNodes.insert(node);
+  }
+
+  timeToNodes.erase(node);
+  timeToNodes.insert({node, timeToNode});
+
+  if (parrentNode >= 0)
+  {
+    nodesParrents.erase(node);
+    timeToNodes.insert({node, parrentNode});
+  }
 }
