@@ -19,9 +19,8 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
     using namespace std::placeholders;
     area["EVEN"] = std::bind(kovshikov::getAreaEven, _1, _2);
     area["ODD"] = std::bind(kovshikov::getAreaOdd, _1, _2);
-   // area["MEAN"] = std::bind(kovshikov::getMean, allData, _1);
+    area["MEAN"] = std::bind(kovshikov::getAreaMean, _1, _2);
   }
-  out << "getArea" << "\n";
   std::string command;
   is >> command;
   try
@@ -115,12 +114,14 @@ double kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream
   return area;
 }
 
-/*
-void kovshikov::getMean(std::ostream& out)
+double kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
-  out << "getMean" << "\n";
+  double area = std::accumulate(allData.begin(), allData.end(), 0, resultArea);
+  double result = area / allData.size();
+  out << "mean area " << result << "\n"; //
+  return result;
 }
-*/
+
 void kovshikov::getVertex(std::ostream& out)
 {
   out << "getVertex" << "\n";

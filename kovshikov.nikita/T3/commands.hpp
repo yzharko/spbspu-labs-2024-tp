@@ -13,9 +13,9 @@ namespace kovshikov
 
   double getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
   double getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);
+  double getAreaMean(const std::vector< Polygon >& allData, std::ostream& out);
 
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
- // void getMean(std::ostream& out);
   void getVertex(std::ostream& out);
 }
 
