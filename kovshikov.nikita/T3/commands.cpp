@@ -200,3 +200,58 @@ void kovshikov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostre
     out << maxVertexes << "\n";
   }
 }
+
+void kovshikov::getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > min;
+  {
+    using namespace std::placeholders;
+    min["AREA"] = std::bind(kovshikov::getMinArea, _1, _2);
+    min["VERTEXES"] = std::bind(kovshikov::getMinVertexes, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    min.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error) // не учитывается формат просто MIN
+  {
+    throw;
+  }
+}
+
+void kovshikov::getMinArea(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  double minArea = 0;
+  if(allData.empty())
+  {
+    out << minArea << "\n";
+  }
+  else
+  {
+    std::vector< double > allAreas;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+    std::sort(allAreas.begin(), allAreas.end());
+    minArea = *(allAreas.begin());
+    out << minArea << "\n";
+  }
+}
+
+void kovshikov::getMinVertexes(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long minVertexes = 0;
+  if(allData.empty())
+  {
+    out << minVertexes << "\n";
+  }
+  else
+  {
+    std::vector< unsigned long long > allVertexes;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertexes);
+    std::sort(allVertexes.begin(), allVertexes.end());
+    minVertexes = *(allVertexes.begin());
+    out << minVertexes << "\n";
+  }
+}
