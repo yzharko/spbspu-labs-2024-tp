@@ -43,6 +43,7 @@ int main(int argc, char* argv[])
     cmds["MIN"] = std::bind(nikiforov::takingMin, shapes, _1, _2);
     cmds["COUNT"] = std::bind(nikiforov::takingCount, shapes, _1, _2);
     cmds["INTERSECTIONS"] = std::bind(nikiforov::takingIntersections, shapes, _1, _2);
+    cmds["SAME"] = std::bind(nikiforov::takingSame, shapes, _1, _2);
   }
 
   std::function < void(std::ostream&) > outError = std::bind(nikiforov::takingError, _1, "<INVALID COMMAND>");
