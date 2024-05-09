@@ -31,7 +31,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   {
     size_t size = command.length();
     bool isDigit = true;
-    for(size_t i = 0; i < size; i++)
+    for(size_t i = 0; i < size; i++)  //переписать через библиотеку
     {
       if(!std::isdigit(command[i]))
       {
@@ -40,8 +40,8 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
     }
     if(isDigit == true)
     {
-      std::cout << std::stoll(command);
-      getVertex(out);
+      unsigned long long num = std::stoll(command);
+      getAreaVertex(num, allData, out);
     }
     else
     {
@@ -122,7 +122,16 @@ double kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostrea
   return result;
 }
 
-void kovshikov::getVertex(std::ostream& out)
+bool kovshikov::isThisVertex(unsigned long long num, Polygon polygon)
 {
-  out << "getVertex" << "\n";
+  return polygon.points.size() == num;
+}
+
+double kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
+{
+  using namespace std::placeholders;
+  std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+  double result = countArea(*detected);
+  out << "vertex " << num << "area " << result << "\n";
+  return result;
 }
