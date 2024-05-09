@@ -100,8 +100,9 @@ std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygon
   return out << '\n';
 }
 
-void mihalchenko::printArea(const std::vector<Polygon> &polygons, std::istream &is,
-                            std::ostream &out)
+void mihalchenko::printArea(const std::vector<Polygon> &polygons,
+                            std::ostream &out,
+                            std::istream &is)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -153,7 +154,7 @@ std::ostream &mihalchenko::getMaxVertexes(const std::vector<Polygon> &polygons, 
   return out;
 }
 
-void mihalchenko::printMax(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+void mihalchenko::printMax(const std::vector<Polygon> &polygons, std::ostream &out, std::istream &is)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -192,7 +193,7 @@ std::ostream &mihalchenko::getMinVertexes(const std::vector<Polygon> &polygons, 
   return out;
 }
 
-void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::ostream &out, std::istream &is)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -243,7 +244,7 @@ std::ostream &mihalchenko::countVertexes(const std::vector<Polygon> &polygons,
 }
 
 void mihalchenko::printCount(const std::vector<Polygon> &polygons,
-                             std::istream &is, std::ostream &out)
+                             std::ostream &out, std::istream &is)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -273,9 +274,9 @@ long long mihalchenko::getLength(const Polygon &polygon)
 bool mihalchenko::isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsPolygon)
 {
   if (getLength(lhsPolygon) == std::count_if(rhsPolygon.points.begin(),
-                                                rhsPolygon.points.end(),
-                                                std::bind(arePointsCorrect,
-                                                          lhsPolygon, _1)))
+                                             rhsPolygon.points.end(),
+                                             std::bind(arePointsCorrect,
+                                                       lhsPolygon, _1)))
   {
     return true;
   }
@@ -306,7 +307,7 @@ bool mihalchenko::arePointsCorrect(const Polygon &polygon, const Point &point)
 }
 
 void mihalchenko::printPerms(const std::vector<Polygon> &polygons,
-                             std::istream &is, std::ostream &out)
+                             std::ostream &out, std::istream &is)
 {
   Polygon copyPolygon;
   is >> copyPolygon;

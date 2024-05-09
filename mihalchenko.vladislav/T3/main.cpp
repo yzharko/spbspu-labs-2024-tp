@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     }
   }
   std::map<std::string, std::function<void(const std::vector<Polygon> &polygon,
-                                           std::istream &is, std::ostream &out)>>
+                                           std::ostream &out, std::istream &is)>>
       cmds;
   {
     using namespace std::placeholders;
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     cmds["MIN"] = std::bind(printMin, _1, _2, _3);
     cmds["COUNT"] = std::bind(printCount, _1, _2, _3);
     cmds["PERMS"] = std::bind(printPerms, _1, _2, _3);
-    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _3);
+    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _2);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
   {
     try
     {
-      cmds.at(command)(polygons, std::cin, std::cout);
+      cmds.at(command)(polygons, std::cout, std::cin);
     }
     catch (const std::exception &)
     {
