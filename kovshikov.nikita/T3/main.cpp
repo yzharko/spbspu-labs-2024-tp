@@ -37,12 +37,12 @@ int main(int argc, char ** argv)
   }
 
   //using const std::vector< Polygon > = polygonVec;
-  //std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
-  std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
+  //заглушка std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
   {
     using namespace std::placeholders;
-    //interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
-    interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2);
+    interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
+   //заглушка interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2);
   }
 
   std::string command;
@@ -50,8 +50,8 @@ int main(int argc, char ** argv)
   {
     try
     {
-     // interaction.at(command)(allData, std::cin, std::cout); //в зависимости от std::bind убрать allData
-      interaction.at(command)(std::cin, std::cout);
+      interaction.at(command)(allData, std::cin, std::cout); //в зависимости от std::bind убрать allData
+      //заглушка interaction.at(command)(std::cin, std::cout);
     }
     catch(const std::out_of_range& error)
     {
