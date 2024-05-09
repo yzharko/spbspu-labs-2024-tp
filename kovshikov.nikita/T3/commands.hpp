@@ -4,6 +4,7 @@
 
 namespace kovshikov
 {
+  int getCordMethod(const Point& currentPoint,const Point& prevPoint);
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
   double countArea(const Polygon polygon);
