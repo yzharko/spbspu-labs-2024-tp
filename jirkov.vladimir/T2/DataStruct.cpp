@@ -47,7 +47,10 @@ std::ostream & jirkov::operator<<(std::ostream & out, const DataStruct &value)
     return out;
   }
   StreamGuard StreamGuard(out);
-  out << "(:key1 " << '\'' << value.key1 << '\'' << ":key2 (:N " << value.key2 << ":):key3 " << "\"" << value.key3 << "\":)";
+  out << "(";
+  out << ":key1 "  << value.key1 << "ull";
+  out << ":key2 0" << std::oct << value.key2;
+  out << ":key3 " << "\"" << value.key3 << "\":)";
   return out;
 }
 
