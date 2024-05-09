@@ -38,11 +38,11 @@ int main(int argc, char ** argv)
 
   //using const std::vector< Polygon > = polygonVec;
   //std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
-  std::map< std::string, std::function < void(std::ostream&) > > interaction;
+  std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
   {
     using namespace std::placeholders;
     //interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
-    interaction["AREA"] = std::bind(kovshikov::getArea, _1);
+    interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2);
   }
 
   std::string command;
@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
     try
     {
      // interaction.at(command)(allData, std::cin, std::cout); //в зависимости от std::bind убрать allData
-      interaction.at(command)(std::cout);
+      interaction.at(command)(std::cin, std::cout);
     }
     catch(const std::out_of_range& error)
     {
@@ -60,36 +60,5 @@ int main(int argc, char ** argv)
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-
- /* using output_it = std::ostream_iterator< Polygon >;
-  std::copy(allData.cbegin(), allData.cend(), output_it{std::cout, "\n"});
-*/
-
   return 0;
 }
-
- /*
-
-
-
-  using input_it = std::istream_iterator< Polygon >;  //блок ввода, нужно перегрузить оператор >> для struct Polygon
-  while(!input.eof())
-  {
-    std::copy(input_it{input}, input_it{}, std::back_inserter(allData));
-    if(input.fail())
-    {
-      input.clear();
-      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-  }
-
-  //контекст для каждой команды
-  while(std::cin >> cmd)
-  {
-    if(cmd == "CMD1")
-    {
-      //доп. параметры для данной команды
-      //выполнение команды
-    }
-  }*/
-//}
