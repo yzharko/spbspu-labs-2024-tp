@@ -9,9 +9,11 @@
 #include <iostream>
 #include "polygons.hpp"
 #include "commands.hpp"
+#include <iomanip>
 
 void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
+  out << std::fixed << std::setprecision(1);
   std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > area;
   {
     using namespace std::placeholders;
