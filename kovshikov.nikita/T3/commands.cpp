@@ -140,3 +140,40 @@ void kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon
   double result = countArea(*detected);
   out << result << "\n";
 }
+
+void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > max;
+  {
+    using namespace std::placeholders;
+    max["AREA"] = std::bind(kovshikov::getMaxArea, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    max.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error) // не учитывается формат просто MAX
+  {
+    throw;
+  }
+}
+
+void kovshikov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  double maxArea = 0;
+  if(allData.empty())
+  {
+    out << maxArea << "\n";
+  }
+  else
+  {
+    std::vector< double > allAreas;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+    std::sort(allAreas.begin(), allAreas.end());
+    maxArea = *(allAreas.end() - 1);
+    out << maxArea << "\n";
+  }
+}

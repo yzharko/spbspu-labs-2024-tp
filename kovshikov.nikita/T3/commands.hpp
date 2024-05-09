@@ -17,7 +17,10 @@ namespace kovshikov
   void getAreaMean(const std::vector< Polygon >& allData, std::ostream& out);
   void getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
 
+  void getMaxArea(const std::vector< Polygon >& allData, std::ostream& out);
+
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+  void getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
 }
 
 #endif

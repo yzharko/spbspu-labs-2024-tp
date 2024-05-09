@@ -9,11 +9,6 @@
 #include "polygons.hpp"
 #include "commands.hpp"
 
-// НЕЛЬЗЯ ИСПОЛЬЗОВАТЬ ЦИКЛЫ
-// std::bind - фукнция которая создает функциональные
-// объекты из других функциональных объектов
-// namespace std::placeholders - номера параметров в функциональном объекте
-
 int main(int argc, char ** argv)
 {
   if(argc != 2)
@@ -36,13 +31,11 @@ int main(int argc, char ** argv)
     }
   }
 
-  //using const std::vector< Polygon > = polygonVec;
   std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
-  //заглушка std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
   {
     using namespace std::placeholders;
     interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
-   //заглушка interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2);
+    interaction["MAX"] = std::bind(kovshikov::getMax, _1, _2, _3);
   }
 
   std::string command;
@@ -51,7 +44,6 @@ int main(int argc, char ** argv)
     try
     {
       interaction.at(command)(allData, std::cin, std::cout); //в зависимости от std::bind убрать allData
-      //заглушка interaction.at(command)(std::cin, std::cout);
     }
     catch(const std::out_of_range& error)
     {
