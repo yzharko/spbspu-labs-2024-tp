@@ -104,7 +104,7 @@ namespace nikiforov
     }
     else if (option == "VERTEXES" && !shapes.empty())
     {
-      out << getVertexesResult(shapes, "min") << "\n";
+      out << getVertexesResult(shapes, "max") << "\n";
     }
     else
     {
@@ -325,6 +325,47 @@ namespace nikiforov
       return true;
     }
     return false;
+  }
+
+  void takingSame(const std::vector<Polygon>& shapes, std::istream& input, std::ostream& out)
+  {
+    nikiforov::Polygon shapeSame;
+
+    if (input >> shapeSame)
+    {
+      out << std::count_if(std::begin(shapes), std::end(shapes), std::bind(countSame, shapeSame, _1));
+      out << "\n";
+    }
+    else
+    {
+      throw std::out_of_range("");
+    }
+    
+  }
+
+  bool countSame(const Polygon& polygonSame, const Polygon& polygonShape)
+  {
+    if (polygonSame.points.size() == polygonShape.points.size())
+    {
+      std::vector< int > resultsSame;
+      std::transform(
+        std::begin(polygonShape.points), std::end(polygonShape.points),
+        std::begin(polygonSame.points),
+        std::back_inserter(resultsSame),
+        std::bind(pointsSame, _1, _2)
+      );
+      auto it = std::search_n(resultsSame.begin(), resultsSame.end(), polygonSame.points.size(), resultsSame.at(0));
+      return it != resultsSame.end();
+    }
+    else
+    {
+      return false;
+    }
+  }
+  
+  int pointsSame(const Point& first, const Point& second)
+  {
+    return (first.x - second.x) + (first.y - second.y);
   }
 
   void takingError(std::ostream& out, const std::string& errorStr)
