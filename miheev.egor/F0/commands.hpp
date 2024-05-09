@@ -6,8 +6,8 @@
 namespace miheev
 {
   // NOTE: аргументы принимаются уже внутри
-  std::ostream& addCommand(std::ostream&, std::istream&, Workspace&);
-  std::ostream& rmCommand(std::ostream&, std::istream&, Workspace&);
+  std::ostream& nodeCommand(std::ostream&, std::istream&, Workspace&);
+  std::ostream& edgeCommand(std::ostream&, std::istream&, Workspace&);
   std::ostream& navigateCommand(std::ostream&, std::istream&, const Workspace&);
   std::ostream& listCommand(std::ostream&, std::istream, const Workspace&);
   std::ostream& jumpCommand(std::ostream&, std::istream&, const Workspace&);
