@@ -163,7 +163,7 @@ miheev::Graph::Dextra::Dextra(const Graph& curGraph):
   }
 }
 
-void miheev::Graph::Dextra::operator()(int start, int finish)
+miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
 {
   bool startDoesntExist = graph.nodes_.count(start) == 0;
   bool finishDoesntExist = graph.nodes_.count(finish) == 0;
@@ -176,13 +176,42 @@ void miheev::Graph::Dextra::operator()(int start, int finish)
     throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
   }
   updateNodeState(start, 0);
+  calcMinTimeToEach();
+  Path path;
+  path.lenght = timeToNodes.at(finish);
+  path.path = findShortestPath(start, finish);
+  return path;
 }
 
 void miheev::Graph::Dextra::calcMinTimeToEach()
 {
   while(!unprocessedNodes.empty())
   {
-    std::vector< size_t > lenghts;
+    int nameOfNodeWithMinimumTime = getNodeWithMinimumTimeToIt();
+    const Node& node = graph.nodes_.at(nameOfNodeWithMinimumTime);
+    if (timeToNodes.at(nameOfNodeWithMinimumTime) == std::numeric_limits< size_t >::max())
+    { // значит остались только узлы, до которых нельзя добраться
+      return;
+    }
+    recalculateTimeToNeighboursOfTheNode(node);
+    unprocessedNodes.erase(node.name);
+  }
+}
+
+void miheev::Graph::Dextra::recalculateTimeToNeighboursOfTheNode(const Node& node)
+{
+  for (auto iter(node.edges.begin()); iter != node.edges.end(); iter++)
+  {
+    int neighbourName = iter->dest->name;
+    bool neighbourIsUnprocessed = unprocessedNodes.count(neighbourName) > 0;
+    if (neighbourIsUnprocessed)
+    {
+      size_t timeToNeighbour = timeToNodes.at(node.name) + iter->weight;
+      if (timeToNeighbour < timeToNodes.at(neighbourName))
+      {
+        updateNodeState(neighbourName, timeToNeighbour, node.name);
+      }
+    }
   }
 }
 
@@ -199,6 +228,23 @@ int miheev::Graph::Dextra::getNodeWithMinimumTimeToIt()
     }
   }
   return node;
+}
+
+std::forward_list< int > miheev::Graph::Dextra::findShortestPath(int start, int finish)
+{
+  if (timeToNodes.at(finish) == std::numeric_limits< size_t >::max())
+  {
+    std::invalid_argument("Navigation error: no path exists from node " + std::to_string(start) + " to node " + std::to_string(finish) + '\n');
+  }
+  std::forward_list< int > path;
+  path.push_front(finish);
+  do
+  {
+    int parentNode = nodesParrents.at(finish);
+    path.push_front(parentNode);
+    finish = parentNode;
+  } while (finish != start);
+  return path;
 }
 
 void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int parrentNode)

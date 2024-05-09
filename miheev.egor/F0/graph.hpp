@@ -30,6 +30,8 @@ namespace miheev
     std::ostream& printNodes(std::ostream&);
     std::ostream& printAllEdges(std::ostream&);
 
+    struct Path;
+
   private:
     std::string name_;
     std::string filename_;
@@ -38,6 +40,12 @@ namespace miheev
     friend std::istream& operator>>(std::istream&, const Graph&);
     struct Printer;
     struct Dextra;
+  };
+
+  struct Graph::Path
+  {
+    size_t lenght;
+    std::forward_list< int > path;
   };
 
   struct Graph::Printer
@@ -51,11 +59,12 @@ namespace miheev
   {
     Dextra(const Graph&);
 
-    void operator()(int begin, int end);
+    Path operator()(int begin, int end);
 
     void calcMinTimeToEach();
     int getNodeWithMinimumTimeToIt();
-    std::forward_list< int > findShortestPath(int finish, int start);
+    void recalculateTimeToNeighboursOfTheNode(const Node&);
+    std::forward_list< int > findShortestPath(int start, int finish);
 
     void updateNodeState(int node, size_t timeToNode, int parrentNode = -1);
 
