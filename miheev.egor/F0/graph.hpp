@@ -25,12 +25,12 @@ namespace miheev
     void rmNode(int name);
     void rmEdge(int lnode, int rnode);
 
-    void navigate(); // как плейсхолдер для функции
+    struct Path;
+    Path navigate(int start, int finish); // как плейсхолдер для функции
 
     std::ostream& printNodes(std::ostream&);
     std::ostream& printAllEdges(std::ostream&);
 
-    struct Path;
 
   private:
     std::string name_;

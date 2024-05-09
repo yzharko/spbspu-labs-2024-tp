@@ -88,6 +88,13 @@ void miheev::Graph::rmEdge(int lnode, int rnode)
   leftNode.backLinks.erase(rnode);
 }
 
+miheev::Graph::Path miheev::Graph::navigate(int start, int finish)
+{
+  Dextra dextra(*this);
+  Path path = dextra(start, finish);
+  return path;
+}
+
 std::ostream& miheev::Graph::printNodes(std::ostream& out)
 {
   for (auto cIter(nodes_.cbegin()); cIter != nodes_.cend();)
@@ -176,10 +183,13 @@ miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
     throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
   }
   updateNodeState(start, 0);
+  std::cout << "start node state changed\n";
   calcMinTimeToEach();
+  std::cout << "min time to nodes calculated\n";
   Path path;
   path.lenght = timeToNodes.at(finish);
   path.path = findShortestPath(start, finish);
+  std::cout << "found shortest way\n";
   return path;
 }
 
@@ -219,12 +229,13 @@ int miheev::Graph::Dextra::getNodeWithMinimumTimeToIt()
 {
   size_t minTime = std::numeric_limits< size_t >::max();
   int node = -1;
-  for (auto iter(timeToNodes.cbegin()); iter != timeToNodes.cend(); iter++)
+  for (auto iter(unprocessedNodes.cbegin()); iter != unprocessedNodes.cend(); iter++)
   {
-    if (iter->second < minTime)
+    size_t curTime = timeToNodes.at(*iter);
+    if (curTime < minTime)
     {
-      node = iter->first;
-      minTime = iter->second;
+      node = *iter;
+      minTime = curTime;
     }
   }
   return node;
@@ -249,23 +260,9 @@ std::forward_list< int > miheev::Graph::Dextra::findShortestPath(int start, int 
 
 void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int parrentNode)
 {
-  bool nodeIsProcessed = unprocessedNodes.count(node) > 0;
-  if (!nodeIsProcessed)
-  {
-    timeToNodes.insert({node, timeToNode});
-    if (parrentNode >= 0)
-    {
-      nodesParrents.insert({node, parrentNode});
-    }
-    unprocessedNodes.insert(node);
-  }
-
   timeToNodes.erase(node);
   timeToNodes.insert({node, timeToNode});
 
-  if (parrentNode >= 0)
-  {
-    nodesParrents.erase(node);
-    timeToNodes.insert({node, parrentNode});
-  }
+  nodesParrents.erase(node);
+  nodesParrents.insert({node, parrentNode});
 }
