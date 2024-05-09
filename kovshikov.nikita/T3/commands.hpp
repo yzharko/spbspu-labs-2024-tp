@@ -11,6 +11,8 @@ namespace kovshikov
   bool isEven(const Polygon& polygon);
   bool isOdd(const Polygon& polygon);
   bool isThisVertex(unsigned long long num, Polygon polygon);
+  unsigned long long getVertexes(const Polygon& polygon);
+
 
   void getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
   void getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);
@@ -18,6 +20,7 @@ namespace kovshikov
   void getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
 
   void getMaxArea(const std::vector< Polygon >& allData, std::ostream& out);
+  void getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out);
 
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);

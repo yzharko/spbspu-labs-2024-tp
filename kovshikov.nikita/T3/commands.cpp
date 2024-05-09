@@ -148,6 +148,7 @@ void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, 
   {
     using namespace std::placeholders;
     max["AREA"] = std::bind(kovshikov::getMaxArea, _1, _2);
+    max["VERTEXES"] = std::bind(kovshikov::getMaxVertexes, _1, _2);
   }
   std::string command;
   is >> command;
@@ -175,5 +176,27 @@ void kovshikov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& 
     std::sort(allAreas.begin(), allAreas.end());
     maxArea = *(allAreas.end() - 1);
     out << maxArea << "\n";
+  }
+}
+
+unsigned long long kovshikov::getVertexes(const Polygon& polygon)
+{
+  return polygon.points.size();
+}
+
+void kovshikov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long maxVertexes = 0;
+  if(allData.empty())
+  {
+    out << maxVertexes << "\n";
+  }
+  else
+  {
+    std::vector< unsigned long long > allVertexes;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertexes);
+    std::sort(allVertexes.begin(), allVertexes.end());
+    maxVertexes = *(allVertexes.end() - 1);
+    out << maxVertexes << "\n";
   }
 }
