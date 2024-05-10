@@ -4,7 +4,7 @@
 #include <iosfwd>
 #include <vector>
 
-namespace taskaevv
+namespace taskaev
 {
   struct Point
   {
