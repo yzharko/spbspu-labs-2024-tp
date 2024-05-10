@@ -10,7 +10,7 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Point & ref)
   return in >> SeparatorIO{'('} >> IntIO{ref.x} >> SeparatorIO{';'} >> IntIO{ref.y} >> SeparatorIO{')'};
 };
 
-std::ostream & zheleznyakov::operator<<(std::ostream & out, Point & ref)
+std::ostream & zheleznyakov::operator<<(std::ostream & out, const Point & ref)
 {
   return out << '(' << ref.x << ';' << ref.y << ')';
 };
@@ -37,7 +37,7 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
   return in;
 };
 
-std::ostream & zheleznyakov::operator<<(std::ostream & out, Polygon & ref)
+std::ostream & zheleznyakov::operator<<(std::ostream & out, const Polygon & ref)
 {
   for (size_t i = 0; i < ref.points.size(); i++)
   {
