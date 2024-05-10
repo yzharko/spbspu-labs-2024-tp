@@ -1,6 +1,7 @@
 #include "commands.hpp"
 #include <functional>
 #include <limits>
+#include <algorithm>
 #include <iostream>
 #include <numeric>
 
@@ -85,7 +86,7 @@ std::ostream & zheleznyakov::commands::max(const std::vector< Polygon > & polygo
 double zheleznyakov::processMaxArea(const std::vector< Polygon > & polygons)
 {
   using namespace std::placeholders;
-  std::vector < const double > areas;
+  std::vector < double > areas;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), std::bind(calculatePolygonArea, _1, 0, 0.0));
   return * std::max_element(areas.begin(), areas.end());
 }
@@ -93,7 +94,7 @@ double zheleznyakov::processMaxArea(const std::vector< Polygon > & polygons)
 size_t zheleznyakov::processMaxVertex(const std::vector< Polygon > & polygons)
 {
   using namespace std::placeholders;
-  std::vector < const double > vertex;
+  std::vector < double > vertex;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(vertex), [](const Polygon & p){
     return p.points.size();
   });
@@ -120,7 +121,7 @@ std::ostream & zheleznyakov::commands::min(const std::vector< Polygon > & polygo
 double zheleznyakov::processMinArea(const std::vector< Polygon > & polygons)
 {
   using namespace std::placeholders;
-  std::vector < const double > areas;
+  std::vector < double > areas;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), std::bind(calculatePolygonArea, _1, 0, 0.0));
   return * std::min_element(areas.begin(), areas.end());
 }
@@ -128,7 +129,7 @@ double zheleznyakov::processMinArea(const std::vector< Polygon > & polygons)
 size_t zheleznyakov::processMinVertex(const std::vector< Polygon > & polygons)
 {
   using namespace std::placeholders;
-  std::vector < const double > vertex;
+  std::vector < double > vertex;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(vertex), [](const Polygon & p){
     return p.points.size();
   });
