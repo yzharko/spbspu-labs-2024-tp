@@ -22,18 +22,20 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
   {
     return in;
   };
-  size_t pointsCount;
+  size_t pointsCount = 0;
   in >> SizeTIO{pointsCount};
   if (pointsCount < 3)
   {
     in.setstate(std::ios::failbit);
   }
+  std::vector< Point > polygon;
   for (size_t i = 0; i < pointsCount; i++)
   {
     Point currentPoint{};
     in >> currentPoint;
-    ref.points.push_back(currentPoint);
+    polygon.push_back(currentPoint);
   }
+  ref = Polygon{polygon};
   return in;
 };
 
