@@ -39,7 +39,7 @@ int main(int argc, char * argv[])
 
   std::map<
     std::string,
-    std::function< std::ostream & (const std::vector< ponomarev::Polygon > &, std::istream &, std::ostream & ) >
+    std::function< std::ostream & (std::istream &, std::ostream &, const std::vector< ponomarev::Polygon > &) >
   > commands;
   {
     using namespace std::placeholders;
@@ -52,7 +52,7 @@ int main(int argc, char * argv[])
   {
     try
     {
-      commands.at(command)(data, std::cin, std::cout);
+      commands.at(command)(std::cin, std::cout, data);
     }
     catch (const std::logic_error&)
     {

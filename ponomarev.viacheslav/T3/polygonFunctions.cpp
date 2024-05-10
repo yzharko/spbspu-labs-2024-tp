@@ -45,3 +45,8 @@ double ponomarev::sumIfNumOfVertexes(double res, const Polygon & polygon, size_t
 {
   return (polygon.points.size() == numOfVertexes) ? res + getArea(polygon) : res;
 }
+
+int ponomarev::getNumOfVertexes(const Polygon & polygon)
+{
+  return polygon.points.size();
+}
