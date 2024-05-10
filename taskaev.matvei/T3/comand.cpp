@@ -1,5 +1,9 @@
 #include <vector>
 #include <string>
+#include <functional>
+#include <cctype>
+#include <numeric>
+#include <utility>
 #include <iomanip>
 #include <algorithm>
 #include "iofmtguard.hpp"
