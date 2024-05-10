@@ -72,7 +72,7 @@ namespace taskaev
       getAreaEven
     );
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << '\n';
+    out << std::fixed << std::setprecision(1) << area << "\n";
   }
   double getAreaEven(double area, const Polygon& polygon)
   {
@@ -92,7 +92,7 @@ namespace taskaev
       getAreaOdd
     );
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << '\n';
+    out << std::fixed << std::setprecision(1) << area << "\n";
   }
   double getAreaOdd(double area, const Polygon& polygon)
   {
@@ -120,7 +120,7 @@ namespace taskaev
     double meanArea = area / static_cast< double >(polygon.size());
 
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << meanArea << '\n';
+    out << std::fixed << std::setprecision(1) << meanArea << "\n";
   }
   double getAreaSum(double area, const Polygon& polygon)
   {
@@ -146,7 +146,7 @@ namespace taskaev
       types
     );
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << '\n';
+    out << std::fixed << std::setprecision(1) << area << "\n";
   }
   double getAreaNum(double area, const Polygon& polygon, size_t type)
   {
@@ -199,5 +199,108 @@ namespace taskaev
     std::transform(polygon.begin(), polygon.end(), vertexes.begin(), countVertexes);
     auto VertexesIter = std::max_element(vertexes.begin(), vertexes.end());
     out << *VertexesIter << "\n";
+  }
+
+  void MinComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
+  {
+    std::string nameComand;
+    if (in >> nameComand)
+    {
+      if (nameComand == "AREA")
+      {
+        minArea(polygon, out);
+      }
+      else if (nameComand == "VERTEXES")
+      {
+        minVertexes(polygon, out);
+      }
+    }
+    else
+    {
+      throw std::logic_error("<INVALID COMAND>\n");
+    }
+  }
+
+  void minArea(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    if (polygon.empty())
+    {
+      throw std::logic_error("");
+    }
+    std::vector< double > area(polygon.size());
+    std::transform(polygon.begin(), polygon.end(), area.begin(), getArea);
+    auto AreaIter = std::min_element(area.begin(), area.end());
+    iofmtguard iofmtguard(out);
+    out << std::fixed << std::setprecision(1) << *AreaIter << "\n";
+  }
+
+  void minVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    if (polygon.empty())
+    {
+      throw std::logic_error("");
+    }
+    std::vector< size_t > vertexes(polygon.size());
+    std::transform(polygon.begin(), polygon.end(), vertexes.begin(), countVertexes);
+    auto VertexesIter = std::min_element(vertexes.begin(), vertexes.end());
+    out << *VertexesIter << "\n";
+  }
+
+  void CountComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
+  {
+    std::string nameComand;
+    if (in >> nameComand)
+    {
+      if (nameComand == "EVEN")
+      {
+        EvenCount(polygon, out);
+      }
+      else if (nameComand == "ODD")
+      {
+        OddCount(polygon, out);
+      }
+      else
+      {
+        size_t type = std::stoull(nameComand);
+        Vertexescount(polygon, out, type);
+      }
+    }
+    else
+    {
+      throw std::logic_error("<INVALID COMAND>\n");
+    }
+  }
+
+  bool EvenVertexes(const Polygon& polygon)
+  {
+    return !OddVertexes(polygon);
+  }
+  bool OddVertexes(const Polygon& polygon)
+  {
+    return countVertexes(polygon) % 2;
+  }
+  void EvenCount(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    size_t countEven = std::count_if(polygon.begin(), polygon.end(), EvenVertexes);
+    out << countEven << "\n";
+  }
+  void OddCount(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    size_t countOdd = std::count_if(pls.cbegin(), pls.cend(), OddVertexes);
+    out << countOdd << "\n";
+  }
+  bool Vertexes(const Polygon& polygon, size_t type)
+  {
+    return polygon.points.size() == type;
+  }
+  void VertexesCount(const std::vector< Polygon >& polygon, std::ostream& out, size_t type)
+  {
+    if (type < 3)
+    {
+      throw std::logic_error("");
+    }
+    auto helps = std::bind(Vertexes, std::placeholders::_1, type);
+    auto counts = std::count_if(polygon.begin(), polygon.end(), helps);
+    out << counts << "\n";
   }
 }
