@@ -6,12 +6,13 @@
 #include <vector>
 #include <functional>
 #include <fstream>
+#include "comand.hpp"
 #include "Polygon.hpp"
 
 int main(int argc, char** argv)
 {
   using namespace taskaev;
-  if (argc != 2);
+  if (argc != 2)
   {
     std::cerr << "Error: arguments not write\n";
     return 1;

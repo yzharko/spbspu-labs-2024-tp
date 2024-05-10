@@ -63,7 +63,7 @@ namespace taskaev
     );
 
     double sum = std::accumulate(area.begin(), area.end(), 0.0);
-    sum += getAreaS(polygon.points.back(), polygon.points.front());
+    sum += getAreas(polygon.points.back(), polygon.points.front());
 
     return 0.5 * std::abs(sum);
   }
@@ -110,7 +110,7 @@ namespace taskaev
 
   void AreaMean(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    if (pls.empty())
+    if (polygon.empty())
     {
       throw std::logic_error("");
     }
@@ -170,11 +170,11 @@ namespace taskaev
     {
       if (nameComand == "AREA")
       {
-        maxArea(polygon, out);
+        MaxArea(polygon, out);
       }
       else if (nameComand == "VERTEXES")
       {
-        maxVertexes(polygon, out);
+        MaxVertexes(polygon, out);
       }
     }
     else
@@ -182,7 +182,7 @@ namespace taskaev
       throw std::logic_error("<INVALID COMAND>\n");
     }
   }
-  void maxArea(const std::vector< Polygon >& polygon, std::ostream& out)
+  void MaxArea(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     if (polygon.empty())
     {
@@ -213,11 +213,11 @@ namespace taskaev
     {
       if (nameComand == "AREA")
       {
-        minArea(polygon, out);
+        MinArea(polygon, out);
       }
       else if (nameComand == "VERTEXES")
       {
-        minVertexes(polygon, out);
+        MinVertexes(polygon, out);
       }
     }
     else
@@ -226,7 +226,7 @@ namespace taskaev
     }
   }
 
-  void minArea(const std::vector< Polygon >& polygon, std::ostream& out)
+  void MinArea(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     if (polygon.empty())
     {
@@ -239,7 +239,7 @@ namespace taskaev
     out << std::fixed << std::setprecision(1) << *AreaIter << "\n";
   }
 
-  void minVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
+  void MinVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     if (polygon.empty())
     {
@@ -267,7 +267,7 @@ namespace taskaev
       else
       {
         size_t type = std::stoull(nameComand);
-        Vertexescount(polygon, out, type);
+        VertexesCount(polygon, out, type);
       }
     }
     else
