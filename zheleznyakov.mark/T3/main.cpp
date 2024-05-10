@@ -57,11 +57,11 @@ int main(int argc, char * argv[])
     {
       cmds.at(currentCommand)(polygons, std::cin, std::cout);
     }
-    catch (const std::exception &)
+    catch (const std::exception & e)
     {
-      std::cerr << "Something went wrong\n";
+      std::cerr << "<INVALID COMMAND>\n";
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max() , '\n');
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 
