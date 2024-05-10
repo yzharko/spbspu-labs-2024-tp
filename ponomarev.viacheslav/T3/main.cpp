@@ -7,7 +7,7 @@
 #include "polygon.hpp"
 #include "commands.hpp"
 
-int main(int argc, char * argv[])
+int main(int argc, char ** argv)
 {
   if (argc != 2)
   {
@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
   std::ifstream input(argv[1]);
   if (!input)
   {
-    std::cerr << "Error: unable to open the file\n";
+    std::cerr << "Error: can't open file";
     return 2;
   }
 
@@ -53,6 +53,7 @@ int main(int argc, char * argv[])
   std::string command;
   while (std::cin >> command)
   {
+    std::cout << command;
     try
     {
       commands.at(command)(std::cin, std::cout, data);
