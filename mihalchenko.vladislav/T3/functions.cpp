@@ -151,7 +151,7 @@ std::ostream &mihalchenko::getMaxVertexes(const std::vector<Polygon> &polygons, 
   std::transform(polygons.begin(), polygons.end(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::max_element(numsOfVertexes.begin(), numsOfVertexes.end());
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << maxVertexes << '\n';
   return out;
 }
@@ -196,7 +196,7 @@ std::ostream &mihalchenko::getMinVertexes(const std::vector<Polygon> &polygons, 
   std::transform(polygons.begin(), polygons.end(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::min_element(numsOfVertexes.begin(), numsOfVertexes.end());
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << maxVertexes << '\n';
   return out;
 }
@@ -226,7 +226,7 @@ void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::ostream &o
 std::ostream &mihalchenko::countOdd(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << std::count_if(polygons.begin(),
                        polygons.end(),
                        std::bind(std::modulus<size_t>{}, std::bind(getSize, _1), 2))
@@ -237,7 +237,7 @@ std::ostream &mihalchenko::countOdd(const std::vector<Polygon> &polygons, std::o
 std::ostream &mihalchenko::countEven(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << std::count_if(polygons.begin(), polygons.end(),
                        std::bind(std::logical_not<bool>{},
                                  std::bind(std::bind(std::modulus<size_t>{},
@@ -251,7 +251,7 @@ std::ostream &mihalchenko::countVertexes(const std::vector<Polygon> &polygons,
                                          size_t num, std::ostream &out)
 {
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << std::count_if(polygons.begin(),
                        polygons.end(),
                        std::bind(std::bind(std::equal_to<size_t>{},
@@ -329,17 +329,17 @@ void mihalchenko::printPerms(const std::vector<Polygon> &polygons,
 {
   Polygon copyPolygon;
   is >> copyPolygon;
-  size_t numOfVertexes = copyPolygon.points.size();
+  long long numOfVertexes = copyPolygon.points.size();
   std::vector<Polygon> copyVectorOfPolygons;
   copy_if(polygons.begin(),
           polygons.end(),
           std::back_inserter(copyVectorOfPolygons),
-          std::bind(std::equal_to<size_t>{},
+          std::bind(std::equal_to<long long>{},
                     std::bind(getLength, _1), numOfVertexes));
   if (!copyVectorOfPolygons.empty())
   {
     iofmtguard fmtguard(out);
-    out << std::fixed;
+    out << std::fixed << std::setprecision(0);
     out << std::count_if(polygons.begin(),
                          polygons.end(),
                          std::bind(isLengthCorrect, copyPolygon, _1))
@@ -394,13 +394,11 @@ bool mihalchenko::isRightPolygon(const Polygon &polygon)
              cosOfVectors.begin(),
              cosOfVectors.end(),
              isZeroCos) != cosOfVectors.end();
-  /*return std::bind(std::bind(std::not_equal_to<size_t>{}, std::find_if(cosOfVectors.begin(),
-             cosOfVectors.end(), std::bind(getVector, _1), _2), _1, cosOfVectors.end()));*/
 }
 
 void mihalchenko::countRightShapes(const std::vector<Polygon> &polygons, std::ostream &out)
 {
   iofmtguard fmtguard(out);
-  out << std::fixed;
+  out << std::fixed << std::setprecision(0);
   out << std::count_if(polygons.begin(), polygons.end(), isRightPolygon) << '\n';
 }
