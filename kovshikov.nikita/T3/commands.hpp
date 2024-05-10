@@ -16,7 +16,7 @@ namespace kovshikov
   Point createVector(const Point& next, const Point& current);
   int getScalar(const Point& next, const Point& current);
   bool isRight(int scalar);
-  bool isPolygonRight(const Polygon& polygon); //bool
+  bool isPolygonRight(const Polygon& polygon);
 
   void getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
   void getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);

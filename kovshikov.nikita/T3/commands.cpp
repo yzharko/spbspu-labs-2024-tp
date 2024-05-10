@@ -331,7 +331,7 @@ bool kovshikov::isRight(int scalar)
   }
 }
 
-bool kovshikov::isPolygonRight(const Polygon& polygon)// bool // проверка на наличие прямого угла в ОДНОМ полигоне
+bool kovshikov::isPolygonRight(const Polygon& polygon)
 {
   std::vector< Point > allVectors;
   std::vector< int > allScalars;
@@ -344,10 +344,7 @@ bool kovshikov::isPolygonRight(const Polygon& polygon)// bool // проверк�
   return std::any_of(allScalars.begin(), allScalars.end(), isRight);
 }
 
-void kovshikov::countRightshapes(const std::vector< Polygon >& allData, std::ostream& out) // не нужен поток ввода, диспетчеризация??
+void kovshikov::countRightshapes(const std::vector< Polygon >& allData, std::ostream& out)
 {
- // out << "allVectors:" << "\n"; //
- // isPolygonRight(allData.front());
-
   out << std::count_if(allData.begin(), allData.end(), isPolygonRight);
 }
