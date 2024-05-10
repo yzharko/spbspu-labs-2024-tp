@@ -99,3 +99,38 @@ size_t zheleznyakov::processMaxVertex(const std::vector< Polygon > & polys)
   });
   return * std::max_element(vertex.begin(), vertex.end());
 }
+
+std::ostream & zheleznyakov::commands::min(const std::vector< Polygon > & polygons, std::istream & in, std::ostream & out)
+{
+  std::string subCmd = "";
+  in >> subCmd;
+  out << std::fixed << std::setprecision(1);
+  if (subCmd == "AREA")
+  {
+    return out << processMinArea(polygons) << '\n';
+  }
+  else if (subCmd == "VERTEXES")
+  {
+    return out << processMinVertex(polygons) << '\n';
+  }
+  return out;
+}
+
+
+double zheleznyakov::processMinArea(const std::vector< Polygon > & polys)
+{
+  using namespace std::placeholders;
+  std::vector < const double > areas;
+  std::transform(polys.begin(), polys.end(), std::back_inserter(areas), std::bind(calculatePolygonArea, _1, 0, 0.0));
+  return * std::min_element(areas.begin(), areas.end());
+}
+
+size_t zheleznyakov::processMinVertex(const std::vector< Polygon > & polys)
+{
+  using namespace std::placeholders;
+  std::vector < const double > vertex;
+  std::transform(polys.begin(), polys.end(), std::back_inserter(vertex), [](const Polygon & p){
+    return p.points.size();
+  });
+  return * std::min_element(vertex.begin(), vertex.end());
+}

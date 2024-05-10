@@ -46,6 +46,7 @@ int main(int argc, char * argv[])
     using namespace std::placeholders;
     cmds["AREA"] = std::bind(commands::area, _1, _2, _3);
     cmds["MAX"] = std::bind(commands::max, _1, _2, _3);
+    cmds["MIN"] = std::bind(commands::min, _1, _2, _3);
   }
   
   std::string currentCommand = "";
