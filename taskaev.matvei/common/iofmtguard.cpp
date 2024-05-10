@@ -1,19 +1,18 @@
-#ifndef IOFMTGUARD_HPP
-#define IOFMTGUARD_HPP
-#include <ios>
+#include "iofmtguard.hpp"
 
 namespace taskaev
 {
-  class iofmtguard
+  iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept :
+    s_(s),
+    fill_(s.fill()),
+    precision_(s.precision()),
+    fmt_(s.flags())
+  {}
+
+  iofmtguard::~iofmtguard()
   {
-  public:
-    iofmtguard(std::basic_ios< char >& s);
-    ~iofmtguard();
-  private:
-    std::basic_ios< char >& s_;
-    char fill_;
-    std::streamsize precision_;
-    std::basic_ios< char >::fmtflags fmt_;
-  };
+    s_.fill(fill_);
+    s_.precision(precision_);
+    s_.flags(fmt_);
+  }
 }
-#endif
