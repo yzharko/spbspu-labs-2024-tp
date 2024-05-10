@@ -11,6 +11,11 @@
 #include "commands.hpp"
 #include <iomanip>
 
+bool kovshikov::isDigit(char ch)
+{
+  return std::isdigit(ch);
+}
+
 void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
@@ -29,16 +34,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   }
   catch(const std::out_of_range& error) // не учитывается формат просто AREA
   {
-    size_t size = command.length();
-    bool isDigit = true;
-    for(size_t i = 0; i < size; i++)  //переписать через библиотеку
-    {
-      if(!std::isdigit(command[i]))
-      {
-        isDigit = false;
-      }
-    }
-    if(isDigit == true)
+    if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
       try
@@ -254,4 +250,41 @@ void kovshikov::getMinVertexes(const std::vector< Polygon >& allData, std::ostre
     minVertexes = *(allVertexes.begin());
     out << minVertexes << "\n";
   }
+}
+
+void kovshikov::count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > count;
+  {
+    using namespace std::placeholders;
+    count["EVEN"] = std::bind(kovshikov::countEven, _1, _2);
+    count["ODD"] = std::bind(kovshikov::countOdd, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    count.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error) // не учитывается формат просто COUNT
+  {
+    throw;
+  }
+}
+
+void kovshikov::countEven(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > even;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), isEven);
+  unsigned long long count = even.size();
+  out << count << "\n";
+}
+
+void kovshikov::countOdd(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > odd;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), isOdd);
+  unsigned long long count = odd.size();
+  out << count << "\n";
 }

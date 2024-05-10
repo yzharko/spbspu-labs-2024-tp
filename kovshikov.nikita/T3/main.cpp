@@ -37,6 +37,7 @@ int main(int argc, char ** argv)
     interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
     interaction["MAX"] = std::bind(kovshikov::getMax, _1, _2, _3);
     interaction["MIN"] = std::bind(kovshikov::getMin, _1, _2, _3);
+    interaction["COUNT"] = std::bind(kovshikov::count, _1, _2, _3);
   }
 
   std::string command;

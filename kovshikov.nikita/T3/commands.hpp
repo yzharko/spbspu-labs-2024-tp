@@ -4,6 +4,7 @@
 
 namespace kovshikov
 {
+  bool isDigit(char ch);
   int getCordMethod(const Point& currentPoint,const Point& prevPoint);
   double countArea(const Polygon polygon);
 
@@ -25,9 +26,13 @@ namespace kovshikov
   void getMinArea(const std::vector< Polygon >& allData, std::ostream& out);
   void getMinVertexes(const std::vector< Polygon >& allData, std::ostream& out);
 
+  void countEven(const std::vector< Polygon >& allData, std::ostream& out);
+  void countOdd(const std::vector< Polygon >& allData, std::ostream& out);
+
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+  void count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
 }
 
 #endif
