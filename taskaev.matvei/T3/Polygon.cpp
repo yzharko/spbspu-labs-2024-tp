@@ -1,6 +1,8 @@
+#include <iterator>
+#include <algorithm>
 #include "Polygon.hpp"
-#include "delimeterI.hpp"
-#include <iostream>
+#include "delimeter.hpp"
+
 
 namespace taskaev
 {

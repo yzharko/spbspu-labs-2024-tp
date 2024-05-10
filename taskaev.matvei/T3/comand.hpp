@@ -2,7 +2,7 @@
 #define COMAND_HPP
 
 #include <vector>
-#include "polygon.hpp"
+#include "Polygon.hpp"
 
 namespace taskaev
 {

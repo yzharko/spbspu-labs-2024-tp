@@ -1,3 +1,4 @@
+#include <limits>
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -26,8 +27,28 @@ int main(int argc, char** argv)
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+  std::map< std::string, std::function< void(std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)> > cmds;
+  {
+    using namespace std::placeholders;
+    cmds["AREA"] = std::bind(AreaComand, _1, _2, _3);
+    cmds["MAX"] = std::bind(MaxComand, _1, _2, _3);
+    cmds["MIN"] = std::bind(MinComand, _1, _2, _3);
+    cmds["COUNT"] = std::bind(CountComand, _1, _2, _3);
+  }
 
-
-
+  std::string cmd = "";
+  while (std::cin >> cmd)
+  {
+    try
+    {
+      cmds.at(cmd)(polygons, std::cin, std::cout);
+    }
+    catch (const std::exception& e)
+    {
+      std::cerr << e.what();
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
   return 0;
 }

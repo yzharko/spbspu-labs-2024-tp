@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 #include "iofmtguard.hpp"
 #include "comand.hpp"
 
