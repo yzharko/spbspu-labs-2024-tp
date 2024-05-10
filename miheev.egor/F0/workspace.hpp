@@ -9,7 +9,7 @@ namespace miheev
   struct Workspace
   {
     std::map< std::string, Graph > graphs;
-    Graph& current;
+    Graph current;
   };
 }
 

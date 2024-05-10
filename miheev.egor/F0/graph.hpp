@@ -17,19 +17,17 @@ namespace miheev
   public:
     Graph() = default;
 
-    const std::string& getName() const noexcept;
-    void setName(const std::string& name);
-
     void addNode(int name);
     void addEdge(int lnode, int rnode, size_t weight = 2);
     void rmNode(int name);
     void rmEdge(int lnode, int rnode);
 
     struct Path;
-    Path navigate(int start, int finish); // как плейсхолдер для функции
+    Path navigate(int start, int finish) const; // как плейсхолдер для функции
 
-    std::ostream& printNodes(std::ostream&);
-    std::ostream& printAllEdges(std::ostream&);
+    std::ostream& printNodes(std::ostream&) const;
+    std::ostream& printAllEdges(std::ostream&) const;
+    bool contains(int nodeName) const;
 
     std::string name;
     std::string filename;
@@ -38,7 +36,6 @@ namespace miheev
 
     struct Printer;
     struct Dextra;
-    friend std::istream& operator>>(std::istream&, const Graph&);
   };
 
   struct Graph::Path
@@ -50,8 +47,8 @@ namespace miheev
   struct Graph::Printer
   {
     std::ostream& printUniqueEdges(const Node&, std::ostream&);
+    bool hasUniqueEdges(const Node&) const;
     std::unordered_set< int > visitedNodes;
-    bool somethingPrinted;
   };
 
   struct Graph::Dextra

@@ -9,8 +9,8 @@ namespace miheev
   std::ostream& nodeCommand(std::ostream&, std::istream&, Workspace&);
   std::ostream& edgeCommand(std::ostream&, std::istream&, Workspace&);
   std::ostream& navigateCommand(std::ostream&, std::istream&, const Workspace&);
-  std::ostream& listCommand(std::ostream&, std::istream, const Workspace&);
-  std::ostream& jumpCommand(std::ostream&, std::istream&, const Workspace&);
+  std::ostream& listCommand(std::ostream&, std::istream&, const Workspace&);
+  std::ostream& jumpCommand(std::ostream&, std::istream&, Workspace&);
   std::ostream& printCommand(std::ostream&, std::istream&, const Workspace&);
   std::ostream& saveCommand(std::ostream&, std::istream&, const Workspace&);
   std::ostream& helpCommand(std::ostream&, std::istream&, const Workspace&);

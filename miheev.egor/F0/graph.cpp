@@ -6,19 +6,10 @@
 #include <limits>
 #include <iterator>
 
-const std::string& miheev::Graph::getName() const noexcept
-{
-  return name_;
-}
-
-void miheev::Graph::setName(const std::string& name)
-{
-  name_ = name;
-}
 
 void miheev::Graph::addNode(int name)
 {
-  if (nodes_.count(name) > 0)
+  if (contains(name))
   {
     throw std::invalid_argument("Insertion error: the node you want to add already exists\n");
   }
@@ -39,13 +30,11 @@ void miheev::Graph::rmNode(int name)
 
 void miheev::Graph::addEdge(int lnode, int rnode, size_t weight)
 {
-  bool LnodeDoesNotExists = nodes_.count(lnode) == 0;
-  if (LnodeDoesNotExists)
+  if (!contains(lnode))
   {
     throw std::invalid_argument("Connection error: no node named " + std::to_string(lnode) + "\n");
   }
-  bool rnodeDoesNotExists = nodes_.count(rnode) == 0;
-  if (rnodeDoesNotExists)
+  if (!contains(rnode))
   {
     throw std::invalid_argument("Connection error: no node named " + std::to_string(rnode) + "\n");
   }
@@ -64,13 +53,11 @@ void miheev::Graph::addEdge(int lnode, int rnode, size_t weight)
 
 void miheev::Graph::rmEdge(int lnode, int rnode)
 {
-  bool leftNodeExists = nodes_.count(lnode) > 0;
-  if (!leftNodeExists)
+  if (!contains(lnode))
   {
     throw std::invalid_argument("Disconnection error: node names" + std::to_string(lnode) + " doesn't exist");
   }
-  bool rightNodeExists = nodes_.count(rnode) > 0;
-  if (!rightNodeExists)
+  if (!contains(rnode))
   {
     throw std::invalid_argument("Disconnection error: node names" + std::to_string(rnode) + " doesn't exist");
   }
@@ -88,14 +75,14 @@ void miheev::Graph::rmEdge(int lnode, int rnode)
   leftNode.backLinks.erase(rnode);
 }
 
-miheev::Graph::Path miheev::Graph::navigate(int start, int finish)
+miheev::Graph::Path miheev::Graph::navigate(int start, int finish) const
 {
   Dextra dextra(*this);
   Path path = dextra(start, finish);
   return path;
 }
 
-std::ostream& miheev::Graph::printNodes(std::ostream& out)
+std::ostream& miheev::Graph::printNodes(std::ostream& out) const
 {
   for (auto cIter(nodes_.cbegin()); cIter != nodes_.cend();)
   {
@@ -109,17 +96,21 @@ std::ostream& miheev::Graph::printNodes(std::ostream& out)
   return out;
 }
 
-std::ostream& miheev::Graph::printAllEdges(std::ostream& out) // здесь потребуется алгоритм обхода графа.
+std::ostream& miheev::Graph::printAllEdges(std::ostream& out) const
 {
-  Printer printer{{}, false};
+  Printer printer;
   for (auto cIter(nodes_.cbegin()); cIter != nodes_.cend();)
   {
-    if (++cIter != nodes_.end() && printer.somethingPrinted)
+    printer.printUniqueEdges(cIter->second, out);
+    if (++cIter == nodes_.cend())
+    {
+      return out << '\n';
+    }
+    const Node& nextNode = cIter->second;
+    if (printer.hasUniqueEdges(nextNode))
     {
       out << ' ';
     }
-    printer.somethingPrinted = false;
-    printer.printUniqueEdges(cIter->second, out);
   }
   return out << '\n';
 }
@@ -127,24 +118,35 @@ std::ostream& miheev::Graph::printAllEdges(std::ostream& out) // здесь по
 std::ostream& miheev::Graph::Printer::printUniqueEdges(const Node& node, std::ostream& out)
 {
   visitedNodes.insert(node.name);
-  for (auto cIter(node.edges.cbegin()); cIter != node.edges.cend();)
+  for (auto cIter(node.edges.cbegin()); cIter != node.edges.cend(); cIter++)
   {
     int destinationName = cIter->dest->name;
+    size_t weight = cIter -> weight;
     bool edgeIsUnique = visitedNodes.count(destinationName) == 0;
-
-    if (!edgeIsUnique)
+    if (edgeIsUnique)
     {
-      ++cIter;
-      continue;
+      if (cIter != node.edges.begin())
+      {
+        out << ' ';
+      }
+      out << node.name << '-' << destinationName << ':' << weight;
     }
-    out << node.name << " - " << destinationName;
-    if (++cIter != node.edges.cend())
-    {
-      out << ' ';
-    }
-    somethingPrinted = edgeIsUnique;
   }
   return out;
+}
+
+bool miheev::Graph::Printer::hasUniqueEdges(const Node& node) const
+{
+  for (auto cIter(node.edges.cbegin()); cIter != node.edges.cend(); cIter++)
+  {
+    int destName = cIter->dest->name;
+    bool isUnique = visitedNodes.count(destName) == 0;
+    if (isUnique)
+    {
+      return true;
+    }
+  }
+  return false;
 }
 
 size_t miheev::Graph::Edge::HashFunction::operator()(const Edge& rhs) const
@@ -172,13 +174,11 @@ miheev::Graph::Dextra::Dextra(const Graph& curGraph):
 
 miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
 {
-  bool startDoesntExist = graph.nodes_.count(start) == 0;
-  bool finishDoesntExist = graph.nodes_.count(finish) == 0;
-  if (startDoesntExist)
+  if (!graph.contains(start))
   {
     throw std::invalid_argument("Navigation error: no node " + std::to_string(start) + "\n");
   }
-  if (finishDoesntExist)
+  if (!graph.contains(finish))
   {
     throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
   }
@@ -267,24 +267,39 @@ void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int par
   nodesParrents.insert({node, parrentNode});
 }
 
-std::istream& operator>>(std::istream& in, miheev::Graph& graph)
+std::istream& miheev::operator>>(std::istream& in, miheev::Graph& graph)
 {
   // ребро выглядит так: a-b:w
   using del = miheev::DelimiterIO;
+
+  std::string graphName = "";
   int lnode = -1, rnode = -1;
   size_t weight;
+
   while(!in.eof())
   {
-    in >> lnode >> del{'-'} >> lnode >> del{':'} >> weight;
-    if (in.fail())
+    in >> lnode >> del{'-'} >> rnode >> del{':'} >> weight;
+    if (in.fail() && !in.eof())
     {
-      std::cerr << "Warning: failed to read one of the nodes in file";
+      std::cerr << "Warning: failed to read one of the nodes in file\n";
       in.clear();
       in.ignore(std::numeric_limits< std::streamsize >::max(), ' ');
       continue;
     }
-    graph.addNode(lnode);
-    graph.addNode(rnode);
+    if (!graph.contains(lnode))
+    {
+      graph.addNode(lnode);
+    }
+    if (!graph.contains(rnode))
+    {
+      graph.addNode(rnode);
+    }
     graph.addEdge(lnode, rnode, weight);
   }
+  return in;
+}
+
+bool miheev::Graph::contains(int nodeName) const
+{
+  return nodes_.count(nodeName) > 0;
 }
