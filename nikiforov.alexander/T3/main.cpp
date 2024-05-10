@@ -6,16 +6,13 @@
 
 int main(int argc, char* argv[])
 {
-  /*if (argc != 2)
+  if (argc != 2)
   {
     std::cerr << "Error: wrong number of parameters\n";
     return 2;
-  }*/
+  }
 
-  //std::ifstream input(argv[1]);
-  std::ifstream input;
-  input.open("../x64/Debug/input.txt");
-
+  std::ifstream input(argv[1]);
   if (!input)
   {
     std::cerr << "Error: unable to open the file\n";

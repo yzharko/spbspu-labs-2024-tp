@@ -334,7 +334,7 @@ namespace nikiforov
 
     if (input >> shapeSame)
     {
-      out << std::count_if(std::begin(shapes), std::end(shapes), std::bind(countSame, shapeSame, _1)); << "\n"; 
+      out << std::count_if(std::begin(shapes), std::end(shapes), std::bind(countSame, shapeSame, _1)) << "\n";
     }
     else
     {
