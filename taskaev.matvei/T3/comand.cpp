@@ -35,6 +35,11 @@ namespace taskaev
     }
   }
 
+  size_t countVertexes(const Polygon& polygon)
+  {
+    return polygon.points.size();
+  }
+
   double getAreas(const Point& point1, const Point& point2)
   {
     return point1.x * point2.y - point2.x * point1.y;
@@ -91,7 +96,7 @@ namespace taskaev
   }
   double getAreaOdd(double area, const Polygon& polygon)
   {
-    if (!(polygon.points.size()%2 == 0))
+    if (!(polygon.points.size() % 2 == 0))
     {
       return area;
     }
@@ -145,10 +150,54 @@ namespace taskaev
   }
   double getAreaNum(double area, const Polygon& polygon, size_t type)
   {
-    if (polygon.points.size() != type)
+    if (countVertexes != type)
     {
       return area;
     }
     return area + getArea(polygon);
+  }
+
+
+  void MaxComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
+  {
+    std::string nameComand;
+    if (in >> nameComand)
+    {
+      if (nameComand == "AREA")
+      {
+        maxArea(polygon, out);
+      }
+      else if (nameComand == "VERTEXES")
+      {
+        maxVertexes(polygon, out);
+      }
+    }
+    else
+    {
+      throw std::logic_error("<INVALID COMAND>\n");
+    }
+  }
+  void maxArea(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    if (polygon.empty())
+    {
+      throw std::logic_error("");
+    }
+    std::vector< double > area(polygon.size());
+    std::transform(polygon.begin(), polygon.end(), area.begin(), getArea);
+    auto AreaIter = std::max_element(area.begin(), area.end());
+    iofmtguard iofmtguard(out);
+    out << std::fixed << std::setprecision(1) << *AreaIter << "\n";
+  }
+  void MaxVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
+  {
+    if (polygon.empty())
+    {
+      throw std::logic_error("");
+    }
+    std::vector< size_t > vertexes(polygon.size());
+    std::transform(polygon.begin(), polygon.end(), vertexes.begin(), countVertexes);
+    auto VertexesIter = std::max_element(vertexes.begin(), vertexes.end());
+    out << *VertexesIter << "\n";
   }
 }
