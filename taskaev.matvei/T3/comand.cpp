@@ -155,7 +155,7 @@ namespace taskaev
   }
   double getAreaNum(double area, const Polygon& polygon, size_t type)
   {
-    if (countVertexes != type)
+    if (countVertexes(polygon) != type)
     {
       return area;
     }
@@ -213,11 +213,11 @@ namespace taskaev
     {
       if (nameComand == "AREA")
       {
-        MinArea(polygon, out);
+        minArea(polygon, out);
       }
       else if (nameComand == "VERTEXES")
       {
-        MinVertexes(polygon, out);
+        minVertexes(polygon, out);
       }
     }
     else
@@ -226,7 +226,7 @@ namespace taskaev
     }
   }
 
-  void MinArea(const std::vector< Polygon >& polygon, std::ostream& out)
+  void minArea(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     if (polygon.empty())
     {
@@ -239,7 +239,7 @@ namespace taskaev
     out << std::fixed << std::setprecision(1) << *AreaIter << "\n";
   }
 
-  void MinVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
+  void minVertexes(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     if (polygon.empty())
     {
@@ -291,7 +291,7 @@ namespace taskaev
   }
   void OddCount(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    size_t countOdd = std::count_if(pls.cbegin(), pls.cend(), OddVertexes);
+    size_t countOdd = std::count_if(polygon.begin(), polygon.end(), OddVertexes);
     out << countOdd << "\n";
   }
   bool Vertexes(const Polygon& polygon, size_t type)
