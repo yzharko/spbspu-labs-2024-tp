@@ -46,3 +46,21 @@ std::ostream & zheleznyakov::operator<<(std::ostream & out, const Polygon & ref)
   }
   return out;
 }
+
+double zheleznyakov::calculateCrossProduct(const Point & p1, const Point & p2)
+{
+  return p1.x * p2.y - p1.y * p2.x;
+}
+
+double zheleznyakov::calculatePolygonArea(const Polygon & poly, int i, double area)
+{
+  int n = poly.points.size();
+  if (i < n - 1) {
+    area += calculateCrossProduct(poly.points[i], poly.points[i + 1]);
+    return calculatePolygonArea(poly, i + 1, area);
+  } else {
+    area += calculateCrossProduct(poly.points[n - 1], poly.points[0]);
+    area = std::abs(area) / 2.0;
+    return area;
+  }
+}

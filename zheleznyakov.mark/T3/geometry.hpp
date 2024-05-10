@@ -22,5 +22,8 @@ namespace zheleznyakov
   std::istream & operator>>(std::istream & in, Polygon & ref);
   std::ostream & operator<<(std::ostream & out, const Polygon & ref);
   bool operator==(const Polygon & poly1, const Polygon & poly2);
+
+  double calculateCrossProduct(const Point & p1, const Point & p2);
+  double calculatePolygonArea(const Polygon & poly, int i, double area);
 }
 #endif
