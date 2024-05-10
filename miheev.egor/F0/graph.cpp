@@ -35,7 +35,7 @@ void miheev::Graph::rmNode(int name)
   auto iter(node.edges.begin());
   for (auto iter(node.edges.begin()); iter != node.edges.end(); iter = node.edges.begin())
   {
-    int neighbourName = iter->dest->name;
+    int neighbourName = iter->dest;
     rmEdge(name, neighbourName);
   }
   nodes_.erase(name);
@@ -54,8 +54,8 @@ void miheev::Graph::addEdge(int lnode, int rnode, size_t weight)
   Node& leftNode = nodes_[lnode];
   Node& rightNode = nodes_[rnode];
 
-  Edge fromLeftToRight{&rightNode, weight};
-  Edge fromRightToLeft{&leftNode, weight};
+  Edge fromLeftToRight{rightNode.name, weight};
+  Edge fromRightToLeft{leftNode.name, weight};
 
   leftNode.edges.insert(fromLeftToRight);
   leftNode.backLinks.insert({rnode, fromRightToLeft});
@@ -133,7 +133,7 @@ std::ostream& miheev::Graph::Printer::printUniqueEdges(const Node& node, std::os
   visitedNodes.insert(node.name);
   for (auto cIter(node.edges.cbegin()); cIter != node.edges.cend(); cIter++)
   {
-    int destinationName = cIter->dest->name;
+    int destinationName = cIter->dest;
     size_t weight = cIter -> weight;
     bool edgeIsUnique = visitedNodes.count(destinationName) == 0;
     if (edgeIsUnique)
@@ -152,7 +152,7 @@ bool miheev::Graph::Printer::hasUniqueEdges(const Node& node) const
 {
   for (auto cIter(node.edges.cbegin()); cIter != node.edges.cend(); cIter++)
   {
-    int destName = cIter->dest->name;
+    int destName = cIter->dest;
     bool isUnique = visitedNodes.count(destName) == 0;
     if (isUnique)
     {
@@ -164,7 +164,7 @@ bool miheev::Graph::Printer::hasUniqueEdges(const Node& node) const
 
 size_t miheev::Graph::Edge::HashFunction::operator()(const Edge& rhs) const
 {
-  size_t ptrHash = std::hash< Node* >()(rhs.dest);
+  size_t ptrHash = std::hash< int >()(rhs.dest);
   size_t weightHash = std::hash< size_t >()(rhs.weight) << 1;
   return ptrHash ^ weightHash;
 }
@@ -196,23 +196,18 @@ miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
     throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
   }
   updateNodeState(start, 0);
-  std::cout << "start node state changed\n";
   calcMinTimeToEach();
-  std::cout << "min time to nodes calculated\n";
   Path path;
   path.lenght = timeToNodes.at(finish);
   path.path = findShortestPath(start, finish);
-  std::cout << "found shortest way\n";
   return path;
 }
 
 void miheev::Graph::Dextra::calcMinTimeToEach()
 {
-  std::cout << "DEBUG: calculating time to each node\n";
   while(!unprocessedNodes.empty())
   {
     int nameOfNodeWithMinimumTime = getNodeWithMinimumTimeToIt();
-    std::cout << "DEGUG: current node with minimum time to it is: " << nameOfNodeWithMinimumTime << '\n';
     if (timeToNodes.at(nameOfNodeWithMinimumTime) == std::numeric_limits< size_t >::max())
     { // значит остались только узлы, до которых нельзя добраться
       return;
@@ -227,7 +222,7 @@ void miheev::Graph::Dextra::recalculateTimeToNeighboursOfTheNode(const Node& nod
 {
   for (auto iter(node.edges.begin()); iter != node.edges.end(); iter++)
   {
-    int neighbourName = iter->dest->name;
+    int neighbourName = iter->dest;
     bool neighbourIsUnprocessed = unprocessedNodes.count(neighbourName) > 0;
     if (neighbourIsUnprocessed)
     {

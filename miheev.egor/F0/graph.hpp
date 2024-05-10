@@ -76,7 +76,8 @@ namespace miheev
 
   struct Graph::Edge
   {
-    Node* dest;
+    // Node* dest;
+    int dest;
     size_t weight;
     struct HashFunction;
     bool operator==(const Edge&) const;
