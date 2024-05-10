@@ -269,7 +269,15 @@ void kovshikov::count(const std::vector< Polygon >& allData, std::istream& is, s
   }
   catch(const std::out_of_range& error) // не учитывается формат просто COUNT
   {
-    throw;
+    if(std::all_of(command.begin(), command.end(), isDigit) == true) // заменить на функцию как здесь так и в AREA
+    {
+      unsigned long long num = std::stoll(command);
+      countVertexes(num, allData, out); //тут нет же исключений??
+    }
+    else
+    {
+      throw;
+    }
   }
 }
 
@@ -286,5 +294,15 @@ void kovshikov::countOdd(const std::vector< Polygon >& allData, std::ostream& ou
   std::vector< Polygon > odd;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), isOdd);
   unsigned long long count = odd.size();
+  out << count << "\n";
+}
+
+void kovshikov::countVertexes(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long count = 0;
+  std::vector< Polygon > withThisVertexes;
+  using namespace std::placeholders;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(withThisVertexes), std::bind(isThisVertex, num, _1));
+  count = withThisVertexes.size();
   out << count << "\n";
 }
