@@ -7,7 +7,9 @@ namespace ponomarev
 {
   double getArea(const Polygon & polygon);
   int getValue(const Point & first, const Point & second);
+
   double sumEven(double res, const Polygon & polygon);
+  double sumOdd(double res, const Polygon & polygon)
   double sumIfNumOfVertexes(double res, const Polygon & polygon, size_t numOfVertexes);
 }
 
