@@ -9,6 +9,7 @@ namespace zheleznyakov
     std::ostream & area(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & max(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & min(const std::vector< Polygon > &, std::istream &, std::ostream &);
+    std::ostream & count(const std::vector< Polygon > &, std::istream &, std::ostream &);
   }
 
   double areaAccumulator(double currentSum, const Polygon & poly);
@@ -26,5 +27,13 @@ namespace zheleznyakov
 
   double processMinArea(const std::vector< Polygon > & polys);
   size_t processMinVertex(const std::vector< Polygon > & polys);
+
+  size_t processCountEven(const std::vector< Polygon > & polys);
+  size_t processCountOdd(const std::vector< Polygon > & polys);
+  size_t processCountVertex(const std::vector< Polygon > & polys, const size_t vertexes);
+
+  bool polygonIsVertexesOdd(const Polygon & polys);
+  bool polygonIsVertexesEven(const Polygon & polys);
+  bool polygonIsVertexesEquals(const Polygon & polys, const size_t vertexes);
 }
 #endif

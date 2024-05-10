@@ -47,6 +47,7 @@ int main(int argc, char * argv[])
     cmds["AREA"] = std::bind(commands::area, _1, _2, _3);
     cmds["MAX"] = std::bind(commands::max, _1, _2, _3);
     cmds["MIN"] = std::bind(commands::min, _1, _2, _3);
+    cmds["COUNT"] = std::bind(commands::count, _1, _2, _3);
   }
   
   std::string currentCommand = "";
