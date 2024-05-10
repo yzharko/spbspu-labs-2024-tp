@@ -1,4 +1,7 @@
 #include <limits>
+#include <map>
+#include <iterator>
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <functional>
