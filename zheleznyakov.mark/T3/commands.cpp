@@ -9,10 +9,6 @@ std::ostream & zheleznyakov::commands::area(const std::vector< Polygon > & polyg
 {
   std::string subCmd = "";
   in >> subCmd;
-  if (polygons.empty())
-  {
-    throw std::logic_error("<INVALID COMMAND>");
-  }
   out << std::fixed << std::setprecision(1);
   if (subCmd == "EVEN")
   {
@@ -24,6 +20,10 @@ std::ostream & zheleznyakov::commands::area(const std::vector< Polygon > & polyg
   }
   else if (subCmd == "MEAN")
   {
+    if (polygons.empty())
+    {
+      throw std::logic_error("<INVALID COMMAND>");
+    }
     return out << processAreaMean(polygons) << '\n';
   }
   size_t vertexes = std::stoll(subCmd);
@@ -117,10 +117,6 @@ std::ostream & zheleznyakov::commands::min(const std::vector< Polygon > & polygo
 {
   std::string subCmd = "";
   in >> subCmd;
-  if (polygons.empty())
-  {
-    throw std::logic_error("<INVALID COMMAND>");
-  }
   out << std::fixed << std::setprecision(1);
   if (subCmd == "AREA")
   {
@@ -156,10 +152,6 @@ std::ostream & zheleznyakov::commands::count(const std::vector< Polygon > & poly
 {
   std::string subCmd = "";
   in >> subCmd;
-  if (polygons.empty())
-  {
-    throw std::logic_error("<INVALID COMMAND>");
-  }
   out << std::fixed << std::setprecision(1);
   if (subCmd == "EVEN")
   {
@@ -198,12 +190,12 @@ size_t zheleznyakov::processCountVertex(const std::vector< Polygon > & polygons,
 
 bool zheleznyakov::polygonIsVertexesOdd(const Polygon & polygon)
 {
-  return polygon.points.size() % 2 == 0;
+  return polygon.points.size() % 2 != 0;
 }
 
 bool zheleznyakov::polygonIsVertexesEven(const Polygon & polygon)
 {
-  return polygon.points.size() % 2 != 0;
+  return polygon.points.size() % 2 == 0;
 }
 
 bool zheleznyakov::polygonIsVertexesEquals(const Polygon & polygon, const size_t vertexes)
