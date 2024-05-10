@@ -3,16 +3,43 @@
 #include <map>
 #include <functional>
 #include <limits>
+#include <iterator>
 #include "geometry.hpp"
 #include "commands.hpp"
 
-int main()
+int main(int argc, char * argv[])
 {
   using namespace zheleznyakov;
   using std::istream;
   using std::ostream;
 
+  if (argc != 2)
+  {
+    std::cerr << "Wrong arguments count\n";
+    return 2;
+  }
+
+  std::ifstream in(argv[1]);
+  if (!in)
+  {
+    std::cerr << "Unable to read file\n";
+    return 2;
+  }
+
   std::vector< Polygon > polygons;
+  while (!in.eof())
+  {
+    std::copy(
+      std::istream_iterator< Polygon >(in),
+      std::istream_iterator< Polygon >(),
+      std::back_inserter(polygons)
+    );
+    if (in.fail() && !in.eof())
+    {
+      in.clear();
+      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 
   std::map< std::string, std::function< ostream &(const std::vector< Polygon > &, istream &, ostream &) > > cmds;
   {
