@@ -44,6 +44,9 @@ int main(int argc, char * argv[])
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(ponomarev::chooseAreaCommand, _1, _2, _3);
+    commands["MAX"] = std::bind(ponomarev::getMax, _1, _2, _3);
+    commands["MIN"] = std::bind(ponomarev::getMin, _1, _2, _3);
+    commands["COUNT"] = std::bind(ponomarev::count, _1, _2, _3);
   }
   return 0;
 
