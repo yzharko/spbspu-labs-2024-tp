@@ -1,8 +1,9 @@
 #include "iofmtguard.hpp"
+#include <ios>
 
 namespace taskaev
 {
-  iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept:
+  iofmtguard::iofmtguard(std::basic_ios< char >& s) :
     s_(s),
     fill_(s.fill()),
     precision_(s.precision()),
