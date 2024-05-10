@@ -280,7 +280,12 @@ namespace nikiforov
     int o3 = orientation(begin2, end2, begin1);
     int o4 = orientation(begin2, end2, end1);
 
-    if ((o1 != o2 && o3 != o4) || (o1 == o2 == o3 == 1 && o4 == 2))
+    if (o1 != o2 && o3 != o4)
+    {
+      return true;
+    }
+
+    if (o1 == o2 && o1 == o3 && o1 != o4)
     {
       return true;
     }
