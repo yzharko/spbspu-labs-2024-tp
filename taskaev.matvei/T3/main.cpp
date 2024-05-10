@@ -1,6 +1,7 @@
 #include <limits>
 #include <iostream>
 #include <vector>
+#include <functional>
 #include <fstream>
 #include "Polygon.hpp"
 
