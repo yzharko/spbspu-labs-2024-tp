@@ -13,7 +13,7 @@ namespace taskaevv
 
   struct Polygon
   {
-    std::vector < taskaev::Point > points;
+    std::vector < Point > points;
   };
 
   std::istream& operator>>(std::istream& in, Point& point);

@@ -40,9 +40,9 @@ namespace taskaev
     return polygon.points.size();
   }
 
-  double getAreas(const Point& point1, const Point& point2)
+  double getAreas(const Point& pointOne, const Point& pointTwo)
   {
-    return point1.x * point2.y - point2.x * point1.y;
+    return pointOne.x_ * pointTwo.y_ - pointTwo.x_ * pointOne.y_;
   }
 
   double getArea(const Polygon& polygon)
