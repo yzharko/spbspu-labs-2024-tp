@@ -83,9 +83,9 @@ namespace taskaev
   {
     if (!(polygon.points.size() % 2 == 0))
     {
-      return area;
+      return area + getArea(polygon);
     }
-    return area + getArea(polygon);
+    return area;
   }
 
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out)
@@ -101,11 +101,11 @@ namespace taskaev
   }
   double getAreaOdd(double area, const Polygon& polygon)
   {
-    if (!(polygon.points.size() % 2 == 0))
+    if ((polygon.points.size() % 2 == 0))
     {
-      return area;
+      return area + getArea(polygon);
     }
-    return area + getArea(polygon);
+    return area;
   }
 
   void AreaMean(const std::vector< Polygon >& polygon, std::ostream& out)
