@@ -81,7 +81,7 @@ namespace taskaev
   }
   double getAreaEven(double area, const Polygon& polygon)
   {
-    if ((polygon.points.size() % 2 == 0))
+    if (!(polygon.points.size() % 2 == 0))
     {
       return area;
     }
