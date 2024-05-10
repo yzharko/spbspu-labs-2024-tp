@@ -6,6 +6,19 @@
 #include <limits>
 #include <iterator>
 
+// miheev::Graph::Graph(const Graph& rhs)
+// {
+//   *this = rhs;
+// }
+
+// miheev::Graph& miheev::Graph::operator=(const Graph& rhs)
+// {
+//   name = rhs.name;
+//   filename = rhs.filename;
+//   nodes_.clear();
+//   nodes_.insert(rhs.nodes_.begin(), rhs.nodes_.end());
+//   return *this;
+// }
 
 void miheev::Graph::addNode(int name)
 {
@@ -195,14 +208,16 @@ miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
 
 void miheev::Graph::Dextra::calcMinTimeToEach()
 {
+  std::cout << "DEBUG: calculating time to each node\n";
   while(!unprocessedNodes.empty())
   {
     int nameOfNodeWithMinimumTime = getNodeWithMinimumTimeToIt();
-    const Node& node = graph.nodes_.at(nameOfNodeWithMinimumTime);
+    std::cout << "DEGUG: current node with minimum time to it is: " << nameOfNodeWithMinimumTime << '\n';
     if (timeToNodes.at(nameOfNodeWithMinimumTime) == std::numeric_limits< size_t >::max())
     { // значит остались только узлы, до которых нельзя добраться
       return;
     }
+    const Node& node = graph.nodes_.at(nameOfNodeWithMinimumTime);
     recalculateTimeToNeighboursOfTheNode(node);
     unprocessedNodes.erase(node.name);
   }

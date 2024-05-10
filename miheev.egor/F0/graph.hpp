@@ -3,8 +3,9 @@
 
 #include <unordered_set>
 #include <map>
+#include <unordered_map>
 #include <forward_list>
-#include <ios>
+#include <iostream>
 
 namespace miheev
 {
@@ -16,6 +17,9 @@ namespace miheev
 
   public:
     Graph() = default;
+    // Graph(const Graph&);
+
+    // Graph& operator=(const Graph&);
 
     void addNode(int name);
     void addEdge(int lnode, int rnode, size_t weight = 2);
@@ -25,8 +29,8 @@ namespace miheev
     struct Path;
     Path navigate(int start, int finish) const; // как плейсхолдер для функции
 
-    std::ostream& printNodes(std::ostream&) const;
-    std::ostream& printAllEdges(std::ostream&) const;
+    std::ostream& printNodes(std::ostream& = std::cout) const;
+    std::ostream& printAllEdges(std::ostream& = std::cout) const;
     bool contains(int nodeName) const;
 
     std::string name;

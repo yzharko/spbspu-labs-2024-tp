@@ -5,7 +5,65 @@
 #include <limits>
 #include "inputFunctions.hpp"
 
-std::ostream& miheev::nodeCommand(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
+// void miheev::commands::execute(const std::string& , miheev::Workspace&)
+// {
+//   std::map< std::string, miheev::commands::_t > commands;
+//   {
+//     using namespace std::placeholders;
+//     // commands["node"] = std::bind(miheev::commands::node, _1, _2, workspace);
+//     // commands["edge"] = std::bind(miheev::commands::edge, _1, _2, workspace);
+//     // commands["navigate"] = std::bind(miheev::commands::navigate, _1, _2, workspace);
+//     // commands["list"] = std::bind(miheev::commands::list, _1, _2, workspace);
+//     // commands["jump"] = std::bind(miheev::commands::jump, _1, _2, workspace);
+//     // commands["print"] = std::bind(miheev::commands::print, _1, _2, workspace);
+//     commands["node"] = 
+//   }
+// }
+
+// miheev::commands::Command::Command():
+//   type(none)
+// {}
+
+// miheev::commands::Command::Command(miheev::commands::ModifyingFunction modifyingFunction)
+// {
+//   function.modifying = modifyingFunction;
+//   type = modifying;
+// }
+
+// miheev::commands::Command::Command(miheev::commands::ConstFunction constantFunction)
+// {
+//   function.constant = constantFunction;
+//   type = constant;
+// }
+
+// miheev::commands::Command& miheev::commands::Command::operator=(const Command& rhs)
+// {
+//   type = rhs.type;
+//   if (type == constant)
+//   {
+//     function.constant = rhs.function.constant;
+//   }
+//   else if (type == modifying)
+//   {
+//     function.modifying = rhs.function.modifying;
+//   }
+//   return *this;
+// }
+
+// std::ostream& miheev::commands::Command::operator()(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
+// {
+//   if (type == constant)
+//   {
+//     return function.constant(out, in, workspace);
+//   }
+//   else if (type == modifying)
+//   {
+//     return function.modifying(out, in, workspace);
+//   }
+//   return out;
+// }
+
+std::ostream& miheev::commands::node(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
 {
   std::string action = "";
   int node = -1;
@@ -29,7 +87,7 @@ std::ostream& miheev::nodeCommand(std::ostream& out, std::istream& in, miheev::W
   return out;
 }
 
-std::ostream& miheev::edgeCommand(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
+std::ostream& miheev::commands::edge(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
 {
   std::string action = "";
   int lnode = -1, rnode = -1;
@@ -62,7 +120,7 @@ void printPath(std::ostream& out, const miheev::Graph::Path& path)
   out << '\n' << "Path length is: " << path.lenght << '\n';
 }
 
-std::ostream& miheev::navigateCommand(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
+std::ostream& miheev::commands::navigate(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
 {
   workspace.current.printNodes(out);
   int lnode = -1, rnode = -1;
@@ -72,7 +130,7 @@ std::ostream& miheev::navigateCommand(std::ostream& out, std::istream& in, const
   return out;
 }
 
-std::ostream& miheev::listCommand(std::ostream& out, std::istream&, const miheev::Workspace& workspace)
+std::ostream& miheev::commands::list(std::ostream& out, std::istream&, const miheev::Workspace& workspace)
 {
   std::vector< std::string > names;
   miheev::getGraphsNames(workspace, names);
@@ -84,23 +142,49 @@ std::ostream& miheev::listCommand(std::ostream& out, std::istream&, const miheev
   return out;
 }
 
-void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph)
+void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph) // TODO: вынести в функции графа
 {
+  std::cout << "DEBUG: simple graph before erase: ";
+  workspace.graphs.at("simple").printAllEdges();
+
   workspace.graphs.erase(graph.name);
+
+  std::cout << "DEBUG: simple graph after erase before insert: ";
+  workspace.graphs.at("simple").printAllEdges();
+
+  // workspace.graphs.insert({graph.name, graph});
   workspace.graphs.insert({graph.name, graph});
+
+  std::cout << "DEBUG: simple graph after insert: ";
+  miheev::Graph g = workspace.graphs.at("simple");
+  g.printAllEdges();
+  // std::cout << "DEBUG: after ";
+  // workspace.graphs.at(graph.name).printAllEdges();
 }
 
-std::ostream& miheev::jumpCommand(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
+std::ostream& miheev::commands::jump(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
 {
+  // std::cout << "DEBUG: before update (simple): ";
+  // workspace.graphs.at("simple").printAllEdges();
   std::string name = "";
   std::getline(in >> std::ws, name);
   updateGraph(workspace, workspace.current);
+  // std::cout << "DEBUG: after update: ";
+  // workspace.graphs.at(workspace.current.name).printAllEdges();
+  // std::cout << "DEGUG: befor shit (simple): ";
+  // workspace.graphs.at("simple").printAllEdges();
+  // std::cout << "DEGUG: befor shit (complex): ";
+  // workspace.graphs.at("complex").printAllEdges();
   try
   {
+
+    // workspace.graphs[name].printAllEdges();
     miheev::Graph newCurrent = workspace.graphs.at(name);
+    newCurrent.printAllEdges();
+    // workspace.graphs.at(workspace.current.name).printAllEdges(out);
+
     workspace.current = newCurrent;
-    workspace.current.printNodes(out);
-    out << "succesfully jumped to graph \"" << newCurrent.name << "\"\n";
+    out << "succesfully jumped to graph \"" << workspace.current.name << "\"\n";
   }
   catch (const std::out_of_range& e)
   {
@@ -109,7 +193,7 @@ std::ostream& miheev::jumpCommand(std::ostream& out, std::istream& in, miheev::W
   return out;
 }
 
-std::ostream& miheev::printCommand(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
+std::ostream& miheev::commands::print(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
 {
   std::string arg = "";
   in >> arg;
@@ -128,7 +212,7 @@ std::ostream& miheev::printCommand(std::ostream& out, std::istream& in, const mi
   return out;
 }
 
-// std::ostream& miheev::saveCommand(std::ostream& out, std::istream& in, const miheev::Workspace&)
+// std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const miheev::Workspace&)
 // {}
 
-// std::ostream& miheev::helpCommand(std::ostream& out, std::istream& in, const miheev::Workspace&)
+// std::ostream& miheev::commands::help(std::ostream& out, std::istream& in, const miheev::Workspace&)
