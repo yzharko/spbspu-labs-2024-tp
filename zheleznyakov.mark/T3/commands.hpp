@@ -7,6 +7,7 @@ namespace zheleznyakov
   namespace commands
   {
     std::ostream & area(const std::vector< Polygon > &, std::istream &, std::ostream &);
+    std::ostream & max(const std::vector< Polygon > &, std::istream &, std::ostream &);
   }
 
   double areaAccumulator(double currentSum, const Polygon & poly);
@@ -18,5 +19,8 @@ namespace zheleznyakov
   double processAreaOdd(const std::vector< Polygon > & polys);
   double processAreaMean(const std::vector< Polygon > & polys);
   double processAreaVertexes(const std::vector< Polygon > & polys, size_t vertexes);
+
+  double processMaxArea(const std::vector< Polygon > & polys);
+  size_t processMaxVertex(const std::vector< Polygon > & polys);
 }
 #endif
