@@ -66,7 +66,7 @@ double zheleznyakov::processAreaOdd(const std::vector< Polygon > & polygons)
 
 double zheleznyakov::processAreaMean(const std::vector< Polygon > & polygons)
 {
-  return std::accumulate(polygons.begin(), polygons.end(), 0, areaAccumulator) / polygons.size();
+  return static_cast< double >(std::accumulate(polygons.begin(), polygons.end(), 0, areaAccumulator)) / polygons.size();
 }
 
 double zheleznyakov::processAreaVertexes(const std::vector< Polygon > & polygons, size_t vertexes)
