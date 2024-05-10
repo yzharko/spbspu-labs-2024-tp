@@ -15,8 +15,8 @@ namespace ponomarev
 
   double sumAreasEven(const std::vector< Polygon > & data);
   double sumAreasOdd(const std::vector< Polygon > & data);
-  double countAreasMean(const std::vector< Polygon > & data);
-  double countSumAreasVertexes(const std::vector< Polygon > & data, int numOfVertexes);
+  double sumAreasMean(const std::vector< Polygon > & data);
+  double sumAreasVertexes(const std::vector< Polygon > & data, int numOfVertexes);
 
   double getMaxArea(const std::vector< Polygon > & data);
   double getMaxVertexes(const std::vector< Polygon > & data);
@@ -26,7 +26,7 @@ namespace ponomarev
 
   int countEven(const std::vector< Polygon > & data);
   int countOdd(const std::vector< Polygon > & data);
-  int countdata(const std::vector< Polygon > & data, int numOfVertexes);
+  int countCertain(const std::vector< Polygon > & data, int numOfVertexes);
 
   std::ostream & printMessage(std::ostream & out, const std::string & message);
 }

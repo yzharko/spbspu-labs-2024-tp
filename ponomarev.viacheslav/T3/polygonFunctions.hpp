@@ -12,7 +12,12 @@ namespace ponomarev
   double sumOdd(double res, const Polygon & polygon);
   double sumAll(double res, const Polygon & polygon);
   double sumIfNumOfVertexes(double res, const Polygon & polygon, size_t numOfVertexes);
+
   int getNumOfVertexes(const Polygon & polygon);
+
+  bool isEven(const Polygon polygon);
+  bool isOdd(const Polygon polygon);
+  bool isEqually(const Polygon polygon, size_t numOfVertexes);
 }
 
 #endif
