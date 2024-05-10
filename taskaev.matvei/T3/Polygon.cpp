@@ -15,11 +15,6 @@ namespace taskaev
     return in >> del{'('} >> point.x_ >> del{';'} >> point.y_ >> del{')'};
   }
 
-  bool operator<(const Point& left, const Point& right)
-  {
-    // later
-  }
-
   std::istream& operator>>(std::istream& in, Polygon& polygon)
   {
     //later
