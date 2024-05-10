@@ -36,6 +36,11 @@ double ponomarev::sumOdd(double res, const Polygon & polygon)
   return (polygon.points.size() % 2 != 0) ? res + getArea(polygon) : res;
 }
 
+double ponomarev::sumAll(double res, const Polygon & polygon)
+{
+  return res + getArea(polygon);
+}
+
 double ponomarev::sumIfNumOfVertexes(double res, const Polygon & polygon, size_t numOfVertexes)
 {
   return (polygon.points.size() == numOfVertexes) ? res + getArea(polygon) : res;

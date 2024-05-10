@@ -9,7 +9,8 @@ namespace ponomarev
   int getValue(const Point & first, const Point & second);
 
   double sumEven(double res, const Polygon & polygon);
-  double sumOdd(double res, const Polygon & polygon)
+  double sumOdd(double res, const Polygon & polygon);
+  double sumAll(double res, const Polygon & polygon);
   double sumIfNumOfVertexes(double res, const Polygon & polygon, size_t numOfVertexes);
 }
 

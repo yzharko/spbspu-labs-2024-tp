@@ -37,7 +37,10 @@ int main(int argc, char * argv[])
     }
   }
 
-  std::map< std::string, std::function < std::ostream & (std::istream &, std::ostream &, const std::vector< ponomarev::Polygon > &) > > commands;
+  std::map<
+    std::string,
+    std::function< std::ostream & (const std::vector< ponomarev::Polygon > &, std::istream &, std::ostream & ) >
+  > commands;
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(ponomarev::chooseAreaCommand, _1, _2, _3);

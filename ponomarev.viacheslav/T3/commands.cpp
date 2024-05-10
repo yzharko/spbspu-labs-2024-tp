@@ -42,9 +42,14 @@ double ponomarev::sumAreasEven(const std::vector< Polygon > & data)
   return std::accumulate(data.cbegin(), data.cend(), 0, sumEven);
 }
 
-double sumAreasOdd(const std::vector< Polygon > & data)
+double ponomarev::sumAreasOdd(const std::vector< Polygon > & data)
 {
-  return std::accumulate(shapes.cbegin(), shapes.cend(), 0, sumOdd);
+  return std::accumulate(data.cbegin(), data.cend(), 0, sumOdd);
+}
+
+double ponomarev::countAreasMean(const std::vector< Polygon > & data)
+{
+  return std::accumulate(data.cbegin(), data.cend(), 0, sumAll) / data.size();
 }
 
 double ponomarev::countSumAreasVertexes(const std::vector< Polygon > & data, int numOfVertexes)
