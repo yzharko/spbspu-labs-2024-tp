@@ -163,6 +163,7 @@ namespace nikiforov
   double getAreaResult(const std::vector< Polygon >& shapes, std::string mode)
   {
     std::vector< double > areaOfEach;
+
     std::transform(
       std::begin(shapes), std::end(shapes),
       std::back_inserter(areaOfEach),
@@ -185,6 +186,7 @@ namespace nikiforov
   size_t getVertexesResult(const std::vector< Polygon >& shapes, std::string mode)
   {
     std::vector< size_t > vectOfAllVertexes;
+
     std::transform(
       std::begin(shapes), std::end(shapes),
       std::back_inserter(vectOfAllVertexes),
@@ -252,14 +254,13 @@ namespace nikiforov
   {
     std::vector< std::pair< Point, Point > > vectorsPolygon;
 
-    size_t sizePol = polygon.points.size();
-
     std::transform(++polygon.points.cbegin(), polygon.points.cend(),
       polygon.points.cbegin(),
       std::back_inserter(vectorsPolygon),
       std::bind(getPointsInter, _2, _1)
     );
 
+    size_t sizePol = polygon.points.size();
     vectorsPolygon.push_back(getPointsInter(polygon.points.at(0), polygon.points.at(sizePol - 1)));
 
     return std::count_if(std::begin(vectorsPolygon), std::end(vectorsPolygon),
@@ -279,7 +280,7 @@ namespace nikiforov
     int o3 = orientation(begin2, end2, begin1);
     int o4 = orientation(begin2, end2, end1);
 
-    if (o1 != o2 && o3 != o4)
+    if ((o1 != o2 && o3 != o4) || (o1 == o2 == o3 == 1 && o4 == 2))
     {
       return true;
     }
@@ -333,8 +334,7 @@ namespace nikiforov
 
     if (input >> shapeSame)
     {
-      out << std::count_if(std::begin(shapes), std::end(shapes), std::bind(countSame, shapeSame, _1));
-      out << "\n";
+      out << std::count_if(std::begin(shapes), std::end(shapes), std::bind(countSame, shapeSame, _1)); << "\n"; 
     }
     else
     {
@@ -345,7 +345,10 @@ namespace nikiforov
 
   bool countSame(const Polygon& polygonSame, const Polygon& polygonShape)
   {
-    if (polygonSame.points.size() == polygonShape.points.size())
+    size_t sizeShape = polygonShape.points.size();
+    size_t sizeSame = polygonSame.points.size();
+
+    if (sizeSame == sizeShape)
     {
       std::vector< int > resultsSame;
       std::transform(
@@ -354,7 +357,7 @@ namespace nikiforov
         std::back_inserter(resultsSame),
         std::bind(pointsSame, _1, _2)
       );
-      auto it = std::search_n(resultsSame.begin(), resultsSame.end(), polygonSame.points.size(), resultsSame.at(0));
+      auto it = std::search_n(resultsSame.begin(), resultsSame.end(), sizeSame, resultsSame.at(0));
       return it != resultsSame.end();
     }
     else

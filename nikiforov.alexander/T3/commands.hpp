@@ -38,7 +38,6 @@ namespace nikiforov
   int pointsSame(const Point& first, const Point& second);
 
   void takingError(std::ostream& out, const std::string& errorStr);
-
 }
 
 #endif
