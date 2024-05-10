@@ -13,7 +13,10 @@ namespace kovshikov
   bool isOdd(const Polygon& polygon);
   bool isThisVertex(unsigned long long num, Polygon polygon);
   unsigned long long getVertexes(const Polygon& polygon);
-
+  Point createVector(const Point& next, const Point& current);
+  int getScalar(const Point& next, const Point& current);
+  bool isRight(int scalar);
+  bool isPolygonRight(const Polygon& polygon); //bool
 
   void getAreaEven(const std::vector< Polygon >& allData, std::ostream& out);
   void getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out);
@@ -30,11 +33,11 @@ namespace kovshikov
   void countOdd(const std::vector< Polygon >& allData, std::ostream& out);
   void countVertexes(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
 
-
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+  void countRightshapes(const std::vector< Polygon >& allData, std::ostream& out);
 }
 
 #endif

@@ -306,3 +306,48 @@ void kovshikov::countVertexes(unsigned long long num, const std::vector< Polygon
   count = withThisVertexes.size();
   out << count << "\n";
 }
+
+kovshikov::Point kovshikov::createVector(const Point& next, const Point& current)
+{
+  int vectorX = next.x - current.x;
+  int vectorY = next.y - current.y;
+  return Point{vectorX, vectorY};
+}
+
+int kovshikov::getScalar(const Point& next, const Point& current)
+{
+  return (next.x * current.x) + (next.y * current.y);
+}
+
+bool kovshikov::isRight(int scalar)
+{
+  if(scalar == 0)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool kovshikov::isPolygonRight(const Polygon& polygon)// bool // проверка на наличие прямого угла в ОДНОМ полигоне
+{
+  std::vector< Point > allVectors;
+  std::vector< int > allScalars;
+  std::vector< Point >::const_iterator next = polygon.points.begin() + 1;
+  std::vector< Point >::const_iterator current = polygon.points.begin();
+  std::transform(next, polygon.points.end(), current, std::back_inserter(allVectors), createVector);
+  allVectors.push_back(createVector(polygon.points.front(), polygon.points.back()));
+  std::transform(allVectors.begin() + 1, allVectors.end(), allVectors.begin(), std::back_inserter(allScalars), getScalar);
+  allScalars.push_back(getScalar(allVectors.front(), allVectors.back()));
+  return std::any_of(allScalars.begin(), allScalars.end(), isRight);
+}
+
+void kovshikov::countRightshapes(const std::vector< Polygon >& allData, std::ostream& out) // не нужен поток ввода, диспетчеризация??
+{
+ // out << "allVectors:" << "\n"; //
+ // isPolygonRight(allData.front());
+
+  out << std::count_if(allData.begin(), allData.end(), isPolygonRight);
+}
