@@ -49,7 +49,7 @@ int main(int argc, char * argv[])
     cmds["MIN"] = std::bind(commands::min, _1, _2, _3);
     cmds["COUNT"] = std::bind(commands::count, _1, _2, _3);
   }
-  
+
   std::string currentCommand = "";
   while (std::cin >> currentCommand)
   {
