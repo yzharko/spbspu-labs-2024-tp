@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <iostream>
 #include <limits>
+#include <fstream>
+#include <sstream>
 #include "inputFunctions.hpp"
 
 std::ostream& miheev::commands::node(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
@@ -51,6 +53,83 @@ std::ostream& miheev::commands::edge(std::ostream& out, std::istream& in, miheev
   return out;
 }
 
+void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph) // TODO: вынести в функции графа
+{
+  workspace.graphs.erase(graph.name);
+  workspace.graphs.insert({graph.name, graph});
+}
+
+void makeCastling(std::ostream& out, std::string nameOfNew, miheev::Workspace& workspace)
+{
+  updateGraph(workspace, workspace.current);
+  try
+  {
+    miheev::Graph newCurrent = workspace.graphs.at(nameOfNew);
+    workspace.current = newCurrent;
+  }
+  catch (const std::out_of_range& e)
+  {
+    out << "Jump error: graph with name \"" << nameOfNew << "\" doesn't exist\n";
+  }
+}
+
+void createGraphFromFile(std::istream& in, std::ostream& out, miheev::Workspace& workspace)
+{
+  std::string filename;
+  in >> filename;
+  miheev::Graph temp;
+  miheev::readGraph(filename, temp);
+  updateGraph(workspace, temp);
+  makeCastling(out, temp.name, workspace);
+  out << "[INFO] graph \"" << temp.name << "\" initialised succesfully\n";
+}
+
+void readGraphFromInput(std::istream& in, miheev::Graph& container)
+{
+  in.clear();
+  in.ignore(std::numeric_limits< std::streamsize >::max());
+  std::string input;
+  std::getline(in, input, '\n');
+  std::stringstream ss(input);
+  ss >> container;
+}
+
+void createGraphFrominput(std::istream& in, std::ostream& out, const std::string& name, miheev::Workspace& workspace)
+{
+  miheev::Graph temp;
+  temp.name = name;
+  out << "(" << name << "): ";
+
+  readGraphFromInput(in, temp);
+
+  updateGraph(workspace, temp);
+  makeCastling(out, name, workspace);
+  out << "[INFO] graph \"" << temp.name << "\" initialised succesfully\n";
+}
+
+std::ostream& miheev::commands::graph(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
+{
+  std::string arg = "";
+  in >> arg;
+  if (arg == "add")
+  {
+    in >> arg;
+    if (arg == "-f")
+    {
+      createGraphFromFile(in, out, workspace);
+    }
+    else
+    {
+      createGraphFrominput(in, out, arg, workspace);
+    }
+  }
+  else if (arg == "close")
+  {
+
+  }
+  return out;
+}
+
 void printPath(std::ostream& out, const miheev::Graph::Path& path)
 {
   out << "Path is: ";
@@ -84,26 +163,12 @@ std::ostream& miheev::commands::list(std::ostream& out, std::istream&, const mih
   return out;
 }
 
-void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph) // TODO: вынести в функции графа
-{
-  workspace.graphs.erase(graph.name);
-  workspace.graphs.insert({graph.name, graph});
-}
-
 std::ostream& miheev::commands::jump(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
 {
   std::string name = "";
   std::getline(in >> std::ws, name);
   updateGraph(workspace, workspace.current);
-  try
-  {
-    miheev::Graph newCurrent = workspace.graphs.at(name);
-    workspace.current = newCurrent;
-  }
-  catch (const std::out_of_range& e)
-  {
-    out << "Jump error: graph with name \"" << name << "\" doesn't exist\n";
-  }
+  makeCastling(out, name, workspace);
   return out;
 }
 
@@ -126,10 +191,24 @@ std::ostream& miheev::commands::print(std::ostream& out, std::istream& in, const
   return out;
 }
 
-std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const miheev::Workspace&)
+std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
 {
-  std::string filename;
-
+  std::string arg = "";
+  in >> arg;
+  if (arg == "-f")
+  {
+    std::string filename = workspace.current.filename;
+    std::ofstream output(filename);
+    output << workspace.current.name << '\n';
+    workspace.current.printAllEdges(output);
+  }
+  else
+  {
+    std::ofstream output(arg);
+    output << workspace.current.name << '\n';
+    workspace.current.printAllEdges(output);
+  }
+  return out;
 }
 
 // std::ostream& miheev::commands::help(std::ostream& out, std::istream& in, const miheev::Workspace&)

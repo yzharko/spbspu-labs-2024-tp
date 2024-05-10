@@ -21,20 +21,15 @@ int main(int argc, char* argv[])
   using namespace miheev;
 
   Graph initialGraph;
-  // std::map< std::string, Graph > initialGraphs;
   Workspace workspace{{}, initialGraph};
-
-  // workspace.current.printAllEdges(std::cout);
   initWorkspace(argc, argv, workspace);
-  // workspace.current.printAllEdges(std::cout);
-  // foo(workspace);
-  // workspace.current.printAllEdges(std::cout);
 
   std::map< std::string, std::function< std::ostream&(std::ostream&, std::istream&, Workspace&) > > commands;
   {
     using namespace std::placeholders;
     commands["node"] = miheev::commands::node;
     commands["edge"] = miheev::commands::edge;
+    commands["graph"] = miheev::commands::graph;
     commands["navigate"] = miheev::commands::navigate;
     commands["list"] = miheev::commands::list;
     commands["jump"] = miheev::commands::jump;
@@ -42,7 +37,7 @@ int main(int argc, char* argv[])
   }
 
   std::string command = "";
-  std::cout << "~> ";
+  std::cout << "[" << workspace.current.name <<"]~> ";
   while(std::cin >> command)
   {
     try
@@ -60,7 +55,7 @@ int main(int argc, char* argv[])
       std::cerr << e.what() << '\n';
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-    std::cout << "~> ";
+    std::cout << "[" << workspace.current.name <<"]~> ";
   }
 
   return 0;

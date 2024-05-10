@@ -4,6 +4,7 @@
 #include <utility>
 #include <vector>
 #include <limits>
+#include <sstream>
 #include <iterator>
 
 // miheev::Graph::Graph(const Graph& rhs)
@@ -282,7 +283,6 @@ std::istream& miheev::operator>>(std::istream& in, miheev::Graph& graph)
   // ребро выглядит так: a-b:w
   using del = miheev::DelimiterIO;
 
-  std::string graphName = "";
   int lnode = -1, rnode = -1;
   size_t weight;
 
@@ -291,7 +291,7 @@ std::istream& miheev::operator>>(std::istream& in, miheev::Graph& graph)
     in >> lnode >> del{'-'} >> rnode >> del{':'} >> weight;
     if (in.fail() && !in.eof())
     {
-      std::cerr << "Warning: failed to read one of the nodes in file\n";
+      std::cerr << "Warning: failed to read one of the nodes\n";
       in.clear();
       in.ignore(std::numeric_limits< std::streamsize >::max(), ' ');
       continue;
