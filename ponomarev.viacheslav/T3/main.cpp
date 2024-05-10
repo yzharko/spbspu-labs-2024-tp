@@ -5,6 +5,7 @@
 #include <limits>
 #include <iterator>
 #include "polygon.hpp"
+#include "commands.hpp"
 
 int main(int argc, char * argv[])
 {
@@ -35,5 +36,26 @@ int main(int argc, char * argv[])
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
+  std::map< std::string, std::function < std::ostream & (const std::vector< ponomarev::Polygon > &, std::istream &, std::ostream &) > > commands;
+  {
+    using namespace std::placeholders;
+    commands["AREA"] = std::bind(ponomarev::chooseAreaCommand, _1, _2, _3);
+  }
   return 0;
+
+  std::string command;
+  while (std::cin >> command)
+  {
+    try
+    {
+      commands.at(command)(data, std::cin, std::cout);
+    }
+    catch (const std::logic_error&)
+    {
+      ponomarev::printMessage(std::cout, "<INVALID COMMAND>");
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 }
