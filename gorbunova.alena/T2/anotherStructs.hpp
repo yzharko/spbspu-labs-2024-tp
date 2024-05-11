@@ -1,3 +1,9 @@
+#ifndef ANOTHERSTRUCTS_HPP
+#define ANOTHERSTRUCTS_HPP
+#include <complex>
+#include <string>
+#include <utility>
+
 namespace gorbunova
 {
   struct Complexx
@@ -20,3 +26,4 @@ namespace gorbunova
     unsigned long long &ref;
   };
 }
+#endif
