@@ -45,14 +45,11 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
     if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
-      try
-      {
-        getAreaVertex(num, allData, out);
-      }
-      catch(const std::out_of_range& error)
+      if(num < 3)
       {
         throw;
       }
+      getAreaVertex(num, allData, out);
     }
     else
     {
@@ -136,15 +133,23 @@ bool kovshikov::isThisVertex(unsigned long long num, Polygon polygon)
 
 void kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
 {
-  using namespace std::placeholders;
-  std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
-  int count = std::count_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
-  if(detected == allData.end())
+  double result = 0;
+  if(allData.empty())
   {
-    throw std::out_of_range("");
+    out << result << "\n";
   }
-  double result = countArea(*detected) * count;
-  out << result << "\n";
+  else
+  {
+    using namespace std::placeholders;
+    std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+    int count = std::count_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+    if(detected == allData.end())
+    {
+      out << result << "\n";
+    }
+    result = countArea(*detected) * count;
+    out << result << "\n";
+  }
 }
 
 void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
