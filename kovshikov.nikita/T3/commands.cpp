@@ -272,6 +272,10 @@ void kovshikov::count(const std::vector< Polygon >& allData, std::istream& is, s
     if(std::all_of(command.begin(), command.end(), isDigit) == true) // заменить на функцию как здесь так и в AREA
     {
       unsigned long long num = std::stoll(command);
+      if(num < 3)
+      {
+        throw;
+      }
       countVertexes(num, allData, out); //тут нет же исключений??
     }
     else
