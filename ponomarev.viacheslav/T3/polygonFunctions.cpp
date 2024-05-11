@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <functional>
 #include <numeric>
-#include <iostream>
 
 double ponomarev::getArea(const Polygon & polygon)
 {
@@ -78,6 +77,7 @@ bool ponomarev::isRect(const Polygon polygon)
   Point b = polygon.points[1];
   Point c = polygon.points[2];
   Point d = polygon.points[3];
+
   return isOrthogonal(a, b, c) && isOrthogonal(b, c, d) && isOrthogonal(c, d, a);
 }
 
@@ -96,8 +96,10 @@ bool ponomarev::isIntersection(const Polygon & first, const Polygon & second)
   int secondMaxY = (*std::max_element(second.points.begin(), second.points.end(), whichBiggerY)).y;
   int secondMinX = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerX)).x;
   int secondMinY = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerY)).y;
-  std::cout << firstMaxX << firstMaxY << firstMinX << firstMinY << "\n";
-  return (firstMaxX >= secondMinX) && (firstMaxY >= secondMinY) && (firstMinX <= secondMaxX) && (firstMinY <= secondMaxY);
+
+  bool isIntersect = (firstMaxX >= secondMinX) && (firstMaxY >= secondMinY) && (firstMinX <= secondMaxX) && (firstMinY <= secondMaxY);
+
+  return isIntersect;
 }
 
 bool ponomarev::whichBiggerX(const Point & first, const Point & second)
@@ -112,10 +114,10 @@ bool ponomarev::whichBiggerY(const Point & first, const Point & second)
 
 bool ponomarev::whichSmallerX(const Point & first, const Point & second)
 {
-  return (first.x > second.x);
+  return (first.x < second.x);
 }
 
 bool ponomarev::whichSmallerY(const Point & first, const Point & second)
 {
-  return (first.y > second.y);
+  return (first.y < second.y);
 }
