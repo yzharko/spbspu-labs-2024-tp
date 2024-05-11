@@ -225,25 +225,25 @@ std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const 
 
 std::ostream& miheev::commands::help(std::ostream& out, std::istream&, const miheev::Workspace&)
 {
-  miheev::sendMessage(out, "help - prints listing of all commands with some clarifications") << '\n';
+  out << "help - prints listing of all commands with some clarifications\n" << '\n';
   out << "navigate < a > < b > - searches for the shortest path between nodes < a > and < b >. ";
-  out << "Note: < a > < b > are positive integers\n";
+  out << "Note: < a > < b > are positive integers\n\n";
   out << "graph add < graphname > - lets user to create a new graph using standart input. ";
-  out << "write down edges in a-b:w format, where a and b are nodes and w is weight";
-  miheev::sendMessage(out, "graph add -f < filename > - reads a graph from file. note that file contains name of the graph too") << '\n';
+  out << "write down edges in a-b:w format, where a and b are nodes and w is weight\n\n";
+  out << "graph add -f < filename > - reads a graph from file. note that file contains name of the graph too\n\n";
   out << "print < what > - prints informations about graph. Take \"nodes\" or \"edges\" as arugents. ";
   out << "If \"nodes\" passed, then prints the list of all nodes of focused graph. ";
   out << "Else if \"edges\" was given, prints edges in format a-b:w, ";
-  out << "where a and b are nodes and w is weight of edge" << '\n';
-  miheev::sendMessage(out, "list - prints list of all graphs in workspace") << '\n';
-  miheev::sendMessage(out, "jump < graphname > - swithes focus to the graph named \"graphname\"") << '\n';
-  miheev::sendMessage(out, "node add < number > - adds new node with name < number > to the focused graph") << '\n';
-  miheev::sendMessage(out, "node rm < number > - removes node named < number > from focused graph") << '\n';
-  miheev::sendMessage(out, "edge add < a > < b > < weight > - add an edge between nodes < a > and < b > with specified < weight >") << '\n';
-  miheev::sendMessage(out, "edge rm < a, b > - removes edge between nodes < a > and < b >") << '\n';
-  miheev::sendMessage(out, "save < filepath > - saves focused graph to file in < filepath >. If file doesn't exists it will be created") << '\n';
-  miheev::sendMessage(out, "save -r - if file was read from file, it will be saved int this exact file") << '\n';
-  miheev::sendMessage(out, "quit - close all graphs without saving") << '\n';
+  out << "where a and b are nodes and w is weight of edge\n\n";
+  out << "list - prints list of all graphs in workspace\n\n";
+  out << "jump < graphname > - swithes focus to the graph named \"graphname\"\n\n";
+  out << "node add < number > - adds new node with name < number > to the focused graph\n\n";
+  out << "node rm < number > - removes node named < number > from focused graph\n\n";
+  out << "edge add < a > < b > < weight > - add an edge between nodes < a > and < b > with specified < weight >\n\n";
+  out << "edge rm < a, b > - removes edge between nodes < a > and < b >\n\n";
+  out << "save < filepath > - saves focused graph to file in < filepath >. If file doesn't exists it will be created\n\n";
+  out << "save -r - if file was read from file, it will be saved int this exact file\n\n";
+  out << "quit - close all graphs without saving\n";
   return out;
 }
 std::ostream& miheev::commands::quit(std::ostream& out, std::istream&, miheev::Workspace& workspace)

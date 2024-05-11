@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
   while(workspace.isActive && !std::cin.eof())
   {
     std::cout << "[" << workspace.current.name <<"]~> ";
+    command = "";
     std::cin >> std::ws >> command;
 
     if (command == "" && std::cin.eof())
