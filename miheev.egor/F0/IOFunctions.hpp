@@ -9,7 +9,7 @@ namespace miheev
   void getGraphsNames(const Workspace&, std::vector< std::string >&);
   void initWorkspace(int argc, char* argv[], miheev::Workspace& workspace);
   void readGraph(const std::string& filename, Graph& container);
-  void sendMessage(std::ostream&, const std::string&);
+  std::ostream& sendMessage(std::ostream&, const std::string&);
 }
 
 #endif

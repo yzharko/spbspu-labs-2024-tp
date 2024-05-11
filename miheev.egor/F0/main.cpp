@@ -8,21 +8,13 @@
 
 #include <sstream>
 
-void foo(miheev::Workspace& w)
-{
-  std::stringstream ss("test\n1-2:1 1-3:1 2-3:1");
-  miheev::Graph test;
-  ss >> test;
-  w.current = test;
-}
-
 int main(int argc, char* argv[])
 {
   using namespace miheev;
 
   Graph initialGraph;
   initialGraph.name = "untitled";
-  Workspace workspace{{}, initialGraph};
+  Workspace workspace{{}, initialGraph, true};
   initWorkspace(argc, argv, workspace);
 
   std::map< std::string, std::function< std::ostream&(std::ostream&, std::istream&, Workspace&) > > commands;
@@ -36,34 +28,42 @@ int main(int argc, char* argv[])
     commands["jump"] = miheev::commands::jump;
     commands["print"] = miheev::commands::print;
     commands["save"] = miheev::commands::save;
+    commands["help"] = miheev::commands::help;
+    commands["quit"] = miheev::commands::quit;
   }
 
   std::string command = "";
-  std::cout << "[" << workspace.current.name <<"]~> ";
-  while(std::cin >> command)
+  while(workspace.isActive && !std::cin.eof())
   {
+    std::cout << "[" << workspace.current.name <<"]~> ";
+    std::cin >> std::ws >> command;
+
+    if (command == "" && std::cin.eof())
+    {
+      commands.at("quit")(std::cout, std::cin, workspace) << '\n';
+      continue;
+    }
     try
     {
       commands.at(command)(std::cout, std::cin, workspace);
     }
     catch (const std::invalid_argument& e)
     {
-      std::cerr << e.what() << '\n';
+      sendMessage(std::cerr, e.what());
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
     catch (const std::out_of_range& e)
     {
-      std::cerr << "invalid command\n";
-      std::cerr << e.what() << '\n';
+      sendMessage(std::cerr, "[ERROR] invalid command");
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
     catch (const std::runtime_error& e)
     {
-      std::cerr << e.what() << '\n';
+      sendMessage(std::cerr, e.what());
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-    std::cout << "[" << workspace.current.name <<"]~> ";
   }
 
+  miheev::sendMessage(std::cout, "[EXIT] Goodbye!");
   return 0;
 }

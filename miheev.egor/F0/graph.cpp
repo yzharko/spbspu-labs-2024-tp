@@ -25,7 +25,7 @@ void miheev::Graph::addNode(int name)
 {
   if (contains(name))
   {
-    throw std::invalid_argument("Insertion error: the node you want to add already exists\n");
+    throw std::invalid_argument("[ERROR](insertion): the node you want to add already exists");
   }
   nodes_.insert({name, Node{name}});
 }
@@ -46,11 +46,11 @@ void miheev::Graph::addEdge(int lnode, int rnode, size_t weight)
 {
   if (!contains(lnode))
   {
-    throw std::invalid_argument("Connection error: no node named " + std::to_string(lnode) + "\n");
+    throw std::invalid_argument("[ERROR](connection): no node named " + std::to_string(lnode));
   }
   if (!contains(rnode))
   {
-    throw std::invalid_argument("Connection error: no node named " + std::to_string(rnode) + "\n");
+    throw std::invalid_argument("[ERROR](connection): no node named " + std::to_string(rnode));
   }
   Node& leftNode = nodes_[lnode];
   Node& rightNode = nodes_[rnode];
@@ -69,11 +69,11 @@ void miheev::Graph::rmEdge(int lnode, int rnode)
 {
   if (!contains(lnode))
   {
-    throw std::invalid_argument("Disconnection error: node names" + std::to_string(lnode) + " doesn't exist");
+    throw std::invalid_argument("[ERROR](disconnection): node names" + std::to_string(lnode) + " doesn't exist");
   }
   if (!contains(rnode))
   {
-    throw std::invalid_argument("Disconnection error: node names" + std::to_string(rnode) + " doesn't exist");
+    throw std::invalid_argument("[ERROR](disconnection): node names" + std::to_string(rnode) + " doesn't exist");
   }
 
 //   --->
@@ -190,11 +190,11 @@ miheev::Graph::Path miheev::Graph::Dextra::operator()(int start, int finish)
 {
   if (!graph.contains(start))
   {
-    throw std::invalid_argument("Navigation error: no node " + std::to_string(start) + "\n");
+    throw std::invalid_argument("[ERROR](navigation): no node " + std::to_string(start));
   }
   if (!graph.contains(finish))
   {
-    throw std::invalid_argument("Navigation error: no node " + std::to_string(finish) + "\n");
+    throw std::invalid_argument("[ERROR](navigation): no node " + std::to_string(finish));
   }
   updateNodeState(start, 0);
   calcMinTimeToEach();
@@ -243,7 +243,7 @@ int miheev::Graph::Dextra::getNodeWithMinimumTimeToIt()
   for (auto iter(unprocessedNodes.cbegin()); iter != unprocessedNodes.cend(); iter++)
   {
     size_t curTime = timeToNodes.at(*iter);
-    if (curTime < minTime)
+    if (curTime <= minTime)
     {
       node = *iter;
       minTime = curTime;
@@ -256,7 +256,7 @@ std::forward_list< int > miheev::Graph::Dextra::findShortestPath(int start, int 
 {
   if (timeToNodes.at(finish) == std::numeric_limits< size_t >::max())
   {
-    std::invalid_argument("Navigation error: no path exists from node " + std::to_string(start) + " to node " + std::to_string(finish) + '\n');
+    std::invalid_argument("[ERROR](navigation): no path exists from node " + std::to_string(start) + " to node " + std::to_string(finish) + '\n');
   }
   std::forward_list< int > path;
   path.push_front(finish);

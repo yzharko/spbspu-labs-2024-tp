@@ -5,6 +5,7 @@
 #include <limits>
 #include <fstream>
 #include <sstream>
+#include <scopeguard.hpp>
 #include "IOFunctions.hpp"
 
 std::ostream& miheev::commands::node(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
@@ -14,7 +15,7 @@ std::ostream& miheev::commands::node(std::ostream& out, std::istream& in, miheev
   in >> action >> node;
   if (node < 0)
   {
-    throw std::invalid_argument("Node error: nodes can't be negative\n");
+    throw std::invalid_argument("[ERROR]: nodes can't be negative");
   }
   if (action == "add")
   {
@@ -69,7 +70,7 @@ void makeCastling(std::ostream& out, std::string nameOfNew, miheev::Workspace& w
   }
   catch (const std::out_of_range& e)
   {
-    out << "Jump error: graph with name \"" << nameOfNew << "\" doesn't exist\n";
+    miheev::sendMessage(out, "[ERROR]: graph with name \"" + nameOfNew + "\" doesn't exist\n");
   }
 }
 
@@ -155,7 +156,6 @@ void printPath(std::ostream& out, const miheev::Graph::Path& path)
 
 std::ostream& miheev::commands::navigate(std::ostream& out, std::istream& in, const miheev::Workspace& workspace)
 {
-  workspace.current.printNodes(out);
   int lnode = -1, rnode = -1;
   in >> lnode >> rnode;
   miheev::Graph::Path path = workspace.current.navigate(lnode, rnode);
@@ -198,7 +198,7 @@ std::ostream& miheev::commands::print(std::ostream& out, std::istream& in, const
   }
   else
   {
-    throw std::invalid_argument("Print error: commant takes only \"nodes\" and \"edges\" as parameters, while \"" + arg + "\" passed\n");
+    throw std::invalid_argument("[ERROR]: commant takes only \"nodes\" and \"edges\" as parameters, while \"" + arg + "\" passed");
   };
   return out;
 }
@@ -223,4 +223,26 @@ std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const 
   return out;
 }
 
-// std::ostream& miheev::commands::help(std::ostream& out, std::istream& in, const miheev::Workspace&)
+std::ostream& miheev::commands::help(std::ostream& out, std::istream&, const miheev::Workspace&)
+{
+  miheev::sendMessage(out, "help - prints listing of all commands with some clarifications") << '\n';
+  miheev::sendMessage(out, "navigate < a > < b > - searches for the shortest path between nodes < a > and < b >. Note: < a > < b > are positive integers") << '\n';
+  miheev::sendMessage(out, "graph add < graphname > - lets user to create a new graph using standart input. It special opens input prompt, where user can write down all nodes with their weights in format a-b:w, where a and b are nodes and w is weight. After the graph is initialised, it will be focused") << '\n';
+  miheev::sendMessage(out, "graph add -f < filename > - reads a graph from file. note that file contains name of the graph too") << '\n';
+  miheev::sendMessage(out, "print < what > - prints informations about graph. Take \"nodes\" or \"edges\" as arugents. If \"nodes\" passed, then prints the list of all nodes of focused graph. Else if \"edges\" was given, prints edges in format a-b:w, where a and b are nodes and w is weight of edge") << '\n';
+  miheev::sendMessage(out, "list - prints list of all graphs in workspace") << '\n';
+  miheev::sendMessage(out, "jump < graphname > - swithes focus to the graph named \"graphname\"") << '\n';
+  miheev::sendMessage(out, "node add < number > - adds new node with name < number > to the focused graph") << '\n';
+  miheev::sendMessage(out, "node rm < number > - removes node named < number > from focused graph") << '\n';
+  miheev::sendMessage(out, "edge add < a > < b > < weight > - add an edge between nodes < a > and < b > with specified < weight >") << '\n';
+  miheev::sendMessage(out, "edge rm < a, b > - removes edge between nodes < a > and < b >") << '\n';
+  miheev::sendMessage(out, "save < filepath > - saves focused graph to file in < filepath >. If file doesn't exists it will be created") << '\n';
+  miheev::sendMessage(out, "save -r - if file was read from file, it will be saved int this exact file") << '\n';
+  miheev::sendMessage(out, "quit - close all graphs without saving") << '\n';
+  return out;
+}
+std::ostream& miheev::commands::quit(std::ostream& out, std::istream&, miheev::Workspace& workspace)
+{
+  workspace.isActive = false;
+  return out;
+}

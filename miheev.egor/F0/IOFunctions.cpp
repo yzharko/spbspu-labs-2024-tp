@@ -40,7 +40,7 @@ void insertGraph(const miheev::Graph& graph, miheev::Workspace& workspace)
   const std::string& name = graph.name;
   if (nameIsNotUnique(name, workspace))
   {
-    throw std::logic_error("Insertion error: graph, named \"" + name + "\" already exists\n");
+    throw std::logic_error("[ERROR](insertion): graph, named \"" + name + "\" already exists");
   }
   workspace.graphs.insert({name, graph});
 }
@@ -77,7 +77,7 @@ void miheev::readGraph(const std::string& filename, miheev::Graph& container)
   std::ifstream in(filename);
   if(!in)
   {
-    throw std::runtime_error("Input error: error while opening file " + filename);
+    throw std::runtime_error("[ERROR](input): error while opening file " + filename);
   }
   std::string name = "";
   std::getline(in, name);
@@ -89,7 +89,7 @@ void miheev::readGraph(const std::string& filename, miheev::Graph& container)
   in.close();
 }
 
-void miheev::sendMessage(std::ostream& out, const std::string& message)
+std::ostream& miheev::sendMessage(std::ostream& out, const std::string& message)
 {
-  out << message << '\n';
+  return out << message << '\n';
 }

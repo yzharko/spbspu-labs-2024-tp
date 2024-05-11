@@ -10,6 +10,7 @@ namespace miheev
   {
     std::map< std::string, Graph > graphs;
     Graph current;
+    bool isActive;
   };
 }
 
