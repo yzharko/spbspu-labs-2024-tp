@@ -13,7 +13,7 @@ namespace gorbunova
   };
 
   std::istream &operator>>(std::istream &in, YaDataStruct &dest);
-  std::ostream &operator>>(std::ostream &out, const YaDataStruct &dest);
+  std::ostream &operator<<(std::ostream &out, const YaDataStruct &dest);
   bool operator<(const YaDataStruct &lhs, const YaDataStruct &rhs);
   std::istream &operator>>(std::istream &in, Ratio &&dest);
   std::istream &operator>>(std::istream &in, Str &&dest);
