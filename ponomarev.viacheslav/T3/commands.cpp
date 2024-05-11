@@ -148,6 +148,11 @@ double ponomarev::sumAreasOdd(const std::vector< Polygon > & data)
 
 double ponomarev::sumAreasMean(const std::vector< Polygon > & data)
 {
+  if (data.empty())
+  {
+    throw std::logic_error("error: data is empty");
+  }
+
   double res = std::accumulate(data.cbegin(), data.cend(), 0, sumAll);
   return res / data.size();
 }
