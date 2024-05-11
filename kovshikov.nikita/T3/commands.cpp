@@ -38,7 +38,6 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   is >> command;
   try
   {
-    fileIsEmpty(allData);
     area.at(command)(allData, out);
   }
   catch(const std::out_of_range& error) // не учитывается формат просто AREA
@@ -124,6 +123,7 @@ void kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& 
 
 void kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
+  fileIsEmpty(allData);
   double area = std::accumulate(allData.begin(), allData.end(), 0, resultArea);
   double result = area / allData.size();
   out << result << "\n";
