@@ -1,10 +1,7 @@
 #ifndef COMANDS_HPP
 #define COMANDS_HPP
 
-#include <vector>
-#include <ostream>
-#include <map>
-#include "polygon.hpp"
+#include "polygonFunctions.hpp"
 
 namespace ponomarev
 {

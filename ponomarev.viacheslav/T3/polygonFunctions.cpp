@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <functional>
 #include <numeric>
+#include <iostream>
 
 double ponomarev::getArea(const Polygon & polygon)
 {
@@ -95,7 +96,7 @@ bool ponomarev::isIntersection(const Polygon & first, const Polygon & second)
   int secondMaxY = (*std::max_element(second.points.begin(), second.points.end(), whichBiggerY)).y;
   int secondMinX = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerX)).x;
   int secondMinY = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerY)).y;
-
+  std::cout << firstMaxX << firstMaxY << firstMinX << firstMinY << "\n";
   return (firstMaxX >= secondMinX) && (firstMaxY >= secondMinY) && (firstMinX <= secondMaxX) && (firstMinY <= secondMaxY);
 }
 

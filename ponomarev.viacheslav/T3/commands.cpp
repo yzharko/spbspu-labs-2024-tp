@@ -1,7 +1,7 @@
 #include "commands.hpp"
 #include <functional>
+#include <map>
 #include <cctype>
-#include "polygonFunctions.hpp"
 #include <vector>
 #include <iomanip>
 #include <numeric>

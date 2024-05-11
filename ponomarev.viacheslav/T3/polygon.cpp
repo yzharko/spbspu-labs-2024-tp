@@ -37,13 +37,18 @@ std::istream & ponomarev::operator>>(std::istream & in, Polygon & dest)
 
   for (size_t i = 0; i < numPoints; i++)
   {
+    if (in.get() == '\n')
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
     if (in >> point)
     {
       polygon.push_back(point);
     }
   }
 
-  if (in && polygon.size() == numPoints)
+  if (in && polygon.size() == numPoints && in.get() == '\n')
   {
     dest = Polygon{ polygon };
   }
