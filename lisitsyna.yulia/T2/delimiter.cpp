@@ -1,6 +1,10 @@
-#include "delim.hpp"
+#include "delimiter.hpp"
+#include <iostream>
+lisitsyna::Delimiter::Delimiter(char exp) :
+  exp(exp)
+{}
 
-std::istream& psarev::operator>>(std::istream& in, DelimiterIO&& dest)
+std::istream& lisitsyna::operator>>(std::istream& in, Delimiter&& dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
