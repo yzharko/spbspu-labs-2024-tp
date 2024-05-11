@@ -47,7 +47,7 @@ namespace taskaev
 
   double getAreas(const Point& pointOne, const Point& pointTwo)
   {
-    return pointOne.x_ * pointTwo.y_ - pointTwo.x_ * pointOne.y_;
+    return ( pointOne.x_ * pointTwo.y_ ) - ( pointTwo.x_ * pointOne.y_ );
   }
 
   double getArea(const Polygon& polygon)
@@ -55,15 +55,15 @@ namespace taskaev
     std::vector< double > area(polygon.points.size());
 
     std::transform(
+      ++(polygon.points.begin()),
+      polygon.points.end(),
       polygon.points.begin(),
-      polygon.points.end() - 1,
-      polygon.points.begin() + 1,
       area.begin(),
-      getAreas
+      std::bind(getAreas, _1, _2)
     );
 
     double sum = std::accumulate(area.begin(), area.end(), 0.0);
-    sum += getAreas(polygon.points.back(), polygon.points.front());
+    sum += getAreas(polygon.points.front(), polygon.points.back());
 
     return 0.5 * std::abs(sum);
   }
@@ -81,11 +81,14 @@ namespace taskaev
   }
   double getAreaEven(double area, const Polygon& polygon)
   {
-    if (!(polygon.points.size() % 2 == 0))
+    if ((polygon.points.size() % 2 == 0))
     {
       return area + getArea(polygon);
     }
-    return area;
+    else
+    {
+      return area;
+    }
   }
 
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out)
@@ -101,11 +104,14 @@ namespace taskaev
   }
   double getAreaOdd(double area, const Polygon& polygon)
   {
-    if ((polygon.points.size() % 2 == 0))
+    if (!(polygon.points.size() % 2 == 0))
     {
       return area + getArea(polygon);
     }
-    return area;
+    else
+    {
+      return area;
+    }
   }
 
   void AreaMean(const std::vector< Polygon >& polygon, std::ostream& out)
