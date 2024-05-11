@@ -23,7 +23,8 @@ std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
     is >> point;
     temp.points.push_back(point);
   }
-  if(count != temp.points.size())
+  char peek = is.peek();
+  if(count != temp.points.size() || peek != '\n')
   {
     is.setstate(std::ios::failbit);
   }

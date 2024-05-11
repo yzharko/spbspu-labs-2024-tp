@@ -430,7 +430,8 @@ bool kovshikov::isInframe(const std::vector< Polygon >& allData, const Polygon& 
 void kovshikov::checkInframe(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
   Polygon polygon;
-  if(!(is >> polygon))
+  is >> polygon;
+  if(!is)
   {
     throw std::out_of_range("");
   }
