@@ -1,14 +1,13 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
-#include <complex>
 #include "anotherStructs.hpp"
 
 namespace gorbunova
 {
   struct YaDataStruct
   {
-    std::pair< long long, unsigned long long > key1;
-    unsigned long long key2;
+    std::pair< long long, unsigned long long > key2;
+    unsigned long long key1;
     std::string key3;
   };
 
