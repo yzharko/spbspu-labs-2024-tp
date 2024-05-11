@@ -239,7 +239,8 @@ std::forward_list< int > miheev::Graph::Dextra::findShortestPath(int start, int 
 {
   if (timeToNodes.at(finish) == std::numeric_limits< size_t >::max())
   {
-    std::invalid_argument("[ERROR](navigation): no path exists from node " + std::to_string(start) + " to node " + std::to_string(finish) + '\n');
+    std::invalid_argument("[ERROR](navigation): no path exists from node " + std::to_string(start)
+     + " to node " + std::to_string(finish) + '\n');
   }
   std::forward_list< int > path;
   path.push_front(finish);
@@ -263,7 +264,6 @@ void miheev::Graph::Dextra::updateNodeState(int node, size_t timeToNode, int par
 
 std::istream& miheev::operator>>(std::istream& in, miheev::Graph& graph)
 {
-  // ребро выглядит так: a-b:w
   using del = miheev::DelimiterIO;
 
   int lnode = -1, rnode = -1;

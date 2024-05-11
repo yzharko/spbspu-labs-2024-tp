@@ -54,7 +54,7 @@ std::ostream& miheev::commands::edge(std::ostream& out, std::istream& in, miheev
   return out;
 }
 
-void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph) // TODO: вынести в функции графа
+void updateGraph(miheev::Workspace& workspace, const miheev::Graph& graph)
 {
   workspace.graphs.erase(graph.name);
   workspace.graphs.insert({graph.name, graph});
@@ -227,9 +227,11 @@ std::ostream& miheev::commands::help(std::ostream& out, std::istream&, const mih
 {
   miheev::sendMessage(out, "help - prints listing of all commands with some clarifications") << '\n';
   miheev::sendMessage(out, "navigate < a > < b > - searches for the shortest path between nodes < a > and < b >. Note: < a > < b > are positive integers") << '\n';
-  miheev::sendMessage(out, "graph add < graphname > - lets user to create a new graph using standart input. It special opens input prompt, where user can write down all nodes with their weights in format a-b:w, where a and b are nodes and w is weight. After the graph is initialised, it will be focused") << '\n';
+  miheev::sendMessage(out, "graph add < graphname > - lets user to create a new graph using standart input.write down edges in a-b:w format, where a and b are nodes and w is weight") << '\n';
   miheev::sendMessage(out, "graph add -f < filename > - reads a graph from file. note that file contains name of the graph too") << '\n';
-  miheev::sendMessage(out, "print < what > - prints informations about graph. Take \"nodes\" or \"edges\" as arugents. If \"nodes\" passed, then prints the list of all nodes of focused graph. Else if \"edges\" was given, prints edges in format a-b:w, where a and b are nodes and w is weight of edge") << '\n';
+  out << "print < what > - prints informations about graph. Take \"nodes\" or \"edges\" as arugents. ";
+  out << "If \"nodes\" passed, then prints the list of all nodes of focused graph. Else if \"edges\" was given, prints edges in format a-b:w, ";
+  out << "where a and b are nodes and w is weight of edge" << '\n';
   miheev::sendMessage(out, "list - prints list of all graphs in workspace") << '\n';
   miheev::sendMessage(out, "jump < graphname > - swithes focus to the graph named \"graphname\"") << '\n';
   miheev::sendMessage(out, "node add < number > - adds new node with name < number > to the focused graph") << '\n';
