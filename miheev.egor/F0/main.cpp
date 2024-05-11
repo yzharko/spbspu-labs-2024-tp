@@ -4,7 +4,7 @@
 #include <limits>
 #include "workspace.hpp"
 #include "commands.hpp"
-#include "inputFunctions.hpp"
+#include "IOFunctions.hpp"
 
 #include <sstream>
 
@@ -21,6 +21,7 @@ int main(int argc, char* argv[])
   using namespace miheev;
 
   Graph initialGraph;
+  initialGraph.name = "untitled";
   Workspace workspace{{}, initialGraph};
   initWorkspace(argc, argv, workspace);
 
@@ -34,6 +35,7 @@ int main(int argc, char* argv[])
     commands["list"] = miheev::commands::list;
     commands["jump"] = miheev::commands::jump;
     commands["print"] = miheev::commands::print;
+    commands["save"] = miheev::commands::save;
   }
 
   std::string command = "";
@@ -52,6 +54,11 @@ int main(int argc, char* argv[])
     catch (const std::out_of_range& e)
     {
       std::cerr << "invalid command\n";
+      std::cerr << e.what() << '\n';
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    catch (const std::runtime_error& e)
+    {
       std::cerr << e.what() << '\n';
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

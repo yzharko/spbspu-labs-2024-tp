@@ -17,7 +17,6 @@ namespace miheev
     std::ostream& print(std::ostream&, std::istream&, const Workspace&);
     std::ostream& save(std::ostream&, std::istream&, const Workspace&);
     std::ostream& help(std::ostream&, std::istream&, const Workspace&);
-    std::ostream& status(std::ostream&, std::istream&, const Workspace&);
   }
 }
 

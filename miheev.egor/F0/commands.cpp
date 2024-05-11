@@ -5,7 +5,7 @@
 #include <limits>
 #include <fstream>
 #include <sstream>
-#include "inputFunctions.hpp"
+#include "IOFunctions.hpp"
 
 std::ostream& miheev::commands::node(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
 {
@@ -81,15 +81,14 @@ void createGraphFromFile(std::istream& in, std::ostream& out, miheev::Workspace&
   miheev::readGraph(filename, temp);
   updateGraph(workspace, temp);
   makeCastling(out, temp.name, workspace);
-  out << "[INFO] graph \"" << temp.name << "\" initialised succesfully\n";
+  miheev::sendMessage(out, "[INFO] graph \"" + temp.name + "\" initialised succesfully");
 }
 
 void readGraphFromInput(std::istream& in, miheev::Graph& container)
 {
   in.clear();
-  in.ignore(std::numeric_limits< std::streamsize >::max());
   std::string input;
-  std::getline(in, input, '\n');
+  std::getline(in >> std::ws, input, '\n');
   std::stringstream ss(input);
   ss >> container;
 }
@@ -104,7 +103,20 @@ void createGraphFrominput(std::istream& in, std::ostream& out, const std::string
 
   updateGraph(workspace, temp);
   makeCastling(out, name, workspace);
-  out << "[INFO] graph \"" << temp.name << "\" initialised succesfully\n";
+  miheev::sendMessage(out, "[INFO] graph \"" + temp.name + "\" initialised succesfully\n");
+}
+
+void closeGraphWithoutSaving(std::istream& in, std::ostream& out, miheev::Workspace& workspace)
+{
+  std::string arg = "";
+  in >> arg;
+  workspace.graphs.erase(arg);
+  if (workspace.current.name == arg)
+  {
+    miheev::Graph substitution = workspace.graphs.begin()->second;
+    workspace.current = substitution;
+  }
+  miheev::sendMessage(out, "[INFO] graph \"" + arg + "\" was deleted");
 }
 
 std::ostream& miheev::commands::graph(std::ostream& out, std::istream& in, miheev::Workspace& workspace)
@@ -125,7 +137,7 @@ std::ostream& miheev::commands::graph(std::ostream& out, std::istream& in, mihee
   }
   else if (arg == "close")
   {
-
+    closeGraphWithoutSaving(in, out, workspace);
   }
   return out;
 }

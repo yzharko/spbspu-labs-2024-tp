@@ -1,4 +1,4 @@
-#include "inputFunctions.hpp"
+#include "IOFunctions.hpp"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
@@ -87,4 +87,9 @@ void miheev::readGraph(const std::string& filename, miheev::Graph& container)
   container.filename = filename;
 
   in.close();
+}
+
+void miheev::sendMessage(std::ostream& out, const std::string& message)
+{
+  out << message << '\n';
 }
