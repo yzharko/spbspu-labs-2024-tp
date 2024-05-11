@@ -212,7 +212,20 @@ int ponomarev::countCertain(const std::vector< Polygon > & data, int numOfVertex
 std::ostream & ponomarev::countRects(std::istream &, std::ostream & out, const std::vector< Polygon > & data)
 {
   int numRects = std::count_if(data.begin(), data.end(), isRect);
-  out << std::fixed << std::setprecision(1) << numRects << "\n";
+  out << std::fixed << std::setprecision(0) << numRects << "\n";
+  return out;
+}
+
+std::ostream & ponomarev::countIntersections(std::istream & in, std::ostream & out, const std::vector< Polygon > & data)
+{
+  Polygon comparationPolygon;
+  if (!(in >> comparationPolygon))
+  {
+    throw std::logic_error("wrong polygon");
+  }
+
+  int numIntersections = std::count_if(data.begin(), data.end(), std::bind(isIntersection, _1, comparationPolygon));
+  out << std::fixed << std::setprecision(0) << numIntersections << "\n";
   return out;
 }
 

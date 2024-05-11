@@ -80,7 +80,41 @@ bool ponomarev::isRect(const Polygon polygon)
   return isOrthogonal(a, b, c) && isOrthogonal(b, c, d) && isOrthogonal(c, d, a);
 }
 
-bool ponomarev::isOrthogonal(Point a, Point b, Point c)
+bool ponomarev::isOrthogonal(const Point a, const Point b, const Point c)
 {
   return (b.x - a.x) * (b.x - c.x) + (b.y - a.y) * (b.y - c.y) == 0;
+}
+
+bool ponomarev::isIntersection(const Polygon & first, const Polygon & second)
+{
+  int firstMaxX = (*std::max_element(first.points.begin(), first.points.end(), whichBiggerX)).x;
+  int firstMaxY = (*std::max_element(first.points.begin(), first.points.end(), whichBiggerY)).y;
+  int firstMinX = (*std::min_element(first.points.begin(), first.points.end(), whichSmallerX)).x;
+  int firstMinY = (*std::min_element(first.points.begin(), first.points.end(), whichSmallerY)).y;
+  int secondMaxX = (*std::max_element(second.points.begin(), second.points.end(), whichBiggerX)).x;
+  int secondMaxY = (*std::max_element(second.points.begin(), second.points.end(), whichBiggerY)).y;
+  int secondMinX = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerX)).x;
+  int secondMinY = (*std::min_element(second.points.begin(), second.points.end(), whichSmallerY)).y;
+
+  return (firstMaxX >= secondMinX) && (firstMaxY >= secondMinY) && (firstMinX <= secondMaxX) && (firstMinY <= secondMaxY);
+}
+
+bool ponomarev::whichBiggerX(const Point & first, const Point & second)
+{
+  return (first.x < second.x);
+}
+
+bool ponomarev::whichBiggerY(const Point & first, const Point & second)
+{
+  return (first.y < second.y);
+}
+
+bool ponomarev::whichSmallerX(const Point & first, const Point & second)
+{
+  return (first.x > second.x);
+}
+
+bool ponomarev::whichSmallerY(const Point & first, const Point & second)
+{
+  return (first.y > second.y);
 }

@@ -19,7 +19,12 @@ namespace ponomarev
   bool isOdd(const Polygon polygon);
   bool isEqually(const Polygon polygon, size_t numOfVertexes);
   bool isRect(const Polygon polygon);
-  bool isOrthogonal(Point a, Point b, Point c);
+  bool isOrthogonal(const Point a, const Point b, const Point c);
+  bool isIntersection(const Polygon & first, const Polygon & second);
+  bool whichBiggerX(const Point & first, const Point & second);
+  bool whichBiggerY(const Point & first, const Point & second);
+  bool whichSmallerX(const Point & first, const Point & second);
+  bool whichSmallerY(const Point & first, const Point & second);
 }
 
 #endif

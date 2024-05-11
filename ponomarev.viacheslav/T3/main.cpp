@@ -48,6 +48,7 @@ int main(int argc, char ** argv)
     commands["MIN"] = std::bind(ponomarev::getMin, _1, _2, _3);
     commands["COUNT"] = std::bind(ponomarev::count, _1, _2, _3);
     commands["RECTS"] = std::bind(ponomarev::countRects, _1, _2, _3);
+    commands["INTERSECTIONS"] = std::bind(ponomarev::countIntersections, _1, _2, _3);
   }
 
   std::string command;
