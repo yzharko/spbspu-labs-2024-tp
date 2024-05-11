@@ -28,6 +28,8 @@ namespace ponomarev
   int countOdd(const std::vector< Polygon > & data);
   int countCertain(const std::vector< Polygon > & data, int numOfVertexes);
 
+  std::ostream & countRects(std::istream &, std::ostream & out, const std::vector< Polygon > & data);
+
   std::ostream & printMessage(std::ostream & out, const std::string & message);
 }
 

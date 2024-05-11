@@ -47,6 +47,7 @@ int main(int argc, char ** argv)
     commands["MAX"] = std::bind(ponomarev::getMax, _1, _2, _3);
     commands["MIN"] = std::bind(ponomarev::getMin, _1, _2, _3);
     commands["COUNT"] = std::bind(ponomarev::count, _1, _2, _3);
+    commands["RECTS"] = std::bind(ponomarev::countRects, _1, _2, _3);
   }
   return 0;
 

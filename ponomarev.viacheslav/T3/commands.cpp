@@ -183,6 +183,13 @@ int ponomarev::countCertain(const std::vector< Polygon > & data, int numOfVertex
   return std::count_if(data.begin(), data.end(), std::bind(isEqually, _1, numOfVertexes));
 }
 
+std::ostream & ponomarev::countRects(std::istream &, std::ostream & out, const std::vector< Polygon > & data)
+{
+  int numRects = std::count_if(data.begin(), data.end(), isRect);
+  out << std::fixed << std::setprecision(1) << numRects << "\n";
+  return out;
+}
+
 std::ostream & ponomarev::printMessage(std::ostream & out, const std::string & message)
 {
   out << message << '\n';

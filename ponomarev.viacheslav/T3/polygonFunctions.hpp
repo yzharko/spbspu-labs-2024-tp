@@ -18,6 +18,8 @@ namespace ponomarev
   bool isEven(const Polygon polygon);
   bool isOdd(const Polygon polygon);
   bool isEqually(const Polygon polygon, size_t numOfVertexes);
+  bool isRect(const Polygon polygon);
+  bool isOrthogonal(Point a, Point b, Point c);
 }
 
 #endif

@@ -65,3 +65,22 @@ bool ponomarev::isEqually(const Polygon polygon, size_t numOfVertexes)
 {
   return polygon.points.size() == numOfVertexes;
 }
+
+bool ponomarev::isRect(const Polygon polygon)
+{
+  if (polygon.points.size() != 4)
+  {
+    return false;
+  }
+
+  Point a = polygon.points[0];
+  Point b = polygon.points[1];
+  Point c = polygon.points[2];
+  Point d = polygon.points[3];
+  return isOrthogonal(a, b, c) && isOrthogonal(b, c, d) && isOrthogonal(c, d, a);
+}
+
+bool ponomarev::isOrthogonal(Point a, Point b, Point c)
+{
+  return (b.x - a.x) * (b.x - c.x) + (b.y - a.y) * (b.y - c.y) == 0;
+}
