@@ -36,7 +36,7 @@ namespace taskaev
     }
     else
     {
-      throw std::logic_error("<INVALID COMAND>\n");
+      throw std::logic_error("");
     }
   }
 
@@ -182,10 +182,14 @@ namespace taskaev
       {
         MaxVertexes(polygon, out);
       }
+      else
+      {
+        throw std::logic_error("");
+      }
     }
     else
     {
-      throw std::logic_error("<INVALID COMAND>\n");
+      throw std::logic_error("");
     }
   }
   void MaxArea(const std::vector< Polygon >& polygon, std::ostream& out)
@@ -225,10 +229,14 @@ namespace taskaev
       {
         minVertexes(polygon, out);
       }
+      else
+      {
+        throw std::logic_error("");
+      }
     }
     else
     {
-      throw std::logic_error("<INVALID COMAND>\n");
+      throw std::logic_error("");
     }
   }
 
@@ -278,7 +286,7 @@ namespace taskaev
     }
     else
     {
-      throw std::logic_error("<INVALID COMAND>\n");
+      throw std::logic_error("");
     }
   }
 
