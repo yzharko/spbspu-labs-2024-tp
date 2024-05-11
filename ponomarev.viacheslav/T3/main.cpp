@@ -53,7 +53,6 @@ int main(int argc, char ** argv)
   std::string command;
   while (std::cin >> command)
   {
-    std::cout << command;
     try
     {
       commands.at(command)(std::cin, std::cout, data);

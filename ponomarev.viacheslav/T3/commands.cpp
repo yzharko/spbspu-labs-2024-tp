@@ -96,7 +96,6 @@ std::ostream & ponomarev::count(std::istream & in, std::ostream & out, const std
 
   std::string type;
   in >> type;
-  out << std::fixed << std::setprecision(1);
   try
   {
     out << countCommands.at(type)(data) << "\n";
