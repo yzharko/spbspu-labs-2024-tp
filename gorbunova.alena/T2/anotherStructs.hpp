@@ -1,5 +1,3 @@
-#include "dataStruct.hpp"
-
 namespace gorbunova
 {
   struct Complexx
