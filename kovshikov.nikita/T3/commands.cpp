@@ -138,11 +138,12 @@ void kovshikov::getAreaVertex(unsigned long long num, const std::vector< Polygon
 {
   using namespace std::placeholders;
   std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+  int count = std::count_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
   if(detected == allData.end())
   {
     throw std::out_of_range("");
   }
-  double result = countArea(*detected);
+  double result = countArea(*detected) * count;
   out << result << "\n";
 }
 
