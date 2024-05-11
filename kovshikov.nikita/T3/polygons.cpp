@@ -20,11 +20,17 @@ std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
   }
   for(size_t i = 0; i < count; i++)
   {
-    is >> point;
-    temp.points.push_back(point);
+    if (is.get() == '\n')
+    {
+      is.setstate(std::ios::failbit);
+      return is;
+    }
+    if(is >> point)
+    {
+      temp.points.push_back(point);
+    }
   }
-  char peek = is.peek();
-  if(count != temp.points.size() || peek != '\n')
+  if(!is || count != temp.points.size() || is.get() != '\n') //проблема если конец файла
   {
     is.setstate(std::ios::failbit);
   }
