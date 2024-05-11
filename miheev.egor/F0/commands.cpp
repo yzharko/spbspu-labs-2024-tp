@@ -39,7 +39,7 @@ std::ostream& miheev::commands::edge(std::ostream& out, std::istream& in, miheev
   in >> action >> lnode >> rnode;
   if (action == "add")
   {
-    size_t weight = 1; // Добавить возможность сделать вес опциональным параметром
+    size_t weight = 1;
     in >> weight;
     workspace.current.addEdge(lnode, rnode, weight);
   }

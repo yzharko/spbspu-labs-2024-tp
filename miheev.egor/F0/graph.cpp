@@ -7,20 +7,6 @@
 #include <sstream>
 #include <iterator>
 
-// miheev::Graph::Graph(const Graph& rhs)
-// {
-//   *this = rhs;
-// }
-
-// miheev::Graph& miheev::Graph::operator=(const Graph& rhs)
-// {
-//   name = rhs.name;
-//   filename = rhs.filename;
-//   nodes_.clear();
-//   nodes_.insert(rhs.nodes_.begin(), rhs.nodes_.end());
-//   return *this;
-// }
-
 void miheev::Graph::addNode(int name)
 {
   if (contains(name))
@@ -76,9 +62,6 @@ void miheev::Graph::rmEdge(int lnode, int rnode)
     throw std::invalid_argument("[ERROR](disconnection): node names" + std::to_string(rnode) + " doesn't exist");
   }
 
-//   --->
-// A      B
-//   <---
   Node& leftNode = nodes_[lnode];
   Node& rightNode = nodes_[rnode];
 
@@ -210,7 +193,7 @@ void miheev::Graph::Dextra::calcMinTimeToEach()
   {
     int nameOfNodeWithMinimumTime = getNodeWithMinimumTimeToIt();
     if (timeToNodes.at(nameOfNodeWithMinimumTime) == std::numeric_limits< size_t >::max())
-    { // значит остались только узлы, до которых нельзя добраться
+    {
       return;
     }
     const Node& node = graph.nodes_.at(nameOfNodeWithMinimumTime);

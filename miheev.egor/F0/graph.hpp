@@ -17,9 +17,6 @@ namespace miheev
 
   public:
     Graph() = default;
-    // Graph(const Graph&);
-
-    // Graph& operator=(const Graph&);
 
     void addNode(int name);
     void addEdge(int lnode, int rnode, size_t weight = 2);
@@ -27,7 +24,7 @@ namespace miheev
     void rmEdge(int lnode, int rnode);
 
     struct Path;
-    Path navigate(int start, int finish) const; // как плейсхолдер для функции
+    Path navigate(int start, int finish) const;
 
     std::ostream& printNodes(std::ostream& = std::cout) const;
     std::ostream& printAllEdges(std::ostream& = std::cout) const;
@@ -70,13 +67,12 @@ namespace miheev
 
     const Graph& graph;
     std::unordered_set< int > unprocessedNodes;
-    std::map <int, int> nodesParrents; // first - node, second - it' pair
+    std::map <int, int> nodesParrents;
     std::map< int, size_t > timeToNodes;
   };
 
   struct Graph::Edge
   {
-    // Node* dest;
     int dest;
     size_t weight;
     struct HashFunction;
