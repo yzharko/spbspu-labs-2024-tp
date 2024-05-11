@@ -4,6 +4,7 @@
 
 namespace kovshikov
 {
+  void fileIsEmpty(const std::vector< Polygon >& allData);
   bool isDigit(char ch);
   int getCordMethod(const Point& currentPoint,const Point& prevPoint);
   double countArea(const Polygon polygon);

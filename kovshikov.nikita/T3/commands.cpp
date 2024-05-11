@@ -11,6 +11,14 @@
 #include "commands.hpp"
 #include <iomanip>
 
+void kovshikov::fileIsEmpty(const std::vector< Polygon >& allData)
+{
+  if(allData.empty())
+  {
+    throw std::out_of_range("");
+  }
+}
+
 bool kovshikov::isDigit(char ch)
 {
   return std::isdigit(ch);
@@ -150,6 +158,7 @@ void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, 
   is >> command;
   try
   {
+    fileIsEmpty(allData);
     max.at(command)(allData, out);
   }
   catch(const std::out_of_range& error) // не учитывается формат просто MAX
@@ -161,18 +170,11 @@ void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, 
 void kovshikov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& out)
 {
   double maxArea = 0;
-  if(allData.empty())
-  {
-    throw std::out_of_range("");
-  }
-  else
-  {
-    std::vector< double > allAreas;
-    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
-    std::sort(allAreas.begin(), allAreas.end());
-    maxArea = *(allAreas.end() - 1);
-    out << maxArea << "\n";
-  }
+  std::vector< double > allAreas;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+  std::sort(allAreas.begin(), allAreas.end());
+  maxArea = *(allAreas.end() - 1);
+  out << maxArea << "\n";
 }
 
 unsigned long long kovshikov::getVertexes(const Polygon& polygon)
@@ -183,18 +185,11 @@ unsigned long long kovshikov::getVertexes(const Polygon& polygon)
 void kovshikov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out)
 {
   unsigned long long maxVertexes = 0;
-  if(allData.empty())
-  {
-    throw std::out_of_range("");
-  }
-  else
-  {
-    std::vector< unsigned long long > allVertexes;
-    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertexes);
-    std::sort(allVertexes.begin(), allVertexes.end());
-    maxVertexes = *(allVertexes.end() - 1);
-    out << maxVertexes << "\n";
-  }
+  std::vector< unsigned long long > allVertexes;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertexes);
+  std::sort(allVertexes.begin(), allVertexes.end());
+  maxVertexes = *(allVertexes.end() - 1);
+  out << maxVertexes << "\n";
 }
 
 void kovshikov::getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
