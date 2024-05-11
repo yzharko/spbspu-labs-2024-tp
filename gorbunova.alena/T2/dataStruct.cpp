@@ -1,7 +1,7 @@
+#include <iomanip>
 #include "dataStruct.hpp"
 #include "iofmtguard.hpp"
 #include "delimiter.hpp"
-#include <iomanip>
 
 std::istream &gorbunova::operator>>(std::istream &in, DataStruct &data)
 {

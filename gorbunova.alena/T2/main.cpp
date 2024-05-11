@@ -2,16 +2,16 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-#include "dataStruct.hpp"
+#include "yaDataStruct.hpp"
 
 int main()
 {
-  std::vector<gorbunova::DataStruct> data;
+  std::vector<gorbunova::YaDataStruct> data;
   while (!std::cin.eof())
   {
     std::copy(
-        std::istream_iterator<gorbunova::DataStruct>(std::cin),
-        std::istream_iterator<gorbunova::DataStruct>(),
+        std::istream_iterator<gorbunova::YaDataStruct>(std::cin),
+        std::istream_iterator<gorbunova::YaDataStruct>(),
         std::back_inserter(data));
     if (std::cin.fail() && !std::cin.eof())
     {
@@ -23,6 +23,6 @@ int main()
   std::copy(
       std::begin(data),
       std::end(data),
-      std::ostream_iterator<gorbunova::DataStruct>(std::cout, "\n"));
+      std::ostream_iterator<gorbunova::YaDataStruct>(std::cout, "\n"));
   return 0;
 }

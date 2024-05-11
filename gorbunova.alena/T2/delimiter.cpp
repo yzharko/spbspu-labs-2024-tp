@@ -1,3 +1,4 @@
+#include <iostream>
 #include "delimiter.hpp"
 
 std::istream &gorbunova::operator>>(std::istream &in, Delimiter &&dest)

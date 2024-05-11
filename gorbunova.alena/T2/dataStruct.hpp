@@ -1,29 +1,15 @@
 #ifndef DATASTRUCT_HPP
 #define DATASTRUCT_HPP
 #include <complex>
+#include "anotherStructs.hpp"
 
 namespace gorbunova
 {
   struct DataStruct
-  {
+{
     std::complex< double > key1;
     std::pair<long long, unsigned long long> key2;
     std::string key3;
-  };
-
-  struct Complexx
-  {
-    std::complex< double > &ref;
-  };
-
-  struct Ratio
-  {
-    std::pair<long long, unsigned long long> &ref;
-  };
-
-  struct Str
-  {
-    std::string &ref;
   };
 
   std::istream &operator>>(std::istream &in, DataStruct &dest);
