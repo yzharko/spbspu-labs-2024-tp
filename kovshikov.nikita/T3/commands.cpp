@@ -352,7 +352,7 @@ bool kovshikov::isPolygonRight(const Polygon& polygon)
 
 void kovshikov::countRightshapes(const std::vector< Polygon >& allData, std::ostream& out)
 {
-  out << std::count_if(allData.begin(), allData.end(), isPolygonRight);
+  out << std::count_if(allData.begin(), allData.end(), isPolygonRight) << "\n";
 }
 
 int kovshikov::getX(const Point& point)
