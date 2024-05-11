@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
       std::istream_iterator< ponomarev::Polygon >(),
       std::back_inserter(data)
     );
-    if (input.fail() && !input.eof())
+    if (input.fail())
     {
       input.clear();
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
@@ -49,7 +49,6 @@ int main(int argc, char ** argv)
     commands["COUNT"] = std::bind(ponomarev::count, _1, _2, _3);
     commands["RECTS"] = std::bind(ponomarev::countRects, _1, _2, _3);
   }
-  return 0;
 
   std::string command;
   while (std::cin >> command)
@@ -66,4 +65,6 @@ int main(int argc, char ** argv)
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
+  return 0;
 }
