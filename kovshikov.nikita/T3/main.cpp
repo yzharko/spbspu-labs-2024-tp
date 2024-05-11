@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
     }
     catch(const std::out_of_range& error)
     {
-      std::cerr << "INVALID COMMAND" << "\n";
+      std::cerr << "<INVALID COMMAND>" << "\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

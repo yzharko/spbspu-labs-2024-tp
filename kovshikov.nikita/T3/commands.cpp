@@ -163,7 +163,7 @@ void kovshikov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& 
   double maxArea = 0;
   if(allData.empty())
   {
-    out << maxArea << "\n";
+    throw std::out_of_range("");
   }
   else
   {
@@ -185,7 +185,7 @@ void kovshikov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostre
   unsigned long long maxVertexes = 0;
   if(allData.empty())
   {
-    out << maxVertexes << "\n";
+    throw std::out_of_range("");
   }
   else
   {
