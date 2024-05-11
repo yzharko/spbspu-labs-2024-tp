@@ -226,11 +226,14 @@ std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const 
 std::ostream& miheev::commands::help(std::ostream& out, std::istream&, const miheev::Workspace&)
 {
   miheev::sendMessage(out, "help - prints listing of all commands with some clarifications") << '\n';
-  miheev::sendMessage(out, "navigate < a > < b > - searches for the shortest path between nodes < a > and < b >. Note: < a > < b > are positive integers") << '\n';
-  miheev::sendMessage(out, "graph add < graphname > - lets user to create a new graph using standart input.write down edges in a-b:w format, where a and b are nodes and w is weight") << '\n';
+  out << "navigate < a > < b > - searches for the shortest path between nodes < a > and < b >. ";
+  out << "Note: < a > < b > are positive integers\n";
+  out << "graph add < graphname > - lets user to create a new graph using standart input. ";
+  out << "write down edges in a-b:w format, where a and b are nodes and w is weight";
   miheev::sendMessage(out, "graph add -f < filename > - reads a graph from file. note that file contains name of the graph too") << '\n';
   out << "print < what > - prints informations about graph. Take \"nodes\" or \"edges\" as arugents. ";
-  out << "If \"nodes\" passed, then prints the list of all nodes of focused graph. Else if \"edges\" was given, prints edges in format a-b:w, ";
+  out << "If \"nodes\" passed, then prints the list of all nodes of focused graph. ";
+  out << "Else if \"edges\" was given, prints edges in format a-b:w, ";
   out << "where a and b are nodes and w is weight of edge" << '\n';
   miheev::sendMessage(out, "list - prints list of all graphs in workspace") << '\n';
   miheev::sendMessage(out, "jump < graphname > - swithes focus to the graph named \"graphname\"") << '\n';
