@@ -38,6 +38,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   is >> command;
   try
   {
+    fileIsEmpty(allData);
     area.at(command)(allData, out);
   }
   catch(const std::out_of_range& error) // не учитывается формат просто AREA
