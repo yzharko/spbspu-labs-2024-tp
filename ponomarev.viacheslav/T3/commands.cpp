@@ -48,9 +48,22 @@ std::ostream & ponomarev::getMax(std::istream & in, std::ostream & out, const st
     maxCommands["VERTEXES"] = getMaxVertexes;
   }
 
+  if (data.empty())
+  {
+    throw std::logic_error("error: data is empty");
+  }
+
   std::string type;
   in >> type;
-  out << std::fixed << std::setprecision(1);
+  if (type == "AREA")
+  {
+    out << std::fixed << std::setprecision(1);
+  }
+  else
+  {
+    out << std::fixed << std::setprecision(0);
+  }
+
   try
   {
     out << maxCommands.at(type)(data) << "\n";
@@ -73,7 +86,15 @@ std::ostream & ponomarev::getMin(std::istream & in, std::ostream & out, const st
 
   std::string type;
   in >> type;
-  out << std::fixed << std::setprecision(1);
+  if (type == "AREA")
+  {
+    out << std::fixed << std::setprecision(1);
+  }
+  else
+  {
+    out << std::fixed << std::setprecision(0);
+  }
+
   try
   {
     out << minCommands.at(type)(data) << "\n";
@@ -127,7 +148,8 @@ double ponomarev::sumAreasOdd(const std::vector< Polygon > & data)
 
 double ponomarev::sumAreasMean(const std::vector< Polygon > & data)
 {
-  return std::accumulate(data.cbegin(), data.cend(), 0, sumAll) / data.size();
+  double res = std::accumulate(data.cbegin(), data.cend(), 0, sumAll);
+  return res / data.size();
 }
 
 double ponomarev::sumAreasVertexes(const std::vector< Polygon > & data, int numOfVertexes)
