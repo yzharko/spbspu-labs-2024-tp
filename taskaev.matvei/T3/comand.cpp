@@ -53,7 +53,7 @@ namespace taskaev
   double getArea(const Polygon& polygon)
   {
     std::vector< double > area(polygon.points.size());
-
+    using namespace  std::placeholders;
     std::transform(
       ++(polygon.points.begin()),
       polygon.points.end(),
