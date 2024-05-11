@@ -48,8 +48,8 @@ std::ostream &gorbunova::operator<<(std::ostream &out, const YaDataStruct &data)
   }
   iofmtguard fmtguard(out);
   out << ":key1 " << "(:N " << data.key1.first << ":D " << data.key1.second << ":)";
-  out << ":key2 \"" data.key2 << "\":)";
-  out << ":key3 " data.key3 << ":)";
+  out << ":key2 \"" << data.key2 << "\":)";
+  out << ":key3 " << data.key3 << ":)";
   return out;
 }
 
