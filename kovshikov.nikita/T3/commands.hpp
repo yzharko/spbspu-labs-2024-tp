@@ -38,6 +38,15 @@ namespace kovshikov
   void getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void countRightshapes(const std::vector< Polygon >& allData, std::ostream& out);
+  void checkInframe(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+
+  int getX(const Point& point);
+  int getY(const Point& point);
+
+  int getMaxCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point));
+  int getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point));
+  std::vector< Point > getFrame(const std::vector< Polygon >& allData);
+  bool isInframe(const std::vector< Polygon >& allData, const Polygon& polygon);
 }
 
 #endif

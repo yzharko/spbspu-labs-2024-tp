@@ -348,3 +348,96 @@ void kovshikov::countRightshapes(const std::vector< Polygon >& allData, std::ost
 {
   out << std::count_if(allData.begin(), allData.end(), isPolygonRight);
 }
+
+int kovshikov::getX(const Point& point)
+{
+  return point.x;
+}
+
+int kovshikov::getY(const Point& point)
+{
+  return point.y;
+}
+
+int kovshikov::getMaxCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point)) // для одной фигуры
+{
+  std::vector< int > coordinates;
+  std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(coordinates), getCoordinate);
+  int max = *std::max_element(coordinates.begin(), coordinates.end());
+  return max;
+}
+
+int kovshikov::getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point)) // для одной фигуры
+{
+  std::vector< int > coordinates;
+  std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(coordinates), getCoordinate);
+  int min = *std::min_element(coordinates.begin(), coordinates.end());
+  return min;
+}
+
+std::vector< kovshikov::Point > kovshikov::getFrame(const std::vector< Polygon >& allData) // для всех фигур
+{
+  std::vector< int > allMaxX;
+  std::vector< int > allMaxY;
+  std::vector< int > allMinX;
+  std::vector< int > allMinY;
+  using namespace std::placeholders;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allMaxX), std::bind(getMaxCoordinate, _1, getX));
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allMaxY), std::bind(getMaxCoordinate, _1, getY));
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allMinX), std::bind(getMinCoordinate, _1, getX));
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allMinY), std::bind(getMinCoordinate, _1, getY));
+  int maxX = *std::max_element(allMaxX.begin(), allMaxX.end());
+  int maxY = *std::max_element(allMaxY.begin(), allMaxY.end());
+  int minX = *std::min_element(allMinX.begin(), allMinX.end());
+  int minY = *std::min_element(allMinY.begin(), allMinY.end());
+  std::vector < Point > frame;
+  frame.push_back(Point{minX, maxY});
+  frame.push_back(Point{maxX, maxY});
+  frame.push_back(Point{maxX, minY});
+  frame.push_back(Point{minX, minY});
+  return frame;
+}
+
+bool kovshikov::isInframe(const std::vector< Polygon >& allData, const Polygon& polygon)
+{
+  std::vector< Point > frame = getFrame(allData);
+  int maxFrameX = frame[1].x;
+  int minFrameX = frame[0].x;
+  int maxFrameY = frame[0].y;
+  int minFrameY = frame[2].y;
+  int maxPolygonX = getMaxCoordinate(polygon, getX);
+  int minPolygonX = getMinCoordinate(polygon, getX);
+  int maxPolygonY = getMaxCoordinate(polygon, getY);
+  int minPolygonY = getMinCoordinate(polygon, getY);
+  bool noMoreMax = maxPolygonX <= maxFrameX || maxPolygonY <= maxFrameY;
+  bool noLessMin = minPolygonX >= minFrameX || minPolygonY >= minFrameY;
+  if(noMoreMax && noLessMin)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+void kovshikov::checkInframe(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  Polygon polygon;
+  if(!(is >> polygon))
+  {
+    throw std::out_of_range("");
+  }
+  else
+  {
+    bool check = isInframe(allData, polygon);
+    if(check == true)
+    {
+      out << "<TRUE>" << "\n";
+    }
+    else
+    {
+      out << "<FALSE>" << "\n";
+    }
+  }
+}

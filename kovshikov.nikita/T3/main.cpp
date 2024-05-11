@@ -39,6 +39,7 @@ int main(int argc, char ** argv)
     interaction["MIN"] = std::bind(kovshikov::getMin, _1, _2, _3);
     interaction["COUNT"] = std::bind(kovshikov::count, _1, _2, _3);
     interaction["RIGHTSHAPES"] = std::bind(kovshikov::countRightshapes, _1, _3);
+    interaction["INFRAME"] = std::bind(kovshikov::checkInframe, _1, _2, _3);
   }
 
   std::string command;
