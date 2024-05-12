@@ -58,6 +58,10 @@ void mihalchenko::getAreaEven(const std::vector<Polygon> &polygons, std::ostream
 
 void mihalchenko::getAreaMean(const std::vector<Polygon> &polygons, std::ostream &out)
 {
+  if (polygons.empty())
+  {
+    throw std::logic_error("Empty data");
+  }
   std::vector<Polygon> copyPolygons;
   std::copy(polygons.cbegin(),
             polygons.cend(),
