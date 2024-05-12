@@ -19,6 +19,10 @@ void doroshenko::cmdArea(const std::vector< Polygon >& polygons, std::istream& i
   input >> areaType;
   try
   {
+    if(polygons.empty())
+    {
+      throw std::invalid_argument("<INVALID COMMAND>\n");
+    }
     cmdsArea.at(areaType)(polygons, output);
   }
   catch (const std::out_of_range& e)
@@ -123,6 +127,10 @@ void doroshenko::cmdMax(const std::vector< Polygon >& polygons, std::istream& in
   input >> maxType;
   try
   {
+    if(polygons.empty())
+    {
+      throw std::invalid_argument("<INVALID COMMAND>\n");
+    }
     cmdsMax.at(maxType)(polygons, output);
   }
   catch (const std::out_of_range& e)
@@ -163,6 +171,10 @@ void doroshenko::cmdMin(const std::vector< Polygon >& polygons, std::istream& in
   input >> minType;
   try
   {
+    if(polygons.empty())
+    {
+      throw std::invalid_argument("<INVALID COMMAND>\n");
+    }
     cmdsMin.at(minType)(polygons, output);
   }
   catch (const std::out_of_range& e)
@@ -203,6 +215,10 @@ void doroshenko::cmdCount(const std::vector< Polygon >& polygons, std::istream& 
   input >> countType;
   try
   {
+    if(polygons.empty())
+    {
+      throw std::invalid_argument("<INVALID COMMAND>\n");
+    }
     cmdsCount.at(countType)(polygons, output);
   }
   catch (const std::out_of_range& e)
