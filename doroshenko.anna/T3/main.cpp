@@ -1,30 +1,11 @@
 #include <iostream>
 #include <map>
-#include "fstream"
+#include <fstream>
+#include <iterator>
 #include <functional>
 #include <limits>
 #include "polygon.hpp"
-namespace doroshenko
-{
-  void cmd1(std::vector< Polygon >&, std::istream&, std::ostream& out)
-  {
-    out << "CMD1 dispatched\n";
-  }
-  void cmd2(int&, std::istream&, std::ostream& out)
-  {
-    out << "CMD2 dispatched\n";
-  }
-  void cmd3(const int&, std::istream&, std::ostream& out)
-  {
-    out << "CMD3 dispatched\n";
-  }
-  void cmd4(const int&, std::istream&, std::ostream& out)
-  {
-    //...
-    out << "hello goth programmer nation!!!\n";
-    throw std::overflow_error("overflow cmd4");
-  }
-}
+
 int main(int argc, char* argv[])
 {
   //int context = 0;
@@ -74,6 +55,30 @@ int main(int argc, char* argv[])
     }
   }
 
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > commands;
+  {
+    using namespace std::placeholders;
+    //interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
+    //interaction["MAX"] = std::bind(kovshikov::getMax, _1, _2, _3);
+    //interaction["MIN"] = std::bind(kovshikov::getMin, _1, _2, _3);
+    //interaction["COUNT"] = std::bind(kovshikov::count, _1, _2, _3);
+    //interaction["RIGHTSHAPES"] = std::bind(kovshikov::countRightshapes, _1, _3);
+    //interaction["INFRAME"] = std::bind(kovshikov::checkInframe, _1, _2, _3);
+  }
 
+  std::string cmd;
+  while (std::cin >> cmd)
+  {
+    try
+    {
+      commands.at(cmd)(polygons, std::cin, std::cout);
+    }
+    catch(const std::out_of_range& error)
+    {
+      std::cout << "<INVALID COMMAND>" << "\n";
+      //std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
   return 0;
 }

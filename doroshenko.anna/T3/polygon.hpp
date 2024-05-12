@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <iostream>
-#include "datastruct.hpp"
 
 namespace doroshenko
 {
