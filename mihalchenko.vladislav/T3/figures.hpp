@@ -8,6 +8,9 @@
 
 #include <numeric>
 
+#include <string> // убрать
+#include <utility> // убрать
+
 namespace mihalchenko
 {
   struct Point

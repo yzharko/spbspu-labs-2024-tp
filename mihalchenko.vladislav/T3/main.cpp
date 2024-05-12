@@ -5,6 +5,7 @@
 #include <string>
 #include "functions.hpp"
 #include "figures.hpp"
+// #include "./../common/delimiters.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     }
   }
   std::map<std::string, std::function<void(const std::vector<Polygon> &polygon,
-                                           std::ostream &out, std::istream &is)>>
+                                           std::istream &is, std::ostream &out)>>
       cmds;
   {
     using namespace std::placeholders;
@@ -42,7 +43,7 @@ int main(int argc, char *argv[])
     cmds["MIN"] = std::bind(printMin, _1, _2, _3);
     cmds["COUNT"] = std::bind(printCount, _1, _2, _3);
     cmds["PERMS"] = std::bind(printPerms, _1, _2, _3);
-    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _2);
+    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _2, _3);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
   {
     try
     {
-      cmds.at(command)(polygons, std::cout, std::cin);
+      cmds.at(command)(polygons, std::cin, std::cout);
     }
     catch (const std::exception &)
     {
