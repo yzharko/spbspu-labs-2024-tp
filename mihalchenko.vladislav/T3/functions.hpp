@@ -4,8 +4,6 @@
 #include <algorithm>
 #include <functional>
 #include "figures.hpp"
-// #include "./../common/delimiters.hpp"
-// #include "./../common/scopeGuard.hpp"
 
 namespace mihalchenko
 {
@@ -39,7 +37,8 @@ namespace mihalchenko
   double getCos(const Point &lhs, const Point &rhs);
   bool isZeroCos(const double &cos);
   bool isRightPolygon(const Polygon &polygon);
-  void countRightShapes(const std::vector<Polygon> &polygons, std::istream &, std::ostream &out);
+  void printCountRightShapes(const std::vector<Polygon> &polygons, std::istream &, std::ostream &out);
+  std::ostream &printErrorMessage(const std::string &msg, std::ostream &out);
 }
 
 #endif

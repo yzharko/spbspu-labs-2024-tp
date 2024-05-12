@@ -3,9 +3,6 @@
 #include <cmath>
 #include <numeric>
 #include <scopeGuard.hpp>
-// #include <delimiters.hpp>
-
-// #include <iostream> // убрать
 
 using namespace std::placeholders;
 
@@ -22,8 +19,7 @@ double mihalchenko::getPoints(const Point &first, const Point &second)
 double mihalchenko::sumArea(double area, const Point &startPoint)
 {
   auto nextPoint = *std::next(&startPoint);
-  auto triangleArea = getPoints(startPoint, nextPoint);
-  return area += triangleArea;
+  return area += getPoints(startPoint, nextPoint);
 }
 
 double mihalchenko::countArea(const Polygon &polygon)
@@ -84,7 +80,7 @@ void mihalchenko::getAreaVertexes(const std::vector<Polygon> &polygons,
 std::ostream &mihalchenko::getAreaResult(const std::vector<Polygon> &copyPolygons,
                                          bool isMeanPredicate, std::ostream &out)
 {
-  // iofmtguard fmtguard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   if (isMeanPredicate == false)
   {
@@ -140,7 +136,7 @@ std::ostream &mihalchenko::getMaxArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::max_element(areas.cbegin(), areas.cend());
-  // iofmtguard fmtguard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -151,8 +147,8 @@ std::ostream &mihalchenko::getMaxVertexes(const std::vector<Polygon> &polygons, 
   std::vector<int> numsOfVertexes(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::max_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
-  // iofmtguard fmtguard(out);
-  // out << std::fixed << std::setprecision(0);
+  iofmtguard fmtguard(out);
+  out << std::fixed << std::setprecision(0);
   out << maxVertexes << '\n';
   return out;
 }
@@ -185,7 +181,7 @@ std::ostream &mihalchenko::getMinArea(const std::vector<Polygon> &polygons, std:
   // areas.reserve(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), areas.begin(), countArea);
   double maxArea = *std::min_element(areas.cbegin(), areas.cend());
-  // iofmtguard fmtguard(out);
+  iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(1);
   out << maxArea << '\n';
   return out;
@@ -196,8 +192,8 @@ std::ostream &mihalchenko::getMinVertexes(const std::vector<Polygon> &polygons, 
   std::vector<int> numsOfVertexes(polygons.size());
   std::transform(polygons.cbegin(), polygons.cend(), numsOfVertexes.begin(), getNumOfVertexes);
   int maxVertexes = *std::min_element(numsOfVertexes.cbegin(), numsOfVertexes.cend());
-  // iofmtguard fmtguard(out);
-  // out << std::fixed << std::setprecision(0);
+  iofmtguard fmtguard(out);
+  out << std::fixed << std::setprecision(0);
   out << maxVertexes << '\n';
   return out;
 }
@@ -348,7 +344,7 @@ void mihalchenko::printPerms(const std::vector<Polygon> &polygons,
   }
   else
   {
-    out << "<INVALID COMMAND>" << '\n';
+    printErrorMessage("<INVALID COMMAND>", out);
   }
 }
 
@@ -397,9 +393,15 @@ bool mihalchenko::isRightPolygon(const Polygon &polygon)
              isZeroCos) != cosOfVectors.end();
 }
 
-void mihalchenko::countRightShapes(const std::vector<Polygon> &polygons, std::istream &, std::ostream &out)
+void mihalchenko::printCountRightShapes(const std::vector<Polygon> &polygons, std::istream &, std::ostream &out)
 {
   iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(0);
   out << std::count_if(polygons.begin(), polygons.end(), isRightPolygon) << '\n';
+}
+
+std::ostream &printErrorMessage(const std::string &msg, std::ostream &out)
+{
+  out << msg << '\n';
+  return out;
 }

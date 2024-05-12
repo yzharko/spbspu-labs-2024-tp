@@ -5,7 +5,6 @@
 #include <string>
 #include "functions.hpp"
 #include "figures.hpp"
-// #include "./../common/delimiters.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +42,7 @@ int main(int argc, char *argv[])
     cmds["MIN"] = std::bind(printMin, _1, _2, _3);
     cmds["COUNT"] = std::bind(printCount, _1, _2, _3);
     cmds["PERMS"] = std::bind(printPerms, _1, _2, _3);
-    cmds["RIGHTSHAPES"] = std::bind(countRightShapes, _1, _2, _3);
+    cmds["RIGHTSHAPES"] = std::bind(printCountRightShapes, _1, _2, _3);
   }
   mihalchenko::Polygon polygon;
   std::string command = "";
@@ -55,7 +54,7 @@ int main(int argc, char *argv[])
     }
     catch (const std::exception &)
     {
-      std::cerr << "<INVALID COMMAND>" << '\n';
+      printErrorMessage("<INVALID COMMAND>", std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
