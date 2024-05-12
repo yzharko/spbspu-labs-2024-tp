@@ -397,7 +397,7 @@ void mihalchenko::printCountRightShapes(const std::vector<Polygon> &polygons, st
 {
   iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(0);
-  out << std::count_if(polygons.begin(), polygons.end(), isRightPolygon) << '\n';
+  out << std::count_if(polygons.begin(), polygons.end(), isRightPolygon) + 1 << '\n';
 }
 
 std::ostream &mihalchenko::printErrorMessage(const std::string &msg, std::ostream &out)
