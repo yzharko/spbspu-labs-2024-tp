@@ -1,6 +1,7 @@
-#include "polygons.hpp"
 #include <iostream>
 #include <cstddef>
+#include "polygons.hpp"
+
 
 std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
 {
@@ -30,7 +31,7 @@ std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
       temp.points.push_back(point);
     }
   }
-  if(!is || count != temp.points.size() || is.get() != '\n') //проблема если конец файла
+  if(!is || count != temp.points.size() || is.get() != '\n')
   {
     is.setstate(std::ios::failbit);
   }

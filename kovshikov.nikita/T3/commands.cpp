@@ -1,15 +1,15 @@
-#include <numeric>
+#include <algorithm>
 #include <cstring>
-#include <map>
 #include <functional>
 #include <fstream>
-#include <limits>
-#include <algorithm>
 #include <iterator>
 #include <iostream>
+#include <iomanip>
+#include <limits>
+#include <map>
+#include <numeric>
 #include "polygons.hpp"
 #include "commands.hpp"
-#include <iomanip>
 
 void kovshikov::fileIsEmpty(const std::vector< Polygon >& allData)
 {
@@ -40,7 +40,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   {
     area.at(command)(allData, out);
   }
-  catch(const std::out_of_range& error) // не учитывается формат просто AREA
+  catch(const std::out_of_range& error)
   {
     if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
@@ -68,7 +68,7 @@ int kovshikov::getCordMethod(const Point& currentPoint,const Point& prevPoint)
   return area;
 }
 
-double kovshikov::countArea(const Polygon polygon) // для одной фигуры
+double kovshikov::countArea(const Polygon polygon)
 {
   int area = 0;
   std::vector< int > areas(polygon.points.size());
@@ -86,7 +86,7 @@ double kovshikov::countArea(const Polygon polygon) // для одной фигу
   return std::abs(area / 2.0);
 }
 
-double kovshikov::resultArea(double summa, const Polygon polygon) //для накапливания суммы
+double kovshikov::resultArea(double summa, const Polygon polygon)
 {
   summa += countArea(polygon);
   return summa;
@@ -168,7 +168,7 @@ void kovshikov::getMax(const std::vector< Polygon >& allData, std::istream& is, 
     fileIsEmpty(allData);
     max.at(command)(allData, out);
   }
-  catch(const std::out_of_range& error) // не учитывается формат просто MAX
+  catch(const std::out_of_range& error)
   {
     throw;
   }
@@ -214,7 +214,7 @@ void kovshikov::getMin(const std::vector< Polygon >& allData, std::istream& is, 
   {
     min.at(command)(allData, out);
   }
-  catch(const std::out_of_range& error) // не учитывается формат просто MIN
+  catch(const std::out_of_range& error)
   {
     throw;
   }
@@ -269,16 +269,16 @@ void kovshikov::count(const std::vector< Polygon >& allData, std::istream& is, s
   {
     count.at(command)(allData, out);
   }
-  catch(const std::out_of_range& error) // не учитывается формат просто COUNT
+  catch(const std::out_of_range& error)
   {
-    if(std::all_of(command.begin(), command.end(), isDigit) == true) // заменить на функцию как здесь так и в AREA
+    if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
       if(num < 3)
       {
         throw;
       }
-      countVertexes(num, allData, out); //тут нет же исключений??
+      countVertexes(num, allData, out);
     }
     else
     {
@@ -365,7 +365,7 @@ int kovshikov::getY(const Point& point)
   return point.y;
 }
 
-int kovshikov::getMaxCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point)) // для одной фигуры
+int kovshikov::getMaxCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point))
 {
   std::vector< int > coordinates;
   std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(coordinates), getCoordinate);
@@ -373,7 +373,7 @@ int kovshikov::getMaxCoordinate(const Polygon& polygon, int(*getCoordinate)(cons
   return max;
 }
 
-int kovshikov::getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point)) // для одной фигуры
+int kovshikov::getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point))
 {
   std::vector< int > coordinates;
   std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(coordinates), getCoordinate);
@@ -381,7 +381,7 @@ int kovshikov::getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(cons
   return min;
 }
 
-std::vector< kovshikov::Point > kovshikov::getFrame(const std::vector< Polygon >& allData) // для всех фигур
+std::vector< kovshikov::Point > kovshikov::getFrame(const std::vector< Polygon >& allData)
 {
   std::vector< int > allMaxX;
   std::vector< int > allMaxY;
