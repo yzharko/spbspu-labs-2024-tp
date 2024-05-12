@@ -11,8 +11,8 @@ namespace doroshenko
   void meanArea(const std::vector< Polygon >& polygons, std::ostream& output);
   void vertexArea(size_t num, const std::vector< Polygon >& polygons, std::ostream& output);
   double plusArea(double sum, const Polygon& polygon);
-  double calculatePolygonAreaRec(const Polygon& polygon, size_t i = 0);
   double calculatePolygonArea(const Polygon& polygon);
+  double calculatePolygonAreaRec(const Polygon& polygon, size_t i, double area);
 
   void cmdMax(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
   void findMaxArea(const std::vector< Polygon >& polygons, std::ostream& output);

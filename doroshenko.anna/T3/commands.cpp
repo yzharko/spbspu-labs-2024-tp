@@ -96,19 +96,21 @@ double doroshenko::plusArea(double sum, const Polygon& polygon)
   return sum;
 }
 
-double doroshenko::calculatePolygonAreaRec(const Polygon& polygon, size_t i)
+double doroshenko::calculatePolygonAreaRec(const Polygon& polygon, size_t i, double area)
 {
-  if (i >= polygon.points.size() - 1)
+  const size_t numPoints = polygon.points.size();
+  if (i >= numPoints)
   {
-    return 0.0;
+    return area;
   }
-  return 0.5 * std::abs(polygon.points[i].x * polygon.points[i + 1].y
-    - polygon.points[i].y * polygon.points[i + 1].x) + calculatePolygonAreaRec(polygon, i + 1);
+  const Point& p1 = polygon.points[i];
+  const Point& p2 = polygon.points[(i + 1) % numPoints];
+  return calculatePolygonAreaRec(polygon, i + 1, area + (p1.x * p2.y - p2.x * p1.y));
 }
 
 double doroshenko::calculatePolygonArea(const Polygon& polygon)
 {
-  return calculatePolygonAreaRec(polygon);
+  return 0.5 * std::abs(calculatePolygonAreaRec(polygon, 0, 0.0));
 }
 
 void doroshenko::cmdMax(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
