@@ -19,10 +19,6 @@ void doroshenko::cmdArea(const std::vector< Polygon >& polygons, std::istream& i
   input >> areaType;
   try
   {
-    if(polygons.empty())
-    {
-      throw std::invalid_argument("<INVALID COMMAND>\n");
-    }
     cmdsArea.at(areaType)(polygons, output);
   }
   catch (const std::out_of_range& e)
@@ -76,8 +72,15 @@ void doroshenko::oddArea(const std::vector< Polygon >& polygons, std::ostream& o
 
 void doroshenko::meanArea(const std::vector< Polygon >& polygons, std::ostream& output)
 {
-  double sumArea = std::accumulate(polygons.begin(), polygons.end(), 0.0, plusArea) / polygons.size();
-  output << std::fixed << std::setprecision(1) << sumArea << "\n";
+  if(polygons.empty())
+  {
+    output << "<INVALID COMMAND>\n";
+  }
+  else
+  {
+    double sumArea = std::accumulate(polygons.begin(), polygons.end(), 0.0, plusArea) / polygons.size();
+    output << std::fixed << std::setprecision(1) << sumArea << "\n";
+  }
 }
 
 void doroshenko::vertexArea(size_t num, const std::vector< Polygon >& polygons, std::ostream& output)
@@ -215,10 +218,6 @@ void doroshenko::cmdCount(const std::vector< Polygon >& polygons, std::istream& 
   input >> countType;
   try
   {
-    if(polygons.empty())
-    {
-      throw std::invalid_argument("<INVALID COMMAND>\n");
-    }
     cmdsCount.at(countType)(polygons, output);
   }
   catch (const std::out_of_range& e)
