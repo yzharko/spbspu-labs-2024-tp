@@ -5,36 +5,10 @@
 #include <functional>
 #include <limits>
 #include "polygon.hpp"
+#include "commands.hpp"
 
 int main(int argc, char* argv[])
 {
-  //int context = 0;
-  //std::map< std::string, std::function < void(std::istream&, std::ostream&) > > cmds;
-  //{
-  //  using namespace std::placeholders;
-  //  cmds["CMD1"] = std::bind(goth::cmd1, context, _1, _2);
-  //  cmds["CMD2"] = std::bind(goth::cmd2, context, _1, _2);
-  //  cmds["CMD3"] = std::bind(goth::cmd3, context, _1, _2);
-  //  cmds["CMD4"] = std::bind(goth::cmd4, context, _1, _2);
-  //}
-  //std::string cmd;
-  //while (std::cin >> cmd)
-  //{
-  //  try
-  //  {
-  //    cmds.at(cmd)(std::cin, std::cout);
-  //  }
-  //  catch (const std::overflow_error& e)
-  //  {
-  //    std::cerr << "<GOTH_ERROR: " << e.what() << ">\n";
-  //  }
-  //  catch (const std::out_of_range&)
-  //  {
-  //    std::cerr << "<INVALID COMMAND>\n";
-  //    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-  //  }
-  //}
-
   using namespace doroshenko;
   if (argc != 2)
   {
@@ -58,12 +32,7 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > commands;
   {
     using namespace std::placeholders;
-    //interaction["AREA"] = std::bind(kovshikov::getArea, _1, _2, _3); //заменить первый параметр на allData
-    //interaction["MAX"] = std::bind(kovshikov::getMax, _1, _2, _3);
-    //interaction["MIN"] = std::bind(kovshikov::getMin, _1, _2, _3);
-    //interaction["COUNT"] = std::bind(kovshikov::count, _1, _2, _3);
-    //interaction["RIGHTSHAPES"] = std::bind(kovshikov::countRightshapes, _1, _3);
-    //interaction["INFRAME"] = std::bind(kovshikov::checkInframe, _1, _2, _3);
+    commands["AREA"] = std::bind(doroshenko::cmdArea, polygons, _2, _3);
   }
 
   std::string cmd;
