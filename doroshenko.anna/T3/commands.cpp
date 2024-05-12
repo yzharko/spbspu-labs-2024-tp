@@ -190,3 +190,69 @@ void doroshenko::findMinVertexes(const std::vector< Polygon >& polygons, std::os
   std::sort(vertexes.begin(), vertexes.end());
   output << vertexes[0];
 }
+
+void doroshenko::cmdCount(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
+{
+  using namespace std::placeholders;
+  std::map< std::string, std::function< void(const std::vector< Polygon >&, std::ostream&) > > cmdsCount;
+  cmdsCount["EVEN"] = std::bind(doroshenko::countEven, _1, _2);
+  cmdsCount["ODD"] = std::bind(doroshenko::countOdd, _1, _2);
+  std::string countType;
+  input >> countType;
+  try
+  {
+    cmdsCount.at(countType)(polygons, output);
+  }
+  catch (const std::out_of_range& e)
+  {
+    if (std::isdigit(countType[0]))
+    {
+      size_t num = std::stoull(countType);
+      if (num < 3)
+      {
+        throw std::invalid_argument("<INVALID COMMAND>\n");
+      }
+      else
+      {
+        vertexCount(num, polygons, output);
+      }
+    }
+    else
+    {
+      throw std::invalid_argument("<INVALID COMMAND>\n");
+    }
+  }
+}
+
+void doroshenko::countEven(const std::vector< Polygon >& polygons, std::ostream& output)
+{
+  size_t result = std::count_if
+  (
+    polygons.begin(),
+    polygons.end(),
+    [](const Polygon& pol) { return pol.points.size() % 2 == 0; }
+  );
+  output << result << "\n";
+}
+
+void doroshenko::countOdd(const std::vector< Polygon >& polygons, std::ostream& output)
+{
+  size_t result = std::count_if
+  (
+    polygons.begin(),
+    polygons.end(),
+    [](const Polygon& pol) { return pol.points.size() % 2 != 0; }
+  );
+  output << result << "\n";
+}
+
+void doroshenko::vertexCount(size_t num, const std::vector< Polygon >& polygons, std::ostream& output)
+{
+  size_t result = std::count_if
+  (
+    polygons.begin(),
+    polygons.end(),
+    [num](const Polygon& pol) { return pol.points.size() == num; }
+  );
+  output << result << "\n";
+}

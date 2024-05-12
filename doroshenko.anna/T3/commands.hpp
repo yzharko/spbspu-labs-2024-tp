@@ -22,6 +22,11 @@ namespace doroshenko
   void findMinArea(const std::vector< Polygon >& polygons, std::ostream& output);
   void findMinVertexes(const std::vector< Polygon >& polygons, std::ostream& output);
 
+
+  void cmdCount(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
+  void countEven(const std::vector< Polygon >& polygons, std::ostream& output);
+  void countOdd(const std::vector< Polygon >& polygons, std::ostream& output);
+  void vertexCount(size_t num, const std::vector< Polygon >& polygons, std::ostream& output);
 }
 
 #endif
