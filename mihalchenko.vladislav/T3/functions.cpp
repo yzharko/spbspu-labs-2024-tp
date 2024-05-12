@@ -302,7 +302,7 @@ bool mihalchenko::isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsP
 bool mihalchenko::isPointCorrect(const Point &lhsPoint, const Point &rhsPoint)
 {
   if (((lhsPoint.x == rhsPoint.x) && (lhsPoint.y == rhsPoint.y)) ||
-      ((lhsPoint.x == rhsPoint.y) && (lhsPoint.y == rhsPoint.x)))
+    ((lhsPoint.x == rhsPoint.y) && (lhsPoint.y == rhsPoint.x)))
   {
     return true;
   }

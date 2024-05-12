@@ -48,8 +48,8 @@ std::istream &mihalchenko::operator>>(std::istream &is, Polygon &rhs)
   else
   {
     std::copy_n(std::istream_iterator<Point>(is),
-                counterOfPoints,
-                std::back_inserter(polygon.points));
+      counterOfPoints,
+      std::back_inserter(polygon.points));
   }
   if (is)
   {
@@ -69,7 +69,7 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
   iofmtguard fmtguard(out);
   out << counterOfPoints;
   std::copy_n(rhs.points.begin(),
-              counterOfPoints - 1,
-              std::ostream_iterator<Point>(out << ' ', " "));
+    counterOfPoints - 1,
+    std::ostream_iterator<Point>(out << ' ', " "));
   return out;
 }
