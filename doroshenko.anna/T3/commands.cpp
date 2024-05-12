@@ -134,7 +134,7 @@ void doroshenko::findMaxArea(const std::vector< Polygon >& polygons, std::ostrea
   std::vector< double > areasOfPolygons;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(areasOfPolygons), calculatePolygonArea);
   std::sort(areasOfPolygons.begin(), areasOfPolygons.end());
-  output << std::fixed << std::setprecision(1) << areasOfPolygons[areasOfPolygons.size() - 1];
+  output << std::fixed << std::setprecision(1) << areasOfPolygons[areasOfPolygons.size() - 1] << "\n";
 }
 
 void doroshenko::findMaxVertexes(const std::vector< Polygon >& polygons, std::ostream& output)
@@ -148,7 +148,7 @@ void doroshenko::findMaxVertexes(const std::vector< Polygon >& polygons, std::os
     [](const Polygon& pol) { return pol.points.size(); }
   );
   std::sort(vertexes.begin(), vertexes.end());
-  output << vertexes[vertexes.size() - 1];
+  output << vertexes[vertexes.size() - 1] << "\n";
 }
 
 void doroshenko::cmdMin(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
