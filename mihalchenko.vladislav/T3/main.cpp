@@ -24,8 +24,8 @@ int main(int argc, char *argv[])
   while (!inputFile.eof())
   {
     std::copy(std::istream_iterator<Polygon>(inputFile),
-              std::istream_iterator<Polygon>(),
-              std::back_inserter(polygons));
+      std::istream_iterator<Polygon>(),
+      std::back_inserter(polygons));
     if (inputFile.fail())
     {
       inputFile.clear();
@@ -33,8 +33,7 @@ int main(int argc, char *argv[])
     }
   }
   std::map<std::string, std::function<void(const std::vector<Polygon> &polygon,
-                                           std::istream &is, std::ostream &out)>>
-      cmds;
+                                           std::istream &is, std::ostream &out)>> cmds;
   {
     using namespace std::placeholders;
     cmds["AREA"] = std::bind(printArea, _1, _2, _3);
