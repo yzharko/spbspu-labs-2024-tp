@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "datastruct.hpp"
+#include "Datastruct.hpp"
 
 int main() {
   std::vector<DataStruct> dataVector;
