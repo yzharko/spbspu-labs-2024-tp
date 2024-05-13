@@ -36,6 +36,7 @@ int main(int argc, char* argv[])
     commands["MAX"] = std::bind(doroshenko::cmdMax, polygons, _2, _3);
     commands["MIN"] = std::bind(doroshenko::cmdMin, polygons, _2, _3);
     commands["COUNT"] = std::bind(doroshenko::cmdCount, polygons, _2, _3);
+    commands["RMECHO"] = std::bind(doroshenko::cmdRmecho, polygons, _2, _3);
   }
 
   std::string cmd;

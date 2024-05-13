@@ -48,3 +48,20 @@ std::istream& doroshenko::operator>>(std::istream& input, Polygon& dest)
   }
   return input;
 }
+
+bool doroshenko::operator==(const Point& other) const
+{
+  return x == other.x && y == other.y;
+}
+
+bool doroshenko::operator==(const Polygon& other) const
+{
+  if(points.size() != other.points.size())
+  {
+    return false;
+  }
+  std::vector< Point > otherPoints;
+  auto it = std::search(other.points.begin(), other.points.end(),
+                        points.begin(), points.end());
+  return it != other.points.end();
+}
