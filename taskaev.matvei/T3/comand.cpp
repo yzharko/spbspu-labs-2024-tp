@@ -330,6 +330,10 @@ namespace taskaev
     {
       throw std::logic_error("");
     }
+    if (input.points.size() < 3)
+    {
+      throw std::logic_error("");
+    }
     size_t countMaxSeq = 0;
     auto help = [&input](const Polygon& p)
     {
