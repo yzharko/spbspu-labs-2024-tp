@@ -337,7 +337,7 @@ namespace taskaev
     while ( iter != polygon.end())
     {
       auto count = std::count_if(iter, polygon.end(), help);
-      countMaxSeq = (countMaxSeq > count) ? countMaxSeq : count;
+      countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(count));
       iter += count;
     }
     out << countMaxSeq << "\n";
