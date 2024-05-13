@@ -331,8 +331,10 @@ namespace taskaev
       throw std::logic_error("");
     }
     size_t countMaxSeq = 0;
-    using namespace std::placeholders;
-    auto help = std::bind(std::equal_to< Polygon >{}, _1, input);
+    auto help = [&input](const Polygon& p)
+    {
+      return p == input;
+    };
     auto iter = polygon.begin();
     while ( iter != polygon.end())
     {
