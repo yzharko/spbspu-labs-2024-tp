@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
     }
   }
 
-  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > commands;
+  std::map< std::string, std::function < void(std::vector< Polygon >&, std::istream&, std::ostream&) > > commands;
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(doroshenko::cmdArea, _1, _2, _3);

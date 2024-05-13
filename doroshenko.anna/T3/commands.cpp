@@ -301,8 +301,7 @@ void doroshenko::cmdRmecho(std::vector<Polygon>& polygons, std::istream& input, 
       return false;
      }
   );
-  size_t removedCount = currentSize - polygons.size();
   polygons.erase(it, polygons.end());
-
+  size_t removedCount = currentSize - polygons.size();
   output << removedCount << '\n';
 }
