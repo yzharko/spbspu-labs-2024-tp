@@ -328,7 +328,7 @@ namespace taskaev
     // reStart
     Polygon input;
     in >> input;
-    if (polygon.empty() || in.fail())
+    if (polygon.empty() == 0 || in.fail())
     {
       throw std::logic_error("");
     }
