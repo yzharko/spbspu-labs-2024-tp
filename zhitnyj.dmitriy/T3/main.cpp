@@ -37,11 +37,11 @@ int main(int argc, char* argv[])
     {
       std::string param;
       std::cin >> param;
-      if (param == "ODD")
+      if (param == "EVEN")
       {
         std::cout << Commands().calculateAreaEvenOdd(polygons, true) << "\n";
       }
-      else if (param == "EVEN")
+      else if (param == "ODD")
       {
         std::cout << Commands().calculateAreaEvenOdd(polygons, false) << "\n";
       }
@@ -100,11 +100,11 @@ int main(int argc, char* argv[])
     {
       std::string param;
       std::cin >> param;
-      if (param == "ODD")
+      if (param == "EVEN")
       {
         std::cout << Commands().countPolygons(polygons, true) << "\n";
       }
-      else if (param == "EVEN")
+      else if (param == "ODD")
       {
         std::cout << Commands().countPolygons(polygons, false) << "\n";
       }
