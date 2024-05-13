@@ -18,5 +18,6 @@ namespace taskaev
 
   std::istream& operator>>(std::istream& in, Point& point);
   std::istream& operator>>(std::istream& in, Polygon& polygon);
+  bool operator==(const Polygon& first, const Polygon& second);
 }
 #endif
