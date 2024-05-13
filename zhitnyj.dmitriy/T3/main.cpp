@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
+#include <algorithm>
 #include "FileReader.hpp"
 #include "Commands.hpp"
 #include "iofmtguard.hpp"
