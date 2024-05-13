@@ -26,7 +26,6 @@ size_t reznikova::getNumOfVertexes(const reznikova::Polygon & polygon)
   return polygon.points.size();
 }
 
-
 std::vector< reznikova::Polygon > reznikova::chooseOddPolygons(const std::vector< reznikova::Polygon > & polygons)
 {
   std::vector< Polygon > odd_polygons;
@@ -64,7 +63,6 @@ bool reznikova::checkIfSame(size_t num, const reznikova::Polygon & polygon)
 
 std::vector< reznikova::Polygon > reznikova::chooseNumPolygons(const std::vector< reznikova::Polygon > & polygons, size_t num)
 {
-  
   std::vector< Polygon > num_polygons;
   using namespace std::placeholders;
   std::copy_if(
@@ -300,8 +298,7 @@ bool reznikova::checkIfRect(const reznikova::Polygon & polygon)
       Point p4 = polygon.points[3];
       if (checkIfParallelogram(polygon))
       {
-        return ((p2.x - p1.x) * (p2.x - p1.x) + (p4.y - p1.y) * (p4.y - p1.y)) ==
-          ((p3.y - p2.y) * (p3.y - p2.y) + (p3.x - p4.x) * (p3.x - p4.x));
+        return ((p2.x - p1.x) * (p2.x - p1.x) + (p4.y - p1.y) * (p4.y - p1.y)) == ((p3.y - p2.y) * (p3.y - p2.y) + (p3.x - p4.x) * (p3.x - p4.x));
       }
     }
     return false;
