@@ -27,11 +27,12 @@ double Commands::calculateMeanArea(const std::vector< Polygon >& polygons) const
 
 double Commands::calculateAreaByVertexCount(const std::vector< Polygon >& polygons, int count) const
 {
-  return std::accumulate(polygons.begin(), polygons.end(), 0.0,
-      [count](double sum, const Polygon& polygon)
-      {
-        return sum + (polygon.points.size() == count ? GeometryUtils().calculateArea(polygon) : 0.0);
-      });
+  return std::accumulate(polygons.begin(), polygons.end(), 0.0, [count](double sum, const Polygon& polygon)
+  {
+    return sum
+        + (polygon.points.size() == static_cast<std::vector< Point >::size_type>(count) ? GeometryUtils().calculateArea(
+            polygon) : 0.0);
+  });
 }
 
 double Commands::calculateMaxArea(const std::vector< Polygon >& polygons) const
