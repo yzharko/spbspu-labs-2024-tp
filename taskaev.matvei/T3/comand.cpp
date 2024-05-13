@@ -326,7 +326,7 @@ namespace taskaev
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
     Polygon input;
-    if (!(in >> input) || input.points.size() < 3)
+    if (!(in >> input))
     {
       throw std::logic_error("");
     }
