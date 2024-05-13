@@ -1,9 +1,7 @@
 #ifndef DATASTRUST_HPP
 #define DATASTRUCT_HPP
 #include <string>
-#include <iosfwd>
 #include <utility>
-
 namespace jirkov
 {
   struct DataStruct

@@ -1,25 +1,28 @@
 #include "DataStruct.hpp"
 
-bool jirkov::DataStruct::operator>(const DataStruct &left, const DataStruct &right)
+namespace jirkov
 {
-  if(left.key1 != right.key1)
+  bool operator>(const DataStruct &left, const DataStruct &right)
   {
-    return left.key1 > right.key1;
+    if(left.key1 != right.key1)
+    {
+      return left.key1 > right.key1;
+    }
+    else if (left.key2 != right.key2)
+    {
+      return left.key2 > right.key2;
+    }
+    else if (left.key3.length() != right.key3.length())
+    {
+      return left.key3.length() > right.key3.length();
+    }
+    else
+    {
+      return false;
+    }
   }
-  else if (left.key2 != right.key2)
+  bool operator<(const DataStruct &left, const DataStruct &right)
   {
-    return left.key2 > right.key2;
+    return !(left > right);
   }
-  else if (left.key3.length() != right.key3.length())
-  {
-    return left.key3.length() > right.key3.length();
-  }
-  else
-  {
-    return false;
-  }
-}
-bool jirkov::DataStruct::operator<(const DataStruct &left, const DataStruct &right)
-{
-  return !(left > right);
 }

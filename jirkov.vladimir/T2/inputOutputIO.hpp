@@ -1,10 +1,9 @@
 #ifndef INPUT_OUTPUT_IO_HPP
 #define INPUT_OUTPUT_IO_HPP
-#ifndef INPUT_OUTPUT_IO_HPP
-#define INPUT_OUTPUT_IO_HPP
 #include <string>
 #include <utility>
 #include <iostream>
+#include "DataStruct.hpp"
 #include "ScopeGuard.hpp"
 #include "IOstructures.hpp"
 namespace jirkov

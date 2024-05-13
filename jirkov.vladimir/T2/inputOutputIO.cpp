@@ -1,4 +1,4 @@
-#include "iputOutputIO.hpp"
+#include "inputOutputIO.hpp"
 
 std::istream & jirkov::operator>>(std::istream &in, DataStruct &value)
 {
