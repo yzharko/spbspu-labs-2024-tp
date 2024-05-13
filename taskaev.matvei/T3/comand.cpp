@@ -343,7 +343,7 @@ namespace taskaev
     while ( iter != polygon.end())
     {
       iter = std::find_if(iter, polygon.end(), help);
-      auto iterTo = std::find_if_not(iter, polygen.end(), help);
+      auto iterTo = std::find_if_not(iter, polygon.end(), help);
       countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::abs(std::distance(iter, iterTo))));
       iter = iterTo;
     }
