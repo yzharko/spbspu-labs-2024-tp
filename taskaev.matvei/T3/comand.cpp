@@ -326,5 +326,32 @@ namespace taskaev
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
     // reStart
+    Polygon input;
+    in >> input;
+    if (poligon.empty() || in.fail())
+    {
+      throw std::logic_error("");
+    }
+    iofmtguard iofmtguard(out);
+    bool flaf = false;
+    std::vector< size_t > sequence;
+    for (const Polygon& p : polygon)
+    {
+      if (p == input && !flag)
+      {
+        flag = true;
+        sequense.push_back(1);
+      }
+      else if (p == input)
+      {
+        sequence.back() +=1;
+      }
+      else
+      {
+        flag = false;
+      }
+    }
+    sequence.push_back(0);
+    out << std::max_element(sequence.begin(), sequence.end()) << "\n";
   }
 }
