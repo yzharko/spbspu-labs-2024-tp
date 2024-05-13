@@ -36,19 +36,19 @@ DataStruct readDataStruct(const std::string& line) {
   }
   return data;
 }
-void customSort(std::vector<DataStruct>& dataVector) {
-  for (size_t i = 0; i < dataVector.size(); ++i) {
-    for (size_t j = i + 1; j < dataVector.size(); ++j) {
-      if (dataVector[i].key1 > dataVector[j].key1) {
-        std::swap(dataVector[i], dataVector[j]);
+void customSort(std::vector<DataStruct>& data) {
+  for (size_t i = 0; i < data.size(); ++i) {
+    for (size_t j = i + 1; j < data.size(); ++j) {
+      if (data[i].key1 > data[j].key1) {
+        std::swap(data[i], data[j]);
         continue;
       }
-      if (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 > dataVector[j].key2) {
-        std::swap(dataVector[i], dataVector[j]);
+      if (data[i].key1 == data[j].key1 && data[i].key2 > data[j].key2) {
+        std::swap(data[i], data[j]);
         continue;
       }
-      if (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 == dataVector[j].key2 && dataVector[i].key3.size() > dataVector[j].key3.size()) {
-        std::swap(dataVector[i], dataVector[j]);
+      if (data[i].key1 == data[j].key1 && data[i].key2 == data[j].key2 && data[i].key3.size() > data[j].key3.size()) {
+        std::swap(data[i], data[j]);
         continue;
       }
     }
