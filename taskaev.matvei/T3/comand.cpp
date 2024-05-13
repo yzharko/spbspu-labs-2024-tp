@@ -325,37 +325,21 @@ namespace taskaev
 
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    std::vector< Polygon > inputPolygons;
     Polygon input;
-    while (in >> input)
+    if (!(in >> input))
     {
-      if (input.points.size() >= 3)
-      {
-        inputPolygons.push_back(input);
-      }
-      else
-      {
-        out << "<INVALID COMMAND>\n";
-      }
+     throw std::logic_error("");
     }
-    for (const auto& inputPolygon : inputPolygons)
+    size_t countMaxSeq = 0;
+    using namespace std::placeholders;
+    auto help = std::bind(std::equal_to< Polygon >{}, _1, input);
+    auto iter = polygon.begin();
+    while (iter != polygon.end())
     {
-      size_t countMaxSeq = 0;
-      auto help = [&inputPolygon](const Polygon& p)
-      {
-        return p == inputPolygon;
-      };
-      auto iter = std::find_if(polygon.begin(), polygon.end(), help);
-      while (iter != polygon.end())
-      {
-        auto iterTo = std::find_if_not(iter, polygon.end(), help);
-        countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::distance(iter, iterTo)));
-        iter = iterTo;
-        if (iter != polygon.end())
-        {
-          iter = std::find_if(iter, polygon.end(), help);
-        }
-      }
+      iter = std::find_if(polygon.begin(), polygon.end(), help);
+      auto iterTo = std::find_if_not(iter, polygon.end(), help);
+      countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::abs(std::distance(iter, iterTo))));
+      iter = iterTo;
       out << countMaxSeq << "\n";
     }
   }
