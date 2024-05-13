@@ -29,6 +29,7 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args";
     return 1;
   }
+
   std::map< std::string, std::function< void(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is) > > commands;
   {
     using namespace std::placeholders;
