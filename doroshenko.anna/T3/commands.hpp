@@ -28,7 +28,7 @@ namespace doroshenko
   void countOdd(const std::vector< Polygon >& polygons, std::ostream& output);
   void vertexCount(size_t num, const std::vector< Polygon >& polygons, std::ostream& output);
 
-  void cmdRmecho(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
+  void cmdRmecho(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
 }
 
 #endif

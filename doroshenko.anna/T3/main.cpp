@@ -32,11 +32,11 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > commands;
   {
     using namespace std::placeholders;
-    commands["AREA"] = std::bind(doroshenko::cmdArea, polygons, _2, _3);
-    commands["MAX"] = std::bind(doroshenko::cmdMax, polygons, _2, _3);
-    commands["MIN"] = std::bind(doroshenko::cmdMin, polygons, _2, _3);
-    commands["COUNT"] = std::bind(doroshenko::cmdCount, polygons, _2, _3);
-    commands["RMECHO"] = std::bind(doroshenko::cmdRmecho, polygons, _2, _3);
+    commands["AREA"] = std::bind(doroshenko::cmdArea, _1, _2, _3);
+    commands["MAX"] = std::bind(doroshenko::cmdMax, _1, _2, _3);
+    commands["MIN"] = std::bind(doroshenko::cmdMin, _1, _2, _3);
+    commands["COUNT"] = std::bind(doroshenko::cmdCount, _1, _2, _3);
+    commands["RMECHO"] = std::bind(doroshenko::cmdRmecho, _1, _2, _3);
   }
 
   std::string cmd;

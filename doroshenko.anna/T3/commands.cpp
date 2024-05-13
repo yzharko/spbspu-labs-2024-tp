@@ -274,23 +274,35 @@ void doroshenko::vertexCount(size_t num, const std::vector< Polygon >& polygons,
   output << result << "\n";
 }
 
-void doroshenko::cmdRmecho(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
+void doroshenko::cmdRmecho(std::vector<Polygon>& polygons, std::istream& input, std::ostream& output)
 {
   size_t currentSize = polygons.size();
-  if(currentSize == 0)
+  if (currentSize == 0)
   {
     output << currentSize << "\n";
+    return;
   }
-  const Polygon toRemove;
+
+  Polygon toRemove;
   input >> toRemove;
-  auto toRemoveIt = std::unique
+
+  bool lastRemoved = false;
+  auto it = std::remove_if
   (
     polygons.begin(),
     polygons.end(),
-    [toRemove](const Polygon& a, const Polygon& b)
+    [&toRemove, &lastRemoved](const Polygon& p)
     {
-      return a==b && a==toRemove;
-    }
+      if (p == toRemove && lastRemoved)
+      {
+        return true;
+      }
+      lastRemoved = (p == toRemove);
+      return false;
+     }
   );
-  output << currentSize - polygons.size() << '\n';
+  size_t removedCount = currentSize - polygons.size();
+  polygons.erase(it, polygons.end());
+
+  output << removedCount << '\n';
 }

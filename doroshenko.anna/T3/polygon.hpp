@@ -18,8 +18,8 @@ namespace doroshenko
     bool operator==(const Polygon& other) const;
   };
 
-  std::istream& operator>>(std::istream& is, Point& dest);
-  std::istream& operator>>(std::istream& is, Polygon& dest);
+  std::istream& operator>>(std::istream& input, Point& dest);
+  std::istream& operator>>(std::istream& input, Polygon& dest);
 }
 
 #endif
