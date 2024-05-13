@@ -325,31 +325,38 @@ namespace taskaev
 
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
+    std::vector< Polygon > inputPolygons;
     Polygon input;
-    if (!(in >> input) || input.points.size() < 3)
+    while (in >> input)
     {
-      out << "<INVALID COMMAND>\n";
-    }
-    size_t countMaxSeq = 0;
-    auto help = [&input](const Polygon& p)
-    {
-      return p == input;
-    };
-    auto iter = std::find_if(polygon.begin(), polygon.end(), help);
-    if (iter == polygon.end())
-    {
-      out << "<INVALID COMMAND>\n";
-    }
-    while (iter != polygon.end())
-    {
-      auto iterTo = std::find_if_not(iter, polygon.end(), help);
-      countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::distance(iter, iterTo)));
-      iter = iterTo;
-      if (iter != polygon.end())
+      if (input.points.size() >= 3)
       {
-        iter = std::find_if(iter, polygon.end(), help);
+        inputPolygons.push_back(input);
+      }
+      else
+      {
+        out << "<INVALID COMMAND>\n";
       }
     }
-    out << countMaxSeq << "\n";
+    for (const auto& inputPolygon : inputPolygons)
+    {
+      size_t countMaxSeq = 0;
+      auto help = [&inputPolygon](const Polygon& p)
+      {
+        return p == inputPolygon;
+      };
+      auto iter = std::find_if(polygon.begin(), polygon.end(), help);
+      while (iter != polygon.end())
+      {
+        auto iterTo = std::find_if_not(iter, polygon.end(), help);
+        countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::distance(iter, iterTo)));
+        iter = iterTo;
+        if (iter != polygon.end())
+        {
+          iter = std::find_if(iter, polygon.end(), help);
+        }
+      }
+      out << countMaxSeq << "\n";
+    }
   }
 }
