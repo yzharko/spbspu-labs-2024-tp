@@ -333,7 +333,7 @@ namespace taskaev
       throw std::logic_error("");
     }
     iofmtguard iofmtguard(out);
-    bool flaf = false;
+    bool flag = false;
     std::vector< size_t > sequence;
     for (const Polygon& p : polygon)
     {
@@ -352,6 +352,6 @@ namespace taskaev
       }
     }
     sequence.push_back(0);
-    out << std::max_element(sequence.begin(), sequence.end()) << "\n";
+    out << *std::max_element(sequence.begin(), sequence.end()) << "\n";
   }
 }
