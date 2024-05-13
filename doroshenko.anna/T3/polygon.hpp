@@ -9,17 +9,17 @@ namespace doroshenko
   struct Point
   {
     int x, y;
+    bool operator==(const Point& other) const;
   };
 
   struct Polygon
   {
     std::vector< Point > points;
+    bool operator==(const Polygon& other) const;
   };
 
   std::istream& operator>>(std::istream& is, Point& dest);
   std::istream& operator>>(std::istream& is, Polygon& dest);
-  bool operator==(const Point& other) const;
-  bool operator==(const Polygon& other) const;
 }
 
 #endif

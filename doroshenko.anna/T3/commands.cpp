@@ -281,14 +281,16 @@ void doroshenko::cmdRmecho(const std::vector< Polygon >& polygons, std::istream&
   {
     output << currentSize << "\n";
   }
-  Polygon toRemove;
+  const Polygon toRemove;
   input >> toRemove;
-  std::unique
+  auto toRemoveIt = std::unique
   (
     polygons.begin(),
     polygons.end(),
     [toRemove](const Polygon& a, const Polygon& b)
-    { return a == b && a == toRemove; }
+    {
+      return a==b && a==toRemove;
+    }
   );
-  output << polygons.size() - currentSize << '\n';
+  output << currentSize - polygons.size() << '\n';
 }
