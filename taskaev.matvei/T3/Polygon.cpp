@@ -45,7 +45,7 @@ namespace taskaev
     return in;
   }
 
-  bool operator==(const Polygon& first, const Polygon& second);
+  bool operator==(const Polygon& first, const Polygon& second)
   {
     return std::equal(first.points.begin(), first.points.end(), second.points.begin());
   }
