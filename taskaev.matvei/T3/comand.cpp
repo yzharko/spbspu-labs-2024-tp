@@ -328,7 +328,7 @@ namespace taskaev
     // reStart
     Polygon input;
     in >> input;
-    if ((polygon.size() == 0) || (in.fail()))
+    if ((polygon.empty()) || (in.fail()) || (input.points.size() < 3))
     {
       throw std::logic_error("");
     }
@@ -352,6 +352,10 @@ namespace taskaev
       }
     }
     sequence.push_back(0);
+    if (*std::max_element(sequence.begin(), sequence.end()) == 0)
+    {
+      throw std::logic_error("");
+    }
     out << *std::max_element(sequence.begin(), sequence.end()) << "\n";
   }
 }
