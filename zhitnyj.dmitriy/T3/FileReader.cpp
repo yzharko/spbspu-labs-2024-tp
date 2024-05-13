@@ -48,9 +48,9 @@ std::vector< Polygon > FileReader::readPolygons(const std::string& filename) con
       iss >> DelimiterIO{ '(' } >> point.x >> DelimiterIO{ ';' } >> point.y >> DelimiterIO{ ')' };
       return point;
     });
-    if (polygon.points.size() == vertex_count)
+    if (polygon.points.size() == static_cast<std::vector<Point>::size_type>(vertex_count))
     {
-      polygons.push_back(polygon);
+        polygons.push_back(polygon);
     }
   }
   return polygons;
