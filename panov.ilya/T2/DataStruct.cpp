@@ -39,10 +39,17 @@ DataStruct readDataStruct(const std::string& line) {
 void customSort(std::vector<DataStruct>& dataVector) {
   for (size_t i = 0; i < dataVector.size(); ++i) {
     for (size_t j = i + 1; j < dataVector.size(); ++j) {
-      if (dataVector[i].key1 > dataVector[j].key1 ||
-        (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 > dataVector[j].key2) ||
-        (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 == dataVector[j].key2 && dataVector[i].key3.size() > dataVector[j].key3.size())) {
+      if (dataVector[i].key1 > dataVector[j].key1) {
         std::swap(dataVector[i], dataVector[j]);
+        continue;
+      }
+      if (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 > dataVector[j].key2) {
+        std::swap(dataVector[i], dataVector[j]);
+        continue;
+      }
+      if (dataVector[i].key1 == dataVector[j].key1 && dataVector[i].key2 == dataVector[j].key2 && dataVector[i].key3.size() > dataVector[j].key3.size()) {
+        std::swap(dataVector[i], dataVector[j]);
+        continue;
       }
     }
   }
