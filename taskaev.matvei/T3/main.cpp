@@ -40,8 +40,7 @@ int main(int argc, char** argv)
     cmds["MIN"] = std::bind(MinComand, _1, _2, _3);
     cmds["COUNT"] = std::bind(CountComand, _1, _2, _3);
     cmds["MAXSEQ"] = std::bind(MaxSeqComand, _1, _2, _3);
-    // later
-    // Same
+    cmds["SAME"] = std::bind(SameComand, _1, _2, _3);
   }
 
   std::string cmd = "";

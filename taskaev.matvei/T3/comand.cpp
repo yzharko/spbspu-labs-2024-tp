@@ -360,5 +360,13 @@ namespace taskaev
   }
   void SameComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
+    Polygon input;
+    in >> input;
+    if (in.fail())
+    {
+      throw std::logic_error("");
+    }
+    iofmtguard iofmtguard(out);
+    //later
   }
 }
