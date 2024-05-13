@@ -326,7 +326,7 @@ namespace taskaev
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
     Polygon input;
-    if (!(in >> input))
+    if (!(in >> input) || input.points.size() < 3)
     {
       throw std::logic_error("");
     }
@@ -336,8 +336,13 @@ namespace taskaev
       return p == input;
     };
     auto iter = polygon.begin();
-    while ( iter != polygon.end())
+    while (iter != polygon.end())
     {
+      iter = std::find_if(iter, polygon.end(), help);
+      if (iter == polygon.end())
+      {
+        break;
+      }
       auto iterTo = std::find_if_not(iter, polygon.end(), help);
       countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::distance(iter, iterTo)));
       iter = iterTo;
