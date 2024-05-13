@@ -34,5 +34,7 @@ namespace taskaev
   void OddCount(const std::vector< Polygon >& polygon, std::ostream& out);
   bool Vertexes(const Polygon& polygon, size_t type);
   void VertexesCount(const std::vector< Polygon >& polygon, std::ostream& out, size_t type);
+
+  void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out);
 }
 #endif

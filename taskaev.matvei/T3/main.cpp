@@ -39,8 +39,8 @@ int main(int argc, char** argv)
     cmds["MAX"] = std::bind(MaxComand, _1, _2, _3);
     cmds["MIN"] = std::bind(MinComand, _1, _2, _3);
     cmds["COUNT"] = std::bind(CountComand, _1, _2, _3);
+    cmds["MAXSEQ"] = std::bind(MaxSeqComand, _1, _2, _3);
     // later
-    // MaxSeq
     // Same
   }
 

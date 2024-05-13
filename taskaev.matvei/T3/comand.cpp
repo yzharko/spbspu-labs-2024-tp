@@ -322,4 +322,24 @@ namespace taskaev
     auto counts = std::count_if(polygon.begin(), polygon.end(), helps);
     out << counts << "\n";
   }
+
+  void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
+  {
+    Polygon input;
+    if (!(in >> input))
+    {
+      throw std::logic_error("");
+    }
+    size_t countMaxSeq = 0;
+    using namespace std::placeholders;
+    auto help = std::bind(std::equal_to< Polygon >{}, _1, input);
+    auto iter = polygon.begin();
+    while ( iter != polygon.end())
+    {
+      auto count = std::count_if(iter, polygon.end(), help);
+      countMaxSeq = (countMaxSeq > count) ? countMaxSeq : count;
+      iter += count;
+    }
+    out << countMaxSeq << "\n";
+  }
 }
