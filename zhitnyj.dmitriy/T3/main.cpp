@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std::cin.clear();
+          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
       }
     }
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std::cin.clear();
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
     }
     else if (command == "MIN")
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std::cin.clear();
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
     }
     else if (command == "COUNT")
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std::cin.clear();
+          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
       }
     }
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
     else
     {
       std::cout << "<INVALID COMMAND>\n";
-      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 
