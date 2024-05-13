@@ -328,24 +328,27 @@ namespace taskaev
     Polygon input;
     if (!(in >> input) || input.points.size() < 3)
     {
-      throw std::logic_error("");
+      out << "<INVALID COMMAND>\n";
     }
     size_t countMaxSeq = 0;
     auto help = [&input](const Polygon& p)
     {
       return p == input;
     };
-    auto iter = polygon.begin();
+    auto iter = std::find_if(polygon.begin(), polygon.end(), help);
+    if (iter == polygon.end())
+    {
+      out << "<INVALID COMMAND>\n";
+    }
     while (iter != polygon.end())
     {
-      iter = std::find_if(iter, polygon.end(), help);
-      if (iter == polygon.end())
-      {
-        break;
-      }
       auto iterTo = std::find_if_not(iter, polygon.end(), help);
       countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(std::distance(iter, iterTo)));
       iter = iterTo;
+      if (iter != polygon.end())
+      {
+        iter = std::find_if(iter, polygon.end(), help);
+      }
     }
     out << countMaxSeq << "\n";
   }
