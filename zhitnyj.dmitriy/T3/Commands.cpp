@@ -76,7 +76,7 @@ int Commands::countPolygons(const std::vector< Polygon >& polygons, bool even, i
   {
     return std::count_if(polygons.begin(), polygons.end(), [vertex_count](const Polygon& polygon)
     {
-      return polygon.points.size() == vertex_count;
+      return polygon.points.size() == static_cast<std::vector< Point >::size_type>(vertex_count);
     });
   }
   else
