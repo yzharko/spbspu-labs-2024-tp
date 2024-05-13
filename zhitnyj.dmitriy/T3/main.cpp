@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std.cin.clear();
+          std::cin.clear();
         }
       }
     }
@@ -79,7 +79,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std.cin.clear();
+        std::cin.clear();
       }
     }
     else if (command == "MIN")
@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std.cin.clear();
+        std::cin.clear();
       }
     }
     else if (command == "COUNT")
@@ -122,7 +122,7 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std.cin.clear();
+          std::cin.clear();
         }
       }
     }
@@ -155,7 +155,7 @@ int main(int argc, char* argv[])
     else
     {
       std::cout << "<INVALID COMMAND>\n";
-      std.cin.clear();
+      std::cin.clear();
     }
   }
 
