@@ -49,4 +49,9 @@ namespace taskaev
   {
     return first.points == second.points;
   }
+
+  bool operator==(const Point& first, const Point& second)
+  {
+    return first.x_ == second.x_ && first.y_ == second.y_;
+  }
 }
