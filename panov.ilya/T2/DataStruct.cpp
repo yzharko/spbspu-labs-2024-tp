@@ -1,4 +1,4 @@
-#include "Datastruct.hpp"
+#include "DataStruct.hpp"
 #include <sstream>
 #include <algorithm>
 
