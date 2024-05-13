@@ -1,10 +1,10 @@
-#include "FileReader.hpp"
 #include <fstream>
 #include <sstream>
 #include <stdexcept>
+#include <algorithm>
 #include "iofmtguard.hpp"
+#include "FileReader.hpp"
 
-// Helper classes for parsing
 struct DelimiterIO
 {
     char exp;
