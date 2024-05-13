@@ -36,5 +36,7 @@ namespace taskaev
   void VertexesCount(const std::vector< Polygon >& polygon, std::ostream& out, size_t type);
 
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out);
+
+  void SameComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out);
 }
 #endif

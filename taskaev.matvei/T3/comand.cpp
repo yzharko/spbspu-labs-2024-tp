@@ -358,4 +358,7 @@ namespace taskaev
     }
     out << *std::max_element(sequence.begin(), sequence.end()) << "\n";
   }
+  void SameComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
+  {
+  }
 }
