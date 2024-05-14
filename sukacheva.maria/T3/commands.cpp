@@ -351,30 +351,46 @@ void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::ostre
   }
 }
 
-bool sukacheva::arePolygonsSame(const Polygon& applicant, const Polygon& overlay, size_t index)
+double sukacheva::calculateSideLength(const Point& head, const Point& tail)
 {
-  if (index == applicant.points.size())
-  {
-    return true;
-  }
-  const Point& point1 = applicant.points[index];
-  const Point& point2 = overlay.points[index];
-  if (point1 != point2)
-  {
-    return false;
-  }
-  return arePolygonsSame(applicant, overlay, index + 1);
+  return std::sqrt(std::pow(tail.x - head.x, 2) + std::pow(tail.y - head.y, 2));
 }
 
-size_t sukacheva::countSamePolygons(const std::vector<Polygon>& polygons, const Polygon& overlay, size_t index)
+void sukacheva::getAllSideLengths(const Polygon& poly, std::vector<double>& sideLengths, size_t index)
 {
-  if (index == polygons.size())
-  {
-    return 0;
+  if (index == poly.points.size()) {
+    return;
   }
-  const Polygon& currentPolygon = polygons[index];
-  bool isSame = arePolygonsSame(currentPolygon, overlay, 0);
-  return (isSame ? 1 : 0) + countSamePolygons(polygons, overlay, index + 1);
+  const Point& currentPoint = poly.points[index];
+  const Point& nextPoint = poly.points[(index + 1) % poly.points.size()];
+  double sideLength = calculateSideLength(currentPoint, nextPoint);
+  sideLengths.push_back(sideLength);
+  getAllSideLengths(poly, sideLengths, index + 1);
+}
+
+bool sukacheva::arePolygonsSame(const Polygon& applicant, const Polygon& overlay)
+{
+  std::vector<double> sideLengthsAplicant;
+  getAllSideLengths(applicant, sideLengthsAplicant, 0);
+  std::vector<double> sideLengthsOverlay;
+  getAllSideLengths(applicant, sideLengthsOverlay, 0);
+  std::sort(sideLengthsAplicant.begin(), sideLengthsAplicant.end());
+  std::sort(sideLengthsOverlay.begin(), sideLengthsOverlay.end());
+  return sideLengthsOverlay == sideLengthsAplicant;
+}
+
+void sukacheva::countSamePolygons(const std::vector<Polygon>& allPolygons, const Polygon& overlay, std::ostream& out)
+{
+  size_t count = std::count_if
+  (
+    allPolygons.begin(),
+    allPolygons.end(),
+    [overlay](const Polygon& applicant)
+    {
+      return arePolygonsSame(applicant, overlay);
+    }
+  );
+  out << std::fixed << count << '\n';
 }
 
 void sukacheva::commandSame(const std::vector<Polygon>& allPolygons, std::istream& in, std::ostream& out)
@@ -387,7 +403,7 @@ void sukacheva::commandSame(const std::vector<Polygon>& allPolygons, std::istrea
   }
   try
   {
-    out << countSamePolygons(allPolygons, overlay, 0);
+    countSamePolygons(allPolygons, overlay, out);
   }
   catch (const std::out_of_range& e)
   {
