@@ -39,7 +39,7 @@ void sukacheva::oddArea(const std::vector<Polygon>& allPolygons, std::ostream& o
     std::back_inserter(oddPolygons),
     [](const Polygon& applicant)
     {
-      return !(applicant.points.size() % 2);
+      return (applicant.points.size() % 2);
     }
   );
   double result = std::accumulate(oddPolygons.begin(), oddPolygons.end(), 0.0, addArea);
@@ -56,7 +56,7 @@ void sukacheva::evenArea(const std::vector<Polygon>& allPolygons, std::ostream& 
     std::back_inserter(evenPolygons),
     [](const Polygon& applicant)
     {
-      return (applicant.points.size() % 2);
+      return !(applicant.points.size() % 2);
     }
   );
   double result = std::accumulate(evenPolygons.begin(), evenPolygons.end(), 0.0, addArea);
@@ -162,7 +162,7 @@ void sukacheva::countEvenVertices(const std::vector<Polygon>& allPolygons, std::
     allPolygons.end(),
     [](const Polygon& applicant)
     {
-      return (applicant.points.size() % 2);
+      return !(applicant.points.size() % 2);
     }
   );
   out << std::fixed << std::setprecision(1) << count << '\n';
@@ -176,7 +176,7 @@ void sukacheva::countOddVertices(const std::vector<Polygon>& allPolygons, std::o
     allPolygons.end(),
     [](const Polygon& applicant)
     {
-      return !(applicant.points.size() % 2);
+      return (applicant.points.size() % 2);
     }
   );
   out << std::fixed << std::setprecision(1) << count << '\n';
