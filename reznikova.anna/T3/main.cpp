@@ -17,7 +17,7 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args\n";
     return 1;
   }
-  
+
   std::vector< reznikova::Polygon > inputData;
   std::ifstream input(argv[1]);
   while (!input.eof())
