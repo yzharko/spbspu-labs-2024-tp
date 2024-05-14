@@ -1,4 +1,4 @@
-#include "FigureStructs.hpp"
+k#include "FigureStructs.hpp"
 #include <algorithm>
 #include <iterator>
 #include <limits>
@@ -31,8 +31,7 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
   int size = 0;
   Polygon polygon;
   Point point;
-  is >> size;
-  if (!is)
+  if (!(is >> size))
   {
     is.setstate(std::ios_base::failbit);
   }
@@ -43,8 +42,6 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
       polygon.points.push_back(point);
     }
   }
-  is.clear();
-  is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   if (size <= 2 or polygon.points.size() != size_t(size))
   {
     is.setstate(std::ios_base::failbit);
