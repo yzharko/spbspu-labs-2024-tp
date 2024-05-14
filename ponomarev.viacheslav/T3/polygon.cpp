@@ -1,5 +1,6 @@
 #include "polygon.hpp"
 #include "delimiter.hpp"
+#include <istream>
 
 std::istream & ponomarev::operator>>(std::istream & in, Point & dest)
 {

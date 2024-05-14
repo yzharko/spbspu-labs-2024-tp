@@ -229,8 +229,9 @@ std::ostream & ponomarev::countIntersections(std::istream & in, std::ostream & o
   return out;
 }
 
-std::ostream & ponomarev::printMessage(std::ostream & out, const std::string & message)
+std::ostream & ponomarev::printInvalidCommandMessage(std::ostream & out)
 {
+  std::string message = "<INVALID COMMAND>";
   out << message << '\n';
   return out;
 }

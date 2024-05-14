@@ -2,7 +2,7 @@
 #define POLYGON_HPP
 
 #include <vector>
-#include <istream>
+#include <ios>
 
 namespace ponomarev
 {

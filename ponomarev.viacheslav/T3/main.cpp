@@ -36,10 +36,9 @@ int main(int argc, char ** argv)
     }
   }
 
-  std::map<
-    std::string,
-    std::function< std::ostream & (std::istream &, std::ostream &, const std::vector< ponomarev::Polygon > &) >
-  > commands;
+  std::map< std::string, std::function< std::ostream & (std::istream &,
+                                                        std::ostream &,
+                                                        const std::vector< ponomarev::Polygon > &) > > commands;
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(ponomarev::chooseAreaCommand, _1, _2, _3);
@@ -57,9 +56,9 @@ int main(int argc, char ** argv)
     {
       commands.at(command)(std::cin, std::cout, data);
     }
-    catch (const std::logic_error&)
+    catch (const std::logic_error &)
     {
-      ponomarev::printMessage(std::cout, "<INVALID COMMAND>");
+      ponomarev::printInvalidCommandMessage(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
