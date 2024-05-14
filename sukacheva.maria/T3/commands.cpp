@@ -374,7 +374,7 @@ bool sukacheva::arePolygonsSame(const Polygon& applicant, const Polygon& overlay
   std::vector<double> sideLengthsAplicant;
   getAllSideLengths(applicant, sideLengthsAplicant, 0);
   std::vector<double> sideLengthsOverlay;
-  getAllSideLengths(applicant, sideLengthsOverlay, 0);
+  getAllSideLengths(overlay, sideLengthsOverlay, 0);
   std::sort(sideLengthsAplicant.begin(), sideLengthsAplicant.end());
   std::sort(sideLengthsOverlay.begin(), sideLengthsOverlay.end());
   return sideLengthsOverlay == sideLengthsAplicant;
