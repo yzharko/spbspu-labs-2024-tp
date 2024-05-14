@@ -367,6 +367,42 @@ namespace taskaev
       throw std::logic_error("");
     }
     iofmtguard iofmtguard(out);
-    //later
+    using namespace std::placeholders;
+    auto function = std::bind(polygonSame, _1, input);
+    iofmtguard iofmtguard(out);
+    out << std::count_if(polygon.begin(), polygon.end(), function) << "\n";
+  }
+  bool polygonSame(const Polygon& polygonOne, const Polygon& polygonTwo)
+  {
+    if (polygonOne.points.size() == polygonTwo.points.size())
+    {
+      bool  flag = std::equal(
+        movePolygon(polygonOne).points.begin(),
+        movePolygon(polygonOne).points.end(),
+        movePolygon(polygonTwo).points.begin(),
+        PointPolygon
+      );
+      return flag;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  bool PointPolygon(const Point& left, const Point& right)
+  {
+    return left.x_ == right.x_ && left.y_ == right.y_;
+  }
+  Polygon movePolygon(const Polygon& polygon)
+  {
+    std::vector< Point > position(polygon.points.size());
+    using namespace std::placeholders;
+    auto a = std::bind(delta, _1, polygon.points.front().x_, polygon.points.front().y_);
+    std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(position), a);
+    return Polygon(position);
+  }
+  Point delta(const Point& point, int X, int Y)
+  {
+    return {point.x_ - X, point.y_ - Y};
   }
 }

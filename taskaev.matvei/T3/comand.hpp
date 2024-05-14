@@ -38,5 +38,9 @@ namespace taskaev
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out);
 
   void SameComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out);
+  bool polygonSame(const Polygon& polygonOne, const Polygon& polygonTwo);
+  bool PointPolygon(const Point& left, const Point& right);
+  Polygon movePolygon(const Polygon& polygon);
+  Point delta(const Point& point, int X, int Y);
 }
 #endif
