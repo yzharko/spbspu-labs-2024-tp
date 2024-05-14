@@ -31,13 +31,6 @@ int main(int argc, char* argv[])
   std::string command;
   while (std::cin >> command)
   {
-    if (polygons.empty())
-    {
-      std::cout << "<INVALID COMMAND>\n";
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-      continue;
-    }
-
     iofmtguard guard(std::cout);
     std::cout << std::fixed << std::setprecision(1);
 
