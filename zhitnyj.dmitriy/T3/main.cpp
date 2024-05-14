@@ -2,7 +2,8 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#include <algorithm>
+#include <functional>
+#include <map>
 #include "FileReader.hpp"
 #include "Commands.hpp"
 #include "iofmtguard.hpp"
@@ -28,166 +29,32 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  std::string command;
-  while (std::cin >> command)
+  Commands commands(polygons);
+
+  std::map< std::string, std::function< void(std::istream&, std::ostream&) > > cmds;
+  cmds["AREA"] = std::bind(&Commands::areaCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  cmds["MAX"] = std::bind(&Commands::maxCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  cmds["MIN"] = std::bind(&Commands::minCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  cmds["COUNT"] = std::bind(&Commands::countCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  cmds["RMECHO"] = std::bind(&Commands::rmechoCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  cmds["PERMS"] = std::bind(&Commands::permsCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+
+  std::string cmd;
+  while (std::cin >> cmd)
   {
-    iofmtguard guard(std::cout);
-    std::cout << std::fixed << std::setprecision(1);
-
-    if (command == "AREA")
+    try
     {
-      std::string param;
-      std::cin >> param;
-      if (param == "EVEN")
+      auto it = cmds.find(cmd);
+      if (it != cmds.end())
       {
-        std::cout << Commands().calculateAreaEvenOdd(polygons, true) << "\n";
-      }
-      else if (param == "ODD")
-      {
-        std::cout << Commands().calculateAreaEvenOdd(polygons, false) << "\n";
-      }
-      else if (param == "MEAN")
-      {
-        if (polygons.empty())
-        {
-          std::cout << "<INVALID COMMAND>\n";
-          continue;
-        }
-        std::cout << Commands().calculateMeanArea(polygons) << "\n";
+        it->second(std::cin, std::cout);
       }
       else
       {
-        try
-        {
-          int vertex_count = std::stoi(param);
-          if (vertex_count < 3)
-          {
-            std::cout << "<INVALID COMMAND>\n";
-            continue;
-          }
-
-          std::cout << Commands().calculateAreaByVertexCount(polygons, vertex_count) << "\n";
-        }
-        catch (const std::invalid_argument&)
-        {
-          std::cout << "<INVALID COMMAND>\n";
-        }
+        throw std::invalid_argument("Invalid command");
       }
     }
-    else if (command == "MAX")
-    {
-      std::string param;
-      std::cin >> param;
-      if (param == "AREA")
-      {
-        if (polygons.empty())
-        {
-          std::cout << "<INVALID COMMAND>\n";
-          continue;
-        }
-
-        std::cout << Commands().calculateMaxArea(polygons) << "\n";
-      }
-      else if (param == "VERTEXES")
-      {
-        if (polygons.empty())
-        {
-          std::cout << "<INVALID COMMAND>\n";
-          continue;
-        }
-
-        std::cout << Commands().calculateMaxVertexes(polygons) << "\n";
-      }
-      else
-      {
-        std::cout << "<INVALID COMMAND>\n";
-        continue;
-      }
-    }
-    else if (command == "MIN")
-    {
-      std::string param;
-      std::cin >> param;
-      if (param == "AREA")
-      {
-        std::cout << Commands().calculateMinArea(polygons) << "\n";
-      }
-      else if (param == "VERTEXES")
-      {
-        std::cout << Commands().calculateMinVertexes(polygons) << "\n";
-      }
-      else
-      {
-        std::cout << "<INVALID COMMAND>\n";
-        continue;
-      }
-    }
-    else if (command == "COUNT")
-    {
-      std::string param;
-      std::cin >> param;
-      if (param == "EVEN")
-      {
-        std::cout << Commands().countPolygons(polygons, true) << "\n";
-      }
-      else if (param == "ODD")
-      {
-        std::cout << Commands().countPolygons(polygons, false) << "\n";
-      }
-      else
-      {
-        try
-        {
-          int vertex_count = std::stoi(param);
-          if (vertex_count < 3)
-          {
-            std::cout << "<INVALID COMMAND>\n";
-            continue;
-          }
-
-          std::cout << Commands().countPolygons(polygons, false, vertex_count) << "\n";
-        }
-        catch (const std::invalid_argument&)
-        {
-          std::cout << "<INVALID COMMAND>\n";
-          continue;
-        }
-      }
-    }
-    else if (command == "RMECHO")
-    {
-      int vertex_count;
-      std::cin >> vertex_count;
-      Polygon target;
-      target.points.resize(vertex_count);
-      std::for_each(target.points.begin(), target.points.end(), [](Point& point)
-      {
-        char ignore;
-        std::cin >> ignore >> point.x >> ignore >> point.y >> ignore;
-      });
-      std::cout << Commands().removeEcho(polygons, target) << "\n";
-    }
-    else if (command == "PERMS")
-    {
-      int vertex_count;
-      std::cin >> vertex_count;
-      if (vertex_count < 3)
-      {
-        std::cout << "<INVALID COMMAND>\n";
-        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-        continue;
-      }
-
-      Polygon target;
-      target.points.resize(vertex_count);
-      std::for_each(target.points.begin(), target.points.end(), [](Point& point)
-      {
-        char ignore;
-        std::cin >> ignore >> point.x >> ignore >> point.y >> ignore;
-      });
-      std::cout << Commands().countPerms(polygons, target) << "\n";
-    }
-    else
+    catch (const std::invalid_argument&)
     {
       std::cout << "<INVALID COMMAND>\n";
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');

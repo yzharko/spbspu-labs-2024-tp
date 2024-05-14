@@ -1,5 +1,5 @@
-#include "GeometryUtils.hpp"
 #include <cmath>
+#include "GeometryUtils.hpp"
 
 double GeometryUtils::calculateArea(const Polygon& polygon) const
 {

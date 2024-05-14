@@ -2,7 +2,6 @@
 #define POLYGON_HPP
 
 #include <vector>
-#include <istream>
 #include "Point.hpp"
 
 struct Polygon

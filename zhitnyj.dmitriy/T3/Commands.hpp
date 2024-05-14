@@ -8,16 +8,28 @@
 class Commands
 {
 public:
-    double calculateAreaEvenOdd(const std::vector< Polygon >& polygons, bool even) const;
-    double calculateMeanArea(const std::vector< Polygon >& polygons) const;
-    double calculateAreaByVertexCount(const std::vector< Polygon >& polygons, int count) const;
-    double calculateMaxArea(const std::vector< Polygon >& polygons) const;
-    int calculateMaxVertexes(const std::vector< Polygon >& polygons) const;
-    double calculateMinArea(const std::vector< Polygon >& polygons) const;
-    int calculateMinVertexes(const std::vector< Polygon >& polygons) const;
-    int countPolygons(const std::vector< Polygon >& polygons, bool even, int vertex_count = -1) const;
-    int countPerms(const std::vector< Polygon >& polygons, const Polygon& target) const;
-    int removeEcho(std::vector< Polygon >& polygons, const Polygon& target) const;
+    explicit Commands(std::vector< Polygon >& polygons);
+
+    void areaCommand(std::istream& input, std::ostream& output);
+    void maxCommand(std::istream& input, std::ostream& output);
+    void minCommand(std::istream& input, std::ostream& output);
+    void countCommand(std::istream& input, std::ostream& output);
+    void rmechoCommand(std::istream& input, std::ostream& output);
+    void permsCommand(std::istream& input, std::ostream& output);
+
+private:
+    std::vector< Polygon >& polygons;
+
+    double calculateAreaEvenOdd(bool even) const;
+    double calculateMeanArea() const;
+    double calculateAreaByVertexCount(int count) const;
+    double calculateMaxArea() const;
+    int calculateMaxVertexes() const;
+    double calculateMinArea() const;
+    int calculateMinVertexes() const;
+    int countPolygons(bool even, int vertex_count = -1) const;
+    int countPerms(const Polygon& target) const;
+    int removeEcho(const Polygon& target);
 };
 
 #endif
