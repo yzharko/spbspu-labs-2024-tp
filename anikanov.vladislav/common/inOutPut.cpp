@@ -5,11 +5,11 @@
 #include <string>
 
 #include "delimiterIO.hpp"
-#include "ullBinIO.hpp"
-#include "ullLitIO.hpp"
-#include "stringIO.hpp"
-#include "delStrIO.hpp"
-#include "dataStruct.hpp"
+#include "../T2/ullBinIO.hpp"
+#include "../T2/ullLitIO.hpp"
+#include "../T2/stringIO.hpp"
+#include "../T2/delStrIO.hpp"
+#include "../T2/dataStruct.hpp"
 #include "iofmtguard.hpp"
 
 
