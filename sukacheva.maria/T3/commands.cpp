@@ -350,7 +350,7 @@ void sukacheva::isRects(const std::vector<Polygon>& allPolygons, std::ostream& o
   out << std::fixed << count << '\n';
 }
 
-void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::istream& in, std::ostream& out)
+void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::ostream& out)
 {
   try
   {

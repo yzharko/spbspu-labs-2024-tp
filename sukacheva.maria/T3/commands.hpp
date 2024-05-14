@@ -31,7 +31,7 @@ namespace sukacheva
   void commandMax(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
   void commandMin(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
   void commandCount(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
-  void commandRects(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
+  void commandRects(const std::vector< Polygon >& allPolygons, std::ostream& out);
 }
 
 #endif
