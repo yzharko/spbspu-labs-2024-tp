@@ -1,4 +1,4 @@
-k#include "FigureStructs.hpp"
+#include "FigureStructs.hpp"
 #include <algorithm>
 #include <iterator>
 #include <limits>
