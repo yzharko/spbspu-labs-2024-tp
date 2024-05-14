@@ -305,35 +305,24 @@ void sukacheva::commandCount(const std::vector<Polygon>& allPolygons, std::istre
   }
 }
 
-bool sukacheva::isRectangle(const Polygon& poly)
+bool sukacheva::isRectangle(const Polygon& poly, size_t index)
 {
-  if (poly.points.size() != 4)
+  if (index == poly.points.size())
   {
-    return false;
+    return (poly.points.size() == 4) &&
+      (std::count(poly.points.begin(), poly.points.end(), poly.points[0]) == 1);
   }
-  auto minmaxX = std::minmax_element
+  const Point& currentPoint = poly.points[index];
+  bool allUniqueBefore = std::none_of
   (
     poly.points.begin(),
-    poly.points.end(),
-    [](const Point& left, const Point& right)
+    poly.points.begin() + index,
+    [&](const Point& p)
     {
-      return left.x < right.x;
+      return p == currentPoint;
     }
   );
-  auto minmaxY = std::minmax_element
-  (
-    poly.points.begin(),
-    poly.points.end(),
-    [](const Point& left, const Point& right)
-    {
-      return left.y < right.y;
-    }
-  );
-  if (minmaxX.first->x == minmaxX.second->x && minmaxY.first->y == minmaxY.second->y)
-  {
-    return true;
-  }
-  return false;
+  return allUniqueBefore && isRectangle(poly, index + 1);
 }
 
 void sukacheva::isRects(const std::vector<Polygon>& allPolygons, std::ostream& out)
@@ -344,7 +333,7 @@ void sukacheva::isRects(const std::vector<Polygon>& allPolygons, std::ostream& o
     allPolygons.end(),
     [](const Polygon& applicant)
     {
-      return isRectangle(applicant);
+      return isRectangle(applicant, 0);
     }
   );
   out << std::fixed << count << '\n';
