@@ -30,12 +30,18 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
   }
   int size = 0;
   Polygon polygon;
+  Point point;
   is >> size;
+  if (!is)
+  {
+    is.setstate(std::ios_base::failbit);
+  }
   for (int i = 0; i < size; i++)
   {
-    Point point;
-    is >> point;
-    polygon.points.push_back(point);
+    if (is >> point)
+    {
+      polygon.points.push_back(point);
+    }
   }
   is.clear();
   is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
