@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
     return 1;
   }
 
-  std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >& polygons, std::ostream& out, std::istream& is) > > commands;
+  std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >&, std::ostream&, std::istream&) > > commands;
   {
     using namespace std::placeholders;
     commands["AREA"] = std::bind(reznikova::areaCommand, _1, _2, _3);
