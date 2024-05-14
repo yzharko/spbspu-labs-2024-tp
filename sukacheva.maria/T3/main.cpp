@@ -44,7 +44,7 @@ int main(int argc, char* argv[])
     commands["MAX"] = std::bind(commandMax, _1, _2, _3);
     commands["MIN"] = std::bind(commandMin, _1, _2, _3);
     commands["COUNT"] = std::bind(commandCount, _1, _2, _3);
-    commands["RECTS"] = std::bind(commandRects, _1, _2, _3);
+    commands["RECTS"] = std::bind(commandRects, _1, _3);
   }
   std::string inputCommand = {};
   while (std::cin >> inputCommand)
