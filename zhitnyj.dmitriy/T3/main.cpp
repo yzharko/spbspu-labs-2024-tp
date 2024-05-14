@@ -48,6 +48,11 @@ int main(int argc, char* argv[])
       }
       else if (param == "MEAN")
       {
+        if (polygons.empty())
+        {
+          std::cout << "<INVALID COMMAND>\n";
+          continue;
+        }
         std::cout << Commands().calculateMeanArea(polygons) << "\n";
       }
       else
@@ -71,6 +76,11 @@ int main(int argc, char* argv[])
     }
     else if (command == "MAX")
     {
+      if (polygons.empty())
+      {
+        std::cout << "<INVALID COMMAND>\n";
+        continue;
+      }
       std::string param;
       std::cin >> param;
       if (param == "AREA")
@@ -157,7 +167,7 @@ int main(int argc, char* argv[])
       if (vertex_count < 3)
       {
         std::cout << "<INVALID COMMAND>\n";
-        continue;
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
 
       Polygon target;
