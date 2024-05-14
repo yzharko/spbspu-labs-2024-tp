@@ -115,13 +115,13 @@ double reznikova::getSumArea(const std::vector< reznikova::Polygon > & polygons)
 
 void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  if (polygons.empty())
-  {
-    throw std::logic_error("empty vect");
-  }
   std::string sub_command;
   is >> sub_command;
   out << std::fixed << std::setprecision(1);
+  if (polygons.empty())
+  {
+    out << 0.0 << "\n";
+  }
   if (sub_command == "ODD")
   {
     std::vector< Polygon > odd_polygons = chooseOddPolygons(polygons);
@@ -149,13 +149,13 @@ void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, 
 
 void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  if (polygons.empty())
-  {
-    throw std::logic_error("empty vect");
-  }
   std::string sub_command;
   is >> sub_command;
   out << std::fixed;
+  if (polygons.empty())
+  {
+    out << 0 << "\n";
+  }
   if (sub_command == "AREA")
   {
     std::vector< double > all_areas = getAllAreas(polygons);
