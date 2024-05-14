@@ -39,7 +39,7 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
     in.setstate(std::ios::failbit);
   }
   std::vector<Point> tempPoints;
-  tempPoints.reserve(vertices); 
+  tempPoints.reserve(vertices);
   std::istream_iterator<Point> it(in);
   std::istream_iterator<Point> end;
   std::copy(it, end, std::back_inserter(tempPoints));
