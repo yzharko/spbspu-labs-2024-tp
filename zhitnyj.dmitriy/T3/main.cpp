@@ -31,6 +31,13 @@ int main(int argc, char* argv[])
   std::string command;
   while (std::cin >> command)
   {
+    if (polygons.empty())
+    {
+      std::cout << "<INVALID COMMAND>\n";
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      continue;
+    }
+
     iofmtguard guard(std::cout);
     std::cout << std::fixed << std::setprecision(1);
 
@@ -55,6 +62,12 @@ int main(int argc, char* argv[])
         try
         {
           int vertex_count = std::stoi(param);
+          if (vertex_count < 3)
+          {
+            std::cout << "<INVALID COMMAND>\n";
+            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+          }
+
           std::cout << Commands().calculateAreaByVertexCount(polygons, vertex_count) << "\n";
         }
         catch (const std::invalid_argument&)
@@ -117,6 +130,12 @@ int main(int argc, char* argv[])
         try
         {
           int vertex_count = std::stoi(param);
+          if (vertex_count < 3)
+          {
+            std::cout << "<INVALID COMMAND>\n";
+            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+          }
+
           std::cout << Commands().countPolygons(polygons, false, vertex_count) << "\n";
         }
         catch (const std::invalid_argument&)
@@ -143,6 +162,12 @@ int main(int argc, char* argv[])
     {
       int vertex_count;
       std::cin >> vertex_count;
+      if (vertex_count < 3)
+      {
+        std::cout << "<INVALID COMMAND>\n";
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      }
+
       Polygon target;
       target.points.resize(vertex_count);
       std::for_each(target.points.begin(), target.points.end(), [](Point& point)

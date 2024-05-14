@@ -20,4 +20,4 @@ public:
     int removeEcho(std::vector< Polygon >& polygons, const Polygon& target) const;
 };
 
-#endif // COMMANDS_HPP
+#endif

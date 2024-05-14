@@ -29,9 +29,7 @@ double Commands::calculateAreaByVertexCount(const std::vector< Polygon >& polygo
 {
   return std::accumulate(polygons.begin(), polygons.end(), 0.0, [count](double sum, const Polygon& polygon)
   {
-    return sum
-        + (polygon.points.size() == static_cast<std::vector< Point >::size_type>(count) ? GeometryUtils().calculateArea(
-            polygon) : 0.0);
+    return sum + (polygon.points.size() == static_cast<std::vector< Point >::size_type>(count) ? GeometryUtils().calculateArea(polygon) : 0.0);
   });
 }
 

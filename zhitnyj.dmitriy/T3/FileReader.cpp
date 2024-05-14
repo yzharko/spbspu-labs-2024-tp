@@ -1,27 +1,8 @@
+#include "FileReader.hpp"
+#include "Polygon.hpp"
 #include <fstream>
-#include <sstream>
 #include <stdexcept>
 #include <algorithm>
-#include "iofmtguard.hpp"
-#include "FileReader.hpp"
-
-struct DelimiterIO
-{
-    char exp;
-};
-
-std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry) return in;
-  char c;
-  in >> c;
-  if (in && c != dest.exp)
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
-}
 
 std::vector< Polygon > FileReader::readPolygons(const std::string& filename) const
 {
@@ -32,26 +13,20 @@ std::vector< Polygon > FileReader::readPolygons(const std::string& filename) con
     throw std::runtime_error("Unable to open file");
   }
 
-  std::string line;
-  while (std::getline(file, line))
+  while (!file.eof())
   {
-    std::istringstream iss(line);
-    int vertex_count;
-    if (!(iss >> vertex_count))
-    {
-      continue;
-    }
     Polygon polygon;
-    std::generate_n(std::back_inserter(polygon.points), vertex_count, [&iss]()
+    file >> polygon;
+    if (!file.fail())
     {
-      Point point;
-      iss >> DelimiterIO{ '(' } >> point.x >> DelimiterIO{ ';' } >> point.y >> DelimiterIO{ ')' };
-      return point;
-    });
-    if (polygon.points.size() == static_cast<std::vector<Point>::size_type>(vertex_count))
+      polygons.push_back(polygon);
+    }
+    else
     {
-        polygons.push_back(polygon);
+      file.clear();
+      file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+
   return polygons;
 }
