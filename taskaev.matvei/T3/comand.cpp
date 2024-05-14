@@ -369,7 +369,6 @@ namespace taskaev
     iofmtguard iofmtguard(out);
     using namespace std::placeholders;
     auto function = std::bind(polygonSame, _1, input);
-    iofmtguard iofmtguard(out);
     out << std::count_if(polygon.begin(), polygon.end(), function) << "\n";
   }
   bool polygonSame(const Polygon& polygonOne, const Polygon& polygonTwo)
@@ -399,7 +398,7 @@ namespace taskaev
     using namespace std::placeholders;
     auto a = std::bind(delta, _1, polygon.points.front().x_, polygon.points.front().y_);
     std::transform(polygon.points.begin(), polygon.points.end(), std::back_inserter(position), a);
-    return Polygon(position);
+    return Polygon{position};
   }
   Point delta(const Point& point, int X, int Y)
   {
