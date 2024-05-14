@@ -1,7 +1,7 @@
 #include <iterator>
 #include <algorithm>
+#include <delimeter.hpp>
 #include "Polygon.hpp"
-#include "delimeter.hpp"
 
 
 namespace taskaev

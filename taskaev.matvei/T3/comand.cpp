@@ -6,14 +6,14 @@
 #include <utility>
 #include <iomanip>
 #include <algorithm>
-#include "iofmtguard.hpp"
+#include <iofmtguard.hpp>
 #include "comand.hpp"
 
 namespace taskaev
 {
   void AreaComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    std::string nameComand;
+    std::string nameComand = "";
     if (in >> nameComand)
     {
       if (nameComand == "EVEN")
@@ -171,7 +171,7 @@ namespace taskaev
 
   void MaxComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    std::string nameComand;
+    std::string nameComand = "";
     if (in >> nameComand)
     {
       if (nameComand == "AREA")
@@ -218,7 +218,7 @@ namespace taskaev
 
   void MinComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    std::string nameComand;
+    std::string nameComand = "";
     if (in >> nameComand)
     {
       if (nameComand == "AREA")
@@ -267,7 +267,7 @@ namespace taskaev
 
   void CountComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    std::string nameComand;
+    std::string nameComand = "";
     if (in >> nameComand)
     {
       if (nameComand == "EVEN")
@@ -325,7 +325,6 @@ namespace taskaev
 
   void MaxSeqComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
-    // reStart
     Polygon input;
     in >> input;
     if ((polygon.empty()) || (in.fail()) || (input.points.size() < 3))
