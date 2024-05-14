@@ -10,26 +10,29 @@ void sobolevsky::getCommands(std::istream & in, std::ostream & out)
   {
     throw std::exception();
   }
-  std::string listOfCommands = "Система команд:\n1. commands - вывод списка доступных пользователю команд\n2. loadAndCreate < filename > -\
-  загрузка текста из файла и создание частотного словаря(название словаря в системе- это название загруженного файла) !WRONG INPUT- если\
-  пользователь ввел название файла некоректно, то выводит ошибку\n3. delete < name > - удаление частотного словаря !WRONG INPUT- если словаря\
-  с таким именем не существует, то выводит ошибку\n4. allDicts - выводит имена всех словарей\n5. compareDicts < name1 > < name2 > - сравнение\
-  двух частотных словарей по по методу косинусного сходства, через построение векторов !WRONG INPUT- если пользователь ввел название хотя бы\
-  одного файла некоректно, то выводит ошибку\n6. rename < oldName > < newName > - переименование словаря !WRONG INPUT- если словаря со старым\
-  именем не существует или новое имя уже занято, то выводит ошибку\n7. select < name > - выбор словаря для дальнейшей работы конкретно только\
-  с ним одним(без предварительного выбора словаря и запуске всех ниже представленных команд, выводит ошибку) !WRONG INPUT- если словаря с\
-  таким именем не существует, то выводит ошибку\n7.1.1. holyTrinity - выводит три самых часто встречаемых слова в словаре(без кол-ва самих\
-  слов в тексте)\n7.1.2. holyTrinity -amount - выводит три самых часто встречаемых слова в словаре(с кол-вом самих слов в тексте)\n7.2.1.\
-  printDict -(n/all) - вывод отсортированного списка определенного кол-ва слов без их частоты(n-определенное число слов, all-сразу все)\n7.2.\
-  2. printDict -(n/all) -amount - вывод отсортированного списка определенного кол-ва слов c их частотой(n-определенное число слов, all-сразу\
-  все)\n7.3. unigueWords - выводит список уникальных слов без повторений\n7.4. wordCount - выводит кол-во слов в тексте(без повторений типо)\
-  \n7.5. save < filename > - сохраняет в файл txt весь отсортированный частотный словарь !WRONG INPUT- если файла с таким именем не\
-  существует, то выводит ошибку\n";
+  std::string listOfCommands = "Система команд:\n1. commands - вывод списка доступных пользователю команд\n\
+  2. loadAndCreate < filename > - загрузка текста из файла и создание частотного словаря(название словаря в \
+  системе- это название загруженного файла) !WRONG INPUT- если пользователь ввел название файла некоректно, \
+  то выводит ошибку\n 3. delete < name > - удаление частотного словаря !WRONG INPUT- если словаря с таким именем \
+  не существует, то выводит ошибку\n4. allDicts - выводит имена всех словарей\n5. compareDicts < name1 > \
+  < name2 > - сравнение двух частотных словарей по по методу косинусного сходства, через построение векторов \
+  !WRONG INPUT- если пользователь ввел название хотя бы одного файла некоректно, то выводит ошибку\n6. rename \
+  < oldName > < newName > - переименование словаря !WRONG INPUT- если словаря со старым именем не существует \
+  или новое имя уже занято, то выводит ошибку\n7. select < name > - выбор словаря для дальнейшей работы конкретно \
+  только с ним одним(без предварительного выбора словаря и запуске всех ниже представленных команд, выводит ошибку) \
+  !WRONG INPUT- если словаря с таким именем не существует, то выводит ошибку\n7.1.1. holyTrinity - выводит три \
+  самых часто встречаемых слова в словаре(без кол-ва самих слов в тексте)\n7.1.2. holyTrinity -amount - выводит \
+  три самых часто встречаемых слова в словаре(с кол-вом самих слов в тексте)\n7.2.1. printDict -(n/all) - вывод \
+  отсортированного списка определенного кол-ва слов без их частоты(n-определенное число слов, all-сразу все)\n7.2.2. \
+  printDict -(n/all) -amount - вывод отсортированного списка определенного кол-ва слов c их частотой(n-определенное \
+  число слов, all-сразу все)\n7.3. unigueWords - выводит список уникальных слов без повторений\n7.4. wordCount - \
+  выводит кол-во слов в тексте(без повторений типо) \n7.5. save < filename > - сохраняет в файл txt весь \
+  отсортированный частотный словарь !WRONG INPUT- если файла с таким именем не существует, то выводит ошибку\n";
   out << listOfCommands;
 }
 
-void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
-std::istream & in, std::ostream & out)
+void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
+std::string > > > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -76,13 +79,14 @@ std::istream & in, std::ostream & out)
   myVec->push_back(std::pair(file, myMultiMap));
 }
 
-bool sobolevsky::isNameHere(std::pair< std::string, std::multimap< size_t, std::string > > &pair, const std::string &name)
+bool sobolevsky::isNameHere(std::pair< std::string, std::multimap< size_t, std::string > > &pair,
+const std::string &name)
 {
   return pair.first == name;
 }
 
-void sobolevsky::getDelete(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
-std::istream & in, std::ostream & out)
+void sobolevsky::getDelete(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
+std::string > > > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -94,8 +98,8 @@ std::istream & in, std::ostream & out)
   {
     throw std::invalid_argument("ERROR: INVALID COMMAND\n");
   }
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere = std::bind(isNameHere,
-  std::placeholders::_1, name);
+  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere
+  = std::bind(isNameHere,std::placeholders::_1, name);
   if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
   {
     throw std::invalid_argument("ERROR: NO DICT WITH SUCH NAME\n");
@@ -106,8 +110,8 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::getAllDicts(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
-std::istream & in, std::ostream & out)
+void sobolevsky::getAllDicts(std::shared_ptr< std::vector< std::pair< std::string,
+std::multimap< size_t, std::string > > > > myVec,std::istream & in, std::ostream & out)
 {
   if (myVec->size() == 0)
   {
@@ -125,8 +129,8 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::getRename(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
-std::istream & in, std::ostream & out)
+void sobolevsky::getRename(std::shared_ptr< std::vector< std::pair< std::string,
+std::multimap< size_t, std::string > > > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -134,12 +138,12 @@ std::istream & in, std::ostream & out)
   }
   std::string oldName, newName;
   in >> oldName >> newName;
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindOldName = std::bind(isNameHere,
-  std::placeholders::_1, oldName);
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindNewName = std::bind(isNameHere,
-  std::placeholders::_1, newName);
-  if(std::find_if(myVec->begin(), myVec->end(), bindOldName) != myVec->end() && std::find_if(myVec->begin(), myVec->end(), bindNewName) ==
-  myVec->end())
+  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindOldName
+  = std::bind(isNameHere, std::placeholders::_1, oldName);
+  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindNewName
+  = std::bind(isNameHere, std::placeholders::_1, newName);
+  if(std::find_if(myVec->begin(), myVec->end(), bindOldName) != myVec->end() &&
+  std::find_if(myVec->begin(), myVec->end(), bindNewName) == myVec->end())
   {
     std::find_if(myVec->begin(), myVec->end(), bindOldName)->first = newName;
   }
@@ -153,10 +157,12 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::dictOutput(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::ostream & out, size_t n, bool mode)
+void sobolevsky::dictOutput(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+std::ostream & out, size_t n, bool mode)
 {
   size_t i = 0;
-  for (std::multimap< size_t, std::string >::reverse_iterator pair = myPair.second.rbegin(); pair != myPair.second.rend(); ++pair)
+  for (std::multimap< size_t, std::string >::reverse_iterator pair = myPair.second.rbegin();
+  pair != myPair.second.rend(); ++pair)
     {
       i++;
       out << pair->second;
@@ -172,7 +178,8 @@ void sobolevsky::dictOutput(std::pair< std::string, std::multimap< size_t, std::
     }
 }
 
-void sobolevsky::holyTrinity(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out)
+void sobolevsky::holyTrinity(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -193,7 +200,8 @@ void sobolevsky::holyTrinity(std::pair< std::string, std::multimap< size_t, std:
   }
 }
 
-void sobolevsky::printDict(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out)
+void sobolevsky::printDict(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -238,7 +246,8 @@ void sobolevsky::printDict(std::pair< std::string, std::multimap< size_t, std::s
   }
 }
 
-void sobolevsky::uniqeWords(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out)
+void sobolevsky::uniqeWords(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+std::istream & in, std::ostream & out)
 {
   if (in.get() != '\n')
   {
@@ -254,7 +263,8 @@ void sobolevsky::uniqeWords(std::pair< std::string, std::multimap< size_t, std::
   }
 }
 
-void sobolevsky::wordCount(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out)
+void sobolevsky::wordCount(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+std::istream & in, std::ostream & out)
 {
   if (in.get() != '\n')
   {
@@ -283,7 +293,8 @@ void sobolevsky::save(std::pair< std::string, std::multimap< size_t, std::string
   dictOutput(myPair, file, myPair.second.size(), true);
 }
 
-void sobolevsky::getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
+void sobolevsky::getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
+std::string > > > > myVec,
 std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
@@ -292,15 +303,17 @@ std::istream & in, std::ostream & out)
   }
   std::string name;
   in >> name;
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere = std::bind(isNameHere,
+  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere
+  = std::bind(isNameHere,
   std::placeholders::_1, name);
   if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
   {
     throw std::invalid_argument("ERROR: NO DICT WITH SUCH NAME\n");
   }
-  std::pair< std::string, std::multimap< size_t, std::string > > currPair(*std::find_if(myVec->begin(), myVec->end(), bindIsNameHere));
-  std::map< std::string, std::function< void(std::pair< std::string, std::multimap< size_t, std::string > > &, std::istream &,
-  std::ostream &) > > commands;
+  std::pair< std::string, std::multimap< size_t, std::string > >
+  currPair(*std::find_if(myVec->begin(), myVec->end(), bindIsNameHere));
+  std::map< std::string, std::function< void(std::pair< std::string, std::multimap< size_t,
+  std::string > > &, std::istream &, std::ostream &) > > commands;
   commands["holyTrinity"] = holyTrinity;
   commands["printDict"] = printDict;
   commands["uniqueWords"] = uniqeWords;
