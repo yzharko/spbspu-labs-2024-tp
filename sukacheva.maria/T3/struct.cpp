@@ -32,7 +32,6 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
   {
     return in;
   }
-  Polygon polygon;
   size_t vertices = 0;
   in >> vertices;
   if (!in || vertices < 3)
@@ -58,7 +57,7 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
     (
       tempPoints.begin(),
       tempPoints.end(),
-      std::back_inserter(polygon.points)
+      std::back_inserter(applicant.points)
     );
   }
   return in;
