@@ -375,10 +375,12 @@ namespace taskaev
   {
     if (polygonOne.points.size() == polygonTwo.points.size())
     {
+      Polygon movedPolygonOne = movePolygon(polygonOne);
+      Polygon movedPolygonTwo = movePolygon(polygonTwo);
       bool  flag = std::equal(
-        movePolygon(polygonOne).points.begin(),
-        movePolygon(polygonOne).points.end(),
-        movePolygon(polygonTwo).points.begin(),
+        movePolygoтOne.points.begin(),
+        movePolygonOne.points.end(),
+        movePolygonTwo.points.begin(),
         PointPolygon
       );
       return flag;
