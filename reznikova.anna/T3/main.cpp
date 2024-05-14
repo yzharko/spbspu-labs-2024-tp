@@ -8,6 +8,7 @@
 #include <iterator>
 #include <fstream>
 #include "FigureStructs.hpp"
+#include "InputProcessing.hpp"
 #include "Commands.hpp"
 
 int main(int argc, const char * argv[])
@@ -17,13 +18,13 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args";
     return 1;
   }
+  std::vector< reznikova::Polygon > inputData;
   std::ifstream input(argv[1]);
   if (!input)
   {
     std::cerr << "can't read from file\n";
     return 1;
   }
-  std::vector< reznikova::Polygon > inputData;
   while (!input.eof())
   {
     std::copy(

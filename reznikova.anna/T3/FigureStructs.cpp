@@ -28,23 +28,26 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
   {
     return is;
   }
-  int size = 0;
+  size_t size = 0;
   Polygon polygon;
   Point point;
   if (!(is >> size))
   {
-    is.setstate(std::ios_base::failbit);
+    is.setstate(std::ios::failbit);
   }
-  for (int i = 0; i < size; i++)
+  for (size_t i = 0; i < size; i++)
   {
     is >> point;
-    polygon.points.push_back(point);
+    if (is)
+    {
+      polygon.points.push_back(point);
+    }
   }
-  if (size <= 2 or polygon.points.size() != size_t(size) or !is)
+  if ((size <= 2) or (polygon.points.size() != size))
   {
-    is.setstate(std::ios_base::failbit);
+    is.setstate(std::ios::failbit);
   }
-  else
+  if (is)
   {
     value = polygon;
   }
