@@ -354,6 +354,10 @@ void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::ostre
 
 double sukacheva::calculateSideLength(const Point& head, const Point& tail)
 {
+  if (head == tail)
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
   return std::sqrt(std::pow(tail.x - head.x, 2) + std::pow(tail.y - head.y, 2));
 }
 
