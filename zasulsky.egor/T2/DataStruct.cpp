@@ -1,8 +1,8 @@
 #include "DataStruct.hpp"
 #include <string>
 #include <iostream>
-#include "InpOutTypes.hpp"
-#include "Iofmtguard.hpp"
+#include <InpOutTypes.hpp>
+#include <Iofmtguard.hpp>
 
 std::istream& zasulsky::operator>>(std::istream& in, DataStruct& dest)
 {
