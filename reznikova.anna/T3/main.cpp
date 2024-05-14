@@ -1,4 +1,4 @@
-#include <iostream>
+k#include <iostream>
 #include <map>
 #include <iostream>
 #include <vector>
@@ -7,28 +7,23 @@
 #include <exception>
 #include <iterator>
 #include <fstream>
-#include "FigureStructs.hpp"
+#include "InputProcessing.hpp"
 #include "Commands.hpp"
 
 int main(int argc, const char * argv[])
 {
   if (argc != 2)
   {
-    std::cerr << "wrong number of args";
+    std::cerr << "wrong number of args\n";
     return 1;
   }
   std::vector< reznikova::Polygon > inputData;
   std::ifstream input(argv[1]);
-  if (!input)
-  {
-    std::cerr << "can't read from file\n";
-    return 1;
-  }
   while (!input.eof())
   {
     std::copy(
-      std::istream_iterator< reznikova::Polygon >(input),
-      std::istream_iterator< reznikova::Polygon >(),
+      std::istream_iterator< reznikova::Polygon >{input},
+      std::istream_iterator< reznikova::Polygon >{},
       std::back_inserter(inputData)
     );
     if (input.fail())
