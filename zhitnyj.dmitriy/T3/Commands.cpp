@@ -5,10 +5,10 @@
 #include <iosfwd>
 #include <limits>
 #include <stdexcept>
+#include <DelimiterIO.hpp>
+#include <iofmtguard.hpp>
 #include "Commands.hpp"
-#include "iofmtguard.hpp"
 #include "GeometryUtils.hpp"
-#include "DelimiterIO.hpp"
 
 Commands::Commands(std::vector< Polygon >& polygons) : polygons(polygons)
 {}
