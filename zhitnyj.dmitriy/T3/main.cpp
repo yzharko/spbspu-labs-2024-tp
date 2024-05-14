@@ -76,19 +76,26 @@ int main(int argc, char* argv[])
     }
     else if (command == "MAX")
     {
-      if (polygons.empty())
-      {
-        std::cout << "<INVALID COMMAND>\n";
-        continue;
-      }
       std::string param;
       std::cin >> param;
       if (param == "AREA")
       {
+        if (polygons.empty())
+        {
+          std::cout << "<INVALID COMMAND>\n";
+          continue;
+        }
+
         std::cout << Commands().calculateMaxArea(polygons) << "\n";
       }
       else if (param == "VERTEXES")
       {
+        if (polygons.empty())
+        {
+          std::cout << "<INVALID COMMAND>\n";
+          continue;
+        }
+
         std::cout << Commands().calculateMaxVertexes(polygons) << "\n";
       }
       else
@@ -168,6 +175,7 @@ int main(int argc, char* argv[])
       {
         std::cout << "<INVALID COMMAND>\n";
         std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        continue;
       }
 
       Polygon target;
