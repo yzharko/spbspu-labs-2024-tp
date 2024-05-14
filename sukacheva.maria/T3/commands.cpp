@@ -121,7 +121,7 @@ void sukacheva::maxVertices(const std::vector<Polygon>& allPolygons, std::ostrea
     }
   );
   size_t maxElement = *std::max_element(allVertices.begin(), allVertices.end());
-  out << std::fixed << std::setprecision(1) << maxElement << '\n';
+  out << std::fixed << maxElement << '\n';
 }
 
 void sukacheva::minArea(const std::vector<Polygon>& allPolygons, std::ostream& out)
@@ -155,7 +155,7 @@ void sukacheva::minVertices(const std::vector<Polygon>& allPolygons, std::ostrea
     }
   );
   size_t minElement = *std::min_element(allVertices.begin(), allVertices.end());
-  out << std::fixed << std::setprecision(1) << minElement << '\n';
+  out << std::fixed << minElement << '\n';
 }
 
 void sukacheva::countEvenVertices(const std::vector<Polygon>& allPolygons, std::ostream& out)
@@ -169,7 +169,7 @@ void sukacheva::countEvenVertices(const std::vector<Polygon>& allPolygons, std::
       return !(applicant.points.size() % 2);
     }
   );
-  out << std::fixed << std::setprecision(1) << count << '\n';
+  out << std::fixed << count << '\n';
 }
 
 void sukacheva::countOddVertices(const std::vector<Polygon>& allPolygons, std::ostream& out)
@@ -183,7 +183,7 @@ void sukacheva::countOddVertices(const std::vector<Polygon>& allPolygons, std::o
       return (applicant.points.size() % 2);
     }
   );
-  out << std::fixed << std::setprecision(1) << count << '\n';
+  out << std::fixed << count << '\n';
 }
 
 void sukacheva::countVertices(const std::vector<Polygon>& allPolygons, std::ostream& out, size_t vertices)
@@ -197,7 +197,7 @@ void sukacheva::countVertices(const std::vector<Polygon>& allPolygons, std::ostr
       return (applicant.points.size() == vertices);
     }
   );
-  out << std::fixed << std::setprecision(1) << count << '\n';
+  out << std::fixed << count << '\n';
 }
 
 void sukacheva::commandArea(const std::vector<Polygon>& allPolygons, std::istream& in, std::ostream& out)
@@ -302,5 +302,62 @@ void sukacheva::commandCount(const std::vector<Polygon>& allPolygons, std::istre
     {
       throw std::logic_error("<INVALID COMMAND>\n");
     }
+  }
+}
+
+bool sukacheva::isRectangle(const Polygon& poly)
+{
+  if (poly.points.size() != 4)
+  {
+    return false;
+  }
+  auto minmaxX = std::minmax_element
+  (
+    poly.points.begin(),
+    poly.points.end(),
+    [](const Point& left, const Point& right)
+    {
+      return left.x < right.x;
+    }
+  );
+  auto minmaxY = std::minmax_element
+  (
+    poly.points.begin(),
+    poly.points.end(),
+    [](const Point& left, const Point& right)
+    {
+      return left.y < right.y;
+    }
+  );
+  if (minmaxX.first->x == minmaxX.second->x && minmaxY.first->y == minmaxY.second->y)
+  {
+    return true;
+  }
+  return false;
+}
+
+void sukacheva::isRects(const std::vector<Polygon>& allPolygons, std::ostream& out)
+{
+  size_t count = std::count_if
+  (
+    allPolygons.begin(),
+    allPolygons.end(),
+    [](const Polygon& applicant)
+    {
+      return isRectangle(applicant);
+    }
+  );
+  out << std::fixed << count << '\n';
+}
+
+void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::istream& in, std::ostream& out)
+{
+  try
+  {
+    isRects(allPolygons, out);
+  }
+  catch (const std::out_of_range& e)
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
   }
 }
