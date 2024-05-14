@@ -211,7 +211,7 @@ void sukacheva::commandArea(const std::vector<Polygon>& allPolygons, std::istrea
   }
   catch (const std::out_of_range& e)
   {
-    if (std::isdigit(command[0]))
+    if (!std::isalpha(command[0]))
     {
       size_t vertices = std::stoull(command);
       if (vertices < 3)
@@ -285,7 +285,7 @@ void sukacheva::commandCount(const std::vector<Polygon>& allPolygons, std::istre
   }
   catch (const std::out_of_range& e)
   {
-    if (std::isdigit(command[0]))
+    if (!std::isalpha(command[0]))
     {
       size_t vertices = std::stoull(command);
       if (vertices < 3)
