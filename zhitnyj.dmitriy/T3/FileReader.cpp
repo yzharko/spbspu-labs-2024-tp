@@ -1,8 +1,8 @@
-#include "FileReader.hpp"
-#include "Polygon.hpp"
 #include <fstream>
 #include <stdexcept>
 #include <algorithm>
+#include "FileReader.hpp"
+#include "Polygon.hpp"
 
 std::vector< Polygon > FileReader::readPolygons(const std::string& filename) const
 {
