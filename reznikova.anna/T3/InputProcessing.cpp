@@ -1,7 +1,7 @@
 #include "InputProcessing.hpp"
 #include <exception>
-#include <limits>
 #include <iterator>
+#include <limits>
 #include "Delimeter.hpp"
 
 void reznikova::readFromFile(std::ifstream & input, std::vector< Polygon > & inputData)
@@ -9,8 +9,8 @@ void reznikova::readFromFile(std::ifstream & input, std::vector< Polygon > & inp
   while (!input.eof())
   {
     std::copy(
-      std::istream_iterator< Polygon >(input),
-      std::istream_iterator< Polygon >(),
+      std::istream_iterator< Polygon >{input},
+      std::istream_iterator< Polygon >{},
       std::back_inserter(inputData)
     );
     if (input.fail())
@@ -20,3 +20,4 @@ void reznikova::readFromFile(std::ifstream & input, std::vector< Polygon > & inp
     }
   }
 }
+

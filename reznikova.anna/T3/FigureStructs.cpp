@@ -37,16 +37,14 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
   }
   for (int i = 0; i < size; i++)
   {
-    if (is >> point)
-    {
-      polygon.points.push_back(point);
-    }
+    is >> point;
+    polygon.points.push_back(point);
   }
-  if (size <= 2 or polygon.points.size() != size_t(size))
+  if (size <= 2 or polygon.points.size() != size_t(size) or !is)
   {
     is.setstate(std::ios_base::failbit);
   }
-  if (is)
+  else
   {
     value = polygon;
   }
