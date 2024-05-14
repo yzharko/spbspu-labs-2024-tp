@@ -1,4 +1,4 @@
-k#include <iostream>
+#include <iostream>
 #include <map>
 #include <iostream>
 #include <vector>
@@ -7,7 +7,7 @@ k#include <iostream>
 #include <exception>
 #include <iterator>
 #include <fstream>
-#include "InputProcessing.hpp"
+#include "FigureStructs.hpp"
 #include "Commands.hpp"
 
 int main(int argc, const char * argv[])
