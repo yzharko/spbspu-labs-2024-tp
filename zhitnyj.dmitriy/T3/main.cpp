@@ -58,7 +58,7 @@ int main(int argc, char* argv[])
           if (vertex_count < 3)
           {
             std::cout << "<INVALID COMMAND>\n";
-            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+            continue;
           }
 
           std::cout << Commands().calculateAreaByVertexCount(polygons, vertex_count) << "\n";
@@ -66,7 +66,6 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
       }
     }
@@ -85,7 +84,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        continue;
       }
     }
     else if (command == "MIN")
@@ -103,7 +102,7 @@ int main(int argc, char* argv[])
       else
       {
         std::cout << "<INVALID COMMAND>\n";
-        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        continue;
       }
     }
     else if (command == "COUNT")
@@ -126,7 +125,7 @@ int main(int argc, char* argv[])
           if (vertex_count < 3)
           {
             std::cout << "<INVALID COMMAND>\n";
-            std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+            continue;
           }
 
           std::cout << Commands().countPolygons(polygons, false, vertex_count) << "\n";
@@ -134,7 +133,7 @@ int main(int argc, char* argv[])
         catch (const std::invalid_argument&)
         {
           std::cout << "<INVALID COMMAND>\n";
-          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+          continue;
         }
       }
     }
@@ -158,7 +157,7 @@ int main(int argc, char* argv[])
       if (vertex_count < 3)
       {
         std::cout << "<INVALID COMMAND>\n";
-        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        continue;
       }
 
       Polygon target;
