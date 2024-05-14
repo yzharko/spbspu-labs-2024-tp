@@ -5,7 +5,6 @@
 #include <limits>
 #include <functional>
 #include "FigureStructs.hpp"
-#include "InputProcessing.hpp"
 #include "Commands.hpp"
 
 int main(int argc, const char * argv[])
@@ -19,9 +18,22 @@ int main(int argc, const char * argv[])
   if (!input)
   {
     std::cerr << "can't read from file\n";
+    return 1;
   }
   std::vector< reznikova::Polygon > inputData;
-  reznikova::readFromFile(input, inputData);
+  while (!input.eof())
+  {
+    std::copy(
+      std::istream_iterator< reznikova::Polygon >(input),
+      std::istream_iterator< reznikova::Polygon >(),
+      std::back_inserter(inputData)
+    );
+    if (input.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 
   std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >&, std::ostream&, std::istream&) > > commands;
   {
