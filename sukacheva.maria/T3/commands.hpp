@@ -25,7 +25,7 @@ namespace sukacheva
   void countVertices(const std::vector< Polygon >& allPolygons, std::ostream& out, size_t vertices);
 
   void isRects(const std::vector< Polygon >& allPolygons, std::ostream& out);
-  bool isRectangle(const Polygon& poly);
+  bool isRectangle(const Polygon& poly, size_t index);
 
   void commandArea(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
   void commandMax(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
