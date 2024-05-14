@@ -37,7 +37,7 @@ void sukacheva::oddArea(const std::vector<Polygon>& allPolygons, std::ostream& o
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(oddPolygons),
-    [](const Polygon& applicant) 
+    [](const Polygon& applicant)
     {
       return !(applicant.points.size() % 2);
     }
