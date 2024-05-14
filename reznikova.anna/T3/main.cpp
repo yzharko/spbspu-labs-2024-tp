@@ -46,9 +46,9 @@ int main(int argc, const char * argv[])
     {
       commands.at(command)(inputData, std::cout, std::cin);
     }
-    catch (const std::logic_error&)
+    catch (const std::exception &)
     {
-      std::cout << "Invalid command\n";
+      std::cout << "<INVALID COMMAND>\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

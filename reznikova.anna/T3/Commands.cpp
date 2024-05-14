@@ -1,6 +1,7 @@
 #include "Commands.hpp"
 #include <algorithm>
 #include <numeric>
+#include <cmath>
 #include <functional>
 #include "ScopeGuard.hpp"
 
@@ -14,10 +15,10 @@ double reznikova::getArea(const reznikova::Polygon & polygon)
     std::back_inserter(sum),
     [](const Point & a, const Point & b)
     {
-      return a.x * b.y - a.y * b.x;
+      return std::abs(a.x * b.y - a.y * b.x);
     }
   );
-  sum.push_back(polygon.points.back().x * polygon.points.front().y - polygon.points.back().y * polygon.points.front().x);
+  sum.push_back(std::abs(polygon.points.back().x * polygon.points.front().y - polygon.points.back().y * polygon.points.front().x));
   double area = std::accumulate(sum.begin(), sum.end(), 0) * 0.5;
   return area;
 }
@@ -150,12 +151,12 @@ void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, s
   if (sub_command == "AREA")
   {
     std::vector< double > all_areas = getAllAreas(polygons);
-    out << std::setprecision(1) << *std::max_element(all_areas.begin(), all_areas.end());
+    out << std::setprecision(1) << *std::max_element(all_areas.begin(), all_areas.end()) << "\n";
   }
   else if (sub_command == "VERTEXES")
   {
     std::vector< size_t > all_areas = getAllVertexes(polygons);
-    out << *std::max_element(all_areas.begin(), all_areas.end());
+    out << *std::max_element(all_areas.begin(), all_areas.end()) << "\n";
   }
   else
   {
@@ -171,12 +172,12 @@ void reznikova::minCommand(const std::vector< reznikova::Polygon > & polygons, s
   if (sub_command == "AREA")
   {
     std::vector< double > all_areas = getAllAreas(polygons);
-    out << std::setprecision(1) << *std::min_element(all_areas.begin(), all_areas.end());
+    out << std::setprecision(1) << *std::min_element(all_areas.begin(), all_areas.end()) << "\n";
   }
   else if (sub_command == "VERTEXES")
   {
     std::vector< size_t > all_areas = getAllVertexes(polygons);
-    out << *std::min_element(all_areas.begin(), all_areas.end());
+    out << *std::min_element(all_areas.begin(), all_areas.end()) << "\n";
   }
   else
   {
