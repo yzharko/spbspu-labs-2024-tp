@@ -4,7 +4,11 @@
 #include <vector>
 #include <limits>
 #include <functional>
+#include <exception>
+#include <iterator>
+#include <fstream>
 #include "FigureStructs.hpp"
+#include "InputProcessing.hpp"
 #include "Commands.hpp"
 
 int main(int argc, const char * argv[])
