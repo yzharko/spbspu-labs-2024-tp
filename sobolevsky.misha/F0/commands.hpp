@@ -12,18 +12,18 @@ namespace sobolevsky
   void getCommands(std::istream & in, std::ostream & out);
   void getLoadAndCreate(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
   std::istream & in, std::ostream & out);
-  void getDelete(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec, std::istream & in,
-  std::ostream & out);
+  void getDelete(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
+  std::istream & in, std::ostream & out);
   void getAllDicts(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
   std::istream & in, std::ostream & out);
-  void getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec, std::istream & in,
-  std::ostream & out);
+  void getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
+  std::istream & in, std::ostream & out);
   void holyTrinity(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out);
   void printDict(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out);
   void uniqeWords(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out);
   void wordCount(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in, std::ostream & out);
-  void getRename(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec, std::istream & in,
-  std::ostream & out);
+  void getRename(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myVec,
+  std::istream & in, std::ostream & out);
   void save(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream & in);
 
   void error(std::ostream & out, const std::string &text);
