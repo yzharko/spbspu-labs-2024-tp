@@ -39,7 +39,7 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
   }
   is.clear();
   is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-  if (size <= 2 or polygon.points.size() != size)
+  if (size <= 2 or polygon.points.size() != size_t(size))
   {
     is.setstate(std::ios_base::failbit);
   }
