@@ -13,7 +13,7 @@ void reznikova::readFromFile(std::ifstream & input, std::vector< Polygon > & inp
       std::istream_iterator< Polygon >{},
       std::back_inserter(inputData)
     );
-    if (input.fail())
+    if (input.fail() && !input.eof())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');

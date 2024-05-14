@@ -16,6 +16,10 @@ int main(int argc, const char * argv[])
     return 1;
   }
   std::ifstream input(argv[1]);
+  if (!input)
+  {
+    std::cerr << "can't read from file\n";
+  }
   std::vector< reznikova::Polygon > inputData;
   reznikova::readFromFile(input, inputData);
 
