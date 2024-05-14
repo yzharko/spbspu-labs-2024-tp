@@ -56,19 +56,12 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
   return in;
 }
 
-std::ostream& sukacheva::operator<<(std::ostream& out, Point& point)
-{
-  std::ostream::sentry guard(out);
-  if (!guard)
-  {
-    return out;
-  }
-  StreamGuard StreamGuard(out);
-  out << "(" << point.x << ";" << point.y << ")";
-  return out;
-}
-
 bool sukacheva::operator==(const Point& left, const Point& right)
 {
   return (left.x == right.x) && (left.y == right.y);
+}
+
+bool sukacheva::operator!=(const Point& left, const Point& right)
+{
+  return (left.x != right.x) || (left.y != right.y);
 }

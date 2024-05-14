@@ -17,8 +17,8 @@ namespace sukacheva
 
   std::istream& operator>>(std::istream& in, Point& applicant);
   std::istream& operator>>(std::istream& in, Polygon& applicant);
-  std::ostream& operator<<(std::ostream& out, Point& point);
   bool operator==(const Point& left, const Point& right);
+  bool operator!=(const Point& left, const Point& right);
 }
 
 #endif

@@ -27,6 +27,10 @@ namespace sukacheva
   void isRects(const std::vector< Polygon >& allPolygons, std::ostream& out);
   bool isRectangle(const Polygon& poly, size_t index);
 
+  bool arePolygonsSame(const Polygon& applicant, const Polygon& overlay, size_t index);
+  size_t countSamePolygons(const std::vector<Polygon>& polygons, const Polygon& overlay, size_t index);
+  void commandSame(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
+
   void commandArea(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
   void commandMax(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);
   void commandMin(const std::vector< Polygon >& allPolygons, std::istream& in, std::ostream& out);

@@ -317,9 +317,9 @@ bool sukacheva::isRectangle(const Polygon& poly, size_t index)
   (
     poly.points.begin(),
     poly.points.begin() + index,
-    [&](const Point& p)
+    [&](const Point& applicant)
     {
-      return p == currentPoint;
+      return applicant == currentPoint;
     }
   );
   return allUniqueBefore && isRectangle(poly, index + 1);
@@ -350,3 +350,48 @@ void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::ostre
     throw std::logic_error("<INVALID COMMAND>\n");
   }
 }
+
+bool sukacheva::arePolygonsSame(const Polygon& applicant, const Polygon& overlay, size_t index)
+{
+  if (index == applicant.points.size())
+  {
+    return true;
+  }
+  const Point& point1 = applicant.points[index];
+  const Point& point2 = overlay.points[index];
+  if (point1 != point2)
+  {
+    return false;
+  }
+  return arePolygonsSame(applicant, overlay, index + 1);
+}
+
+size_t sukacheva::countSamePolygons(const std::vector<Polygon>& polygons, const Polygon& overlay, size_t index)
+{
+  if (index == polygons.size())
+  {
+    return 0;
+  }
+  const Polygon& currentPolygon = polygons[index];
+  bool isSame = arePolygonsSame(currentPolygon, overlay, 0);
+  return (isSame ? 1 : 0) + countSamePolygons(polygons, overlay, index + 1);
+}
+
+void sukacheva::commandSame(const std::vector<Polygon>& allPolygons, std::istream& in, std::ostream& out)
+{
+  Polygon overlay;
+  in >> overlay;
+  if (in.fail())
+  {
+    throw std::logic_error("< WRONG INPUT >\n");
+  }
+  try
+  {
+    out << countSamePolygons(allPolygons, overlay, 0);
+  }
+  catch (const std::out_of_range& e)
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
+}
+
