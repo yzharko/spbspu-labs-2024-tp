@@ -10,17 +10,17 @@ double reznikova::getArea(const reznikova::Polygon & polygon)
   std::vector< double > sum;
   std::transform(
     polygon.points.begin(),
-    polygon.points.end(),
-    ++polygon.points.begin(),
+    polygon.points.end()-1,
+    std::next(polygon.points.begin()),
     std::back_inserter(sum),
     [](const Point & a, const Point & b)
     {
-      return std::abs(a.x * b.y - a.y * b.x);
+      return a.x * b.y - a.y * b.x;
     }
   );
-  sum.push_back(std::abs(polygon.points.back().x * polygon.points.front().y - polygon.points.back().y * polygon.points.front().x));
+  sum.push_back(polygon.points.back().x * polygon.points.front().y - polygon.points.back().y * polygon.points.front().x);
   double area = std::accumulate(sum.begin(), sum.end(), 0) * 0.5;
-  return area;
+  return std::abs(area);
 }
 
 size_t reznikova::getNumOfVertexes(const reznikova::Polygon & polygon)
@@ -121,6 +121,7 @@ void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, 
   if (polygons.empty())
   {
     out << 0.0 << "\n";
+
   }
   if (sub_command == "ODD")
   {
