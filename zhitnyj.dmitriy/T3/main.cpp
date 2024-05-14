@@ -3,6 +3,7 @@
 #include <string>
 #include <iomanip>
 #include <functional>
+#include <numeric>
 #include <map>
 #include "FileReader.hpp"
 #include "Commands.hpp"
