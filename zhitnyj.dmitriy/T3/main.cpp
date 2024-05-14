@@ -7,6 +7,7 @@
 #include <map>
 #include "FileReader.hpp"
 #include "Commands.hpp"
+#include "iofmtguard.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -58,6 +59,10 @@ int main(int argc, char* argv[])
     {
       std::cout << "<INVALID COMMAND>\n";
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    catch (const std::runtime_error& err)
+    {
+      std::cerr << err.what() << "\n";
     }
   }
 
