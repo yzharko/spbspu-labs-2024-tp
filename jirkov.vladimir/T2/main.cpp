@@ -7,10 +7,10 @@
 int main()
 {
   using namespace jirkov;
-  using inIterator = std::istream_iterator< DataStruct >;
   std::vector< DataStruct > values;
   while (!std::cin.eof())
   {
+    using inIterator = std::istream_iterator< DataStruct >;
     std::copy(inIterator{std::cin}, inIterator{}, std::back_inserter(values));
     if (std::cin.fail())
     {
