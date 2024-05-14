@@ -45,7 +45,7 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
       polygon.points.push_back(point);
     }
   }
-  if (in && vertices == polygon.points.size())
+  if (vertices == polygon.points.size())
   {
     applicant = polygon;
   }
