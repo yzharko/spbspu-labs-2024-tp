@@ -17,6 +17,7 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args\n";
     return 1;
   }
+  
   std::vector< reznikova::Polygon > inputData;
   std::ifstream input(argv[1]);
   while (!input.eof())
@@ -28,8 +29,8 @@ int main(int argc, const char * argv[])
     );
     if (input.fail())
     {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      input.clear();
+      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 
@@ -59,3 +60,4 @@ int main(int argc, const char * argv[])
   }
   return 0;
 }
+
