@@ -378,7 +378,7 @@ namespace taskaev
       Polygon movedPolygonOne = movePolygon(polygonOne);
       Polygon movedPolygonTwo = movePolygon(polygonTwo);
       bool  flag = std::equal(
-        movePolygoтOne.points.begin(),
+        movePolygonOne.points.begin(),
         movePolygonOne.points.end(),
         movePolygonTwo.points.begin(),
         PointPolygon
