@@ -3,6 +3,7 @@
 #include <functional>
 #include <map>
 #include <iterator>
+#include <limits>
 #include "struct.hpp"
 #include "commands.hpp"
 
