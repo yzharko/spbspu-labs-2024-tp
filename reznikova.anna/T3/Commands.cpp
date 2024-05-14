@@ -1,4 +1,4 @@
-#include "Commands.hpp"
+k#include "Commands.hpp"
 #include <algorithm>
 #include <numeric>
 #include <cmath>
@@ -134,6 +134,10 @@ void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, 
   }
   else if (sub_command == "MEAN")
   {
+    if (polygons.empty())
+    {
+      throw std::logic_error("can't divide by 0");
+    }
     out << getSumArea(polygons)/polygons.size() << "\n";
   }
   else if (!std::isalpha(sub_command[0]) && stoull(sub_command) > 2)
@@ -152,6 +156,10 @@ void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, s
   std::string sub_command;
   is >> sub_command;
   out << std::fixed;
+  if (polygons.empty())
+  {
+    throw std::logic_error("can't found max of nothing");
+  }
   if (sub_command == "AREA")
   {
     std::vector< double > all_areas = getAllAreas(polygons);
@@ -247,7 +255,7 @@ bool reznikova::checkIfPointsEqual(const reznikova::Point & point, const rezniko
       return (comp_point.x == point.x && comp_point.y == point.y) or (comp_point.y == point.x && comp_point.x == point.y);
     }
   );
-  return (num_of_perms == 1);
+  return (num_of_perms > 1);
 }
 
 bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const reznikova::Polygon & polygon)
