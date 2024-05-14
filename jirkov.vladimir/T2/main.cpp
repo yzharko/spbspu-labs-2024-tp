@@ -3,7 +3,7 @@
 #include <vector>
 #include <algorithm>
 #include <iterator>
-#include "inputOutputIO.hpp"
+#include "DataStruct.hpp"
 int main()
 {
   using namespace jirkov;
