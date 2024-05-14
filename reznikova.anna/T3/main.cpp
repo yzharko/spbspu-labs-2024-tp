@@ -29,7 +29,6 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args";
     return 1;
   }
-
   std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >&, std::ostream&, std::istream&) > > commands;
   {
     using namespace std::placeholders;
@@ -38,7 +37,7 @@ int main(int argc, const char * argv[])
     commands["MIN"] = std::bind(reznikova::minCommand, _1, _2, _3);
     commands["COUNT"] = std::bind(reznikova::countCommand, _1, _2, _3);
     commands["PERMS"] = std::bind(reznikova::permsCommand, _1, _2, _3);
-    commands["RECTS"] = std::bind(reznikova::rectsCommand, _1, _2, _3);
+    commands["RECTS"] = std::bind(reznikova::rectsCommand, _1, _2);
   }
   std::string command;
   while (std::cin >> command)

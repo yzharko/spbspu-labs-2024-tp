@@ -22,7 +22,7 @@ namespace reznikova
   void permsCommand(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is);
   bool checkIfParallelogram(const Polygon & polygon);
   bool checkIfRect(const Polygon & polygon);
-  void rectsCommand(const std::vector< Polygon > & polygons, std::ostream & out, std::istream & is);
+  void rectsCommand(const std::vector< Polygon > & polygons, std::ostream & out);
 }
 
 #endif

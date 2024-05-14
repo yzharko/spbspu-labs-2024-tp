@@ -1,5 +1,6 @@
 #include "InputProcessing.hpp"
 #include <exception>
+#include <iterator>
 #include "Delimeter.hpp"
 
 void reznikova::readFromFile(std::ifstream & input, std::vector< Polygon > & inputData)

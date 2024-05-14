@@ -1,6 +1,7 @@
 #include "Commands.hpp"
 #include <algorithm>
 #include <numeric>
+#include <functional>
 #include "ScopeGuard.hpp"
 
 double reznikova::getArea(const reznikova::Polygon & polygon)
@@ -25,6 +26,7 @@ size_t reznikova::getNumOfVertexes(const reznikova::Polygon & polygon)
 {
   return polygon.points.size();
 }
+
 
 std::vector< reznikova::Polygon > reznikova::chooseOddPolygons(const std::vector< reznikova::Polygon > & polygons)
 {
@@ -246,7 +248,7 @@ bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const rezn
   {
     return false;
   }
-  auto num_of_perms = std::count_if(
+    auto num_of_perms = std::count_if(
     base_polygon.points.begin(),
     base_polygon.points.end(),
     [polygon](const Point & cmp_point)
@@ -254,7 +256,7 @@ bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const rezn
       return checkIfPointsEqual(cmp_point, polygon);
     }
   );
-  if (num_of_perms == polygon.points.size())
+  if (size_t(num_of_perms) == polygon.points.size())
   {
     return true;
   }
@@ -304,7 +306,7 @@ bool reznikova::checkIfRect(const reznikova::Polygon & polygon)
     return false;
 }
 
-void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
+void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out)
 {
   out << std::fixed;
   using namespace std::placeholders;

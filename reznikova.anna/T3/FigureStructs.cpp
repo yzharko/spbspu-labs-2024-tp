@@ -29,7 +29,6 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Polygon & val
     return is;
   }
   using input_it_t = std::istream_iterator< reznikova::Point >;
-  using del = Delimiter;
   int size = 0;
   Polygon polygon;
   is >> size;
