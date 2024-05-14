@@ -1,5 +1,6 @@
 #include "struct.hpp"
 #include <iostream>
+#include <limits>
 #include "Delimeter.hpp"
 #include "StreamGuard.hpp"
 
