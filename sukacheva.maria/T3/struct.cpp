@@ -1,7 +1,5 @@
 #include "struct.hpp"
 #include <iostream>
-#include <iterator>
-#include <algorithm>
 #include "Delimeter.hpp"
 #include "StreamGuard.hpp"
 
@@ -32,33 +30,25 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
   {
     return in;
   }
+  Polygon polygon;
+  Point point;
   size_t vertices = 0;
   in >> vertices;
   if (!in || vertices < 3)
   {
     in.setstate(std::ios::failbit);
   }
-  std::vector< Point > tempPoints;
-  tempPoints.reserve(vertices);
-  std::copy
-  (
-    std::istream_iterator< Point >(in),
-    std::istream_iterator< Point >(),
-    std::back_inserter(tempPoints)
-  );
-
-  if (tempPoints.size() != vertices)
+  while (in >> point)
+  {
+    polygon.points.push_back(point);
+  }
+  if (vertices != polygon.points.size())
   {
     in.setstate(std::ios::failbit);
   }
   if (in)
   {
-    std::copy
-    (
-      tempPoints.begin(),
-      tempPoints.end(),
-      std::back_inserter(applicant.points)
-    );
+    applicant = polygon;
   }
   return in;
 }
