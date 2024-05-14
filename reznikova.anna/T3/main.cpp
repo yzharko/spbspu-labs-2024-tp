@@ -2,13 +2,11 @@
 #include <map>
 #include <iostream>
 #include <vector>
-#include <limits>
 #include <functional>
-#include <exception>
-#include <iterator>
 #include <fstream>
 #include "FigureStructs.hpp"
 #include "Commands.hpp"
+#include "InputProcessing.hpp"
 
 int main(int argc, const char * argv[])
 {
@@ -17,23 +15,9 @@ int main(int argc, const char * argv[])
     std::cerr << "wrong number of args\n";
     return 1;
   }
-
   std::vector< reznikova::Polygon > inputData;
   std::ifstream input(argv[1]);
-  while (!input.eof())
-  {
-    std::copy(
-      std::istream_iterator< reznikova::Polygon >{input},
-      std::istream_iterator< reznikova::Polygon >{},
-      std::back_inserter(inputData)
-    );
-    if (input.fail())
-    {
-      input.clear();
-      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-  }
-
+  reznikova::readFromFile(input, inputData);
   std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >&, std::ostream&, std::istream&) > > commands;
   {
     using namespace std::placeholders;
@@ -60,4 +44,3 @@ int main(int argc, const char * argv[])
   }
   return 0;
 }
-
