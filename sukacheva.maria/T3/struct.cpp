@@ -38,11 +38,14 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
   {
     in.setstate(std::ios::failbit);
   }
-  while (in >> point)
+  for (size_t i = 0; i < vertices; i++)
   {
-    polygon.points.push_back(point);
+    if (in >> point)
+    {
+      polygon.points.push_back(point);
+    }
   }
-  if (vertices != polygon.points.size())
+  if (vertices != polygon.points.size() || (in >> point))
   {
     in.setstate(std::ios::failbit);
   }
