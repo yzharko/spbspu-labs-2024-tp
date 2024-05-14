@@ -349,23 +349,32 @@ namespace nikiforov
 
   int orientation(Point p, Point q, Point r)
   {
-    int val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
+    int collinear = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
 
-    if (val == 0)
+    if (collinear == 0)
     {
       return 0;
     }
-    return (val > 0) ? 1 : 2;
+    return (collinear > 0) ? 1 : 2;
   }
 
   bool onSegment(Point p, Point q, Point r)
   {
-    if (q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x) &&
-      q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y))
+    if (xCoordinatePointInSegment(p, q, r) && yCoordinatePointInSegment(p, q, r))
     {
       return true;
     }
     return false;
+  }
+
+  bool xCoordinatePointInSegment(Point p, Point q, Point r)
+  {
+    return q.x <= std::max(p.x, r.x) && q.x >= std::min(p.x, r.x);
+  }
+
+  bool yCoordinatePointInSegment(Point p, Point q, Point r)
+  {
+    return q.y <= std::max(p.y, r.y) && q.y >= std::min(p.y, r.y);
   }
 
   void takingSame(const std::vector<Polygon>& shapes, std::istream& input, std::ostream& out)

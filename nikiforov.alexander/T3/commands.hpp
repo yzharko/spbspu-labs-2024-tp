@@ -40,14 +40,14 @@ namespace nikiforov
   bool doIntersect(Point p1, Point q1, Point p2, Point q2);
   int orientation(Point p, Point q, Point r);
   bool onSegment(Point p, Point q, Point r);
+  bool xCoordinatePointInSegment(Point p, Point q, Point r);
+  bool yCoordinatePointInSegment(Point p, Point q, Point r);
 
   void takingSame(const std::vector< Polygon >& shapes, std::istream& input, std::ostream& out);
   bool countSame(const Polygon& polygonSame, const Polygon& polygonShape);
   int pointsSame(const Point& first, const Point& second);
 
   void takingError(std::ostream& out, const std::string& errorStr);
-
-  
 }
 
 #endif
