@@ -6,7 +6,7 @@
 class GeometryUtils
 {
 public:
-    double calculateArea(const Polygon& polygon) const;
+  double calculateArea(const Polygon& polygon) const;
 };
 
 #endif

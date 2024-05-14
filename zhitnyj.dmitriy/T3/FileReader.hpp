@@ -8,7 +8,7 @@
 class FileReader
 {
 public:
-    std::vector< Polygon > readPolygons(const std::string& filename) const;
+  std::vector< Polygon > readPolygons(const std::string& filename) const;
 };
 
 #endif
