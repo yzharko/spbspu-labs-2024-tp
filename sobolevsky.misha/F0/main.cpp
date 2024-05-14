@@ -10,7 +10,8 @@
 int main()
 {
   std::cout << "Для просмотра доступных команд введите \"commands\"\n";
-  std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > > myContainer(new std::vector< std::pair< std::string, std::multimap< size_t, std::string > > >());
+  std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > >
+  myContainer(new std::vector< std::pair<std::string, std::multimap< size_t, std::string > > >());
   std::map< std::string, std::function< void(std::istream & in, std::ostream & out) > > cmds;
   cmds["commands"] = sobolevsky::getCommands;
   cmds["loadAndCreate"] = std::bind(sobolevsky::getLoadAndCreate, myContainer,  std::placeholders::_1, std::placeholders::_2);
