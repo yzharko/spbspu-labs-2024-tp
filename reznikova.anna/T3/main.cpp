@@ -10,25 +10,15 @@
 
 int main(int argc, const char * argv[])
 {
-  std::vector< reznikova::Polygon > inputData;
-  if (argc == 2)
-  {
-    std::ifstream input(argv[1]);
-    try
-    {
-      reznikova::readFromFile(input, inputData);
-    }
-    catch (std::exception & e)
-    {
-      std::cerr << e.what();
-      return 1;
-    }
-  }
-  else
+  if (argc != 2)
   {
     std::cerr << "wrong number of args";
     return 1;
   }
+  std::ifstream input(argv[1]);
+  std::vector< reznikova::Polygon > inputData;
+  reznikova::readFromFile(input, inputData);
+
   std::map< std::string, std::function< void(const std::vector< reznikova::Polygon >&, std::ostream&, std::istream&) > > commands;
   {
     using namespace std::placeholders;
