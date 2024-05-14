@@ -2,10 +2,10 @@
 #include <numeric>
 #include <iomanip>
 
-using namespace std::placeholders;
-
 namespace nikiforov
 {
+  using namespace std::placeholders;
+
   void takingArea(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out)
   {
     std::string option = "";
@@ -14,45 +14,65 @@ namespace nikiforov
 
     if (option == "ODD")
     {
-      std::vector< Polygon > figuresOdd;
-      std::copy_if(
-        std::begin(shapes), std::end(shapes),
-        std::back_inserter(figuresOdd),
-        isOdd
-      );
-
-      out << getAreaResult(figuresOdd, "area") << "\n";
+      getAreaOdd(shapes, out);
     }
     else if (option == "EVEN")
     {
-      std::vector< Polygon > figuresEven;
-      std::copy_if(
-        std::begin(shapes), std::end(shapes),
-        std::back_inserter(figuresEven),
-        isEven
-      );
-
-      out << getAreaResult(figuresEven, "area") << "\n";
+      getAreaEven(shapes, out);
     }
     else if (option == "MEAN" && !shapes.empty())
     {
-      out << getAreaResult(shapes, "area") / shapes.size() << "\n";
+      getAreaMean(shapes, out);
     }
     else if (isdigit(option[0]) && stoi(option) > 2)
     {
-      std::vector< Polygon > figuresNumOfVert;
-      std::copy_if(
-        std::begin(shapes), std::end(shapes),
-        std::back_inserter(figuresNumOfVert),
-        std::bind(numOfVert, size_t(stoi(option)), _1)
-      );
-
-      out << getAreaResult(figuresNumOfVert, "area") << "\n";
+      getAreaNumOfVerts(shapes, size_t(stoi(option)), out);
     }
     else
     {
       throw std::out_of_range("");
     }
+  }
+
+  void getAreaOdd(const std::vector< Polygon >& shapes, std::ostream& out)
+  {
+    std::vector< Polygon > figuresOdd;
+    std::copy_if(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(figuresOdd),
+      isOdd
+    );
+
+    out << getAreaResult(figuresOdd, "area") << "\n";
+  }
+
+  void getAreaEven(const std::vector< Polygon >& shapes, std::ostream& out)
+  {
+    std::vector< Polygon > figuresEven;
+    std::copy_if(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(figuresEven),
+      isEven
+    );
+
+    out << getAreaResult(figuresEven, "area") << "\n";
+  }
+
+  void getAreaMean(const std::vector< Polygon >& shapes, std::ostream& out)
+  {
+    out << getAreaResult(shapes, "area") / shapes.size() << "\n";
+  }
+
+  void getAreaNumOfVerts(const std::vector< Polygon >& shapes, const size_t& option, std::ostream& out)
+  {
+    std::vector< Polygon > figuresNumOfVert;
+    std::copy_if(
+      std::begin(shapes), std::end(shapes),
+      std::back_inserter(figuresNumOfVert),
+      std::bind(numOfVert, option, _1)
+    );
+
+    out << getAreaResult(figuresNumOfVert, "area") << "\n";
   }
 
   int getPoints(const Point& first, const Point& second)
@@ -144,20 +164,35 @@ namespace nikiforov
 
     if (option == "ODD")
     {
-      out << count_if(std::begin(shapes), std::end(shapes), isOdd) << "\n";
+      countOddVerts(shapes, out);
     }
     else if (option == "EVEN")
     {
-      out << count_if(std::begin(shapes), std::end(shapes), isEven) << "\n";
+      countEvenVerts(shapes, out);
     }
     else if (isdigit(option[0]) && stoi(option) > 2)
     {
-      out << count_if(std::begin(shapes), std::end(shapes), std::bind(numOfVert, size_t(stoi(option)), _1)) << "\n";
+      countSpecVerts(shapes, size_t(stoi(option)),out);
     }
     else
     {
       throw std::out_of_range("");
     }
+  }
+
+  void countOddVerts(const std::vector<Polygon>& shapes, std::ostream& out)
+  {
+    out << count_if(std::begin(shapes), std::end(shapes), isOdd) << "\n";
+  }
+
+  void countEvenVerts(const std::vector<Polygon>& shapes, std::ostream& out)
+  {
+    out << count_if(std::begin(shapes), std::end(shapes), isEven) << "\n";
+  }
+
+  void countSpecVerts(const std::vector<Polygon>& shapes, const size_t& option, std::ostream& out)
+  {
+    out << count_if(std::begin(shapes), std::end(shapes), std::bind(numOfVert, option, _1)) << "\n";
   }
 
   double getAreaResult(const std::vector< Polygon >& shapes, std::string mode)

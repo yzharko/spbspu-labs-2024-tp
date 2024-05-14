@@ -7,6 +7,11 @@
 namespace nikiforov
 {
   void takingArea(const std::vector< Polygon >& shapes, std::istream&, std::ostream& out);
+  void getAreaOdd(const std::vector< Polygon >& shapes, std::ostream& out);
+  void getAreaEven(const std::vector< Polygon >& shapes, std::ostream& out);
+  void getAreaMean(const std::vector< Polygon >& shapes, std::ostream& out);
+  void getAreaNumOfVerts(const std::vector< Polygon >& shapes, const size_t& option, std::ostream& out);
+
   int getPoints(const Point& first, const Point& second);
   double getArea(const Polygon& polygon);
 
@@ -20,6 +25,9 @@ namespace nikiforov
   void takingMin(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out);
 
   void takingCount(const std::vector< Polygon >& shapes, std::istream& in, std::ostream& out);
+  void countOddVerts(const std::vector< Polygon >& shapes, std::ostream& out);
+  void countEvenVerts(const std::vector< Polygon >& shapes, std::ostream& out);
+  void countSpecVerts(const std::vector< Polygon >& shapes, const size_t& option, std::ostream& out);
 
   double getAreaResult(const std::vector< Polygon >& shapes, std::string mode);
   size_t getVertexesResult(const std::vector< Polygon >& shapes, std::string mode);
@@ -38,6 +46,8 @@ namespace nikiforov
   int pointsSame(const Point& first, const Point& second);
 
   void takingError(std::ostream& out, const std::string& errorStr);
+
+  
 }
 
 #endif
