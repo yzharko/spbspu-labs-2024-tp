@@ -45,13 +45,13 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
       polygon.points.push_back(point);
     }
   }
-  if (vertices != polygon.points.size() || (in >> point))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  if (in)
+  if (vertices == polygon.points.size() || !(in >> point))
   {
     applicant = polygon;
+  }
+  else
+  {
+    in.setstate(std::ios::failbit);
   }
   return in;
 }
