@@ -255,7 +255,7 @@ bool reznikova::checkIfPointsEqual(const reznikova::Point & point, const rezniko
       return (comp_point.x == point.x && comp_point.y == point.y) or (comp_point.y == point.x && comp_point.x == point.y);
     }
   );
-  return (num_of_perms > 1);
+  return (num_of_perms >= 1);
 }
 
 bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const reznikova::Polygon & polygon)
