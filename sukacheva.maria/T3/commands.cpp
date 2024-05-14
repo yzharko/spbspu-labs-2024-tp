@@ -6,6 +6,7 @@
 #include <map>
 #include <functional>
 #include <string>
+#include <cmath>
 
 double sukacheva::calculateTriangleArea(Point p1, Point p2, Point p3)
 {
