@@ -369,6 +369,10 @@ namespace taskaev
     iofmtguard iofmtguard(out);
     using namespace std::placeholders;
     auto function = std::bind(polygonSame, _1, input);
+    if (std::count_if(polygon.begin(), polygon.end(), function) == 0)
+    {
+      throw std::logic_error("");
+    }
     out << std::count_if(polygon.begin(), polygon.end(), function) << "\n";
   }
   bool polygonSame(const Polygon& polygonOne, const Polygon& polygonTwo)
