@@ -65,6 +65,10 @@ void sukacheva::evenArea(const std::vector<Polygon>& allPolygons, std::ostream& 
 
 void sukacheva::meanArea(const std::vector<Polygon>& allPolygons, std::ostream& out)
 {
+  if (allPolygons.empty())
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
   double result = std::accumulate(allPolygons.begin(), allPolygons.end(), 0.0, addArea) / allPolygons.size();
   out << std::fixed << std::setprecision(1) << result << '\n';
 }
