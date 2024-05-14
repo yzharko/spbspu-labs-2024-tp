@@ -44,13 +44,10 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
     std::istream::pos_type startPos = in.tellg();
     if (!(in >> point))
     {
-      if (in.eof())
-      {
-        break;
-      }
       in.clear();
       in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       in.seekg(startPos);
+      break;
     }
     else
     {
