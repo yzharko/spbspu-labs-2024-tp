@@ -40,13 +40,20 @@ std::istream& sukacheva::operator>>(std::istream& in, Polygon& applicant)
   }
   for (size_t i = 0; i < vertices + 1; i++)
   {
-    if (in >> point)
+    std::istream::pos_type startPos = in.tellg();
+    if (!(in >> point))
     {
-      polygon.points.push_back(point);
+      if (in.eof())
+      {
+        break;
+      }
+      in.clear();
+      in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      in.seekg(startPos);
     }
     else
     {
-      break;
+      polygon.points.push_back(point);
     }
   }
   if (vertices == polygon.points.size())
