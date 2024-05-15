@@ -31,13 +31,17 @@ std::istream& doroshenko::operator>>(std::istream& input, Polygon& dest)
   {
     input.setstate(std::ios::failbit);
   }
-  Point point;
-  for (size_t i = 0; i < vertexes; i++)
+  using input_it_t = std::istream_iterator< Point >;
+  std::vector< Point > points;
+  std::copy_n(input_it_t{ input }, vertexes, std::back_inserter(points));
+  if (input)
   {
-    if (input >> point)
-    {
-      polygon.points.push_back(point);
-    }
+    polygon.points = std::move(points);
+  }
+  char next = input.peek();
+  if(next == ' ')
+  {
+    input.setstate(std::ios::failbit);
   }
   if (input && vertexes == polygon.points.size())
   {
