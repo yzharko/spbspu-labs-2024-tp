@@ -1,6 +1,7 @@
-#include "delimeter.hpp"
+#include <iostream>
+#include "delimiter.hpp"
 
-std::istream & redko::operator>>(std::istream & in, DelimiterIO && dest)
+std::istream &gorbunova::operator>>(std::istream &in, Delimiter &&dest)
 {
   std::istream::sentry guard(in);
   if (!guard)
