@@ -348,5 +348,5 @@ void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons,
 
 void reznikova::getOutputMessage(std::ostream & out, const std::string & message)
 {
-  out << message;
+  out << message << "\n";
 }
