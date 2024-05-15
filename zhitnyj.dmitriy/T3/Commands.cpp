@@ -1,9 +1,9 @@
 #include <functional>
 #include <stdexcept>
+#include <iofmtguard.hpp>
+#include <DelimiterIO.hpp>
 #include "Commands.hpp"
-#include "iofmtguard.hpp"
 #include "GeometryUtils.hpp"
-#include "DelimiterIO.hpp"
 
 void printInvalidCommand(std::ostream& out)
 {
