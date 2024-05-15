@@ -1,13 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <iomanip>
-#include <functional>
 #include <limits>
 #include <map>
 #include "FileReader.hpp"
 #include "Commands.hpp"
-#include "iofmtguard.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -30,15 +27,13 @@ int main(int argc, char* argv[])
     return 2;
   }
 
-  Commands commands(polygons);
-
-  std::map< std::string, std::function< void(std::istream&, std::ostream&) > > cmds;
-  cmds["AREA"] = std::bind(&Commands::areaCommand, &commands, std::placeholders::_1, std::placeholders::_2);
-  cmds["MAX"] = std::bind(&Commands::maxCommand, &commands, std::placeholders::_1, std::placeholders::_2);
-  cmds["MIN"] = std::bind(&Commands::minCommand, &commands, std::placeholders::_1, std::placeholders::_2);
-  cmds["COUNT"] = std::bind(&Commands::countCommand, &commands, std::placeholders::_1, std::placeholders::_2);
-  cmds["RMECHO"] = std::bind(&Commands::rmechoCommand, &commands, std::placeholders::_1, std::placeholders::_2);
-  cmds["PERMS"] = std::bind(&Commands::permsCommand, &commands, std::placeholders::_1, std::placeholders::_2);
+  std::map< std::string, std::function< void(std::istream&, std::ostream&, std::vector< Polygon >&)>> cmds;
+  cmds["AREA"] = std::bind(areaCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["MAX"] = std::bind(maxCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["MIN"] = std::bind(minCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["COUNT"] = std::bind(countCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["RMECHO"] = std::bind(rmechoCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["PERMS"] = std::bind(permsCommand, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
   std::string cmd;
   while (std::cin >> cmd)
@@ -48,7 +43,7 @@ int main(int argc, char* argv[])
       auto it = cmds.find(cmd);
       if (it != cmds.end())
       {
-        it->second(std::cin, std::cout);
+        it->second(std::cin, std::cout, polygons);
       }
       else
       {
@@ -57,7 +52,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::invalid_argument&)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      printInvalidCommand(std::cout);
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
