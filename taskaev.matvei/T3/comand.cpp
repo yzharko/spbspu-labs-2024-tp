@@ -70,7 +70,7 @@ namespace taskaev
 
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    double area = std::accumulate(
+    double area = std::count_if(
       polygon.begin(),
       polygon.end(),
       0.0,
