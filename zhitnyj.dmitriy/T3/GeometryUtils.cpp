@@ -1,7 +1,8 @@
+#include <algorithm>
 #include <numeric>
 #include <iterator>
-#include <functional>
 #include <cmath>
+#include <stdexcept>
 #include "GeometryUtils.hpp"
 
 double calculateArea(const Polygon& polygon)
