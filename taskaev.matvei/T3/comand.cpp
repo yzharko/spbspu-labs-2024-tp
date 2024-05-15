@@ -71,30 +71,43 @@ namespace taskaev
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     iofmtguard iofmtguard(out);
+    double area = std::inner_product(
+      polygon.begin(),
+      polygon.end(),
+      std::begin(polygon),
+      0.0,
+      [](double acc, double area)
+      {
+        return acc + area;
+      },
+      [](const Polygon& p1, const Polygon& )
+      {
+        return (p1.points.size() % 2 == 0) ? getArea(p1) : 0.0;
+      }
+    );
     out << std::fixed << std::setprecision(1);
-    double totalArea = std::inner_product(
-        polygon.begin(), polygon.end(), std::begin(polygon), 0.0,
-        [](double acc, double area) { return acc + area; },
-        [](const Polygon& p1, const Polygon& ) { return (p1.points.size() % 2 == 0) ? getArea(p1) : 0.0; });
-    out << totalArea << "\n";
+    out << area << "\n";
   }
 
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     iofmtguard iofmtguard(out);
+    double area = std::inner_product(
+      polygon.begin(),
+      polygon.end(),
+      std::begin(polygon),
+      0.0,
+      [](double acc, double area)
+      {
+        return acc + area;
+      },
+      [](const Polygon& p1, const Polygon& )
+      {
+        return (p.points.size() % 2 != 0) ? getArea(p) : 0.0;
+      }
+    );
     out << std::fixed << std::setprecision(1);
-    out << std::accumulate(polygon.begin(), polygon.end(), 0.0, getAreaOdd) << "\n";
-  }
-  double getAreaOdd(double area, const Polygon& polygon)
-  {
-    if (!(polygon.points.size() % 2 == 0))
-    {
-      return area + getArea(polygon);
-    }
-    else
-    {
-      return area;
-    }
+    out << area << "\n";
   }
 
   void AreaMean(const std::vector< Polygon >& polygon, std::ostream& out)

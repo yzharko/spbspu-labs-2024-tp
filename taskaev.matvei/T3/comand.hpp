@@ -13,7 +13,7 @@ namespace taskaev
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out);
   //  double getAreaEven(double area, const Polygon& polygon);
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out);
-  double getAreaOdd(double area, const Polygon& polygon);
+  // double getAreaOdd(double area, const Polygon& polygon);
   void AreaMean(const std::vector< Polygon >& polygon, std::ostream& out);
   double getAreaSum(double area, const Polygon& polygon);
   void AreaNum(const std::vector< Polygon >& polygon, std::ostream& out, size_t type);
