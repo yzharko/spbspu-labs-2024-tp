@@ -14,7 +14,7 @@ void printInvalidCommand(std::ostream& output)
 {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   out << "<INVALID COMMAND>\n";
 }
 
@@ -146,7 +146,7 @@ void rmechoCommand(std::istream& input, std::ostream& output, std::vector< Polyg
 {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   int vertex_count;
   input >> vertex_count;
   Polygon target;
@@ -163,7 +163,7 @@ void permsCommand(std::istream& input, std::ostream& output, const std::vector< 
 {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   int vertex_count;
   input >> vertex_count;
   if (vertex_count < 3)
