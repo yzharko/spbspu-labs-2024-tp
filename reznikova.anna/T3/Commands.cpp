@@ -320,9 +320,11 @@ bool reznikova::checkIfRect(const reznikova::Polygon & polygon)
       Point forthPoint = polygon.points[3];
       if (checkIfParallelogram(polygon))
       {
-        int firstOperand = ((secondPoint.x - firstPoint.x) * (secondPoint.x - firstPoint.x) + (forthPoint.y - firstPoint.y) * (forthPoint.y - firstPoint.y));
-        int secondOperand = ((forthPoint.y - secondPoint.y) * (thirdPoint.y - secondPoint.y) + (thirdPoint.x - forthPoint.x) * (thirdPoint.x - forthPoint.x));
-        return firstOperand == secondOperand;
+        int firstOperandLeft = (secondPoint.x - firstPoint.x) * (secondPoint.x - firstPoint.x);
+        int firstOperandRight = (forthPoint.y - firstPoint.y) * (forthPoint.y - firstPoint.y);
+        int secondOperandLeft = (forthPoint.y - secondPoint.y) * (thirdPoint.y - secondPoint.y);
+        int secondOperandRight = (thirdPoint.x - forthPoint.x) * (thirdPoint.x - forthPoint.x);
+        return (firstOperandLeft + firstOperandRight) == (secondOperandLeft + secondOperandRight);
       }
     }
     return false;
