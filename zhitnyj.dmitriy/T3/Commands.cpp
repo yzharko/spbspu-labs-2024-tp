@@ -1,5 +1,10 @@
 #include <functional>
 #include <stdexcept>
+#include <iostream>
+#include <functional>
+#include <algorithm>
+#include <iterator>
+#include <stdexcept>
 #include <iofmtguard.hpp>
 #include <DelimiterIO.hpp>
 #include "Commands.hpp"
