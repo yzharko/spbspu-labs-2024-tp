@@ -31,6 +31,7 @@ namespace doroshenko
   void cmdRmecho(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
   bool arePolygonsCompatible(Polygon& a, Polygon& b);
   void cmdSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
+  void warning(std::ostream& output, const std::string& mes);
 }
 
 #endif

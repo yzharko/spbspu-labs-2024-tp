@@ -15,6 +15,7 @@ void doroshenko::cmdArea(const std::vector< Polygon >& polygons, std::istream& i
   cmdsArea["EVEN"] = std::bind(doroshenko::evenArea, _1, _2);
   cmdsArea["ODD"] = std::bind(doroshenko::oddArea, _1, _2);
   cmdsArea["MEAN"] = std::bind(doroshenko::meanArea, _1, _2);
+  auto warningInvCom = std::bind(warning, _1, "<INVALID COMMAND>\n");
   std::string areaType;
   input >> areaType;
   try
@@ -28,7 +29,7 @@ void doroshenko::cmdArea(const std::vector< Polygon >& polygons, std::istream& i
       size_t num = std::stoull(areaType);
       if (num < 3)
       {
-        throw std::invalid_argument("<INVALID COMMAND>\n");
+        warningInvCom(output);
       }
       else
       {
@@ -37,7 +38,7 @@ void doroshenko::cmdArea(const std::vector< Polygon >& polygons, std::istream& i
     }
     else
     {
-      throw std::invalid_argument("<INVALID COMMAND>\n");
+      warningInvCom(output);
     }
   }
 }
@@ -72,9 +73,10 @@ void doroshenko::oddArea(const std::vector< Polygon >& polygons, std::ostream& o
 
 void doroshenko::meanArea(const std::vector< Polygon >& polygons, std::ostream& output)
 {
+  auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
   if(polygons.empty())
   {
-    output << "<INVALID COMMAND>\n";
+    warningInvCom(output);
   }
   else
   {
@@ -126,19 +128,20 @@ void doroshenko::cmdMax(const std::vector< Polygon >& polygons, std::istream& in
   std::map< std::string, std::function< void(const std::vector< Polygon >&, std::ostream&) > > cmdsMax;
   cmdsMax["AREA"] = std::bind(doroshenko::findMaxArea, _1, _2);
   cmdsMax["VERTEXES"] = std::bind(doroshenko::findMaxVertexes, _1, _2);
+  auto warningInvCom = std::bind(warning, _1, "<INVALID COMMAND>\n");
   std::string maxType;
   input >> maxType;
   try
   {
     if(polygons.empty())
     {
-      throw std::invalid_argument("<INVALID COMMAND>\n");
+      warningInvCom(output);
     }
     cmdsMax.at(maxType)(polygons, output);
   }
   catch (const std::out_of_range& e)
   {
-    throw std::invalid_argument("<INVALID COMMAND\n");
+    warningInvCom(output);
   }
 }
 
@@ -170,19 +173,20 @@ void doroshenko::cmdMin(const std::vector< Polygon >& polygons, std::istream& in
   std::map< std::string, std::function< void(const std::vector< Polygon >&, std::ostream&) > > cmdsMin;
   cmdsMin["AREA"] = std::bind(doroshenko::findMinArea, _1, _2);
   cmdsMin["VERTEXES"] = std::bind(doroshenko::findMinVertexes, _1, _2);
+  auto warningInvCom = std::bind(warning, _1, "<INVALID COMMAND>\n");
   std::string minType;
   input >> minType;
   try
   {
     if(polygons.empty())
     {
-      throw std::invalid_argument("<INVALID COMMAND>\n");
+      warningInvCom(output);
     }
     cmdsMin.at(minType)(polygons, output);
   }
   catch (const std::out_of_range& e)
   {
-    throw std::invalid_argument("<INVALID COMMAND\n");
+    warningInvCom(output);
   }
 }
 
@@ -214,6 +218,7 @@ void doroshenko::cmdCount(const std::vector< Polygon >& polygons, std::istream& 
   std::map< std::string, std::function< void(const std::vector< Polygon >&, std::ostream&) > > cmdsCount;
   cmdsCount["EVEN"] = std::bind(doroshenko::countEven, _1, _2);
   cmdsCount["ODD"] = std::bind(doroshenko::countOdd, _1, _2);
+  auto warningInvCom = std::bind(warning, _1, "<INVALID COMMAND>\n");
   std::string countType;
   input >> countType;
   try
@@ -227,7 +232,7 @@ void doroshenko::cmdCount(const std::vector< Polygon >& polygons, std::istream& 
       size_t num = std::stoull(countType);
       if (num < 3)
       {
-        throw std::invalid_argument("<INVALID COMMAND>\n");
+        warningInvCom(output);
       }
       else
       {
@@ -355,7 +360,7 @@ bool doroshenko::arePolygonsCompatible(Polygon& a, Polygon& b)
 
 void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
 {
-  Polygon pol;
+  Polygon target;
   input >> target;
   size_t compatibleCount = std::count_if
   (
@@ -364,4 +369,9 @@ void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, 
     [&target](Polygon& polygon) { return arePolygonsCompatible(polygon, target); }
   );
   output << compatibleCount << '\n';
+}
+
+void doroshenko::warning(std::ostream& output, const std::string& mes)
+{
+  output << mes;
 }
