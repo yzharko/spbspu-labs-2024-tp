@@ -3,7 +3,7 @@
 #include <numeric>
 #include <cmath>
 #include <functional>
-#include "ScopeGuard.hpp"
+#include <ScopeGuard.hpp>
 
 double reznikova::getArea(const reznikova::Polygon & polygon)
 {
@@ -31,32 +31,32 @@ size_t reznikova::getNumOfVertexes(const reznikova::Polygon & polygon)
 
 std::vector< reznikova::Polygon > reznikova::chooseOddPolygons(const std::vector< reznikova::Polygon > & polygons)
 {
-  std::vector< Polygon > odd_polygons;
+  std::vector< Polygon > oddPolygons;
   std::copy_if(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(odd_polygons),
+    std::back_inserter(oddPolygons),
     [](const Polygon & polygon)
     {
       return (polygon.points.size() % 2 != 0);
     }
   );
-  return odd_polygons;
+  return oddPolygons;
 }
 
 std::vector< reznikova::Polygon > reznikova::chooseEvenPolygons(const std::vector< reznikova::Polygon > & polygons)
 {
-  std::vector< Polygon > even_polygons;
+  std::vector< Polygon > evenPolygons;
   std::copy_if(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(even_polygons),
+    std::back_inserter(evenPolygons),
     [](const Polygon & polygon)
     {
       return (polygon.points.size() % 2 == 0);
     }
   );
-  return even_polygons;
+  return evenPolygons;
 }
 
 bool reznikova::checkIfSame(size_t num, const reznikova::Polygon & polygon)
@@ -66,45 +66,45 @@ bool reznikova::checkIfSame(size_t num, const reznikova::Polygon & polygon)
 
 std::vector< reznikova::Polygon > reznikova::chooseNumPolygons(const std::vector< reznikova::Polygon > & polygons, size_t num)
 {
-  std::vector< Polygon > num_polygons;
+  std::vector< Polygon > numPolygons;
   using namespace std::placeholders;
   std::copy_if(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(num_polygons),
+    std::back_inserter(numPolygons),
     std::bind(checkIfSame, num, _1)
   );
-  return num_polygons;
+  return numPolygons;
 }
 
 std::vector< double > reznikova::getAllAreas(const std::vector< reznikova::Polygon > & polygons)
 {
-  std::vector< double > all_areas;
+  std::vector< double > allAreas;
   std::transform(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(all_areas),
+    std::back_inserter(allAreas),
     [](const Polygon & polygon)
     {
       return getArea(polygon);
     }
   );
-  return all_areas;
+  return allAreas;
 }
 
 std::vector< size_t > reznikova::getAllVertexes(const std::vector< reznikova::Polygon > & polygons)
 {
-  std::vector< size_t > all_vertexes;
+  std::vector< size_t > allVertexes;
   std::transform(
     polygons.begin(),
     polygons.end(),
-    std::back_inserter(all_vertexes),
+    std::back_inserter(allVertexes),
     [](const Polygon & polygon)
     {
       return getNumOfVertexes(polygon);
     }
   );
-  return all_vertexes;
+  return allVertexes;
 }
 
 double reznikova::getSumArea(const std::vector< reznikova::Polygon > & polygons)
@@ -113,99 +113,99 @@ double reznikova::getSumArea(const std::vector< reznikova::Polygon > & polygons)
   {
     return 0.0;
   }
-  std::vector< double > all_areas = getAllAreas(polygons);
-  return std::accumulate(all_areas.begin(), all_areas.end(), 0.0);
+  std::vector< double > allAreas = getAllAreas(polygons);
+  return std::accumulate(allAreas.begin(), allAreas.end(), 0.0);
 }
 
 void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::string sub_command;
-  is >> sub_command;
+  std::string subCommand;
+  is >> subCommand;
   out << std::fixed << std::setprecision(1);
-  if (sub_command == "ODD")
+  if (subCommand == "ODD")
   {
-    std::vector< Polygon > odd_polygons = chooseOddPolygons(polygons);
-    out << getSumArea(odd_polygons) << "\n";
+    std::vector< Polygon > oddPolygons = chooseOddPolygons(polygons);
+    out << getSumArea(oddPolygons) << "\n";
   }
-  else if (sub_command == "EVEN")
+  else if (subCommand == "EVEN")
   {
-    std::vector< Polygon > even_polygons = chooseEvenPolygons(polygons);
-    out << getSumArea(even_polygons) << "\n";
+    std::vector< Polygon > evenPolygons = chooseEvenPolygons(polygons);
+    out << getSumArea(evenPolygons) << "\n";
   }
-  else if (sub_command == "MEAN")
+  else if (subCommand == "MEAN")
   {
     if (polygons.empty())
     {
-      throw std::logic_error("can't divide by 0");
+      throw std::logic_error("<INVALID COMMAND>");
     }
     out << getSumArea(polygons)/polygons.size() << "\n";
   }
-  else if (!std::isalpha(sub_command[0]) && stoull(sub_command) > 2)
+  else if (!std::isalpha(subCommand[0]) && stoull(subCommand) > 2)
   {
-    std::vector< Polygon > num_polygons = chooseNumPolygons(polygons, size_t(stoull(sub_command)));
-    out << getSumArea(num_polygons) << "\n";
+    std::vector< Polygon > numPolygons = chooseNumPolygons(polygons, size_t(stoull(subCommand)));
+    out << getSumArea(numPolygons) << "\n";
   }
   else
   {
-    throw std::runtime_error("wrong area parameter");
+    throw std::runtime_error("<INVALID COMMAND>");
   }
 }
 
 void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::string sub_command;
-  is >> sub_command;
+  std::string subCommand;
+  is >> subCommand;
   out << std::fixed;
   if (polygons.empty())
   {
-    throw std::logic_error("can't found max of nothing");
+    throw std::logic_error("<INVALID COMMAND>");
   }
-  if (sub_command == "AREA")
+  if (subCommand == "AREA")
   {
-    std::vector< double > all_areas = getAllAreas(polygons);
-    out << std::setprecision(1) << *std::max_element(all_areas.begin(), all_areas.end()) << "\n";
+    std::vector< double > allAreas = getAllAreas(polygons);
+    out << std::setprecision(1) << *std::max_element(allAreas.begin(), allAreas.end()) << "\n";
   }
-  else if (sub_command == "VERTEXES")
+  else if (subCommand == "VERTEXES")
   {
-    std::vector< size_t > all_areas = getAllVertexes(polygons);
-    out << *std::max_element(all_areas.begin(), all_areas.end()) << "\n";
+    std::vector< size_t > allAreas = getAllVertexes(polygons);
+    out << *std::max_element(allAreas.begin(), allAreas.end()) << "\n";
   }
   else
   {
-    throw std::runtime_error("wrong max parameter");
+    throw std::runtime_error("<INVALID COMMAND>");
   }
 }
 
 void reznikova::minCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::string sub_command;
-  is >> sub_command;
+  std::string subCommand;
+  is >> subCommand;
   out << std::fixed;
-  if (sub_command == "AREA")
+  if (subCommand == "AREA")
   {
-    std::vector< double > all_areas = getAllAreas(polygons);
-    out << std::setprecision(1) << *std::min_element(all_areas.begin(), all_areas.end()) << "\n";
+    std::vector< double > allAreas = getAllAreas(polygons);
+    out << std::setprecision(1) << *std::min_element(allAreas.begin(), allAreas.end()) << "\n";
   }
-  else if (sub_command == "VERTEXES")
+  else if (subCommand == "VERTEXES")
   {
-    std::vector< size_t > all_areas = getAllVertexes(polygons);
-    out << *std::min_element(all_areas.begin(), all_areas.end()) << "\n";
+    std::vector< size_t > allAreas = getAllVertexes(polygons);
+    out << *std::min_element(allAreas.begin(), allAreas.end()) << "\n";
   }
   else
   {
-    throw std::runtime_error("wrong max parameter");
+    throw std::runtime_error("<INVALID COMMAND>");
   }
 }
 
 void reznikova::countCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  std::string sub_command;
-  is >> sub_command;
+  std::string subCommand;
+  is >> subCommand;
   out << std::fixed;
-  if (sub_command == "EVEN")
+  if (subCommand == "EVEN")
   {
-    long int num_even_polygons = 0;
-    num_even_polygons = std::count_if(
+    long int numEvenPolygons = 0;
+    numEvenPolygons = std::count_if(
       polygons.begin(),
       polygons.end(),
       [](const Polygon & polygon)
@@ -213,12 +213,12 @@ void reznikova::countCommand(const std::vector< reznikova::Polygon > & polygons,
         return (polygon.points.size() % 2 == 0);
       }
     );
-    out << num_even_polygons << "\n";
+    out << numEvenPolygons << "\n";
   }
-  else if (sub_command == "ODD")
+  else if (subCommand == "ODD")
   {
-    long int num_odd_polygons = 0;
-    num_odd_polygons = std::count_if(
+    long int numOddPolygons = 0;
+    numOddPolygons = std::count_if(
       polygons.begin(),
       polygons.end(),
       [](const Polygon & polygon)
@@ -226,53 +226,53 @@ void reznikova::countCommand(const std::vector< reznikova::Polygon > & polygons,
         return (polygon.points.size() % 2 != 0);
       }
     );
-    out << num_odd_polygons << "\n";
+    out << numOddPolygons << "\n";
   }
-  else if (!std::isalpha(sub_command[0]) && stoull(sub_command) > 2)
+  else if (!std::isalpha(subCommand[0]) && stoull(subCommand) > 2)
   {
     using namespace std::placeholders;
-    long int num_same_vertex_polygons = 0;
-    num_same_vertex_polygons = std::count_if(
+    long int numSameVertexPolygons = 0;
+    numSameVertexPolygons = std::count_if(
       polygons.begin(),
       polygons.end(),
-      std::bind(checkIfSame, size_t(std::stoull(sub_command)), _1)
+      std::bind(checkIfSame, size_t(std::stoull(subCommand)), _1)
     );
-    out << num_same_vertex_polygons << "\n";
+    out << numSameVertexPolygons << "\n";
   }
   else
   {
-    throw std::runtime_error("wrong max parameter");
+    throw std::runtime_error("<INVALID COMMAND>");
   }
 }
 
 bool reznikova::checkIfPointsEqual(const reznikova::Point & point, const reznikova::Polygon & polygon)
 {
-  auto num_of_perms = std::count_if(
+  auto numOfPerms = std::count_if(
     polygon.points.begin(),
     polygon.points.end(),
-    [point](const Point & comp_point)
+    [point](const Point & compPoint)
     {
-      return (comp_point.x == point.x && comp_point.y == point.y) or (comp_point.y == point.x && comp_point.x == point.y);
+      return (compPoint.x == point.x && compPoint.y == point.y) or (compPoint.y == point.x && compPoint.x == point.y);
     }
   );
-  return (num_of_perms >= 1);
+  return (numOfPerms >= 1);
 }
 
-bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const reznikova::Polygon & polygon)
+bool reznikova::checkIfPerms(const reznikova::Polygon & basePolygon, const reznikova::Polygon & polygon)
 {
-  if (base_polygon.points.size() != polygon.points.size())
+  if (basePolygon.points.size() != polygon.points.size())
   {
     return false;
   }
-    auto num_of_perms = std::count_if(
-    base_polygon.points.begin(),
-    base_polygon.points.end(),
-    [polygon](const Point & cmp_point)
+    auto numOfPerms = std::count_if(
+    basePolygon.points.begin(),
+    basePolygon.points.end(),
+    [polygon](const Point & cmpPoint)
     {
-      return checkIfPointsEqual(cmp_point, polygon);
+      return checkIfPointsEqual(cmpPoint, polygon);
     }
   );
-  if (size_t(num_of_perms) == polygon.points.size())
+  if (size_t(numOfPerms) == polygon.points.size())
   {
     return true;
   }
@@ -281,20 +281,20 @@ bool reznikova::checkIfPerms(const reznikova::Polygon & base_polygon, const rezn
 
 void reznikova::permsCommand(const std::vector< reznikova::Polygon > & polygons, std::ostream & out, std::istream & is)
 {
-  Polygon base_polygon;
-  is >> base_polygon;
-  if (base_polygon.points.size() < 3)
+  Polygon basePolygon;
+  is >> basePolygon;
+  if (basePolygon.points.size() < 3)
   {
-    throw std::logic_error("wrong polygon");
+    throw std::logic_error("<INVALID COMMAND>");
   }
   out << std::fixed;
   using namespace std::placeholders;
-  auto num_perms = std::count_if(
+  auto numPerms = std::count_if(
     polygons.begin(),
     polygons.end(),
-    std::bind(checkIfPerms, base_polygon, _1)
+    std::bind(checkIfPerms, basePolygon, _1)
   );
-  out << num_perms << "\n";
+  out << numPerms << "\n";
 }
 
 bool reznikova::checkIfParallelogram(const reznikova::Polygon & polygon)
@@ -314,13 +314,15 @@ bool reznikova::checkIfRect(const reznikova::Polygon & polygon)
 {
     if (polygon.points.size() == 4)
     {
-      Point p1 = polygon.points[0];
-      Point p2 = polygon.points[1];
-      Point p3 = polygon.points[2];
-      Point p4 = polygon.points[3];
+      Point firstPoint = polygon.points[0];
+      Point secondPoint = polygon.points[1];
+      Point thirdPoint = polygon.points[2];
+      Point forthPoint = polygon.points[3];
       if (checkIfParallelogram(polygon))
       {
-        return ((p2.x - p1.x) * (p2.x - p1.x) + (p4.y - p1.y) * (p4.y - p1.y)) == ((p3.y - p2.y) * (p3.y - p2.y) + (p3.x - p4.x) * (p3.x - p4.x));
+        int firstOperand = ((secondPoint.x - firstPoint.x) * (secondPoint.x - firstPoint.x) + (forthPoint.y - firstPoint.y) * (forthPoint.y - firstPoint.y));
+        int secondOperand = ((forthPoint.y - secondPoint.y) * (thirdPoint.y - secondPoint.y) + (thirdPoint.x - forthPoint.x) * (thirdPoint.x - forthPoint.x));
+        return firstOperand == secondOperand;
       }
     }
     return false;
@@ -330,8 +332,8 @@ void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons,
 {
   out << std::fixed;
   using namespace std::placeholders;
-  long int num_rects = 0;
-  num_rects = std::count_if(
+  long int numRects = 0;
+  numRects = std::count_if(
     polygons.begin(),
     polygons.end(),
     [](const Polygon & polygon)
@@ -339,5 +341,10 @@ void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons,
       return checkIfRect(polygon);
     }
   );
-  out << num_rects << "\n";
+  out << numRects << "\n";
+}
+
+void reznikova::getOutputMessage(std::ostream & out, const std::string & message)
+{
+  out << message;
 }

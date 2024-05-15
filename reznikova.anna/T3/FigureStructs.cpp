@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iterator>
 #include <limits>
-#include "Delimeter.hpp"
+#include <Delimeter.hpp>
 
 std::istream & reznikova::operator>>(std::istream & is, reznikova::Point & value)
 {

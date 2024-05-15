@@ -1,9 +1,9 @@
 #include <iostream>
-#include <limits>
 #include <map>
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <limits>
 #include <fstream>
 #include "FigureStructs.hpp"
 #include "Commands.hpp"
@@ -36,9 +36,9 @@ int main(int argc, const char * argv[])
     {
       commands.at(command)(inputData, std::cout, std::cin);
     }
-    catch (const std::exception &)
+    catch (const std::exception & e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      reznikova::getOutputMessage(std::cout, e.what());
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

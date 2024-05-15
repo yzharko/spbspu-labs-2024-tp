@@ -23,6 +23,7 @@ namespace reznikova
   bool checkIfParallelogram(const Polygon & polygon);
   bool checkIfRect(const Polygon & polygon);
   void rectsCommand(const std::vector< Polygon > & polygons, std::ostream & out);
+  void getOutputMessage(std::ostream & out, const std::string & message);
 }
 
 #endif
