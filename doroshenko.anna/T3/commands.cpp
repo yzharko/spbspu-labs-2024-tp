@@ -360,8 +360,14 @@ bool doroshenko::arePolygonsCompatible(Polygon& a, Polygon& b)
 
 void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
 {
+  auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
   Polygon target;
   input >> target;
+  if(!input)
+  {
+    warningInvCom(output);
+    throw std::invalid_argument("");
+  }
   size_t compatibleCount = std::count_if
   (
     polygons.begin(),
