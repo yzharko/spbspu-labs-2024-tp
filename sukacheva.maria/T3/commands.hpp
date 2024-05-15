@@ -5,8 +5,8 @@
 
 namespace sukacheva
 {
-  double calculateTriangleArea(Point p1, Point p2, Point p3);
-  double calculatePolygonArea(std::vector<Point> polygon, size_t n);
+  double calculateTriangleArea(Point pointA, Point pointB, Point pointC);
+  double calculatePolygonArea(std::vector<Point> polygon, size_t counter);
   double summation(const std::vector<Polygon>& polygons);
 
   void oddArea(const std::vector< Polygon >& allPolygons, std::ostream& out);

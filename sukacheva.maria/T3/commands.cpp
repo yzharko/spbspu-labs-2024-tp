@@ -8,57 +8,64 @@
 #include <string>
 #include <cmath>
 
-double sukacheva::calculateTriangleArea(Point p1, Point p2, Point p3)
+double sukacheva::calculateTriangleArea(Point pointA, Point pointB, Point pointC)
 {
-  return 0.5 * abs((p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)));
+  return 0.5 * abs((pointA.x * (pointB.y - pointC.y) + pointB.x * (pointC.y - pointA.y) + pointC.x * (pointA.y - pointB.y)));
 }
 
-double sukacheva::calculatePolygonArea(std::vector<Point> polygon, size_t n)
+double sukacheva::calculatePolygonArea(std::vector<Point> polygon, size_t counter)
 {
-  if (n < 3)
+  if (counter < 3)
   {
     return 0;
   }
   else
   {
-    return calculateTriangleArea(polygon[0], polygon[n - 1], polygon[n - 2]) + calculatePolygonArea(polygon, n - 1);
+    return calculateTriangleArea(polygon[0], polygon[counter - 1], polygon[counter - 2]) + calculatePolygonArea(polygon, counter - 1);
   }
 }
 
 double sukacheva::summation(const std::vector<Polygon>& polygons)
 {
-  std::vector< double > areas(polygons.size());
-  std::transform
-  (
-    polygons.begin(),
-    polygons.end(),
-    areas.begin(),
-    [](const Polygon& applicant)
-    {
-      return calculatePolygonArea(applicant.points, applicant.points.size());
-    }
-  );
-  std::function< double(std::vector< double >::const_iterator, std::vector< double >::const_iterator) > sumRecursive;
-  sumRecursive = [&sumRecursive](std::vector< double >::const_iterator it, std::vector< double >::const_iterator end) -> double
-    {
-      if (it == end)
+  if (polygons.empty())
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
+  else
+  {
+    std::vector< double > areas(polygons.size());
+    std::transform
+    (
+      polygons.begin(),
+      polygons.end(),
+      areas.begin(),
+      [](const Polygon& applicant)
       {
-        return 0;
+        return calculatePolygonArea(applicant.points, applicant.points.size());
       }
-      std::vector<int> result(1);
-      std::transform
-      (
-        it,
-        it + 1,
-        result.begin(),
-        [&sumRecursive, end, it](int val)
+    );
+    std::function< double(std::vector< double >::const_iterator, std::vector< double >::const_iterator) > sumRecursive;
+    sumRecursive = [&sumRecursive](std::vector< double >::const_iterator it, std::vector< double >::const_iterator end) -> double
+      {
+        if (it == end)
         {
-          return val + sumRecursive(it + 1, end);
+          return 0;
         }
-      );
-      return result[0];
-    };
-  return sumRecursive(areas.begin(), areas.end());
+        std::vector<int> result(1);
+        std::transform
+        (
+          it,
+          it + 1,
+          result.begin(),
+          [&sumRecursive, end, it](int val)
+          {
+            return val + sumRecursive(it + 1, end);
+          }
+        );
+        return result[0];
+      };
+    return sumRecursive(areas.begin(), areas.end());
+  }
 }
 
 void sukacheva::oddArea(const std::vector<Polygon>& allPolygons, std::ostream& out)
