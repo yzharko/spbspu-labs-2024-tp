@@ -25,8 +25,7 @@ double calculateArea(const Polygon& polygon)
       return a.x * b.y - b.x * a.y;
     });
 
-  areaComponents.push_back(
-    polygon.points.back().x * polygon.points.front().y - polygon.points.front().x * polygon.points.back().y);
+  areaComponents.push_back(polygon.points.back().x * polygon.points.front().y - polygon.points.front().x * polygon.points.back().y);
 
   double area = std::accumulate(areaComponents.begin(), areaComponents.end(), 0.0);
 
@@ -40,7 +39,7 @@ double calculateAreaEvenOdd(bool even, const std::vector< Polygon >& polygons)
   {
     return (polygon.points.size() % 2 == 0) == even ? calculateArea(polygon) : 0.0;
   });
-  return std::reduce(areas.begin(), areas.end(), 0.0);
+  return std::accumulate(areas.begin(), areas.end(), 0.0);
 }
 
 double calculateMeanArea(const std::vector< Polygon >& polygons)
@@ -53,7 +52,7 @@ double calculateMeanArea(const std::vector< Polygon >& polygons)
   std::vector< double > areas(polygons.size());
   std::transform(polygons.begin(), polygons.end(), areas.begin(), calculateArea);
 
-  double totalArea = std::reduce(areas.begin(), areas.end(), 0.0);
+  double totalArea = std::accumulate(areas.begin(), areas.end(), 0.0);
   return totalArea / polygons.size();
 }
 
@@ -62,10 +61,9 @@ double calculateAreaByVertexCount(int count, const std::vector< Polygon >& polyg
   std::vector< double > areas(polygons.size());
   std::transform(polygons.begin(), polygons.end(), areas.begin(), [count](const Polygon& polygon)
   {
-    return polygon.points.size() == static_cast< std::vector< Point >::size_type >(count) ? calculateArea(polygon)
-                                                                                          : 0.0;
+    return polygon.points.size() == static_cast< std::vector< Point >::size_type >(count) ? calculateArea(polygon) : 0.0;
   });
-  return std::reduce(areas.begin(), areas.end(), 0.0);
+  return std::accumulate(areas.begin(), areas.end(), 0.0);
 }
 
 double calculateMaxArea(const std::vector< Polygon >& polygons)
