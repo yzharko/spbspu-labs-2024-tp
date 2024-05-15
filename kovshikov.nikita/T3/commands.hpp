@@ -5,6 +5,10 @@
 
 namespace kovshikov
 {
+  void getCheck(std::string command,
+                  void(*getFunction)(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out),
+                    const std::vector< Polygon >& allData, std::ostream& out);
+
   void fileIsEmpty(const std::vector< Polygon >& allData);
   bool isDigit(char ch);
   int getCordMethod(const Point& currentPoint,const Point& prevPoint);

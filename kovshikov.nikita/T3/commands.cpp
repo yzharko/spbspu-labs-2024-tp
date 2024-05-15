@@ -42,7 +42,7 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   }
   catch(const std::out_of_range& error)
   {
-    if(std::all_of(command.begin(), command.end(), isDigit) == true)
+   /* if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
       if(num < 3)
@@ -54,7 +54,27 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
     else
     {
       throw;
+    }*/
+    getCheck(command, getAreaVertex, allData, out);
+  }
+}
+
+void kovshikov::getCheck(std::string command,
+                           void(*getFunction)(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out),
+                             const std::vector< Polygon >& allData, std::ostream& out)
+{
+  if(std::all_of(command.begin(), command.end(), isDigit) == true)
+  {
+    unsigned long long num = std::stoll(command);
+    if(num < 3)
+    {
+      throw std::out_of_range("");
     }
+    getFunction(num, allData, out);
+  }
+  else
+  {
+    throw std::out_of_range("");
   }
 }
 

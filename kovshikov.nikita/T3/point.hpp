@@ -1,7 +1,7 @@
 #ifndef POINT_HPP
 #define POINT_HPP
-#include "io_structures.hpp"
-#include "scope_guard.hpp"
+#include <io_structures.hpp>
+#include <scope_guard.hpp>
 
 namespace kovshikov
 {

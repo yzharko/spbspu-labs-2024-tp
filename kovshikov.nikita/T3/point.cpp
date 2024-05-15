@@ -28,4 +28,3 @@ std::ostream& kovshikov::operator<<(std::ostream& out, const Point& value)
   out << value.x << " " << value.y;
   return out;
 }
-

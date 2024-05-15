@@ -1,7 +1,6 @@
-#include <iostream>
 #include <cstddef>
+#include <iostream>
 #include "polygons.hpp"
-
 
 std::istream& kovshikov::operator>>(std::istream& is, Polygon& value)
 {
