@@ -80,9 +80,9 @@ namespace taskaev
       {
         return acc + area;
       },
-      [](const Polygon& p1, const Polygon& )
+      [](const Polygon& p, const Polygon& )
       {
-        return (p1.points.size() % 2 == 0) ? getArea(p1) : 0.0;
+        return (p.points.size() % 2 == 0) ? getArea(p) : 0.0;
       }
     );
     out << std::fixed << std::setprecision(1);
@@ -101,7 +101,7 @@ namespace taskaev
       {
         return acc + area;
       },
-      [](const Polygon& p1, const Polygon& )
+      [](const Polygon& p, const Polygon& )
       {
         return (p.points.size() % 2 != 0) ? getArea(p) : 0.0;
       }
