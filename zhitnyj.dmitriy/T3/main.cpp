@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <functional>
 #include <limits>
 #include <map>
 #include "FileReader.hpp"
