@@ -38,11 +38,6 @@ std::istream& doroshenko::operator>>(std::istream& input, Polygon& dest)
   {
     polygon.points = std::move(points);
   }
-  char next = input.peek();
-  if(next == ' ')
-  {
-    input.setstate(std::ios::failbit);
-  }
   if (input && vertexes == polygon.points.size())
   {
     dest = polygon;

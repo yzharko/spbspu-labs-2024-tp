@@ -366,7 +366,8 @@ void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, 
   auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
   Polygon target;
   input >> target;
-  if(input.fail())
+  char c = input.peek();
+  if(c != '\n' || input.fail())
   {
     warningInvCom(output);
     throw std::invalid_argument("");
