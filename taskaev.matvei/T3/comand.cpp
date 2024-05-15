@@ -71,7 +71,7 @@ namespace taskaev
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     iofmtguard iofmtguard(out);
-    double area = std::transform_reduce(
+    double area = std::transform(
         polygon.begin(), polygon.end(), 0.0, [](double acc, double area) { return acc + area; },
         [](const Polygon& p) { return (p.points.size() % 2 == 0) ? getArea(p) : 0.0; });
     out << std::fixed << std::setprecision(1);
