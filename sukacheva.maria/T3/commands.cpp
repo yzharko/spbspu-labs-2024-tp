@@ -60,8 +60,32 @@ void sukacheva::evenArea(const std::vector<Polygon>& allPolygons, std::ostream& 
       return !(applicant.points.size() % 2);
     }
   );
-  double result = std::accumulate(evenPolygons.begin(), evenPolygons.end(), 0.0, addArea);
-  out << std::fixed << std::setprecision(1) << result << '\n';
+  std::vector<double> areas(evenPolygons.size());
+  std::transform
+  (
+    evenPolygons.begin(),
+    evenPolygons.end(),
+    areas.begin(),
+    [](const Polygon& applicant)
+    {
+      return calculatePolygonArea(applicant.points, applicant.points.size());
+    }
+  );
+  std::vector<double> partialSums(areas.size());
+  partialSums[0] = areas[0];
+  std::transform
+  (
+    areas.begin() + 1,
+    areas.end(),
+    areas.begin(),
+    partialSums.begin(),
+    [](int acc, int val)
+    {
+      return acc + val;
+    }
+  );
+  double sum = partialSums.back();
+  out << std::fixed << std::setprecision(1) << sum << '\n';
 }
 
 void sukacheva::meanArea(const std::vector<Polygon>& allPolygons, std::ostream& out)
@@ -354,16 +378,13 @@ void sukacheva::commandRects(const std::vector<Polygon>& allPolygons, std::ostre
 
 double sukacheva::calculateSideLength(const Point& head, const Point& tail)
 {
-  if (head == tail)
-  {
-    throw std::logic_error("<INVALID COMMAND>\n");
-  }
   return std::sqrt(std::pow(tail.x - head.x, 2) + std::pow(tail.y - head.y, 2));
 }
 
 void sukacheva::getAllSideLengths(const Polygon& poly, std::vector<double>& sideLengths, size_t index)
 {
-  if (index == poly.points.size()) {
+  if (index == poly.points.size())
+  {
     return;
   }
   const Point& currentPoint = poly.points[index];
