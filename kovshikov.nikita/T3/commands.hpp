@@ -1,5 +1,6 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
+#include <cstring>
 #include "polygons.hpp"
 
 namespace kovshikov
@@ -48,6 +49,7 @@ namespace kovshikov
   int getMinCoordinate(const Polygon& polygon, int(*getCoordinate)(const Point& point));
   std::vector< Point > getFrame(const std::vector< Polygon >& allData);
   bool isInframe(const std::vector< Polygon >& allData, const Polygon& polygon);
+  void outputError(std::ostream& out, const std::string& strError);
 }
 
 #endif

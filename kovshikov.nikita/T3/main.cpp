@@ -42,6 +42,8 @@ int main(int argc, char ** argv)
     interaction["INFRAME"] = std::bind(kovshikov::checkInframe, _1, _2, _3);
   }
 
+  std::string strError = "<INVALID COMMAND>";
+  std::function< void(std::ostream&) > invalidCommand = std::bind(outputError, std::placeholders::_1, strError);
   std::string command;
   while (std::cin >> command)
   {
@@ -51,7 +53,7 @@ int main(int argc, char ** argv)
     }
     catch(const std::out_of_range& error)
     {
-      std::cout << "<INVALID COMMAND>" << "\n";
+      invalidCommand(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

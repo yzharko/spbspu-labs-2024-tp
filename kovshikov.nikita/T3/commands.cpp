@@ -448,3 +448,8 @@ void kovshikov::checkInframe(const std::vector< Polygon >& allData, std::istream
     }
   }
 }
+
+void kovshikov::outputError(std::ostream& out, const std::string& strError)
+{
+  out << strError << "\n";
+}
