@@ -29,6 +29,8 @@ namespace doroshenko
   void vertexCount(size_t num, const std::vector< Polygon >& polygons, std::ostream& output);
 
   void cmdRmecho(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
+  bool arePolygonsCompatible(Polygon& a, Polygon& b);
+  void cmdSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output);
 }
 
 #endif

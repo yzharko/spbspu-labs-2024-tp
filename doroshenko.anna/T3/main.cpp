@@ -37,6 +37,7 @@ int main(int argc, char* argv[])
     commands["MIN"] = std::bind(doroshenko::cmdMin, _1, _2, _3);
     commands["COUNT"] = std::bind(doroshenko::cmdCount, _1, _2, _3);
     commands["RMECHO"] = std::bind(doroshenko::cmdRmecho, _1, _2, _3);
+    commands["SAME"] = std::bind(doroshenko::cmdSame, _1, _2, _3);
   }
 
   std::string cmd;

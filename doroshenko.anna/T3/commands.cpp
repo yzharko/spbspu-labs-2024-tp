@@ -274,7 +274,7 @@ void doroshenko::vertexCount(size_t num, const std::vector< Polygon >& polygons,
   output << result << "\n";
 }
 
-void doroshenko::cmdRmecho(std::vector<Polygon>& polygons, std::istream& input, std::ostream& output)
+void doroshenko::cmdRmecho(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
 {
   size_t currentSize = polygons.size();
   if (currentSize == 0)
@@ -304,4 +304,64 @@ void doroshenko::cmdRmecho(std::vector<Polygon>& polygons, std::istream& input, 
   polygons.erase(it, polygons.end());
   size_t removedCount = currentSize - polygons.size();
   output << removedCount << '\n';
+}
+
+bool doroshenko::arePolygonsCompatible(Polygon& a, Polygon& b)
+{
+  if (a.points.size() != b.points.size())
+  {
+    return false;
+  }
+  Polygon sortedA = a;
+  std::transform(sortedA.points.begin(), sortedA.points.end(), a.points.begin(), [](Point& p){
+    Point point;
+    point.x = std::abs(p.x);
+    point.y = std::abs(p.y);
+    return point;
+  });
+  std::sort
+  (
+    sortedA.points.begin(),
+    sortedA.points.end(),
+    [](Point& fP, Point& sP){return fP.x == sP.x ? fP.y < sP.y : fP.x < sP.x;}
+  );
+  Polygon sortedB = b;
+  std::transform(sortedB.points.begin(), sortedB.points.end(), b.points.begin(), [](Point& p){
+    Point point;
+    point.x = std::abs(p.x);
+    point.y = std::abs(p.y);
+    return point;
+  });
+  std::sort
+  (
+    sortedB.points.begin(),
+    sortedB.points.end(),
+    [](Point& fP, Point& sP){return fP.x != sP.x ? fP.x < sP.x : fP.y < sP.y;}
+  );
+  Point diff;
+  diff.x = sortedA.points[0].x - sortedB.points[0].x;
+  diff.y = sortedA.points[0].y - sortedB.points[0].y;
+  return std::equal
+  (
+    sortedA.points.begin(),
+    sortedA.points.end(),
+    sortedB.points.begin(),
+    [diff](Point& fP, Point& sP)
+    {
+      return fP.x - sP.x == diff.x && fP.y - sP.y == diff.y;
+    }
+  );
+}
+
+void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
+{
+  Polygon pol;
+  input >> target;
+  size_t compatibleCount = std::count_if
+  (
+    polygons.begin(),
+    polygons.end(),
+    [&target](Polygon& polygon) { return arePolygonsCompatible(polygon, target); }
+  );
+  output << compatibleCount << '\n';
 }
