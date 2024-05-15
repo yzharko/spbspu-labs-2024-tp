@@ -71,11 +71,12 @@ namespace taskaev
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
     iofmtguard iofmtguard(out);
-    double area = std::transform(
-        polygon.begin(), polygon.end(), 0.0, [](double acc, double area) { return acc + area; },
-        [](const Polygon& p) { return (p.points.size() % 2 == 0) ? getArea(p) : 0.0; });
     out << std::fixed << std::setprecision(1);
-    out << area << "\n";
+    double totalArea = std::inner_product(
+        polygon.begin(), polygon.end(), std::begin(polygon), 0.0,
+        [](double acc, double area) { return acc + area; },
+        [](const Polygon& p) { return (p.points.size() % 2 == 0) ? getArea(p) : 0.0; });
+    out << totalArea << "\n";
   }
 
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out)
