@@ -1,6 +1,6 @@
 #include <istream>
+#include <DelimiterIO.hpp>
 #include "Polygon.hpp"
-#include "DelimiterIO.hpp"
 
 bool operator==(const Polygon& lhs, const Polygon& rhs)
 {
