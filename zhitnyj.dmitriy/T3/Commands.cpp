@@ -5,8 +5,11 @@
 #include "Commands.hpp"
 #include "GeometryUtils.hpp"
 
-void printInvalidCommand(std::ostream& out)
+void printInvalidCommand(std::ostream& output)
 {
+  iofmtguard guard(output);
+  output << std::fixed << std::setprecision(1);
+  
   out << "<INVALID COMMAND>\n";
 }
 
@@ -136,6 +139,9 @@ void countCommand(std::istream& input, std::ostream& output, const std::vector< 
 
 void rmechoCommand(std::istream& input, std::ostream& output, std::vector< Polygon >& polygons)
 {
+  iofmtguard guard(output);
+  output << std::fixed << std::setprecision(1);
+  
   int vertex_count;
   input >> vertex_count;
   Polygon target;
@@ -150,6 +156,9 @@ void rmechoCommand(std::istream& input, std::ostream& output, std::vector< Polyg
 
 void permsCommand(std::istream& input, std::ostream& output, const std::vector< Polygon >& polygons)
 {
+  iofmtguard guard(output);
+  output << std::fixed << std::setprecision(1);
+  
   int vertex_count;
   input >> vertex_count;
   if (vertex_count < 3)
