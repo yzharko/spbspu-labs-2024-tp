@@ -332,30 +332,23 @@ namespace taskaev
       throw std::logic_error("");
     }
     iofmtguard iofmtguard(out);
-    bool flag = false;
-    std::vector< size_t > sequence;
-    for (const Polygon& p : polygon)
+    size_t countMaxSeq = 0;
+    auto help = [&input](const Polygon& p)
     {
-      if (p == input && !flag)
-      {
-        flag = true;
-        sequence.push_back(1);
-      }
-      else if (p == input)
-      {
-        sequence.back() +=1;
-      }
-      else
-      {
-        flag = false;
-      }
+      return p == input;
+    };
+    auto iter = polygon.begin();
+    while(iter != polygon.end())
+    {
+      auto count = std::count_if(iter, polygon.end(), help);
+      countMaxSeq = std::max(countMaxSeq, static_cast< size_t >(count));
+      iter += count;
     }
-    sequence.push_back(0);
-    if (*std::max_element(sequence.begin(), sequence.end()) == 0)
+    if (countMaxSeq == 0)
     {
       throw std::logic_error("");
     }
-    out << *std::max_element(sequence.begin(), sequence.end()) << "\n";
+    out << countMaxSeq << "\n";
   }
   void SameComand(const std::vector< Polygon >& polygon, std::istream& in, std::ostream& out)
   {
