@@ -42,19 +42,6 @@ void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is,
   }
   catch(const std::out_of_range& error)
   {
-   /* if(std::all_of(command.begin(), command.end(), isDigit) == true)
-    {
-      unsigned long long num = std::stoll(command);
-      if(num < 3)
-      {
-        throw;
-      }
-      getAreaVertex(num, allData, out);
-    }
-    else
-    {
-      throw;
-    }*/
     getCheck(command, getAreaVertex, allData, out);
   }
 }
@@ -291,19 +278,7 @@ void kovshikov::count(const std::vector< Polygon >& allData, std::istream& is, s
   }
   catch(const std::out_of_range& error)
   {
-    if(std::all_of(command.begin(), command.end(), isDigit) == true)
-    {
-      unsigned long long num = std::stoll(command);
-      if(num < 3)
-      {
-        throw;
-      }
-      countVertexes(num, allData, out);
-    }
-    else
-    {
-      throw;
-    }
+    getCheck(command, countVertexes, allData, out);
   }
 }
 
