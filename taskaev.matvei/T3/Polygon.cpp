@@ -3,7 +3,6 @@
 #include <delimeter.hpp>
 #include "Polygon.hpp"
 
-
 namespace taskaev
 {
   std::istream& operator>>(std::istream& in, Point& point)
