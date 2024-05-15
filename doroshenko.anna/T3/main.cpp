@@ -39,6 +39,7 @@ int main(int argc, char* argv[])
     commands["RMECHO"] = std::bind(doroshenko::cmdRmecho, _1, _2, _3);
     commands["SAME"] = std::bind(doroshenko::cmdSame, _1, _2, _3);
   }
+  auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
 
   std::string cmd;
   while (std::cin >> cmd)
@@ -54,6 +55,7 @@ int main(int argc, char* argv[])
     }
     catch(const std::out_of_range& e)
     {
+      warningInvCom(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
