@@ -4,17 +4,21 @@
 #include <iosfwd>
 
 namespace anikanov {
-    struct Point {
-        int x;
-        int y;
+  struct Point {
+    int x;
+    int y;
 
-        Point() : x(0), y(0) {}
-        Point(int x, int y): x(x), y(y) {}
-        Point &operator=(const Point &point);
-        double operator-(const Point &point) const;
-    };
+    Point() : x(0), y(0)
+    {
+    }
+    Point(int x, int y) : x(x), y(y)
+    {
+    }
+    Point &operator=(const Point &point);
+    double operator-(const Point &point) const;
+  };
 
-    std::istream &operator >>(std::istream & in, Point& dest);
+  std::istream &operator>>(std::istream &in, Point &dest);
 }
 
 #endif
