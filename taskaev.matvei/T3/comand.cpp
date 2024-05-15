@@ -70,7 +70,7 @@ namespace taskaev
 
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    double area = std::count_if(
+    double area = std::accumulate(
       polygon.begin(),
       polygon.end(),
       0.0,
@@ -408,5 +408,11 @@ namespace taskaev
   Point delta(const Point& point, int X, int Y)
   {
     return {point.x_ - X, point.y_ - Y};
+  }
+
+  void invalidMessage(std::ostream& out, const std::string& text)
+  {
+    iofmtguard iofmtguard(out);
+    out << text;
   }
 }

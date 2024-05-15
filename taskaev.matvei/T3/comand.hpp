@@ -42,5 +42,7 @@ namespace taskaev
   bool PointPolygon(const Point& left, const Point& right);
   Polygon movePolygon(const Polygon& polygon);
   Point delta(const Point& point, int X, int Y);
+
+  void invalidMessage(std::ostream& out, const std::string& text);
 }
 #endif
