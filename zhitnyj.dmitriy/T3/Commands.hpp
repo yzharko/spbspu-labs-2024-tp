@@ -5,7 +5,7 @@
 #include <string>
 #include "Polygon.hpp"
 
-void printInvalidCommand(std::ostream& out);
+void printInvalidCommand(std::ostream& output);
 void areaCommand(std::istream& input, std::ostream& output, const std::vector< Polygon >& polygons);
 void maxCommand(std::istream& input, std::ostream& output, const std::vector< Polygon >& polygons);
 void minCommand(std::istream& input, std::ostream& output, const std::vector< Polygon >& polygons);
