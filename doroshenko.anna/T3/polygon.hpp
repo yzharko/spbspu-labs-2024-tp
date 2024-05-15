@@ -2,7 +2,7 @@
 #define POLYGON_HPP
 
 #include <vector>
-#include <iostream>
+#include <iosfwd>
 
 namespace doroshenko
 {
