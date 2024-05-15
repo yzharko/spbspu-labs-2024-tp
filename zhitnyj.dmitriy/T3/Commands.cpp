@@ -15,7 +15,7 @@ void printInvalidCommand(std::ostream& output)
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
 
-  out << "<INVALID COMMAND>\n";
+  output << "<INVALID COMMAND>\n";
 }
 
 void areaCommand(std::istream& input, std::ostream& output, const std::vector< Polygon >& polygons)
