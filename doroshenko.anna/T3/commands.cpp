@@ -147,10 +147,18 @@ void doroshenko::cmdMax(const std::vector< Polygon >& polygons, std::istream& in
 
 void doroshenko::findMaxArea(const std::vector< Polygon >& polygons, std::ostream& output)
 {
-  std::vector< double > areasOfPolygons;
-  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areasOfPolygons), calculatePolygonArea);
-  std::sort(areasOfPolygons.begin(), areasOfPolygons.end());
-  output << std::fixed << std::setprecision(1) << areasOfPolygons[areasOfPolygons.size() - 1] << "\n";
+  auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
+  if(polygons.empty())
+  {
+    warningInvCom(output);
+  }
+  else
+  {
+    std::vector< double > areasOfPolygons;
+    std::transform(polygons.begin(), polygons.end(), std::back_inserter(areasOfPolygons), calculatePolygonArea);
+    std::sort(areasOfPolygons.begin(), areasOfPolygons.end());
+    output << std::fixed << std::setprecision(1) << areasOfPolygons[areasOfPolygons.size() - 1] << "\n";
+  }
 }
 
 void doroshenko::findMaxVertexes(const std::vector< Polygon >& polygons, std::ostream& output)
@@ -363,18 +371,22 @@ void doroshenko::cmdSame(std::vector< Polygon >& polygons, std::istream& input, 
   auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
   Polygon target;
   input >> target;
-  if(!input)
+  if(input.fail())
   {
+    output << "oyyyy";
     warningInvCom(output);
     throw std::invalid_argument("");
   }
-  size_t compatibleCount = std::count_if
-  (
-    polygons.begin(),
-    polygons.end(),
-    [&target](Polygon& polygon) { return arePolygonsCompatible(polygon, target); }
-  );
-  output << compatibleCount << '\n';
+  else
+  {
+    size_t compatibleCount = std::count_if
+    (
+      polygons.begin(),
+      polygons.end(),
+      [&target](Polygon& polygon) { return arePolygonsCompatible(polygon, target); }
+    );
+    output << compatibleCount << '\n';
+  }
 }
 
 void doroshenko::warning(std::ostream& output, const std::string& mes)
