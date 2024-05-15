@@ -61,5 +61,5 @@ bool doroshenko::Polygon::operator==(const Polygon& other) const
     return false;
   }
   return std::equal(other.points.begin(), other.points.end(),
-                        points.begin(), points.end());
+         points.begin(), points.end());
 }
