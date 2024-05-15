@@ -70,14 +70,9 @@ namespace taskaev
 
   void AreaEven(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    double area = std::accumulate(
-      polygon.begin(),
-      polygon.end(),
-      0.0,
-      getAreaEven
-    );
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << "\n";
+    out << std::fixed << std::setprecision(1);
+    out << std::accumulate(polygon.begin(), polygon.end(), 0.0, getAreaEven) << "\n";
   }
   double getAreaEven(double area, const Polygon& polygon)
   {
@@ -93,14 +88,9 @@ namespace taskaev
 
   void AreaOdd(const std::vector< Polygon >& polygon, std::ostream& out)
   {
-    double area = std::accumulate(
-      polygon.begin(),
-      polygon.end(),
-      0.0,
-      getAreaOdd
-    );
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << "\n";
+    out << std::fixed << std::setprecision(1);
+    out << std::accumulate(polygon.begin(), polygon.end(), 0.0, getAreaOdd) << "\n";
   }
   double getAreaOdd(double area, const Polygon& polygon)
   {
@@ -120,18 +110,9 @@ namespace taskaev
     {
       throw std::logic_error("");
     }
-
-    double area = std::accumulate(
-      polygon.begin(),
-      polygon.end(),
-      0.0,
-      getAreaSum
-    );
-
-    double meanArea = area / static_cast< double >(polygon.size());
-
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << meanArea << "\n";
+    out << std::fixed << std::setprecision(1);
+    out << std::accumulate(polygon.begin(),polygon.end(), 0.0, getAreaSum) / static_cast< double >(polygon.size()) << "\n";
   }
   double getAreaSum(double area, const Polygon& polygon)
   {
@@ -144,20 +125,11 @@ namespace taskaev
     {
       throw std::logic_error("");
     }
-    auto types = std::bind(
-      getAreaNum,
-      std::placeholders::_1,
-      std::placeholders::_2,
-      type
-    );
-    double area = std::accumulate(
-      polygon.begin(),
-      polygon.end(),
-      0.0,
-      types
-    );
+    using namespace std::placeholders;
+    auto types = std::bind(getAreaNum, _1, _2, type);
     iofmtguard iofmtguard(out);
-    out << std::fixed << std::setprecision(1) << area << "\n";
+    out << std::fixed << std::setprecision(1);
+    out << std::accumulate(polygon.begin(), polygon.end(), 0.0, types) << "\n";
   }
   double getAreaNum(double area, const Polygon& polygon, size_t type)
   {
