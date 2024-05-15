@@ -6,6 +6,7 @@
 #include <limits>
 #include "struct.hpp"
 #include "commands.hpp"
+#include "ErrorMessage.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::exception& e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      ErrorMessage(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
