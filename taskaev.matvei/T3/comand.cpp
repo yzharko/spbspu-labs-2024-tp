@@ -75,7 +75,7 @@ namespace taskaev
     double totalArea = std::inner_product(
         polygon.begin(), polygon.end(), std::begin(polygon), 0.0,
         [](double acc, double area) { return acc + area; },
-        [](const Polygon& p) { return (p.points.size() % 2 == 0) ? getArea(p) : 0.0; });
+        [](const Polygon& p1, const Polygon& p2) { return (p1.points.size() % 2 == 0) ? getArea(p1) : 0.0; });
     out << totalArea << "\n";
   }
 
