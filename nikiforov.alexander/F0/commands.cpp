@@ -23,7 +23,7 @@ void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istrea
   {
     throw std::out_of_range("");
   }
-  
+
   input.close();
 }
 
@@ -61,7 +61,6 @@ void nikiforov::deleteDictionary(mapDictionaries_t& mapDictionaries, std::istrea
   {
     out << " The dictionary does not exist, or it has already been deleted\n";
   }
-
 }
 
 void nikiforov::printNamesDictionaries(const mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
@@ -119,25 +118,23 @@ void nikiforov::unite(mapDictionaries_t& mapDictionaries, std::istream& in, std:
     }
     else
     {
-      out << " Error: Dictionary merging '" << name1 << "' and '" << name2 << "' to the dictionary '" << newname <<"'\n";
+      out << " Error: Dictionary merging '" << name1 << "' and '" << name2 << "' to the dictionary '" << newname << "'\n";
     }
   }
   else
   {
     out << " Error: Dictionary merging '" << name1 << "' and '" << name2 << "' to the dictionary '" << newname << "'\n";
   }
-  
 }
 
 void nikiforov::rename(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
 {
   std::string name = "";
   std::string newname = "";
-  
+
   in >> name >> newname;
 
   auto nameDictionary = mapDictionaries.find(name);
-  
   if (nameDictionary != mapDictionaries.end())
   {
     auto newnameDictionary = mapDictionaries.find(newname);
@@ -182,4 +179,81 @@ void nikiforov::clear(mapDictionaries_t& mapDictionaries, std::istream& in, std:
   {
     out << " Error: One or both of the dictionaries do not exist\n";
   }
+}
+void nikiforov::ActionsOnTheDictionary::select(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string nameDictionary;
+  in >> nameDictionary;
+  auto SelectedDictionary = mapDictionaries.find(nameDictionary);
+
+  if (SelectedDictionary != mapDictionaries.end())
+  {
+    nameSelectedDictionary = nameDictionary;
+    out << " The dictionary " << nameSelectedDictionary << " has been successfully selected\n";
+  }
+  else
+  {
+    out << " Error: Dictionary with the name " << nameDictionary << " does not exist\n";
+  }
+}
+
+void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  if (isSelectedDictionary())
+  {
+    auto SelectedDictionary = mapDictionaries.find(nameSelectedDictionary);
+    std::multimap<size_t, std::string> invertedDictionary = nikiforov::invertedMap(SelectedDictionary->second);
+
+    std::string option;
+    if (in.get() != '\n' && in >> option)
+    {
+      if (option == "most")
+      {
+        size_t numOfTheMostFrequent = 0;
+        in >> numOfTheMostFrequent;
+        out << " The " << numOfTheMostFrequent << " most common words\n";
+
+        size_t count = 0;
+        for (auto it = invertedDictionary.rbegin(); it != invertedDictionary.rend(); ++it) {
+          if (numOfTheMostFrequent != count++)
+          {
+            out << count << ". " << it->second << " " << it->first << "\n";
+          }
+          else
+          {
+            break;
+          }
+        }
+      }
+      else if (option == "count")
+      {
+        size_t countWords = 0;
+        for (auto word : invertedDictionary)
+        {
+          countWords++;
+        }
+        out << " The dictionary " << nameSelectedDictionary << " contains " << countWords << " words\n";
+      }
+      else
+      {
+        out << " Errorfdafsdfsfs\n";
+      }
+    }
+    else
+    {
+      out << " The contents of the dictionary " << nameSelectedDictionary << "\n";
+      for (auto it = invertedDictionary.rbegin(); it != invertedDictionary.rend(); ++it) {
+        out << it->second << " " << it->first << "\n";
+      }
+    }
+  }
+  else
+  {
+    out << " Error\n";
+  }
+}
+
+bool nikiforov::ActionsOnTheDictionary::isSelectedDictionary()
+{
+  return nameSelectedDictionary.empty() ? false : true;
 }

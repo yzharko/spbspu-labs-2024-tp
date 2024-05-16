@@ -2,6 +2,9 @@
 #define COMMANDS_HPP
 #include <iomanip>
 #include <map>
+#include <numeric>
+#include <algorithm>
+#include <functional>
 
 using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
@@ -23,6 +26,43 @@ namespace nikiforov
   void rename(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
   void clear(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+
+  class ActionsOnTheDictionary
+  {
+  public:
+    ActionsOnTheDictionary() : nameSelectedDictionary("") {};
+
+    void select(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+    void print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+
+    bool isSelectedDictionary();
+
+  private:
+    std::string nameSelectedDictionary;
+  };
+
+  template<typename A, typename B>
+  std::pair<B, A> invertedPair(const std::pair<A, B>& p);
+
+  template<typename A, typename B>
+  std::multimap<B, A> invertedMap(const std::map<A, B>& dictionary);
+}
+
+template<typename A, typename B>
+std::pair<B, A> nikiforov::invertedPair(const std::pair<A, B>& p)
+{
+  return std::pair<B, A>(p.second, p.first);
+}
+
+template<typename A, typename B>
+std::multimap<B, A> nikiforov::invertedMap(const std::map<A, B>& dictionary)
+{
+  std::multimap<B, A> invertedDictionary;
+  std::transform(dictionary.begin(), dictionary.end(),
+    std::inserter(invertedDictionary, invertedDictionary.begin()),
+    invertedPair<A, B>
+  );
+  return invertedDictionary;
 }
 
 #endif

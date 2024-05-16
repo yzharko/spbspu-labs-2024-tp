@@ -5,19 +5,26 @@
 
 int main(int argc, char* argv[])
 {
-  std::map< std::string, std::map< std::string, size_t > > mapDictionaries;
+  using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
-  using namespace std::placeholders;
-  std::map< std::string, std::function < void(std::map< std::string, std::map< std::string, size_t > >& , std::istream&, std::ostream&) > > command;
+  mapDictionaries_t mapDictionaries;
+  nikiforov::ActionsOnTheDictionary A;
+
+  std::map< std::string, std::function < void(mapDictionaries_t&, std::istream&, std::ostream&) > > command;
   {
     command["help"] = std::bind(nikiforov::printCommands);
-    command["create"] = nikiforov::createDictionary, mapDictionaries, _1, _2;
-    command["delete"] = nikiforov::deleteDictionary, mapDictionaries, _1, _2;
-    command["list"] = nikiforov::printNamesDictionaries, mapDictionaries, _1, _2;
-    command["add"] = nikiforov::add, mapDictionaries, _1, _2;
-    command["unite"] = nikiforov::unite, mapDictionaries, _1, _2;
-    command["rename"] = nikiforov::rename, mapDictionaries, _1, _2;
-    command["clear"] = nikiforov::clear, mapDictionaries, _1, _2;
+    command["create"] = nikiforov::createDictionary;
+    command["delete"] = nikiforov::deleteDictionary;
+    command["list"] = nikiforov::printNamesDictionaries;
+    command["add"] = nikiforov::add;
+    command["unite"] = nikiforov::unite;
+    command["rename"] = nikiforov::rename;
+    command["clear"] = nikiforov::clear;
+
+    using namespace nikiforov;
+    using namespace std::placeholders;
+    command["select"] = std::bind(&ActionsOnTheDictionary::select, &A, _1, _2, _3);
+    command["print"] = std::bind(&ActionsOnTheDictionary::print, &A, _1, _2, _3);
   }
 
   std::string cmd = "";
