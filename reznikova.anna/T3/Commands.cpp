@@ -136,7 +136,7 @@ void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, 
   {
     if (polygons.empty())
     {
-      throw std::logic_error("<INVALID COMMAND>");
+      throw std::exception();
     }
     out << getSumArea(polygons)/polygons.size() << "\n";
   }
@@ -147,7 +147,7 @@ void reznikova::areaCommand(const std::vector< reznikova::Polygon > & polygons, 
   }
   else
   {
-    throw std::runtime_error("<INVALID COMMAND>");
+    throw std::exception();
   }
 }
 
@@ -158,7 +158,7 @@ void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, s
   out << std::fixed;
   if (polygons.empty())
   {
-    throw std::logic_error("<INVALID COMMAND>");
+    throw std::exception();
   }
   if (subCommand == "AREA")
   {
@@ -172,7 +172,7 @@ void reznikova::maxCommand(const std::vector< reznikova::Polygon > & polygons, s
   }
   else
   {
-    throw std::runtime_error("<INVALID COMMAND>");
+    throw std::exception();
   }
 }
 
@@ -193,7 +193,7 @@ void reznikova::minCommand(const std::vector< reznikova::Polygon > & polygons, s
   }
   else
   {
-    throw std::runtime_error("<INVALID COMMAND>");
+    throw std::exception();
   }
 }
 
@@ -241,7 +241,7 @@ void reznikova::countCommand(const std::vector< reznikova::Polygon > & polygons,
   }
   else
   {
-    throw std::runtime_error("<INVALID COMMAND>");
+    throw std::exception();
   }
 }
 
@@ -285,7 +285,7 @@ void reznikova::permsCommand(const std::vector< reznikova::Polygon > & polygons,
   is >> basePolygon;
   if (basePolygon.points.size() < 3)
   {
-    throw std::logic_error("<INVALID COMMAND>");
+    throw std::exception();
   }
   out << std::fixed;
   using namespace std::placeholders;

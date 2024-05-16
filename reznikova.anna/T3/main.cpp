@@ -38,7 +38,7 @@ int main(int argc, const char * argv[])
     }
     catch (const std::exception & e)
     {
-      reznikova::getOutputMessage(std::cout, e.what());
+      reznikova::getOutputMessage(std::cout, "<INVALID COMMAND>");
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
