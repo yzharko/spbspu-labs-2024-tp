@@ -13,7 +13,7 @@ namespace kaseev {
 
   std::istream & operator>>(std::istream& in, DataStruct& data);
   std::ostream& operator<<(std::ostream& out, const DataStruct& data);
-  bool operator<(const DataStruct& lhs, const DataStruct& rhs);
+  bool operator<(const DataStruct& first, const DataStruct& second);
   std::istream & operator>>(std::istream & in, DblLit && data);
   std::istream & operator>>(std::istream & in, UllOct && data);
   std::istream& operator>>(std::istream& in, String && dest);
