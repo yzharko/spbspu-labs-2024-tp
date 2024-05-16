@@ -11,25 +11,25 @@ std::istream& kaseev::operator>>(std::istream& in, DataStruct& data)
   }
   DataStruct keeper;
   {
-    in >> delimimitr{ '(' };
+    in >> delimimitr{'('};
     std::string KeyNum;
     for (size_t i = 0; i < 3 && in; ++i)
     {
-      in >> KeyNum;
+      in >> delimimitr{':'} >> KeyNum;
       if (KeyNum == "key1")
       {
-        in >> DblLit{ keeper.key1 } >> delimimitr{ 'd' };
+        in >> DblLit{keeper.key1} >> delimimitr{'d'};
       }
       else if (KeyNum == "key2")
       {
-        in >> UllOct{ keeper.key2 } >> delimimitr{ ':' };
+        in >> UllOct{keeper.key2};
       }
       else if (KeyNum == "key3")
       {
-        in >> String{ keeper.key3 } >> delimimitr{ ':' };
+        in >> String{keeper.key3};
       }
     }
-    in >> delimimitr{ ':' } >> delimimitr{ ')' };
+    in >> delimimitr{':'} >> delimimitr{')'};
   }
   if (in)
   {
