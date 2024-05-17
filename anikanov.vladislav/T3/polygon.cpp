@@ -28,6 +28,9 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
   dest.points.clear();
 
   size_t size;
+  if (in.eof()) {
+    return in;
+  }
   in >> size;
   if (in.fail()) {
     in.clear();
@@ -44,4 +47,8 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
   }
 
   return in;
+}
+double anikanov::Polygon::getArea() const
+{
+  return 0;
 }

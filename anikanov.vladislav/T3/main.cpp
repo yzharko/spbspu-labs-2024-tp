@@ -4,6 +4,7 @@
 #include <limits>
 
 #include "polygon.hpp"
+#include "mainExtensions.hpp"
 
 int main(int argc, char **argv)
 {
@@ -27,6 +28,7 @@ int main(int argc, char **argv)
     polygons.push_back(pol);
     std::cout << polygons[polygons.size() - 1].getSize() << '\n';
   }
+
 
   return 0;
 }
