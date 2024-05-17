@@ -136,7 +136,7 @@ void gorbunova::cmdInframe(const std::vector< Polygon > &polygons, std::ostream 
 {
   Polygon queryPolygon;
   auto outInvalid = std::bind(printMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
-  if(!(is >> queryPolygon) || queryPolygon.points.size() != 4)
+  if (!(is >> queryPolygon) || queryPolygon.points.size() != 4)
   {
     outInvalid(out);
     is.clear();
@@ -152,6 +152,7 @@ void gorbunova::cmdInframe(const std::vector< Polygon > &polygons, std::ostream 
     bool isInFrame = std::all_of(queryPolygon.points.begin(), queryPolygon.points.end(), [&](const Point &point)
       { return pointInFrame(point, topLeft, bottomRight); });
     out << (isInFrame ? "<TRUE>" : "<FALSE>") << '\n';
+  }
 }
 
 void gorbunova::printMessage(std::ostream &out, const std::string &message)
