@@ -4,8 +4,9 @@
 #include "polygon.hpp"
 
 using polygonArr = std::vector< anikanov::Polygon >;
+using funcShema = std::function< bool(const anikanov::Polygon &) >;
 
-std::vector< double > getAreas(const polygonArr &polygons)
+std::vector< double > anikanov::getAreas(const polygonArr &polygons)
 {
   std::vector< double > areas;
   for (const auto &polygon: polygons) {
@@ -14,7 +15,7 @@ std::vector< double > getAreas(const polygonArr &polygons)
   return areas;
 }
 
-std::vector< double > getAreasIf(const polygonArr &polygons, bool (*func)(const anikanov::Polygon &))
+std::vector< double > anikanov::getAreasIf(const polygonArr &polygons, funcShema func)
 {
   std::vector< double > areas;
   for (const auto &polygon: polygons) {
@@ -25,9 +26,9 @@ std::vector< double > getAreasIf(const polygonArr &polygons, bool (*func)(const 
   return areas;
 }
 
-std::vector< double > getVertexes(const polygonArr &polygons)
+std::vector< size_t > anikanov::getVertexes(const polygonArr &polygons)
 {
-  std::vector< double > vertexes;
+  std::vector< size_t > vertexes;
   for (const auto &polygon: polygons) {
     vertexes.push_back(polygon.getSize());
   }

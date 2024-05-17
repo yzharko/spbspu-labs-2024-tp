@@ -50,5 +50,5 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
 }
 double anikanov::Polygon::getArea() const
 {
-  return 0;
+  return 1;
 }
