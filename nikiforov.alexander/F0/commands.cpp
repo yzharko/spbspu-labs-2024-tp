@@ -206,7 +206,7 @@ void nikiforov::save(const mapDictionaries_t& mapDictionaries, std::istream& in,
     }
     else
     {
-      out << "The data was not written to the folder "<< nameMkdir << "\n";
+      out << "The data was not written to the folder " << nameMkdir << "\n";
     }
   }
 }
@@ -309,7 +309,7 @@ void nikiforov::ActionsOnTheDictionary::find(mapDictionaries_t& mapDictionaries,
 
     std::string enteredWord = "";
     in >> enteredWord;
-    
+
     auto word = SelectedDictionary->second.find(enteredWord);
     if (word != SelectedDictionary->second.end())
     {
