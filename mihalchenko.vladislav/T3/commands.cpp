@@ -121,7 +121,7 @@ void mihalchenko::printPerms(const std::vector< Polygon > &polygons,
   }
   else
   {
-    printErrorMessage("<INVALID COMMAND>", out);
+    printErrorMessage(out);
   }
 }
 
@@ -132,8 +132,8 @@ void mihalchenko::printCountRightShapes(const std::vector< Polygon > &polygons, 
   out << std::count_if(polygons.begin(), polygons.end(), isRightPolygon) + 1 << '\n';
 }
 
-std::ostream &mihalchenko::printErrorMessage(const std::string &msg, std::ostream &out)
+std::ostream &mihalchenko::printErrorMessage(std::ostream &out)
 {
-  out << msg << '\n';
+  out << "<INVALID COMMAND>" << '\n';
   return out;
 }

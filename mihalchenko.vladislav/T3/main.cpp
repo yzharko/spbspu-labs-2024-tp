@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     }
     catch (const std::exception &)
     {
-      printErrorMessage("<INVALID COMMAND>", std::cout);
+      printErrorMessage(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
