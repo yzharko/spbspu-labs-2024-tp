@@ -135,15 +135,23 @@ void gorbunova::cmdPerms(const std::vector< Polygon > &polygons, std::ostream &o
 void gorbunova::cmdInframe(const std::vector< Polygon > &polygons, std::ostream &out, std::istream &is)
 {
   Polygon queryPolygon;
-  is >> queryPolygon;
-  Point topLeft = {std::numeric_limits< int >::max(), std::numeric_limits< int >::min()};
-  Point bottomRight = {std::numeric_limits< int >::min(), std::numeric_limits< int >::max()};
-  std::for_each(polygons.begin(), polygons.end(), [&](const Polygon &polygon)
-    { std::for_each(polygon.points.begin(), polygon.points.end(), [&](const Point &point)
-      { updateFrame(point, topLeft, bottomRight); }); });
-  bool isInFrame = std::all_of(queryPolygon.points.begin(), queryPolygon.points.end(), [&](const Point &point)
-    { return pointInFrame(point, topLeft, bottomRight); });
-  out << (isInFrame ? "<TRUE>" : "<FALSE>") << '\n';
+  auto outInvalid = std::bind(printMessage, std::placeholders::_1, "<INVALID COMMAND>\n");
+  if(!(is >> queryPolygon) || queryPolygon.points.size() != 4)
+  {
+    outInvalid(out);
+    is.clear();
+    is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+  }
+  else
+  {
+    Point topLeft = {std::numeric_limits< int >::max(), std::numeric_limits< int >::min()};
+    Point bottomRight = {std::numeric_limits< int >::min(), std::numeric_limits< int >::max()};
+    std::for_each(polygons.begin(), polygons.end(), [&](const Polygon &polygon)
+      { std::for_each(polygon.points.begin(), polygon.points.end(), [&](const Point &point)
+        { updateFrame(point, topLeft, bottomRight); }); });
+    bool isInFrame = std::all_of(queryPolygon.points.begin(), queryPolygon.points.end(), [&](const Point &point)
+      { return pointInFrame(point, topLeft, bottomRight); });
+    out << (isInFrame ? "<TRUE>" : "<FALSE>") << '\n';
 }
 
 void gorbunova::printMessage(std::ostream &out, const std::string &message)
