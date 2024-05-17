@@ -33,10 +33,7 @@ double sukacheva::summation(const std::vector<Polygon>& polygons)
     polygons.begin(),
     polygons.end(),
     areas.begin(),
-    [](const Polygon& applicant)
-    {
-      return calculatePolygonArea(applicant.points, applicant.points.size());
-    }
+    [](const Polygon& applicant) { return calculatePolygonArea(applicant.points, applicant.points.size()); }
   );
   std::function< double(std::vector< double >::const_iterator, std::vector< double >::const_iterator) > sumRecursive;
   sumRecursive = [&sumRecursive](std::vector< double >::const_iterator it, std::vector< double >::const_iterator end) -> double
@@ -45,16 +42,13 @@ double sukacheva::summation(const std::vector<Polygon>& polygons)
       {
         return 0;
       }
-      std::vector<int> result(1);
+      std::vector< int > result(1);
       std::transform
       (
         it,
         it + 1,
         result.begin(),
-        [&sumRecursive, end, it](int val)
-        {
-          return val + sumRecursive(it + 1, end);
-        }
+        [&sumRecursive, end, it](int val) { return val + sumRecursive(it + 1, end); }
       );
       return result[0];
     };
@@ -69,10 +63,7 @@ void sukacheva::oddArea(const std::vector<Polygon>& allPolygons, std::ostream& o
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(oddPolygons),
-    [](const Polygon& applicant)
-    {
-      return (applicant.points.size() % 2);
-    }
+    [](const Polygon& applicant) { return (applicant.points.size() % 2); }
   );
   out << std::fixed << std::setprecision(1) << summation(oddPolygons) << '\n';
 }
@@ -85,10 +76,7 @@ void sukacheva::evenArea(const std::vector<Polygon>& allPolygons, std::ostream& 
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(evenPolygons),
-    [](const Polygon& applicant)
-    {
-      return !(applicant.points.size() % 2);
-    }
+    [](const Polygon& applicant) { return !(applicant.points.size() % 2); }
   );
   out << std::fixed << std::setprecision(1) << summation(evenPolygons) << '\n';
 }
@@ -113,10 +101,7 @@ void sukacheva::verticesArea(const std::vector<Polygon>& allPolygons, std::ostre
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(verticesPolygons),
-    [vertices](const Polygon& applicant)
-    {
-      return (applicant.points.size() == vertices);
-    }
+    [vertices](const Polygon& applicant) { return (applicant.points.size() == vertices); }
   );
   out << std::fixed << std::setprecision(1) << summation(verticesPolygons) << '\n';
 }
@@ -129,10 +114,7 @@ void sukacheva::maxArea(const std::vector<Polygon>& allPolygons, std::ostream& o
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(allAreas),
-    [](const Polygon& applicant)
-    {
-      return calculatePolygonArea(applicant.points, applicant.points.size());
-    }
+    [](const Polygon& applicant) { return calculatePolygonArea(applicant.points, applicant.points.size()); }
   );
   double maxElement = *std::max_element(allAreas.begin(), allAreas.end());
   out << std::fixed << std::setprecision(1) << maxElement << '\n';
@@ -146,10 +128,7 @@ void sukacheva::maxVertices(const std::vector<Polygon>& allPolygons, std::ostrea
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(allVertices),
-    [](const Polygon& applicant)
-    {
-      return (applicant.points.size());
-    }
+    [](const Polygon& applicant) { return (applicant.points.size()); }
   );
   size_t maxElement = *std::max_element(allVertices.begin(), allVertices.end());
   out << std::fixed << maxElement << '\n';
@@ -163,10 +142,7 @@ void sukacheva::minArea(const std::vector<Polygon>& allPolygons, std::ostream& o
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(allAreas),
-    [](const Polygon& applicant)
-    {
-      return calculatePolygonArea(applicant.points, applicant.points.size());
-    }
+    [](const Polygon& applicant) { return calculatePolygonArea(applicant.points, applicant.points.size()); }
   );
   double minElement = *std::min_element(allAreas.begin(), allAreas.end());
   out << std::fixed << std::setprecision(1) << minElement << '\n';
@@ -180,10 +156,7 @@ void sukacheva::minVertices(const std::vector<Polygon>& allPolygons, std::ostrea
     allPolygons.begin(),
     allPolygons.end(),
     std::back_inserter(allVertices),
-    [](const Polygon& applicant) -> size_t
-    {
-      return applicant.points.size();
-    }
+    [](const Polygon& applicant) -> size_t { return applicant.points.size(); }
   );
   size_t minElement = *std::min_element(allVertices.begin(), allVertices.end());
   out << std::fixed << minElement << '\n';
@@ -195,10 +168,7 @@ void sukacheva::countEvenVertices(const std::vector<Polygon>& allPolygons, std::
   (
     allPolygons.begin(),
     allPolygons.end(),
-    [](const Polygon& applicant)
-    {
-      return !(applicant.points.size() % 2);
-    }
+    [](const Polygon& applicant) { return !(applicant.points.size() % 2); }
   );
   out << std::fixed << count << '\n';
 }
@@ -209,10 +179,7 @@ void sukacheva::countOddVertices(const std::vector<Polygon>& allPolygons, std::o
   (
     allPolygons.begin(),
     allPolygons.end(),
-    [](const Polygon& applicant)
-    {
-      return (applicant.points.size() % 2);
-    }
+    [](const Polygon& applicant) { return (applicant.points.size() % 2); }
   );
   out << std::fixed << count << '\n';
 }
@@ -223,10 +190,7 @@ void sukacheva::countVertices(const std::vector<Polygon>& allPolygons, std::ostr
   (
     allPolygons.begin(),
     allPolygons.end(),
-    [vertices](const Polygon& applicant)
-    {
-      return (applicant.points.size() == vertices);
-    }
+    [vertices](const Polygon& applicant) { return (applicant.points.size() == vertices); }
   );
   out << std::fixed << count << '\n';
 }
@@ -340,18 +304,14 @@ bool sukacheva::isRectangle(const Polygon& poly, size_t index)
 {
   if (index == poly.points.size())
   {
-    return (poly.points.size() == 4) &&
-      (std::count(poly.points.begin(), poly.points.end(), poly.points[0]) == 1);
+    return (poly.points.size() == 4) && (std::count(poly.points.begin(), poly.points.end(), poly.points[0]) == 1);
   }
   const Point& currentPoint = poly.points[index];
   bool allUniqueBefore = std::none_of
   (
     poly.points.begin(),
     poly.points.begin() + index,
-    [&](const Point& applicant)
-    {
-      return applicant == currentPoint;
-    }
+    [&](const Point& applicant) { return applicant == currentPoint; }
   );
   return allUniqueBefore && isRectangle(poly, index + 1);
 }
@@ -362,10 +322,7 @@ void sukacheva::isRects(const std::vector<Polygon>& allPolygons, std::ostream& o
   (
     allPolygons.begin(),
     allPolygons.end(),
-    [](const Polygon& applicant)
-    {
-      return isRectangle(applicant, 0);
-    }
+    [](const Polygon& applicant) { return isRectangle(applicant, 0); }
   );
   out << std::fixed << count << '\n';
 }
@@ -417,10 +374,7 @@ void sukacheva::countSamePolygons(const std::vector<Polygon>& allPolygons, const
   (
     allPolygons.begin(),
     allPolygons.end(),
-    [overlay](const Polygon& applicant)
-    {
-      return arePolygonsSame(applicant, overlay);
-    }
+    [overlay](const Polygon& applicant) { return arePolygonsSame(applicant, overlay); }
   );
   out << std::fixed << count << '\n';
 }
