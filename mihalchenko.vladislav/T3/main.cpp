@@ -3,8 +3,7 @@
 #include <limits>
 #include <map>
 #include <string>
-#include "functions.hpp"
-#include "figures.hpp"
+#include "commands.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
     }
   }
   std::map<std::string, std::function<void(const std::vector<Polygon> &polygon,
-                                           std::istream &is, std::ostream &out)>> cmds;
+    std::istream &is, std::ostream &out)>> cmds;
   {
     using namespace std::placeholders;
     cmds["AREA"] = std::bind(printArea, _1, _2, _3);
