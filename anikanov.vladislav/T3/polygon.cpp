@@ -1,5 +1,6 @@
 #include "polygon.hpp"
 #include <iostream>
+#include <limits>
 
 anikanov::Polygon &anikanov::Polygon::operator=(const anikanov::Polygon &polygon)
 {
@@ -25,13 +26,22 @@ size_t anikanov::Polygon::getSize() const
 std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
 {
   dest.points.clear();
+
   size_t size;
   in >> size;
-  for (size_t i = 0; i < size; ++i) {
-    Point point;
-    in >> point;
-    dest.points.push_back(point);
+  if (in.fail()) {
+    in.clear();
+    in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   }
+  for (size_t i = 0; i < size; ++i) {
+    Point p;
+    in >> p;
+    if (in.fail()) {
+      in.clear();
+      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    dest.points.push_back(p);
+  }
+
   return in;
 }
-

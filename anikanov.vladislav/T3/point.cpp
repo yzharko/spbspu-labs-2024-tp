@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <iostream>
-#include "../common/inOutPut.hpp"
+#include <limits>
 
 anikanov::Point &anikanov::Point::operator=(const anikanov::Point &point)
 {
@@ -18,5 +18,7 @@ double anikanov::Point::operator-(const anikanov::Point &point) const
 
 std::istream &anikanov::operator>>(std::istream &in, anikanov::Point &dest)
 {
-  return in >> DelimiterIO{'('} >> dest.x >> DelimiterIO{';'} >> dest.y >> DelimiterIO{')'};
+  char delimiter;
+  in >> delimiter >> dest.x >> delimiter >> dest.y >> delimiter;
+  return in;
 }

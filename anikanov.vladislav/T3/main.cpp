@@ -1,11 +1,10 @@
 #include <algorithm>
 #include <iostream>
 #include <fstream>
+#include <limits>
 
-#include "polygon.cpp"
-#include "point.cpp"
-#include "../common/delimiterIO.hpp"
-#include "../common/inOutPut.cpp"
+#include "polygon.hpp"
+#include "point.hpp"
 
 int main(int argc, char **argv)
 {
@@ -21,33 +20,13 @@ int main(int argc, char **argv)
 
   std::vector< Polygon > polygons;
   Polygon pol;
-  while (std::getline(input, expression)) {
-    if (expression.empty()) {
-      expression.clear();
-      continue;
-    }
 
-    try {
-      postfix = toPostfix(expression);
-      answers.push(calculate(postfix));
-    } catch (const std::logic_error &err) {
-      std::cerr << err.what() << "\n";
-      return 1;
-    } catch (const std::runtime_error &err) {
-      std::cerr << err.what() << "\n";
-      return 2;
+  while (input >> pol) {
+    if (input.eof()) {
+      break;
     }
-
-    expression.clear();
-  }
-  while (!input.eof()) {
-    std::cout << "+\n";
-    input >> pol;
-    if (!input.fail()) {
-      polygons.push_back(pol);
-    } else {
-      input.clear();
-    }
+    polygons.push_back(pol);
+    std::cout << polygons[polygons.size() - 1].getSize() << '\n';
   }
 
   return 0;
