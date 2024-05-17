@@ -23,7 +23,7 @@ double hohlova::CalcArea(const Polygon& polygons)
   return std::abs(area) / 2.0;
 }
 
-int hohlova::countVertices(const Polygon& polygon)
+unsigned long long hohlova::countVertices(const Polygon& polygon)
 {
   return polygon.points.size();
 }
@@ -186,7 +186,7 @@ void hohlova::MAXCommandVertices(const std::vector< Polygon >& polygons, std::os
   }
   if (count == 0)
   {
-    Eror(out);
+    Error(out);
   }
   else
   {
