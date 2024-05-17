@@ -4,7 +4,6 @@
 #include <limits>
 
 #include "polygon.hpp"
-#include "point.hpp"
 
 int main(int argc, char **argv)
 {
