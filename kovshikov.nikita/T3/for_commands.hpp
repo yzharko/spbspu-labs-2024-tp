@@ -14,7 +14,7 @@ namespace kovshikov
   int getCordMethod(const Point& currentPoint,const Point& prevPoint);
   double countArea(const Polygon polygon);
 
-  double resultArea(double summa, const Polygon polygon);
+  double resultArea(const Polygon polygon);
   bool isEven(const Polygon& polygon);
   bool isOdd(const Polygon& polygon);
   bool isThisVertex(unsigned long long num, Polygon polygon);

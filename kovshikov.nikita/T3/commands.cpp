@@ -10,6 +10,7 @@
 #include <map>
 #include <numeric>
 #include "polygons.hpp"
+
 void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);
@@ -36,7 +37,9 @@ void kovshikov::getAreaEven(const std::vector< Polygon >& allData, std::ostream&
 {
   std::vector< Polygon > even;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), isEven);
-  double area = std::accumulate(even.begin(), even.end(), 0, resultArea);
+  std::vector< double > areas;
+  std::transform(even.begin(), even.end(), std::back_inserter(areas), resultArea);
+  double area = std::accumulate(areas.begin(), areas.end(), 0);
   out << area << "\n";
 }
 
@@ -44,14 +47,18 @@ void kovshikov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& 
 {
   std::vector< Polygon > odd;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), isOdd);
-  double area = std::accumulate(odd.begin(), odd.end(), 0, resultArea);
+  std::vector< double > areas;
+  std::transform(odd.begin(), odd.end(), std::back_inserter(areas), resultArea);
+  double area = std::accumulate(areas.begin(), areas.end(), 0);
   out << area << "\n";
 }
 
 void kovshikov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
   fileIsEmpty(allData);
-  double area = std::accumulate(allData.begin(), allData.end(), 0, resultArea);
+  std::vector< double > areas;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(areas), resultArea);
+  double area = std::accumulate(areas.begin(), areas.end(), 0);
   double result = area / allData.size();
   out << result << "\n";
 }

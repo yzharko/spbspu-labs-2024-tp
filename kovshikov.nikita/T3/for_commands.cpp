@@ -71,10 +71,9 @@ double kovshikov::countArea(const Polygon polygon)
   return std::abs(area / 2.0);
 }
 
-double kovshikov::resultArea(double summa, const Polygon polygon)
+double kovshikov::resultArea(const Polygon polygon)
 {
-  summa += countArea(polygon);
-  return summa;
+  return countArea(polygon);
 }
 
 bool kovshikov::isEven(const Polygon& polygon)
