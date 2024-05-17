@@ -1,13 +1,13 @@
 #ifndef IOFMTGUARD_HPP
 #define IOFMTGUARD_HPP
-#include <iomanip>
+#include <ios>
 
-namespace taskaev
+namespace gorbunova
 {
   class iofmtguard
   {
   public:
-    explicit iofmtguard(std::basic_ios< char > &s) noexcept;
+    explicit iofmtguard(std::basic_ios< char > &s);
     ~iofmtguard();
   private:
     std::basic_ios< char > &s_;
