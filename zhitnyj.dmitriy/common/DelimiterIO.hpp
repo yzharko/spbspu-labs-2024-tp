@@ -5,7 +5,7 @@
 
 struct DelimiterIO
 {
-    char exp;
+  char exp;
 };
 
 std::istream& operator>>(std::istream& in, DelimiterIO&& dest);
