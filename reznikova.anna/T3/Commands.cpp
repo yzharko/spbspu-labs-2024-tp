@@ -346,7 +346,7 @@ void reznikova::rectsCommand(const std::vector< reznikova::Polygon > & polygons,
   out << numRects << "\n";
 }
 
-void reznikova::getOutputMessage(std::ostream & out, const std::string & message)
+void reznikova::getOutputMessage(std::ostream & out)
 {
-  out << message << "\n";
+  out << "<INVALID COMMAND>\n";
 }

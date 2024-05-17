@@ -30,7 +30,6 @@ int main(int argc, const char * argv[])
     commands["RECTS"] = std::bind(reznikova::rectsCommand, _1, _2);
   }
   std::string command;
-  auto errorOfInvalidCommand = std::bind(reznikova::getOutputMessage, std::placeholders::_1, "<INVALID COMMAND>");
   while (std::cin >> command)
   {
     try
@@ -39,7 +38,7 @@ int main(int argc, const char * argv[])
     }
     catch (const std::exception & e)
     {
-      errorOfInvalidCommand(std::cout);
+      reznikova::getOutputMessage(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
