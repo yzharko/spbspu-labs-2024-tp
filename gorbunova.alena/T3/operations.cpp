@@ -202,7 +202,7 @@ void gorbunova::countEven(const std::vector< Polygon > &polygons, std::ostream &
     std::back_inserter(onlyEvenPolygons),
     [](const Polygon &polygon)
     {
-      return (polygon.points.size() % 2);
+      return !(polygon.points.size() % 2);
     });
   out << onlyEvenPolygons.size() << '\n';
 }
@@ -216,7 +216,7 @@ void gorbunova::countOdd(const std::vector< Polygon > &polygons, std::ostream &o
     std::back_inserter(onlyOddPolygons),
     [](const Polygon &polygon)
     {
-      return !(polygon.points.size() % 2);
+      return (polygon.points.size() % 2);
     });
   out << onlyOddPolygons.size() << '\n';
 }
