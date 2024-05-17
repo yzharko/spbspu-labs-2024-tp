@@ -15,3 +15,4 @@ std::istream & reznikova::operator>>(std::istream & is, reznikova::Delimiter && 
   }
   return is;
 }
+

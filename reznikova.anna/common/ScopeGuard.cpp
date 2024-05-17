@@ -16,3 +16,4 @@ namespace reznikova
     s_.flags(fmt_);
   }
 }
+
