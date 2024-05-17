@@ -5,6 +5,9 @@
 #include <fstream>
 #include <functional>
 #include <map>
+#include <algorithm>
+#include <iomanip>
+#include <numeric>
 
 using namespace hohlova;
 int main(int argc, char* argv[])
