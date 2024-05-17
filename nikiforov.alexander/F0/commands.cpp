@@ -6,7 +6,7 @@ std::string nikiforov::cutNameFile(std::string& str)
   return std::string(str.substr(0, str.find(".txt")));
 }
 
-void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in)
 {
   std::string fileName = "";
   in >> fileName;
@@ -63,7 +63,7 @@ void nikiforov::deleteDictionary(mapDictionaries_t& mapDictionaries, std::istrea
   }
 }
 
-void nikiforov::printNamesDictionaries(const mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+void nikiforov::printNamesDictionaries(const mapDictionaries_t& mapDictionaries, std::ostream& out)
 {
   size_t count = 0;
   for (auto it = mapDictionaries.begin(); it != mapDictionaries.end(); ++it) {
@@ -142,16 +142,16 @@ void nikiforov::rename(mapDictionaries_t& mapDictionaries, std::istream& in, std
     {
       mapDictionaries.emplace(newname, nameDictionary->second);
       mapDictionaries.erase(nameDictionary);
-      out << " The " << name << " dictionary has been successfully renamed to " << newname << "\n";
+      out << " The '" << name << "' dictionary has been successfully renamed to '" << newname << "'\n";
     }
     else
     {
-      out << " Error: The dictionary " << newname << " already exists, enter a different name" << "\n";
+      out << " Error: The dictionary '" << newname << "' already exists, enter a different name" << "\n";
     }
   }
   else
   {
-    out << " Error: There is no dictionary with the name " << name << "\n";
+    out << " Error: There is no dictionary with the name '" << name << "'\n";
   }
 }
 
@@ -173,13 +173,60 @@ void nikiforov::clear(mapDictionaries_t& mapDictionaries, std::istream& in, std:
         firstDictionary->second.erase(it->first);
       }
     }
-    out << " All existing words in the " << name2 << " dictionary have been removed from the " << name1 << " dictionary\n";
+    out << " All existing words in the '" << name2 << "' dictionary have been removed from the '" << name1 << "' dictionary\n";
   }
   else
   {
     out << " Error: One or both of the dictionaries do not exist\n";
   }
 }
+
+void nikiforov::save(const mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string nameMkdir = "";
+  in >> nameMkdir;
+  std::string commandCreateMkdir = "mkdir " + nameMkdir;
+
+  std::ofstream fout;
+  if (!std::system(commandCreateMkdir.c_str()))
+  {
+    writingDictionaries(mapDictionaries, nameMkdir, fout);
+    out << " The data was successfully written to the folder" << nameMkdir << "\n";
+  }
+  else
+  {
+    out << " The folder already exists, do you want to overwrite it (yes/no)? \n";
+    std::string consent = "";
+    in >> consent;
+
+    if (consent == "yes")
+    {
+      writingDictionaries(mapDictionaries, nameMkdir, fout);
+      out << " The data was successfully written to the folder" << nameMkdir << "\n";
+    }
+    else
+    {
+      out << "The data was not written to the folder "<< nameMkdir << "\n";
+    }
+  }
+}
+
+void nikiforov::writingDictionaries(const mapDictionaries_t& mapDictionaries, std::string nameMkdir, std::ofstream& fout)
+{
+  for (auto dictionary : mapDictionaries)
+  {
+    fout.open(nameMkdir + "\\" + dictionary.first + ".txt");
+    if (fout.is_open())
+    {
+      for (auto it : dictionary.second)
+      {
+        fout << it.first << " " << it.second << "\n";
+      }
+    }
+    fout.close();
+  }
+}
+
 void nikiforov::ActionsOnTheDictionary::select(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
 {
   std::string nameDictionary;
@@ -189,11 +236,11 @@ void nikiforov::ActionsOnTheDictionary::select(mapDictionaries_t& mapDictionarie
   if (SelectedDictionary != mapDictionaries.end())
   {
     nameSelectedDictionary = nameDictionary;
-    out << " The dictionary " << nameSelectedDictionary << " has been successfully selected\n";
+    out << " The dictionary '" << nameSelectedDictionary << "' has been successfully selected\n";
   }
   else
   {
-    out << " Error: Dictionary with the name " << nameDictionary << " does not exist\n";
+    out << " Error: Dictionary with the name '" << nameDictionary << "' does not exist\n";
   }
 }
 
@@ -232,7 +279,7 @@ void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries
         {
           countWords++;
         }
-        out << " The dictionary " << nameSelectedDictionary << " contains " << countWords << " words\n";
+        out << " The dictionary '" << nameSelectedDictionary << "' contains " << countWords << " words\n";
       }
       else
       {
@@ -241,7 +288,7 @@ void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries
     }
     else
     {
-      out << " The contents of the dictionary " << nameSelectedDictionary << "\n";
+      out << " The contents of the dictionary '" << nameSelectedDictionary << "':\n";
       for (auto it = invertedDictionary.rbegin(); it != invertedDictionary.rend(); ++it) {
         out << it->second << " " << it->first << "\n";
       }
@@ -249,7 +296,61 @@ void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries
   }
   else
   {
-    out << " Error\n";
+    out << " The dictionary is not selected\n";
+    out << " Select a dictionary using the command 'select < name >'\n";
+  }
+}
+
+void nikiforov::ActionsOnTheDictionary::find(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  if (isSelectedDictionary())
+  {
+    auto SelectedDictionary = mapDictionaries.find(nameSelectedDictionary);
+
+    std::string enteredWord = "";
+    in >> enteredWord;
+    
+    auto word = SelectedDictionary->second.find(enteredWord);
+    if (word != SelectedDictionary->second.end())
+    {
+      out << word->first << " " << word->second << "\n";
+    }
+    else
+    {
+      out << " Error: The word '" << enteredWord << "' was not found\n";
+    }
+  }
+  else
+  {
+    out << " The dictionary is not selected\n";
+    out << " Select a dictionary using the command 'select < name >'\n";
+  }
+}
+
+void nikiforov::ActionsOnTheDictionary::erase(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  if (isSelectedDictionary())
+  {
+    auto SelectedDictionary = mapDictionaries.find(nameSelectedDictionary);
+
+    std::string enteredWord = "";
+    in >> enteredWord;
+
+    auto deletedWord = SelectedDictionary->second.find(enteredWord);
+    if (deletedWord != SelectedDictionary->second.end())
+    {
+      SelectedDictionary->second.erase(deletedWord);
+      out << " The word '" << enteredWord << "' has been successfully deleted\n";
+    }
+    else
+    {
+      out << " Error: The word " << enteredWord << " was not found\n";
+    }
+  }
+  else
+  {
+    out << " The dictionary is not selected\n";
+    out << " Select a dictionary using the command 'select < name >'\n";
   }
 }
 

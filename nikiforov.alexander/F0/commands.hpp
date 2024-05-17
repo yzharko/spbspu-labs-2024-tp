@@ -2,9 +2,7 @@
 #define COMMANDS_HPP
 #include <iomanip>
 #include <map>
-#include <numeric>
 #include <algorithm>
-#include <functional>
 
 using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
@@ -12,12 +10,12 @@ namespace nikiforov
 {
   std::string cutNameFile(std::string& str);
 
-  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in);
   std::map<std::string, size_t> getDictionary(std::istream& in);
 
   void deleteDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
-  void printNamesDictionaries(const mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+  void printNamesDictionaries(const mapDictionaries_t& mapDictionaries, std::ostream& out);
 
   void add(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
@@ -27,6 +25,10 @@ namespace nikiforov
 
   void clear(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
+  void save(const mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+
+  void writingDictionaries(const mapDictionaries_t& mapDictionaries, std::string nameMkdir,std::ofstream& fout);
+
   class ActionsOnTheDictionary
   {
   public:
@@ -34,6 +36,8 @@ namespace nikiforov
 
     void select(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
     void print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+    void find(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+    void erase(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
     bool isSelectedDictionary();
 
