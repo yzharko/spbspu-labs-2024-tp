@@ -1,3 +1,4 @@
+#include "for_commands.hpp"
 #include <algorithm>
 #include <cstring>
 #include <functional>
@@ -8,7 +9,6 @@
 #include <limits>
 #include <map>
 #include <numeric>
-#include "for_commands.hpp"
 #include "polygons.hpp"
 
 void kovshikov::fileIsEmpty(const std::vector< Polygon >& allData)
@@ -206,7 +206,7 @@ bool kovshikov::isInframe(const std::vector< Polygon >& allData, const Polygon& 
   }
 }
 
-void kovshikov::outputError(std::ostream& out, const std::string& strError)
+void kovshikov::outputError(std::ostream& out)
 {
-  out << strError << "\n";
+  out << "<INVALID COMMAND>" << "\n";
 }

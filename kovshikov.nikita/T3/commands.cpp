@@ -1,3 +1,4 @@
+#include "commands.hpp"
 #include <algorithm>
 #include <cstring>
 #include <functional>
@@ -9,8 +10,6 @@
 #include <map>
 #include <numeric>
 #include "polygons.hpp"
-#include "commands.hpp"
-
 void kovshikov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
   out << std::fixed << std::setprecision(1);

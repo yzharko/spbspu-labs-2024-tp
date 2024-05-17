@@ -1,5 +1,5 @@
-#include <iostream>
 #include "point.hpp"
+#include <iostream>
 
 std::istream& kovshikov::operator>>(std::istream& is, Point& value)
 {
