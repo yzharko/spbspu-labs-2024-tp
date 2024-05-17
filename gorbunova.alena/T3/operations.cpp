@@ -37,7 +37,7 @@ void gorbunova::areaOdd(const std::vector< Polygon > &polygons, std::ostream &ou
     std::back_inserter(onlyOddPolygons),
     [](const Polygon &polygon)
     {
-      return !(polygon.points.size() % 2);
+      return (polygon.points.size() % 2);
     });
   double sum = sumAreas(onlyOddPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
@@ -52,7 +52,7 @@ void gorbunova::areaEven(const std::vector< Polygon > &polygons, std::ostream &o
     std::back_inserter(onlyEvenPolygons),
     [](const Polygon &polygon)
     {
-      return (polygon.points.size() % 2);
+      return !(polygon.points.size() % 2);
     });
   double sum = sumAreas(onlyEvenPolygons);
   out << std::setprecision(1) << std::fixed << sum << '\n';
