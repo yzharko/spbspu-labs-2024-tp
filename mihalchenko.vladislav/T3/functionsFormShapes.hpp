@@ -13,22 +13,22 @@ namespace mihalchenko
   double sumArea(double area, const Point &startPoint);
   double countArea(const Polygon &polygon);
 
-  void getAreaOdd(const std::vector<Polygon> &polygons, std::ostream &out);
-  void getAreaEven(const std::vector<Polygon> &polygons, std::ostream &out);
-  void getAreaMean(const std::vector<Polygon> &polygons, std::ostream &out);
-  void getAreaVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out);
-  std::ostream &getAreaResult(const std::vector<Polygon> &polygons, bool predicate, std::ostream &out);
+  void getAreaOdd(const std::vector< Polygon > &polygons, std::ostream &out);
+  void getAreaEven(const std::vector< Polygon > &polygons, std::ostream &out);
+  void getAreaMean(const std::vector< Polygon > &polygons, std::ostream &out);
+  void getAreaVertexes(const std::vector< Polygon > &polygons, size_t num, std::ostream &out);
+  std::ostream &getAreaResult(const std::vector< Polygon > &polygons, bool predicate, std::ostream &out);
 
   int getNumOfVertexes(const Polygon &polygons);
 
-  std::ostream &getMaxArea(const std::vector<Polygon> &polygons, std::ostream &out);
-  std::ostream &getMaxVertexes(const std::vector<Polygon> &polygons, std::ostream &out);
-  std::ostream &getMinArea(const std::vector<Polygon> &polygons, std::ostream &out);
-  std::ostream &getMinVertexes(const std::vector<Polygon> &polygons, std::ostream &out);
+  std::ostream &getMaxArea(const std::vector< Polygon > &polygons, std::ostream &out);
+  std::ostream &getMaxVertexes(const std::vector< Polygon > &polygons, std::ostream &out);
+  std::ostream &getMinArea(const std::vector< Polygon > &polygons, std::ostream &out);
+  std::ostream &getMinVertexes(const std::vector< Polygon > &polygons, std::ostream &out);
 
-  std::ostream &countEven(const std::vector<Polygon> &polygons, std::ostream &out);
-  std::ostream &countOdd(const std::vector<Polygon> &polygons, std::ostream &out);
-  std::ostream &countVertexes(const std::vector<Polygon> &polygons, size_t num, std::ostream &out);
+  std::ostream &countEven(const std::vector< Polygon > &polygons, std::ostream &out);
+  std::ostream &countOdd(const std::vector< Polygon > &polygons, std::ostream &out);
+  std::ostream &countVertexes(const std::vector< Polygon > &polygons, size_t num, std::ostream &out);
 
   long long getLength(const Polygon &polygon);
   bool isLengthCorrect(const Polygon &lhsPolygon, const Polygon &rhsPolygon);

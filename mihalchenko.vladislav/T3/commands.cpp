@@ -1,12 +1,9 @@
 #include "commands.hpp"
 #include <iomanip>
 #include <cmath>
-#include <numeric>
 #include <scopeGuard.hpp>
 
-using namespace std::placeholders;
-
-void mihalchenko::printArea(const std::vector<Polygon> &polygons,
+void mihalchenko::printArea(const std::vector< Polygon > &polygons,
   std::istream &is, std::ostream &out)
 {
   std::string partOfCmd;
@@ -33,7 +30,7 @@ void mihalchenko::printArea(const std::vector<Polygon> &polygons,
   }
 }
 
-void mihalchenko::printMax(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+void mihalchenko::printMax(const std::vector< Polygon > &polygons, std::istream &is, std::ostream &out)
 {
   if (polygons.empty())
   {
@@ -55,7 +52,7 @@ void mihalchenko::printMax(const std::vector<Polygon> &polygons, std::istream &i
   }
 }
 
-void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &is, std::ostream &out)
+void mihalchenko::printMin(const std::vector< Polygon > &polygons, std::istream &is, std::ostream &out)
 {
   if (polygons.empty())
   {
@@ -77,7 +74,7 @@ void mihalchenko::printMin(const std::vector<Polygon> &polygons, std::istream &i
   }
 }
 
-void mihalchenko::printCount(const std::vector<Polygon> &polygons,
+void mihalchenko::printCount(const std::vector< Polygon > &polygons,
   std::istream &is, std::ostream &out)
 {
   std::string partOfCmd;
@@ -100,17 +97,19 @@ void mihalchenko::printCount(const std::vector<Polygon> &polygons,
   }
 }
 
-void mihalchenko::printPerms(const std::vector<Polygon> &polygons,
+void mihalchenko::printPerms(const std::vector< Polygon > &polygons,
   std::istream &is, std::ostream &out)
 {
+  using namespace std::placeholders;
   Polygon copyPolygon;
   is >> copyPolygon;
   long long numOfVertexes = copyPolygon.points.size();
-  std::vector<Polygon> copyVectorOfPolygons;
+  using namespace std::placeholders;
+  std::vector< Polygon > copyVectorOfPolygons;
   copy_if(polygons.begin(),
     polygons.end(),
     std::back_inserter(copyVectorOfPolygons),
-    std::bind(std::equal_to<long long>{},
+    std::bind(std::equal_to< long long >{},
     std::bind(getLength, _1), numOfVertexes));
   if (!copyVectorOfPolygons.empty())
   {
@@ -126,7 +125,7 @@ void mihalchenko::printPerms(const std::vector<Polygon> &polygons,
   }
 }
 
-void mihalchenko::printCountRightShapes(const std::vector<Polygon> &polygons, std::istream &, std::ostream &out)
+void mihalchenko::printCountRightShapes(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out)
 {
   iofmtguard fmtguard(out);
   out << std::fixed << std::setprecision(0);

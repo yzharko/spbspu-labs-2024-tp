@@ -1,5 +1,4 @@
 #include "figures.hpp"
-
 #include <scopeGuard.hpp>
 #include <delimiters.hpp>
 #include <dataStruct.hpp>
@@ -47,7 +46,7 @@ std::istream &mihalchenko::operator>>(std::istream &is, Polygon &rhs)
   }
   else
   {
-    std::copy_n(std::istream_iterator<Point>(is),
+    std::copy_n(std::istream_iterator< Point >(is),
       counterOfPoints,
       std::back_inserter(polygon.points));
   }
@@ -70,6 +69,6 @@ std::ostream &mihalchenko::operator<<(std::ostream &out, const Polygon &rhs)
   out << counterOfPoints;
   std::copy_n(rhs.points.begin(),
     counterOfPoints - 1,
-    std::ostream_iterator<Point>(out << ' ', " "));
+    std::ostream_iterator< Point >(out << ' ', " "));
   return out;
 }
