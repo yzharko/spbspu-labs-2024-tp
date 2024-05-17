@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "dataStruct.hpp"
-#include "../common/inOutPut.hpp"
+#include "inOutPut.hpp"
 
 int main()
 {
