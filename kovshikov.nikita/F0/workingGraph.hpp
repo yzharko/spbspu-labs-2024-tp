@@ -10,6 +10,7 @@ namespace kovshikov
 
   void add(Graph& graph, std::istream& is);
   void connect(Graph& graph, std::istream& is);
+  void getDouble(Graph& graph, std::istream& is);
 }
 
 #endif

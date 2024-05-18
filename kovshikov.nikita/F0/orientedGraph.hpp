@@ -38,6 +38,7 @@ namespace kovshikov
     bool haveThisKey(size_t key);
     std::string getVertex(std::pair< size_t, Node > vertex);
     void haveNot(size_t keyWho, size_t keyWith);
+    bool isDouble(size_t key1, size_t key2);
   private:
     std::map< size_t, Node > tree;
   };

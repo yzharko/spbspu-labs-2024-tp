@@ -234,3 +234,17 @@ void kovshikov::Graph::haveNot(size_t keyWho, size_t keyWith)
     throw std::logic_error("At least one key does not exist");
   }
 }
+
+bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
+{
+  bool have1 = tree.at(key1).edges.find(key2) != tree.at(key1).edges.end();
+  bool have2 = tree.at(key2).edges.find(key1) != tree.at(key2).edges.end();
+  if(have1 && have2)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
