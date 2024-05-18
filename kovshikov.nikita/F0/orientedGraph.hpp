@@ -1,5 +1,6 @@
 #ifndef ORIENTEDGRAPH_HPP
 #define ORIENTEDGRAPH_HPP
+#include <vector>
 #include <string>
 #include <cstddef>
 #include <map>
@@ -26,14 +27,20 @@ namespace kovshikov
 
     void createEdge(size_t keyWho, size_t keyWith, size_t weight);
     void decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease);
+    void increaseWeight(size_t keyWho, size_t keyWith, size_t increase);
     size_t getWeight(size_t keyWho, size_t keyWith);
     void deleteEdge(size_t keyWho, size_t keyWith);
 
+    void connect(size_t whoKey, size_t count, size_t weight);
+    void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
+
+    bool haveThisKey(size_t key);
   private:
     std::map< size_t, Node > tree;
   };
 
   size_t getKey(std::pair< size_t, Graph::Node > vertex);
+  bool noThis(size_t whoKey, size_t randomKey);
 }
 
 class kovshikov::Graph::Node

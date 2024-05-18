@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <iostream>
 #include <vector>
@@ -48,6 +49,18 @@ void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
   tree.at(keyWho).edges[keyWith] = weight;
 }
 
+void kovshikov::Graph::increaseWeight(size_t keyWho, size_t keyWith, size_t increase)
+{
+  if(getWeight(keyWho, keyWith) == 0)
+  {
+    createEdge(keyWho, keyWith, increase);
+  }
+  else
+  {
+    tree.at(keyWho).edges[keyWith] += increase;
+  }
+}
+
 void kovshikov::Graph::decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease)
 {
   if(tree.at(keyWho).edges[keyWith] < decrease)
@@ -92,5 +105,57 @@ void kovshikov::Graph::deleteEdge(size_t keyWho, size_t keyWith)
   else
   {
     tree.at(keyWho).edges.erase(keyWith);
+  }
+}
+
+bool kovshikov::Graph::haveThisKey(size_t key)
+{
+  //тернарным оператором
+  if(tree.find(key) != tree.end())
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+bool kovshikov::noThis(size_t whoKey, size_t randomKey)
+{
+  return (whoKey != randomKey) ? true : false;
+}
+
+void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
+{
+   std::vector< size_t > keys;
+   std::transform(tree.begin(), tree.end(), std::back_inserter(keys), getKey);
+   std::copy_if(keys.begin(), keys.end(), std::back_inserter(connectKeys), std::bind(noThis, whoKey, std::placeholders::_1));
+}
+
+void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
+{
+  size_t size = getSize() - 1;
+  size_t remainder = count % size;
+  size_t numCircules = (remainder == 0)?(count / size):(count / size + 1);
+  std::vector< size_t > connectKeys;
+  getConnectKeys(connectKeys, whoKey);
+  for(size_t i = 1; i <= numCircules; i++)
+  {
+    //STL с помощью адресной арифметики!!!!!
+    if(i == numCircules)
+    {
+      for(size_t j = 1; j <= remainder; j++)
+      {
+        increaseWeight(whoKey, connectKeys[j], weight);
+      }
+    }
+    else
+    {
+      for(size_t k = 0; k < size; k++)
+      {
+        increaseWeight(whoKey, connectKeys[k], weight);
+      }
+    }
   }
 }

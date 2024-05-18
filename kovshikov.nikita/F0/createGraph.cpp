@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <functional>
 #include <iterator>
 #include <iostream>
 #include <vector>
@@ -75,5 +76,66 @@ void kovshikov::deleteGraph(std::map< std::string, Graph >& graphsList, std::ist
   else
   {
     graphsList.erase(key);
+  }
+}
+
+void kovshikov::add(Graph& graph, std::istream& is)  // тут две команды
+{
+  std::string parameter;
+  size_t key;
+  is >> parameter;
+  is >> key;
+  if(graph.haveThisKey(key) == true)
+  {
+    throw std::logic_error("This key is already in use");
+  }
+  else
+  {
+    if(std::all_of(parameter.begin(), parameter.end(), isDigit) == true) //add with 3 param
+    {
+      unsigned long long count = std::stoll(parameter);
+      std::string graphname;
+      is >> graphname;
+      graph.addVertex(key, graphname);
+      graph.connect(key, count, 1);
+    }
+    else //add with 2 param
+    {
+      graph.addVertex(key, parameter);
+    }
+  }
+}
+
+void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istream& is)
+{
+  std::string key;
+  is >> key;
+  if(graphsList.find(key) == graphsList.end())
+  {
+    throw std::logic_error("This graph is not there");
+  }
+  else
+  {
+    std::map< std::string, std::function< void(Graph& graph, std::istream& is) > > working;
+    {
+      using namespace std::placeholders;
+      working["add"] = std::bind(add, _1, _2);
+    }
+
+    std::string command;
+    while(std::cin >> command)
+    {
+      try
+      {
+        working.at(command)(graphsList.at(key), std::cin);
+      }
+      catch(const std::exception& error)
+      {
+        std::cout << "<ERROR>\n";
+        std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      }
+    }
   }
 }
