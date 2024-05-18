@@ -15,7 +15,6 @@ namespace anikanov {
     {
     }
     Point &operator=(const Point &point);
-    double operator-(const Point &point) const;
   };
 
   std::istream &operator>>(std::istream &in, Point &dest);

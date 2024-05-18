@@ -17,6 +17,7 @@ namespace anikanov {
     size_t operator%(const size_t number) const;
     Point &operator[](size_t index);
     double getArea() const;
+    double areaHelper(const Point &point1, const Point &point2) const;
     size_t getSize() const;
   };
 

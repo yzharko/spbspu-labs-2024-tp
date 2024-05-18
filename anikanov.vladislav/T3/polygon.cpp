@@ -1,4 +1,6 @@
 #include "polygon.hpp"
+#include <cmath>
+#include <numeric>
 #include <iostream>
 #include <limits>
 #include <inOutPut.hpp>
@@ -51,14 +53,27 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
     dest.points.push_back(p);
   }
 
-  if (dest.getSize() != size)
-  {
+  if (dest.getSize() != size) {
     in.setstate(std::ios::failbit);
   }
 
   return in;
 }
+
+double anikanov::Polygon::areaHelper(const anikanov::Point &point1, const anikanov::Point &point2) const
+{
+  return (point1.x * point2.y - point1.y * point2.x);
+}
+
 double anikanov::Polygon::getArea() const
 {
-  return 1;
+  auto pointTemp = ++points.begin();
+  double area = std::accumulate(points.begin(), --points.end(), 0.0,
+                                [&pointTemp, this](double areaTemp, const Point &point) {
+                                  areaTemp += areaHelper(point, *pointTemp);
+                                  pointTemp++;
+                                  return areaTemp;
+                                });
+  area += areaHelper(*--points.end(), *points.begin());
+  return std::fabs(area / 2.0);
 }

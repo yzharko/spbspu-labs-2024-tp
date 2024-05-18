@@ -12,11 +12,6 @@ anikanov::Point &anikanov::Point::operator=(const anikanov::Point &point)
   return *this;
 }
 
-double anikanov::Point::operator-(const anikanov::Point &point) const
-{
-  return sqrt(pow(x - point.x, 2) + pow(y - point.y, 2));
-}
-
 std::istream &anikanov::operator>>(std::istream &in, anikanov::Point &dest)
 {
   using namespace anikanov;
