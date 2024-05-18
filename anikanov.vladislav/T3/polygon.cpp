@@ -42,6 +42,7 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
     if (in.fail()) {
       in.clear();
       in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      continue;
     }
     dest.points.push_back(p);
   }
