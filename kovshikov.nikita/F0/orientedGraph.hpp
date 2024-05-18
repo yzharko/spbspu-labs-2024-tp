@@ -24,8 +24,6 @@ namespace kovshikov
     void outKeys(); // вывод всех ключей нужен ли
     void outGraph() const; //вывод ключа, вершины, ребер
 
-    void deleteVertex(size_t key);
-
     void createEdge(size_t keyWho, size_t keyWith, size_t weight);
     void decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease);
     void increaseWeight(size_t keyWho, size_t keyWith, size_t increase);
@@ -39,6 +37,7 @@ namespace kovshikov
     std::string getVertex(std::pair< size_t, Node > vertex);
     void haveNot(size_t keyWho, size_t keyWith);
     bool isDouble(size_t key1, size_t key2);
+    void deleteVertex(size_t key);
   private:
     std::map< size_t, Node > tree;
   };
@@ -46,6 +45,7 @@ namespace kovshikov
   size_t getKey(std::pair< size_t, Graph::Node > vertex);
   bool noThis(size_t whoKey, size_t randomKey);
   size_t getWith(std::pair< size_t, size_t > edge);
+  bool noThisEl(size_t whoKey, std::pair< size_t, Graph::Node > el);
 }
 
 class kovshikov::Graph::Node

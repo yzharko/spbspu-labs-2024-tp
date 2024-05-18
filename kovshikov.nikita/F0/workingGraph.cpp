@@ -82,5 +82,28 @@ void kovshikov::getDouble(Graph& graph, std::istream& is)
     graph.createEdge(num2, num3, num1);
     graph.createEdge(num3, num2, num1);
   }
+}
 
+void kovshikov::deleteElement(Graph& graph, std::istream& is)
+{
+  size_t num1;
+  size_t num2;
+  size_t num3;
+  is >> num1;
+  if(is.peek() == '\n')
+  {
+    graph.deleteVertex(num1);
+  }
+  else
+  {
+    is >> num2 >> num3;
+    try
+    {
+      graph.decreaseWeight(num2, num3, num1);
+    }
+    catch(const std::logic_error& e)
+    {
+      throw;
+    }
+  }
 }

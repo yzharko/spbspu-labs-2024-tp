@@ -45,15 +45,6 @@ void kovshikov::Graph::outKeys() //??
   std::cout << "\n";
 }
 
-void kovshikov::Graph::deleteVertex(size_t key)
-{
-  if(tree.find(key) == tree.end())
-  {
-    throw std::logic_error("<There is no vertex>");
-  }
-  tree.erase(key);
-}
-
 void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
 {
   try
@@ -152,6 +143,11 @@ bool kovshikov::noThis(size_t whoKey, size_t randomKey)
   return (whoKey != randomKey) ? true : false;
 }
 
+bool kovshikov::noThisEl(size_t whoKey, std::pair< size_t, Graph::Node > el)
+{
+  return (whoKey != el.first) ? true : false;
+}
+
 void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
 {
    std::vector< size_t > keys;
@@ -247,4 +243,19 @@ bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
   {
     return false;
   }
+}
+
+void kovshikov::Graph::deleteVertex(size_t key)
+{
+  std::vector< size_t > keys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(keys), std::bind(noThisEl, key, std::placeholders::_1));
+  size_t size = keys.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
+    {
+      tree[keys[i]].edges.erase(key);
+    }
+  }
+  tree.erase(key);
 }
