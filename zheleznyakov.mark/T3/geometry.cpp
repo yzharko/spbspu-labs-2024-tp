@@ -1,4 +1,7 @@
 #include "geometry.hpp"
+#include <limits>
+#include <iostream>
+#include <string>
 
 std::istream & zheleznyakov::operator>>(std::istream & in, Point & ref)
 {
@@ -21,21 +24,27 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
   if (!sentry)
   {
     return in;
-  };
-  size_t pointsCount = 0;
-  in >> SizeTIO{pointsCount};
-  if (pointsCount < 3)
+  }
+  size_t pointsAmount = 0;
+  in >> SizeTIO{pointsAmount};
+  if (pointsAmount < 3)
   {
     in.setstate(std::ios::failbit);
   }
   std::vector< Point > polygon;
-  for (size_t i = 0; i < pointsCount; i++)
+  for (size_t i = 0; i < pointsAmount; i++)
   {
-    Point currentPoint{};
-    in >> currentPoint;
-    polygon.push_back(currentPoint);
+    Point temp{};
+    in >> temp;
+    polygon.push_back(temp);
   }
   ref = Polygon{polygon};
+  std::string tmp;
+  std::getline(in, tmp);
+  if (tmp != "")
+  {
+    in.setstate(std::ios::failbit);
+  }
   return in;
 };
 

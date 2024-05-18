@@ -244,3 +244,58 @@ size_t zheleznyakov::maxseqTransformHelper(const Polygon& polygon, const Polygon
     return currentSeq;
   }
 }
+
+std::ostream & zheleznyakov::commands::same(const std::vector< Polygon > & polygon, std::istream & in, std::ostream & out)
+{
+  Polygon target;
+  in >> target;
+  if (!in)
+  {
+    throw std::logic_error("");
+  }
+  size_t v = processSame(polygon, target);
+  return out << v << '\n';
+}
+
+size_t zheleznyakov::processSame(const std::vector<Polygon>& polygons, const Polygon& target)
+{
+  using namespace std::placeholders;
+  return std::count_if(polygons.begin(), polygons.end(), std::bind(sameCountIfHelper, _1, target));
+}
+
+bool zheleznyakov::sameCountIfHelper(const Polygon& current, const Polygon& target)
+{
+  if (current.points.size() != target.points.size())
+  {
+    return false;
+  }
+  const Point movement = diffVector(current.points.at(0), target.points.at(0));
+  std::vector< bool > results;
+  {
+    using namespace std::placeholders;
+    std::transform(
+      target.points.begin(),
+      target.points.end(),
+      std::back_inserter(results),
+      std::bind(hasLayeredPoints, current, _1, movement)
+    );
+  };
+  return std::all_of(results.begin(), results.end(), [](bool r){ return r; });
+}
+
+zheleznyakov::Point zheleznyakov::diffVector(const Point & p1, const Point & p2)
+{
+  return Point{p2.x - p1.x, p2.y - p1.y};
+}
+
+bool zheleznyakov::hasLayeredPoints(const Polygon & p1, const Point & p2, const Point & movement)
+{
+  using namespace std::placeholders;
+  bool haveAllPointsLayering = std::any_of(p1.points.begin(), p1.points.end(), std::bind(arePointsLayering, _1, p2, movement));
+  return haveAllPointsLayering;
+}
+
+bool zheleznyakov::arePointsLayering(const Point & p1, const Point & p2, const Point & movement)
+{
+  return Point{p1.x + movement.x, p1.y + movement.y} == p2;
+}

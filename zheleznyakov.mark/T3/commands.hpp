@@ -11,6 +11,7 @@ namespace zheleznyakov
     std::ostream & min(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & count(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & maxseq(const std::vector< Polygon > &, std::istream &, std::ostream &);
+    std::ostream & same(const std::vector< Polygon > &, std::istream &, std::ostream &);
   }
 
   double areaAccumulator(double currentSum, const Polygon & poly);
@@ -39,5 +40,11 @@ namespace zheleznyakov
 
   size_t processMaxseq(const std::vector< Polygon > & polygons, const Polygon & target);
   size_t maxseqTransformHelper(const Polygon& polygon, const Polygon& target);
+
+  size_t processSame(const std::vector<Polygon> & polygons, const Polygon & target);
+  bool sameCountIfHelper(const Polygon & current, const Polygon & target);
+  Point diffVector(const Point & p1, const Point & p2);
+  bool hasLayeredPoints(const Polygon & p1, const Point & p2, const Point & movement);
+  bool arePointsLayering(const Point & p1, const Point & p2, const Point & movement);
 }
 #endif
