@@ -1,10 +1,11 @@
 #include "mainExtensions.hpp"
 
+#include <algorithm>
 #include <fstream>
 #include <limits>
-//#include <stdexcept>
-#include <algorithm>
-#include "vector"
+#include <numeric>
+#include <string>
+#include <vector>
 #include "polygon.hpp"
 
 using polygonArr = std::vector< anikanov::Polygon >;
@@ -60,4 +61,92 @@ std::vector< size_t > anikanov::getVertexes(const polygonArr &polygons)
     vertexes.push_back(polygon.getSize());
   }
   return vertexes;
+}
+
+double anikanov::area(const polygonArr &polygons, std::istream &in)
+{
+  std::string subcmd;
+  in >> subcmd;
+  std::vector< double > areas;
+  if (subcmd == "ODD") {
+    areas = getAreasIf(polygons, [](const Polygon &pol) {
+      return pol.getSize() % 2 == 1;
+    });
+  } else if (subcmd == "EVEN") {
+    areas = getAreasIf(polygons, [](const Polygon &pol) {
+      return pol.getSize() % 2 == 0;
+    });
+  } else if (subcmd == "MEAN") {
+    areas = getAreas(polygons);
+    double sum = std::accumulate(areas.begin(), areas.end(), 0.0);
+    return sum / static_cast< double >(polygons.size());
+  } else {
+    size_t count;
+
+    try {
+      count = std::stoull(subcmd);
+      if (count < 3) {
+        throw std::runtime_error("Invalid command");
+      }
+    } catch (std::exception) {
+      throw std::runtime_error("Invalid command");
+    }
+
+    areas = getAreasIf(polygons, [&count](const Polygon &pol) {
+      return pol.getSize() == count;
+    });
+  }
+  return std::accumulate(areas.begin(), areas.end(), 0.0);
+}
+
+double anikanov::max(const std::vector< Polygon > &polygons, std::istream &in)
+{
+  std::string subcmd;
+  in >> subcmd;
+  if (subcmd == "AREA") {
+    std::vector< double > areas = getAreas(polygons);
+    auto maxAreaPolygon = *std::max_element(areas.begin(), areas.end());
+    return maxAreaPolygon;
+  } else if (subcmd == "VERTEXES") {
+    std::vector< size_t > count = getVertexes(polygons);
+    auto maxVertexesPolygon = *std::max_element(count.begin(), count.end());
+    return maxVertexesPolygon;
+  }
+}
+
+double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in)
+{
+  std::string subcmd;
+  in >> subcmd;
+  if (subcmd == "AREA") {
+    std::vector< double > areas = getAreas(polygons);
+    auto minAreaPolygon = *std::min_element(areas.begin(), areas.end());
+    return minAreaPolygon;
+  } else if (subcmd == "VERTEXES") {
+    std::vector< size_t > count = getVertexes(polygons);
+    auto minVertexesPolygon = *std::min_element(count.begin(), count.end());
+    return minVertexesPolygon;
+  }
+}
+
+size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
+{
+  size_t count;
+  std::string subcmd;
+  in >> subcmd;
+  if (subcmd == "ODD") {
+    count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+      return pol.getSize() % 2 == 1;
+    });
+  } else if (subcmd == "EVEN") {
+    count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+      return pol.getSize() % 2 == 0;
+    });
+  } else {
+    size_t specificNumber = std::stoull(subcmd);
+    count = std::count_if(polygons.begin(), polygons.end(), [&specificNumber](const Polygon &pol) {
+      return pol.getSize() == specificNumber;
+    });
+  }
+  return count;
 }
