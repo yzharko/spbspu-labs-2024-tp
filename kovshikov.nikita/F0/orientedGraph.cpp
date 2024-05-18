@@ -143,11 +143,6 @@ bool kovshikov::noThis(size_t whoKey, size_t randomKey)
   return (whoKey != randomKey) ? true : false;
 }
 
-bool kovshikov::noThisEl(size_t whoKey, std::pair< size_t, Graph::Node > el)
-{
-  return (whoKey != el.first) ? true : false;
-}
-
 void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
 {
    std::vector< size_t > keys;
@@ -246,9 +241,11 @@ bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
 }
 
 void kovshikov::Graph::deleteVertex(size_t key)
-{
+{ //обратить внимание
+  std::vector< size_t > allKeys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
   std::vector< size_t > keys;
-  std::transform(tree.begin(), tree.end(), std::back_inserter(keys), std::bind(noThisEl, key, std::placeholders::_1));
+  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
   size_t size = keys.size();
   for(size_t i = 0; i < size; i++)
   {
@@ -261,6 +258,20 @@ void kovshikov::Graph::deleteVertex(size_t key)
 }
 
 size_t kovshikov::Graph::getDegree(size_t key)
-{
-  return tree[key].edges.size();
+{ // в других может быть такая же ошибка, надо проверить
+  size_t degree = 0;
+  degree += tree[key].edges.size();
+  std::vector< size_t > allKeys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
+  std::vector< size_t > keys;
+  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
+  size_t size = keys.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
+    {
+      degree += 1;
+    }
+  }
+  return degree;
 }
