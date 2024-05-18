@@ -117,3 +117,16 @@ void kovshikov::outputGraphs(const std::map< std::string, Graph >& graphsList, s
   std::copy(graphnames.cbegin(), graphnames.cend(), output_it{out, " "});
   out << "\n";
 }
+
+void kovshikov::outputVertexes(const std::map< std::string, Graph >& graphsList, std::ostream& out)
+{
+  std::vector < std::string > graphnames;
+  std::transform(graphsList.begin(), graphsList.end(), std::back_inserter(graphnames), getGraphname);
+  size_t size = graphnames.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    std::string graphname = graphnames[i];
+    out << graphnames[i] << ":" << "\n";
+    graphsList.at(graphname).outGraph();
+  }
+}

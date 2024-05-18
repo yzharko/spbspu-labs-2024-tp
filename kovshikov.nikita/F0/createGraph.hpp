@@ -12,6 +12,7 @@ namespace kovshikov
   void workWith(std::map< std::string, Graph >& graphsList, std::istream& is);
 
   void outputGraphs(const std::map< std::string, Graph >& graphsList, std::ostream& out);
+  void outputVertexes(const std::map< std::string, Graph >& graphsList, std::ostream& out);
 }
 
 #endif

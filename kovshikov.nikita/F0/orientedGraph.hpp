@@ -21,7 +21,8 @@ namespace kovshikov
     void addVertex(size_t key, std::string str);
     bool isEmpty() const noexcept;
     size_t getSize() const noexcept;
-    void outKeys(); // вывод всех ключей
+    void outKeys(); // вывод всех ключей нужен ли
+    void outGraph() const; //вывод ключа, вершины, ребер
 
     void deleteVertex(size_t key);
 
@@ -35,12 +36,14 @@ namespace kovshikov
     void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
 
     bool haveThisKey(size_t key);
+    std::string getVertex(std::pair< size_t, Node > vertex);
   private:
     std::map< size_t, Node > tree;
   };
 
   size_t getKey(std::pair< size_t, Graph::Node > vertex);
   bool noThis(size_t whoKey, size_t randomKey);
+  size_t getWith(std::pair< size_t, size_t > edge);
 }
 
 class kovshikov::Graph::Node

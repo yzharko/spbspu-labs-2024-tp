@@ -24,6 +24,7 @@ int main()
   {
     using namespace std::placeholders;
     outGraph["list"] = std::bind(outputGraphs, _1, _2);
+    outGraph["output"] = std::bind(outputVertexes, _1, _2);
   }
 
   std::string command;

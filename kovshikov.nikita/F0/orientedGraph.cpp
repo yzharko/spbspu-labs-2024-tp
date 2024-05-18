@@ -26,7 +26,17 @@ size_t kovshikov::getKey(std::pair< size_t, Graph::Node > vertex)
   return vertex.first;
 }
 
-void kovshikov::Graph::outKeys()
+std::string kovshikov::Graph::getVertex(std::pair< size_t, Node > vertex)
+{
+  return vertex.second.value;
+}
+
+size_t kovshikov::getWith(std::pair< size_t, size_t > edge)
+{
+  return edge.first;
+}
+
+void kovshikov::Graph::outKeys() //??
 {
   std::vector< size_t > keysList;
   std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
@@ -155,6 +165,45 @@ void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
       for(size_t k = 0; k < size; k++)
       {
         increaseWeight(whoKey, connectKeys[k], weight);
+      }
+    }
+  }
+}
+
+void kovshikov::Graph::outGraph() const
+{
+  if(isEmpty())
+  {
+    std::cout << "This graph is empty" << "\n";
+  }
+  else
+  {
+    std::vector< size_t > keysList;
+    std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
+    size_t size = tree.size();
+    for(size_t i = 0; i < size; i++)
+    {
+      std::cout << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
+      if(tree.at(keysList[i]).edges.empty())
+      {
+        std::cout << 0 << "\n";
+      }
+      else
+      {
+        std::vector< size_t > keysWith;
+        std::transform(tree.at(keysList[i]).edges.begin(), tree.at(keysList[i]).edges.end(), std::back_inserter(keysWith), getWith);
+        size_t count = tree.at(keysList[i]).edges.size();
+        for(size_t j = 0; j < count; j++)
+        {
+          if(j == count - 1)
+          {
+            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "\n";
+          }
+          else
+          {
+            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "  ";
+          }
+        }
       }
     }
   }
