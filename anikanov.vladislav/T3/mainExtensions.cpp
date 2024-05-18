@@ -88,7 +88,7 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
       if (count < 3) {
         throw std::runtime_error("Invalid command");
       }
-    } catch (std::exception) {
+    } catch (const std::exception &err) {
       throw std::runtime_error("Invalid command");
     }
 
@@ -112,6 +112,7 @@ double anikanov::max(const std::vector< Polygon > &polygons, std::istream &in)
     auto maxVertexesPolygon = *std::max_element(count.begin(), count.end());
     return maxVertexesPolygon;
   }
+  throw std::runtime_error("Invalid command");
 }
 
 double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in)
@@ -127,6 +128,7 @@ double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in)
     auto minVertexesPolygon = *std::min_element(count.begin(), count.end());
     return minVertexesPolygon;
   }
+  throw std::runtime_error("Invalid command");
 }
 
 size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
