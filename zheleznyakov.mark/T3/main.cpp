@@ -48,6 +48,7 @@ int main(int argc, char * argv[])
     cmds["MAX"] = std::bind(commands::max, _1, _2, _3);
     cmds["MIN"] = std::bind(commands::min, _1, _2, _3);
     cmds["COUNT"] = std::bind(commands::count, _1, _2, _3);
+    cmds["MAXSEQ"] = std::bind(commands::maxseq, _1, _2, _3);
   }
 
   std::string currentCommand = "";

@@ -202,3 +202,45 @@ bool zheleznyakov::polygonIsVertexesEquals(const Polygon & polygon, const size_t
 {
   return polygon.points.size() == vertexes;
 }
+
+std::ostream & zheleznyakov::commands::maxseq(const std::vector< Polygon > & polygon, std::istream & in, std::ostream & out)
+{
+  Polygon target;
+  in >> target;
+  size_t v = processMaxseq(polygon, target);
+  return out << v << '\n';
+}
+
+size_t zheleznyakov::processMaxseq(const std::vector<Polygon>& polygons, const Polygon& target)
+{
+  if (polygons.size() <= 2)
+  {
+    throw std::logic_error("<INVALID COMMAND>");
+  }
+  std::vector< size_t > results;
+  {
+    using namespace std::placeholders;
+    std::transform(
+      polygons.begin(),
+      polygons.end(),
+      std::back_inserter(results),
+      std::bind(maxseqTransformHelper, _1, target)
+    );
+  }
+  return *std::max_element(results.begin(), results.end());
+}
+
+size_t zheleznyakov::maxseqTransformHelper(const Polygon& polygon, const Polygon& target)
+{
+  static size_t currentSeq = 0;
+  if (polygon == target)
+  {
+    currentSeq++;
+    return currentSeq;
+  }
+  else
+  {
+    currentSeq = 0;
+    return currentSeq;
+  }
+}

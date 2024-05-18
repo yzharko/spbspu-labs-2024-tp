@@ -1,6 +1,7 @@
 #ifndef GEOMETRY_HPP
 #define GEOMETRY_HPP
 #include <vector>
+#include <algorithm>
 #include "separators.hpp"
 #include "dataTypes.hpp"
 namespace zheleznyakov

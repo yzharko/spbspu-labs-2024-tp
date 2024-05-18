@@ -10,6 +10,7 @@ namespace zheleznyakov
     std::ostream & max(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & min(const std::vector< Polygon > &, std::istream &, std::ostream &);
     std::ostream & count(const std::vector< Polygon > &, std::istream &, std::ostream &);
+    std::ostream & maxseq(const std::vector< Polygon > &, std::istream &, std::ostream &);
   }
 
   double areaAccumulator(double currentSum, const Polygon & poly);
@@ -17,23 +18,26 @@ namespace zheleznyakov
   double evenAreaAccumulator(double currentSum, const Polygon & poly);
   double vertexAreaAccumulator(double currentSum, const Polygon & poly, size_t vertexes);
 
-  double processAreaEven(const std::vector< Polygon > & polys);
-  double processAreaOdd(const std::vector< Polygon > & polys);
-  double processAreaMean(const std::vector< Polygon > & polys);
-  double processAreaVertexes(const std::vector< Polygon > & polys, size_t vertexes);
+  double processAreaEven(const std::vector< Polygon > & polygons);
+  double processAreaOdd(const std::vector< Polygon > & polygons);
+  double processAreaMean(const std::vector< Polygon > & polygons);
+  double processAreaVertexes(const std::vector< Polygon > & polygons, size_t vertexes);
 
-  double processMaxArea(const std::vector< Polygon > & polys);
-  size_t processMaxVertex(const std::vector< Polygon > & polys);
+  double processMaxArea(const std::vector< Polygon > & polygons);
+  size_t processMaxVertex(const std::vector< Polygon > & polygons);
 
-  double processMinArea(const std::vector< Polygon > & polys);
-  size_t processMinVertex(const std::vector< Polygon > & polys);
+  double processMinArea(const std::vector< Polygon > & polygons);
+  size_t processMinVertex(const std::vector< Polygon > & polygons);
 
-  size_t processCountEven(const std::vector< Polygon > & polys);
-  size_t processCountOdd(const std::vector< Polygon > & polys);
-  size_t processCountVertex(const std::vector< Polygon > & polys, const size_t vertexes);
+  size_t processCountEven(const std::vector< Polygon > & polygons);
+  size_t processCountOdd(const std::vector< Polygon > & polygons);
+  size_t processCountVertex(const std::vector< Polygon > & polygons, const size_t vertexes);
 
-  bool polygonIsVertexesOdd(const Polygon & polys);
-  bool polygonIsVertexesEven(const Polygon & polys);
-  bool polygonIsVertexesEquals(const Polygon & polys, const size_t vertexes);
+  bool polygonIsVertexesOdd(const Polygon & polygons);
+  bool polygonIsVertexesEven(const Polygon & polygons);
+  bool polygonIsVertexesEquals(const Polygon & polygons, const size_t vertexes);
+
+  size_t processMaxseq(const std::vector< Polygon > & polygons, const Polygon & target);
+  size_t maxseqTransformHelper(const Polygon& polygon, const Polygon& target);
 }
 #endif

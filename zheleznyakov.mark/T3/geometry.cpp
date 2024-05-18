@@ -49,6 +49,19 @@ std::ostream & zheleznyakov::operator<<(std::ostream & out, const Polygon & ref)
   return out;
 }
 
+bool zheleznyakov::operator==(const Point & point1, const Point & point2)
+{
+  return point1.x == point2.x && point1.y == point2.y;
+}
+
+bool zheleznyakov::operator==(const Polygon & poly1, const Polygon & poly2)
+{
+  return std::equal(
+    std::begin(poly1.points), std::end(poly1.points),
+    std::begin(poly2.points), std::end(poly2.points)
+  );
+}
+
 double zheleznyakov::calculateCrossProduct(const Point & p1, const Point & p2)
 {
   return p1.x * p2.y - p1.y * p2.x;
