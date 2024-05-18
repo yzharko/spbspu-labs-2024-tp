@@ -10,7 +10,7 @@ bool kovshikov::isDigit(char ch)
   return std::isdigit(ch);
 }
 
-void kovshikov::add(Graph& graph, std::istream& is)  // тут две команды
+void kovshikov::add(Graph& graph, std::istream& is)
 {
   std::string parameter;
   size_t key;
@@ -22,7 +22,7 @@ void kovshikov::add(Graph& graph, std::istream& is)  // тут две коман
   }
   else
   {
-    if(std::all_of(parameter.begin(), parameter.end(), isDigit) == true) //add with 3 param
+    if(std::all_of(parameter.begin(), parameter.end(), isDigit) == true)
     {
       unsigned long long count = std::stoll(parameter);
       std::string graphname;
@@ -30,7 +30,7 @@ void kovshikov::add(Graph& graph, std::istream& is)  // тут две коман
       graph.addVertex(key, graphname);
       graph.connect(key, count, 1);
     }
-    else //add with 2 param
+    else
     {
       graph.addVertex(key, parameter);
     }

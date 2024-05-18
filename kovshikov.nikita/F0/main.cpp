@@ -50,7 +50,7 @@ int main()
     catch(const std::logic_error& error)
     {
       std::cout << "<ERROR>\n";
-      std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения сделать несколько catch
+      std::cout << error.what() << "\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
