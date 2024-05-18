@@ -38,6 +38,7 @@ namespace kovshikov
     void haveNot(size_t keyWho, size_t keyWith);
     bool isDouble(size_t key1, size_t key2);
     void deleteVertex(size_t key);
+    size_t getDegree(size_t key);
   private:
     std::map< size_t, Node > tree;
   };

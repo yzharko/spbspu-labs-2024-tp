@@ -91,6 +91,7 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
       working["connect"] = std::bind(connect, _1, _2);
       working["double"] = std::bind(getDouble, _1, _2);
       working["delete"] = std::bind(deleteElement, _1, _2);
+      working["degree"] = std::bind(getDegree, _1, _2);
     }
 
     std::string command;

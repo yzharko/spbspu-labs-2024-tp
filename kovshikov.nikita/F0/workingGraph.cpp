@@ -107,3 +107,10 @@ void kovshikov::deleteElement(Graph& graph, std::istream& is)
     }
   }
 }
+
+void kovshikov::getDegree(Graph& graph, std::istream& is)
+{
+  size_t key;
+  is >> key;
+  std::cout << graph.getDegree(key) << "\n";
+}

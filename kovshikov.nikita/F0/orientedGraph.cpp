@@ -259,3 +259,8 @@ void kovshikov::Graph::deleteVertex(size_t key)
   }
   tree.erase(key);
 }
+
+size_t kovshikov::Graph::getDegree(size_t key)
+{
+  return tree[key].edges.size();
+}
