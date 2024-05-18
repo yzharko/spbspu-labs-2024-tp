@@ -19,6 +19,13 @@ int main()
     interaction["work"] = std::bind(workWith, _1, _2);
   }
 
+  std::map< std::string, std::function< void(const std::map< std::string, Graph >&, std::ostream&) > > outGraph;
+
+  {
+    using namespace std::placeholders;
+    outGraph["list"] = std::bind(outputGraphs, _1, _2);
+  }
+
   std::string command;
 
   while(std::cin >> command)
@@ -27,10 +34,23 @@ int main()
     {
       interaction.at(command)(graphsList, std::cin);
     }
-    catch(const std::exception& error)
+    catch(const std::out_of_range& error)
+    {
+      try
+      {
+        outGraph.at(command)(graphsList, std::cout);
+      }
+      catch(const std::out_of_range& error)
+      {
+        std::cout << "<INVALID COMMAND>\n";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      }
+    }
+    catch(const std::logic_error& error)
     {
       std::cout << "<ERROR>\n";
-      std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения
+      std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения сделать несколько catch
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }

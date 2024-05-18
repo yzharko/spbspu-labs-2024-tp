@@ -5,11 +5,6 @@
 #include <vector>
 #include "createGraph.hpp"
 
-bool kovshikov::isDigit(char ch)
-{
-  return std::isdigit(ch);
-}
-
 void kovshikov::createGraph(std::map< std::string, Graph >& graphsList, std::istream& is)
 {
   std::string parameter;
@@ -79,33 +74,6 @@ void kovshikov::deleteGraph(std::map< std::string, Graph >& graphsList, std::ist
   }
 }
 
-void kovshikov::add(Graph& graph, std::istream& is)  // тут две команды
-{
-  std::string parameter;
-  size_t key;
-  is >> parameter;
-  is >> key;
-  if(graph.haveThisKey(key) == true)
-  {
-    throw std::logic_error("This key is already in use");
-  }
-  else
-  {
-    if(std::all_of(parameter.begin(), parameter.end(), isDigit) == true) //add with 3 param
-    {
-      unsigned long long count = std::stoll(parameter);
-      std::string graphname;
-      is >> graphname;
-      graph.addVertex(key, graphname);
-      graph.connect(key, count, 1);
-    }
-    else //add with 2 param
-    {
-      graph.addVertex(key, parameter);
-    }
-  }
-}
-
 void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istream& is)
 {
   std::string key;
@@ -120,6 +88,7 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
     {
       using namespace std::placeholders;
       working["add"] = std::bind(add, _1, _2);
+     // working["connect"] = std::bind()
     }
 
     std::string command;
@@ -138,4 +107,13 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
       }
     }
   }
+}
+
+void kovshikov::outputGraphs(const std::map< std::string, Graph >& graphsList, std::ostream& out)
+{
+  std::vector< std::string > graphnames;
+  std::transform(graphsList.begin(), graphsList.end(), std::back_inserter(graphnames), getGraphname);
+  using output_it = std::ostream_iterator< std::string >;
+  std::copy(graphnames.cbegin(), graphnames.cend(), output_it{out, " "});
+  out << "\n";
 }
