@@ -43,7 +43,7 @@ void kovshikov::Graph::deleteVertex(size_t key)
   tree.erase(key);
 }
 
-void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight) //по ключу, надо сделать по значению
+void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
 {
   tree.at(keyWho).edges[keyWith] = weight;
 }

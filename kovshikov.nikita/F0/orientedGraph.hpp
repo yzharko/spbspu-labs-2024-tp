@@ -17,7 +17,7 @@ namespace kovshikov
 
     class Node;
 
-    void addVertex(size_t key, std::string str); //добавление вершины в граф
+    void addVertex(size_t key, std::string str);
     bool isEmpty() const noexcept;
     size_t getSize() const noexcept;
     void outKeys(); // вывод всех ключей

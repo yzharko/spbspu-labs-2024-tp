@@ -4,7 +4,8 @@
 
 namespace kovshikov
 {
-  void createGraph(const std::map< std::string, Graph >& graphsList, std::istream& is);
+  void createGraph(std::map< std::string, Graph >& graphsList, std::istream& is);
+  bool isDigit(char ch);
 }
 
 #endif
