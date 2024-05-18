@@ -14,20 +14,16 @@ int main(int argc, char **argv)
   if (argc < 2 || argc > 2) {
     return 1;
   }
-  std::ifstream input(argv[1]);
-  if (!input) {
-    return 1;
-  }
 
+  std::string filename = argv[1];
   std::vector< Polygon > polygons;
-  Polygon pol;
 
-  while (input >> pol) {
-    if (input.eof()) {
-      break;
-    }
-    polygons.push_back(pol);
-    std::cout << polygons[polygons.size() - 1].getSize() << '\n';
+  try {
+    polygons = readPolygons(filename);
+  }
+  catch (const std::exception &e) {
+    std::cerr << "Error reading file: " << e.what() << "\n";
+    return 2;
   }
 
   std::string cmd, subcmd;

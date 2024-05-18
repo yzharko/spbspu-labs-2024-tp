@@ -6,6 +6,7 @@
 #include "polygon.hpp"
 
 namespace anikanov {
+  std::vector< Polygon > readPolygons(const std::string &filename);
   std::vector< double > getAreas(const std::vector< Polygon > &polygons);
   std::vector< double > getAreasIf(const std::vector< Polygon > &polygons, std::function< bool(const Polygon &) >);
   std::vector< size_t > getVertexes(const std::vector< Polygon > &polygons);

@@ -1,10 +1,37 @@
 #include "mainExtensions.hpp"
 
+#include <fstream>
+#include <limits>
+//#include <stdexcept>
+#include <algorithm>
 #include "vector"
 #include "polygon.hpp"
 
 using polygonArr = std::vector< anikanov::Polygon >;
 using funcShema = std::function< bool(const anikanov::Polygon &) >;
+
+std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filename)
+{
+  std::vector< Polygon > polygons;
+  std::ifstream input(filename);
+
+  if (!input.is_open()) {
+    throw std::runtime_error("Unable to open file");
+  }
+
+  while (!input.eof()) {
+    Polygon polygon;
+    input >> polygon;
+    if (!input.fail()) {
+      polygons.push_back(polygon);
+    } else {
+      input.clear();
+      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
+
+  return polygons;
+}
 
 std::vector< double > anikanov::getAreas(const polygonArr &polygons)
 {

@@ -3,6 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
+#include <delimiterIO.hpp>
 
 anikanov::Point &anikanov::Point::operator=(const anikanov::Point &point)
 {
@@ -18,7 +19,7 @@ double anikanov::Point::operator-(const anikanov::Point &point) const
 
 std::istream &anikanov::operator>>(std::istream &in, anikanov::Point &dest)
 {
-  char delimiter;
-  in >> delimiter >> dest.x >> delimiter >> dest.y >> delimiter;
+  using namespace anikanov;
+  in >> DelimiterIO{ '(' } >> dest.x >> DelimiterIO{ ';' } >> dest.y >> DelimiterIO{ ')' };
   return in;
 }
