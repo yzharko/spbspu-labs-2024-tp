@@ -41,3 +41,21 @@ std::string kovshikov::getGraphname(std::pair< std::string, Graph > element)
 {
   return element.first;
 }
+
+void kovshikov::connect(Graph& graph, std::istream& is)
+{
+  size_t num1;
+  size_t num2;
+  size_t num3;
+  is >> num1 >> num2;
+  if(!(is >> num3))
+  {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    std::cout << graph.getWeight(num1, num2);
+  }
+  else
+  {
+    graph.createEdge(num2, num3, num1);
+  }
+}

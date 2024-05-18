@@ -88,7 +88,7 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
     {
       using namespace std::placeholders;
       working["add"] = std::bind(add, _1, _2);
-     // working["connect"] = std::bind()
+      working["connect"] = std::bind(connect, _1, _2);
     }
 
     std::string command;

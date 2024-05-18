@@ -6,9 +6,10 @@
 namespace kovshikov
 {
   bool isDigit(char ch);
+  std::string getGraphname(std::pair< std::string, Graph > element);
 
   void add(Graph& graph, std::istream& is);
-  std::string getGraphname(std::pair< std::string, Graph > element);
+  void connect(Graph& graph, std::istream& is);
 }
 
 #endif

@@ -37,6 +37,7 @@ namespace kovshikov
 
     bool haveThisKey(size_t key);
     std::string getVertex(std::pair< size_t, Node > vertex);
+    void haveNot(size_t keyWho, size_t keyWith);
   private:
     std::map< size_t, Node > tree;
   };

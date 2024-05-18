@@ -56,11 +56,27 @@ void kovshikov::Graph::deleteVertex(size_t key)
 
 void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
 {
+  try
+  {
+    haveNot(keyWho, keyWith);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
   tree.at(keyWho).edges[keyWith] = weight;
 }
 
 void kovshikov::Graph::increaseWeight(size_t keyWho, size_t keyWith, size_t increase)
 {
+  try
+  {
+    haveNot(keyWho, keyWith);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
   if(getWeight(keyWho, keyWith) == 0)
   {
     createEdge(keyWho, keyWith, increase);
@@ -206,5 +222,15 @@ void kovshikov::Graph::outGraph() const
         }
       }
     }
+  }
+}
+
+void kovshikov::Graph::haveNot(size_t keyWho, size_t keyWith)
+{
+  bool haveWho = tree.find(keyWho) == tree.end();
+  bool haveWith = tree.find(keyWith) == tree.end();
+  if(haveWho || haveWith)
+  {
+    throw std::logic_error("At least one key does not exist");
   }
 }
