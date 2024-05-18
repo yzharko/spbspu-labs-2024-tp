@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <fstream>
 #include <map>
@@ -49,10 +50,8 @@ void BuildTable(Node* root, std::vector<bool>& current_code)
 }
 
 
-int main()
+void someFunction(const std::string& s)
 {
-  std::cout << "Hello World, huffman coding!\n";
-  std::string s = "hello world, i am slay queen ";
   std::map<char, int> m;
   for (int i = 0; i < s.length(); i++)
   {
@@ -96,5 +95,55 @@ int main()
       std::cout << x[n];
     }
   }
+  std::cout << std::endl;
+  std::cout << "well done\n";
+}
+
+std::string inputData(std::istream& is)
+{
+  std::string str;
+  getline(std::cin, str);
+  return str;
+}
+
+
+int main()
+{
+  std::cout << "Hello World, huffman coding!\n";
+  std::string s = "";
+  std::string input_comand;
+  const std::string END = "end";
+  bool flag = true;
+  while (flag)
+  {
+    std::cout << "Enter command (help, input, encode) :\n ";
+    std::cin >> input_comand;
+    if (input_comand == END)
+    {
+      flag = false;
+      std::cout << "good bye\n";
+    }
+    else if (input_comand == "input")
+    {
+      std::getline(std::cin >> std::ws, s);
+    }
+    else if (input_comand == "encode")
+    {
+      someFunction(s);
+      std::string s = "";
+    }
+    else if (input_comand == "help")
+    {
+      std::cout << "Available commands\n"
+        "help - display available commands\n"
+        "input - standard input\n"
+        "encode - encode input data\n";
+    }
+    else
+    {
+      std::cout << "NOT COMMAND\n";
+    }
+  }
   return 0;
 }
+
