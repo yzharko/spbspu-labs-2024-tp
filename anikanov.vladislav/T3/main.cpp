@@ -33,9 +33,9 @@ int main(int argc, char **argv)
       if (cmd == "AREA") {
         std::cout << std::fixed << std::setprecision(1) << area(polygons, std::cin) << '\n';
       } else if (cmd == "MAX") {
-        std::cout << std::fixed << std::setprecision(1) << max(polygons, std::cin) << '\n';
+        std::cout << std::fixed << std::setprecision(1) << max(polygons, std::cin, std::cout) << '\n';
       } else if (cmd == "MIN") {
-        std::cout << std::fixed << std::setprecision(1) << min(polygons, std::cin) << '\n';
+        std::cout << std::fixed << std::setprecision(1) << min(polygons, std::cin, std::cout) << '\n';
       } else if (cmd == "COUNT") {
         std::cout << count(polygons, std::cin) << "\n";
       } else if (cmd == "RECTS") {

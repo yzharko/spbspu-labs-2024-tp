@@ -4,6 +4,8 @@
 #include <fstream>
 #include <limits>
 #include <numeric>
+#include <iomanip>
+#include <iostream>
 #include <string>
 #include <vector>
 #include "polygon.hpp"
@@ -99,34 +101,34 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
   return std::accumulate(areas.begin(), areas.end(), 0.0);
 }
 
-double anikanov::max(const std::vector< Polygon > &polygons, std::istream &in)
+double anikanov::max(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
 {
   std::string subcmd;
   in >> subcmd;
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
     auto maxAreaPolygon = *std::max_element(areas.begin(), areas.end());
-    return maxAreaPolygon;
+    std::cout << std::fixed << std::setprecision(1) << maxAreaPolygon << '\n';
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
     auto maxVertexesPolygon = *std::max_element(count.begin(), count.end());
-    return maxVertexesPolygon;
+    std::cout << std::fixed << std::setprecision(1) << maxVertexesPolygon << '\n';
   }
   throw std::runtime_error("Invalid command");
 }
 
-double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in)
+double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
 {
   std::string subcmd;
   in >> subcmd;
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
     auto minAreaPolygon = *std::min_element(areas.begin(), areas.end());
-    return minAreaPolygon;
+    std::cout << std::fixed << std::setprecision(1) << minAreaPolygon << '\n';
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
     auto minVertexesPolygon = *std::min_element(count.begin(), count.end());
-    return minVertexesPolygon;
+    std::cout << std::fixed << std::setprecision(1) << minVertexesPolygon << '\n';
   }
   throw std::runtime_error("Invalid command");
 }
@@ -145,7 +147,17 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
       return pol.getSize() % 2 == 0;
     });
   } else {
-    size_t specificNumber = std::stoull(subcmd);
+    size_t specificNumber;
+
+    try {
+      specificNumber = std::stoull(subcmd);
+      if (count < 3) {
+        throw std::runtime_error("Invalid command");
+      }
+    } catch (const std::exception &err) {
+      throw std::runtime_error("Invalid command");
+    }
+
     count = std::count_if(polygons.begin(), polygons.end(), [&specificNumber](const Polygon &pol) {
       return pol.getSize() == specificNumber;
     });
