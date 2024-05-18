@@ -14,19 +14,18 @@ double mihalchenko::getPoints(const Point &first, const Point &second)
   return first.x * second.y - first.y * second.x;
 }
 
-double mihalchenko::sumArea(double area, const Point &startPoint)
-{
-  auto nextPoint = *std::next(&startPoint);
-  return area += getPoints(startPoint, nextPoint);
-}
-
 double mihalchenko::countArea(const Polygon &polygon)
 {
-  double area = std::accumulate(polygon.points.begin(),
-    std::prev(polygon.points.end()), 0.,
-    sumArea);
-  auto lhs = std::prev(polygon.points.end())->x * polygon.points.front().y;
-  auto rhs = polygon.points.front().x * std::prev(polygon.points.end())->y;
+  using namespace std::placeholders;
+  std::vector< double > vectorArea;
+  std::transform(++polygon.points.cbegin(), polygon.points.cend(),
+    polygon.points.cbegin(),
+    std::back_inserter(vectorArea),
+    std::bind(getPoints, _1, _2));
+  double area = std::accumulate(vectorArea.cbegin(),
+    vectorArea.cend(), 0.);
+  auto lhs = polygon.points.begin()->x * polygon.points.back().y;
+  auto rhs = polygon.points.back().x * polygon.points.begin()->y;
   auto pmArea = lhs - rhs;
   area = 0.5 * std::abs(area + pmArea);
   return area;

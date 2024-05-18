@@ -10,7 +10,6 @@ namespace mihalchenko
   size_t getSize(const Polygon &polygon);
   double getPoints(const Point &first, const Point &second);
 
-  double sumArea(double area, const Point &startPoint);
   double countArea(const Polygon &polygon);
 
   void getAreaOdd(const std::vector< Polygon > &polygons, std::ostream &out);
