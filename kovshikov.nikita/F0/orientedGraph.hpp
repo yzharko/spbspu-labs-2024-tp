@@ -1,5 +1,6 @@
 #ifndef ORIENTEDGRAPH_HPP
 #define ORIENTEDGRAPH_HPP
+#include <cstring>
 #include <cstddef>
 #include <map>
 #include <utility>
