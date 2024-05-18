@@ -48,14 +48,15 @@ void kovshikov::connect(Graph& graph, std::istream& is)
   size_t num2;
   size_t num3;
   is >> num1 >> num2;
-  if(!(is >> num3))
+  if(is.peek() == '\n')
   {
     std::cin.clear();
     std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    std::cout << graph.getWeight(num1, num2);
+    std::cout << graph.getWeight(num1, num2) << "\n";
   }
   else
   {
+    is >> num3;
     graph.createEdge(num2, num3, num1);
   }
 }
