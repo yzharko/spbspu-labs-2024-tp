@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 #include <limits>
-#include <delimiterIO.hpp>
+#include <inOutPut.hpp>
 
 anikanov::Point &anikanov::Point::operator=(const anikanov::Point &point)
 {

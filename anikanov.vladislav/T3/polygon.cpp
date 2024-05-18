@@ -1,7 +1,7 @@
 #include "polygon.hpp"
 #include <iostream>
 #include <limits>
-#include <delimiterIO.hpp>
+#include <inOutPut.hpp>
 
 anikanov::Polygon &anikanov::Polygon::operator=(const anikanov::Polygon &polygon)
 {
