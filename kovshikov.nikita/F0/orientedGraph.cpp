@@ -2,6 +2,7 @@
 #include <functional>
 #include <iterator>
 #include <iostream>
+#include <numeric>
 #include <vector>
 #include "orientedGraph.hpp"
 
@@ -257,10 +258,18 @@ void kovshikov::Graph::deleteVertex(size_t key)
   tree.erase(key);
 }
 
+size_t kovshikov::getWeightEdge(std::pair< size_t, size_t > edge)
+{
+  return edge.second;
+}
+
 size_t kovshikov::Graph::getDegree(size_t key)
 { // в других может быть такая же ошибка, надо проверить
+  //считал с учетом веса
   size_t degree = 0;
-  degree += tree[key].edges.size();
+  std::vector< size_t > sum;
+  std::transform(tree.at(key).edges.begin(), tree.at(key).edges.end(), std::back_inserter(sum), getWeightEdge);
+  degree += std::accumulate(sum.begin(), sum.end(), 0);
   std::vector< size_t > allKeys;
   std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
   std::vector< size_t > keys;
@@ -270,8 +279,9 @@ size_t kovshikov::Graph::getDegree(size_t key)
   {
     if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
     {
-      degree += 1;
+      degree += tree[keys[i]].edges[key];
     }
   }
   return degree;
 }
+

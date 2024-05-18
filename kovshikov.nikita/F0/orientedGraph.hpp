@@ -46,6 +46,7 @@ namespace kovshikov
   size_t getKey(std::pair< size_t, Graph::Node > vertex);
   bool noThis(size_t whoKey, size_t randomKey);
   size_t getWith(std::pair< size_t, size_t > edge);
+  size_t getWeightEdge(std::pair< size_t, size_t > edge);
 }
 
 class kovshikov::Graph::Node
