@@ -20,22 +20,6 @@ bool DataStruct::operator<(const DataStruct& other) const
   return key3.length() < other.key3.length();
 }
 
-std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry)
-  {
-    return in;
-  }
-  char c;
-  in >> c;
-  if (in && std::tolower(c) != std::tolower(dest.exp))
-  {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
-}
-
 std::istream& operator>>(std::istream& in, UllLitIO&& dest)
 {
   std::istream::sentry sentry(in);
