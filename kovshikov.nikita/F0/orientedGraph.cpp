@@ -6,25 +6,48 @@
 #include <vector>
 #include "orientedGraph.hpp"
 
-void kovshikov::Graph::addVertex(size_t key, std::string str)
+//проверка-исключения
+void kovshikov::Graph::haveThisVertex(size_t key)
 {
-  tree[key] = Node(str);
+  if(tree.find(key) == tree.end())
+  {
+    throw std::logic_error("This key does not exist");
+  }
 }
 
-bool kovshikov::Graph::isEmpty() const noexcept
+void kovshikov::Graph::haveNot(size_t keyWho, size_t keyWith)
 {
-  return tree.empty();
+  bool haveWho = tree.find(keyWho) == tree.end();
+  bool haveWith = tree.find(keyWith) == tree.end();
+  if(haveWho || haveWith)
+  {
+    throw std::logic_error("At least one key does not exist");
+  }
 }
 
-
-size_t kovshikov::Graph::getSize() const noexcept
+bool kovshikov::Graph::haveThisKey(size_t key)
 {
-  return tree.size();
+  return tree.find(key) != tree.end();
 }
 
-size_t kovshikov::getKey(std::pair< size_t, Graph::Node > vertex)
+bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
 {
-  return vertex.first;
+  bool have1 = tree.at(key1).edges.find(key2) != tree.at(key1).edges.end();
+  bool have2 = tree.at(key2).edges.find(key1) != tree.at(key2).edges.end();
+  return have1 && have2;
+}
+
+bool kovshikov::noThis(size_t whoKey, size_t randomKey)
+{
+  return whoKey != randomKey;
+}
+
+//возвращение элементов, вспомогатедьные функции
+void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
+{
+   std::vector< size_t > keys;
+   std::transform(tree.begin(), tree.end(), std::back_inserter(keys), getKey);
+   std::copy_if(keys.begin(), keys.end(), std::back_inserter(connectKeys), std::bind(noThis, whoKey, std::placeholders::_1));
 }
 
 std::string kovshikov::Graph::getVertex(std::pair< size_t, Node > vertex)
@@ -32,20 +55,53 @@ std::string kovshikov::Graph::getVertex(std::pair< size_t, Node > vertex)
   return vertex.second.value;
 }
 
+size_t kovshikov::getKey(std::pair< size_t, Graph::Node > vertex)
+{
+  return vertex.first;
+}
+
 size_t kovshikov::getWith(std::pair< size_t, size_t > edge)
 {
   return edge.first;
 }
 
-void kovshikov::Graph::outKeys() //??
+size_t kovshikov::getWeightEdge(std::pair< size_t, size_t > edge)
 {
-  std::vector< size_t > keysList;
-  std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
-  using output_it = std::ostream_iterator< size_t >;
-  std::copy(keysList.cbegin(), keysList.cend(), output_it{std::cout, " "});
-  std::cout << "\n";
+  return edge.second;
 }
 
+//добавление-удаление вершины
+void kovshikov::Graph::addVertex(size_t key, std::string str)
+{
+  tree[key] = Node(str);
+}
+
+void kovshikov::Graph::deleteVertex(size_t key)
+{ //обратить внимание
+  try
+  {
+    haveThisVertex(key);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
+  std::vector< size_t > allKeys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
+  std::vector< size_t > keys;
+  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
+  size_t size = keys.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
+    {
+      tree[keys[i]].edges.erase(key);
+    }
+  }
+  tree.erase(key);
+}
+
+//взаимодействие с ребрами
 void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
 {
   try
@@ -57,6 +113,18 @@ void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
     throw;
   }
   tree.at(keyWho).edges[keyWith] = weight;
+}
+
+void kovshikov::Graph::deleteEdge(size_t keyWho, size_t keyWith)
+{
+  if(getWeight(keyWho, keyWith) == 0)
+  {
+    throw std::logic_error("<The edge does not exist>");
+  }
+  else
+  {
+    tree.at(keyWho).edges.erase(keyWith);
+  }
 }
 
 void kovshikov::Graph::increaseWeight(size_t keyWho, size_t keyWith, size_t increase)
@@ -114,43 +182,7 @@ size_t kovshikov::Graph::getWeight(size_t keyWho, size_t keyWith)
   }
 }
 
-void kovshikov::Graph::deleteEdge(size_t keyWho, size_t keyWith)
-{
-  if(getWeight(keyWho, keyWith) == 0)
-  {
-    throw std::logic_error("<The edge does not exist>");
-  }
-  else
-  {
-    tree.at(keyWho).edges.erase(keyWith);
-  }
-}
-
-bool kovshikov::Graph::haveThisKey(size_t key)
-{
-  //тернарным оператором
-  if(tree.find(key) != tree.end())
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
-
-bool kovshikov::noThis(size_t whoKey, size_t randomKey)
-{
-  return (whoKey != randomKey) ? true : false;
-}
-
-void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
-{
-   std::vector< size_t > keys;
-   std::transform(tree.begin(), tree.end(), std::back_inserter(keys), getKey);
-   std::copy_if(keys.begin(), keys.end(), std::back_inserter(connectKeys), std::bind(noThis, whoKey, std::placeholders::_1));
-}
-
+//особенность создания графа
 void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
 {
   size_t size = getSize() - 1;
@@ -178,107 +210,7 @@ void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
   }
 }
 
-void kovshikov::Graph::outGraph() const
-{
-  if(isEmpty())
-  {
-    std::cout << "This graph is empty" << "\n";
-  }
-  else
-  {
-    std::vector< size_t > keysList;
-    std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
-    size_t size = tree.size();
-    for(size_t i = 0; i < size; i++)
-    {
-      std::cout << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
-      if(tree.at(keysList[i]).edges.empty())
-      {
-        std::cout << 0 << "\n";
-      }
-      else
-      {
-        std::vector< size_t > keysWith;
-        std::transform(tree.at(keysList[i]).edges.begin(), tree.at(keysList[i]).edges.end(), std::back_inserter(keysWith), getWith);
-        size_t count = tree.at(keysList[i]).edges.size();
-        for(size_t j = 0; j < count; j++)
-        {
-          if(j == count - 1)
-          {
-            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "\n";
-          }
-          else
-          {
-            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "  ";
-          }
-        }
-      }
-    }
-  }
-}
-
-void kovshikov::Graph::haveNot(size_t keyWho, size_t keyWith)
-{
-  bool haveWho = tree.find(keyWho) == tree.end();
-  bool haveWith = tree.find(keyWith) == tree.end();
-  if(haveWho || haveWith)
-  {
-    throw std::logic_error("At least one key does not exist");
-  }
-}
-
-void kovshikov::Graph::haveThisVertex(size_t key)
-{
-  if(tree.find(key) == tree.end())
-  {
-    throw std::logic_error("This key does not exist");
-  }
-}
-
-bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
-{
-  bool have1 = tree.at(key1).edges.find(key2) != tree.at(key1).edges.end();
-  bool have2 = tree.at(key2).edges.find(key1) != tree.at(key2).edges.end();
-  if(have1 && have2)
-  {
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
-
-void kovshikov::Graph::deleteVertex(size_t key)
-{ //обратить внимание
-  try
-  {
-    haveThisVertex(key);
-  }
-  catch(const std::logic_error& e)
-  {
-    throw;
-  }
-  std::vector< size_t > allKeys;
-  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
-  std::vector< size_t > keys;
-  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
-  size_t size = keys.size();
-  for(size_t i = 0; i < size; i++)
-  {
-    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
-    {
-      tree[keys[i]].edges.erase(key);
-    }
-  }
-  tree.erase(key);
-}
-
-size_t kovshikov::getWeightEdge(std::pair< size_t, size_t > edge)
-{
-  return edge.second;
-}
-
+//функции для системы команд
 size_t kovshikov::Graph::getVertexWeight(size_t key)
 { // в других может быть такая же ошибка, надо проверить
   //считал с учетом веса
@@ -362,4 +294,65 @@ size_t kovshikov::Graph::getOwn(size_t key)
     }
   }
   return own;
+}
+
+//вывод
+void kovshikov::Graph::outKeys() //??
+{
+  std::vector< size_t > keysList;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
+  using output_it = std::ostream_iterator< size_t >;
+  std::copy(keysList.cbegin(), keysList.cend(), output_it{std::cout, " "});
+  std::cout << "\n";
+}
+
+void kovshikov::Graph::outGraph() const
+{
+  if(isEmpty())
+  {
+    std::cout << "This graph is empty" << "\n";
+  }
+  else
+  {
+    std::vector< size_t > keysList;
+    std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
+    size_t size = tree.size();
+    for(size_t i = 0; i < size; i++)
+    {
+      std::cout << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
+      if(tree.at(keysList[i]).edges.empty())
+      {
+        std::cout << 0 << "\n";
+      }
+      else
+      {
+        std::vector< size_t > keysWith;
+        std::transform(tree.at(keysList[i]).edges.begin(), tree.at(keysList[i]).edges.end(), std::back_inserter(keysWith), getWith);
+        size_t count = tree.at(keysList[i]).edges.size();
+        for(size_t j = 0; j < count; j++)
+        {
+          if(j == count - 1)
+          {
+            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "\n";
+          }
+          else
+          {
+            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "  ";
+          }
+        }
+      }
+    }
+  }
+}
+
+//cтандартные проверки
+bool kovshikov::Graph::isEmpty() const noexcept
+{
+  return tree.empty();
+}
+
+
+size_t kovshikov::Graph::getSize() const noexcept
+{
+  return tree.size();
 }

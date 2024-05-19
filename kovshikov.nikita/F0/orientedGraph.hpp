@@ -19,35 +19,41 @@ namespace kovshikov
     class Node;
 
     void addVertex(size_t key, std::string str);
-    bool isEmpty() const noexcept;
-    size_t getSize() const noexcept;
-    void outKeys(); // вывод всех ключей нужен ли
-    void outGraph() const; //вывод ключа, вершины, ребер
+    void deleteVertex(size_t key);
 
     void createEdge(size_t keyWho, size_t keyWith, size_t weight);
-    void decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease);
-    void increaseWeight(size_t keyWho, size_t keyWith, size_t increase);
-    size_t getWeight(size_t keyWho, size_t keyWith);
     void deleteEdge(size_t keyWho, size_t keyWith);
+    void increaseWeight(size_t keyWho, size_t keyWith, size_t increase);
+    void decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease);
+    size_t getWeight(size_t keyWho, size_t keyWith);
 
     void connect(size_t whoKey, size_t count, size_t weight);
-    void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
 
-    void haveThisVertex(size_t key);
-    bool haveThisKey(size_t key);
-    std::string getVertex(std::pair< size_t, Node > vertex);
-    void haveNot(size_t keyWho, size_t keyWith);
-    bool isDouble(size_t key1, size_t key2);
-    void deleteVertex(size_t key);
     size_t getVertexWeight(size_t key);
     size_t getDegree(size_t key);
     size_t getOwn(size_t key);
+
+    void haveThisVertex(size_t key);
+    void haveNot(size_t keyWho, size_t keyWith);
+    bool haveThisKey(size_t key);
+    bool isDouble(size_t key1, size_t key2);
+
+    void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
+    std::string getVertex(std::pair< size_t, Node > vertex);
+
+    void outGraph() const; //вывод ключа, вершины, ребер
+    void outKeys(); // вывод всех ключей нужен ли
+
+    bool isEmpty() const noexcept;
+    size_t getSize() const noexcept;
+
   private:
     std::map< size_t, Node > tree;
   };
 
-  size_t getKey(std::pair< size_t, Graph::Node > vertex);
   bool noThis(size_t whoKey, size_t randomKey);
+
+  size_t getKey(std::pair< size_t, Graph::Node > vertex);
   size_t getWith(std::pair< size_t, size_t > edge);
   size_t getWeightEdge(std::pair< size_t, size_t > edge);
 }
