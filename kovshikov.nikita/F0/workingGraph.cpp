@@ -108,9 +108,25 @@ void kovshikov::deleteElement(Graph& graph, std::istream& is)
   }
 }
 
+void kovshikov::getWeight(Graph& graph, std::istream& is)
+{
+  size_t key;
+  is >> key;
+  std::cout << graph.getVertexWeight(key) << "\n";
+}
+
 void kovshikov::getDegree(Graph& graph, std::istream& is)
 {
   size_t key;
   is >> key;
   std::cout << graph.getDegree(key) << "\n";
 }
+
+void kovshikov::getOwn(Graph& graph, std::istream& is)
+{
+  size_t key;
+  is >> key;
+  std::cout << graph.getOwn(key) << "\n";
+}
+
+

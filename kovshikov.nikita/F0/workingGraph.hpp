@@ -12,7 +12,9 @@ namespace kovshikov
   void connect(Graph& graph, std::istream& is);
   void getDouble(Graph& graph, std::istream& is);
   void deleteElement(Graph& graph, std::istream& is);
+  void getWeight(Graph& graph, std::istream& is);
   void getDegree(Graph& graph, std::istream& is);
+  void getOwn(Graph& graph, std::istream& is);
 }
 
 #endif

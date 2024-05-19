@@ -33,12 +33,15 @@ namespace kovshikov
     void connect(size_t whoKey, size_t count, size_t weight);
     void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
 
+    void haveThisVertex(size_t key);
     bool haveThisKey(size_t key);
     std::string getVertex(std::pair< size_t, Node > vertex);
     void haveNot(size_t keyWho, size_t keyWith);
     bool isDouble(size_t key1, size_t key2);
     void deleteVertex(size_t key);
+    size_t getVertexWeight(size_t key);
     size_t getDegree(size_t key);
+    size_t getOwn(size_t key);
   private:
     std::map< size_t, Node > tree;
   };

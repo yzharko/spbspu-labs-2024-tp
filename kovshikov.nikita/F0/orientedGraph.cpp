@@ -227,6 +227,14 @@ void kovshikov::Graph::haveNot(size_t keyWho, size_t keyWith)
   }
 }
 
+void kovshikov::Graph::haveThisVertex(size_t key)
+{
+  if(tree.find(key) == tree.end())
+  {
+    throw std::logic_error("This key does not exist");
+  }
+}
+
 bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
 {
   bool have1 = tree.at(key1).edges.find(key2) != tree.at(key1).edges.end();
@@ -243,6 +251,14 @@ bool kovshikov::Graph::isDouble(size_t key1, size_t key2)
 
 void kovshikov::Graph::deleteVertex(size_t key)
 { //обратить внимание
+  try
+  {
+    haveThisVertex(key);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
   std::vector< size_t > allKeys;
   std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
   std::vector< size_t > keys;
@@ -263,9 +279,17 @@ size_t kovshikov::getWeightEdge(std::pair< size_t, size_t > edge)
   return edge.second;
 }
 
-size_t kovshikov::Graph::getDegree(size_t key)
+size_t kovshikov::Graph::getVertexWeight(size_t key)
 { // в других может быть такая же ошибка, надо проверить
   //считал с учетом веса
+  try
+  {
+    haveThisVertex(key);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
   size_t degree = 0;
   std::vector< size_t > sum;
   std::transform(tree.at(key).edges.begin(), tree.at(key).edges.end(), std::back_inserter(sum), getWeightEdge);
@@ -285,3 +309,57 @@ size_t kovshikov::Graph::getDegree(size_t key)
   return degree;
 }
 
+size_t kovshikov::Graph::getDegree(size_t key)
+{
+  //степень - количество ребер входящих и исходящих
+  try
+  {
+    haveThisVertex(key);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
+  size_t degree = 0;
+  degree += tree.at(key).edges.size();
+  std::vector< size_t > allKeys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
+  std::vector< size_t > keys;
+  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
+  size_t size = keys.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
+    {
+      degree += 1;
+    }
+  }
+  return degree;
+}
+
+size_t kovshikov::Graph::getOwn(size_t key)
+{
+  //эту функцию можно использовать в методе getVertexWeight
+  try
+  {
+    haveThisVertex(key);
+  }
+  catch(const std::logic_error& e)
+  {
+    throw;
+  }
+  size_t own = 0;
+  std::vector< size_t > allKeys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
+  std::vector< size_t > keys;
+  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
+  size_t size = keys.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
+    {
+      own += tree[keys[i]].edges[key];
+    }
+  }
+  return own;
+}
