@@ -7,7 +7,7 @@
 void redko::help(const std::string & descr)
 {
   if (descr.empty())
-  { 
+  {
     std::cout << "help\n";
     std::cout << "      see list of commands\n";
     std::cout << "code\n";
@@ -166,7 +166,7 @@ void redko::recode(const std::string & descr)
     throw std::logic_error("<invalid Huffman format>");
   }
   firstObj.decode();
-  
+
   HuffmanCode secondObj;
   if (!(secondInput >> secondObj) && !secondInput.eof())
   {
@@ -253,7 +253,7 @@ void redko::compare(const std::string & descr)
     throw std::logic_error("<invalid Huffman format>");
   }
   auto firstEncoding = firstObj.getEncoding();
-  
+
   HuffmanCode secondObj;
   if (!(secondInput >> secondObj) && !secondInput.eof())
   {
