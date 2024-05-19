@@ -196,7 +196,7 @@ void sobolevsky::getCompareDicts(std::shared_ptr< std::vector< mypair > > myVec,
       dlinaVec1 += vec1.at(pair.first) * vec1.at(pair.first);
       dlinaVec2 += vec2.at(pair.first) * vec2.at(pair.first);
     }
-    out << "коэфициент сходства двух словарей: " << vecProizv/(std::sqrt(dlinaVec1) * std::sqrt(dlinaVec2)) << "\n";
+    out << "similarity coefficient of two dictionaries: " << vecProizv/(std::sqrt(dlinaVec1) * std::sqrt(dlinaVec2)) << "\n";
   }
   else
   {
