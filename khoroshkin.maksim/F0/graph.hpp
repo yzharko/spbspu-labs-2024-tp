@@ -28,7 +28,7 @@ namespace khoroshkin
     void printAdjList();
     void printAdjMatrix();
 
-    void sortTopological();
+    std::string sortTopological(bool returnLikeStr = false);
   private:
     std::map< T, std::list< T > > graph;
 
@@ -248,12 +248,12 @@ void khoroshkin::Graph< T >::printAdjMatrix()
 }
 
 template< typename T >
-void khoroshkin::Graph< T >::sortTopological()
+std::string khoroshkin::Graph< T >::sortTopological(bool retunLikeString)
 {
   if (graph.empty())
   {
     std::cout << "Graph is empty!\n";
-    return;
+    return "";
   }
 
   std::list< std::pair< T, std::list< T > > > graphList{};
@@ -275,12 +275,26 @@ void khoroshkin::Graph< T >::sortTopological()
     }
   }
 
-  while (!stack.empty())
+  std::string result = "";
+  if (!retunLikeString)
   {
-    std::cout << stack.top();
-    stack.pop();
-    std::cout << ((stack.empty()) ? "\n" : ", ");
+    while (!stack.empty())
+    {
+      std::cout << stack.top();
+      stack.pop();
+      std::cout << ((stack.empty()) ? "\n" : ", ");
+    }
   }
+  else
+  {
+    while (!stack.empty())
+    {
+      result.append(std::to_string(stack.top()));
+      stack.pop();
+      result.append(((stack.empty()) ? "\n" : ", "));
+    }
+  }
+  return result;
 }
 
 template< typename T >

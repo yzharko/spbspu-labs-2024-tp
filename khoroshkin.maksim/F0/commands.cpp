@@ -121,7 +121,7 @@ void khoroshkin::sortCmd(Graph< int > & graph, std::istream & is, std::ostream &
   }
 }
 
-void khoroshkin::sortCmd(Graph< int > & graph, std::istream & is, std::ostream & out)
+void khoroshkin::saveCmd(Graph< int > & graph, std::istream & is, std::ostream & out)
 {
   std::string filename;
   if (!(is >> filename))
@@ -129,6 +129,6 @@ void khoroshkin::sortCmd(Graph< int > & graph, std::istream & is, std::ostream &
     out << "Error: wrong output filename!\n";
   }
   std::ofstream outputFile(filename);
-  outputFile << graph.sortTopological();
+  outputFile << graph.sortTopological(true);
   out << "Saved successfully!\n";
 }
