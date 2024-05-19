@@ -19,6 +19,7 @@ int main()
   cmds["delete"] = std::bind(sobolevsky::getDelete, myContainer, std::placeholders::_1);
   cmds["select"] = std::bind(sobolevsky::getSelect, myContainer, std::placeholders::_1, std::placeholders::_2);
   cmds["rename"] = std::bind(sobolevsky::getRename, myContainer, std::placeholders::_1);
+  cmds["compareDicts"] = std::bind(sobolevsky::getCompareDicts, myContainer, std::placeholders::_1, std::placeholders::_2);
   std::string cmd;
   while (std::cin >> cmd)
   {

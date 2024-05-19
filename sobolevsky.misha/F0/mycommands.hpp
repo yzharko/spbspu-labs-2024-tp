@@ -22,6 +22,7 @@ namespace sobolevsky
   void wordCount(mypair &myPair, std::istream & in, std::ostream & out);
   void getRename(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in);
   void save(mypair &myPair, std::istream & in);
+  void getCompareDicts(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out);
 
   void error(std::ostream & out, const std::string &text);
   bool isNameHere(mypair &pair, const std::string &name);
