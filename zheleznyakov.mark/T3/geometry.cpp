@@ -34,6 +34,11 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
   std::vector< Point > polygon;
   for (size_t i = 0; i < pointsAmount; i++)
   {
+    if (in.get() == '\n')
+    {
+      in.setstate(std::ios::failbit);
+      return in;
+    }
     Point temp{};
     in >> temp;
     polygon.push_back(temp);
