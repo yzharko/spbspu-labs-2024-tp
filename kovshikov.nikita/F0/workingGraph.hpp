@@ -19,6 +19,7 @@ namespace kovshikov
   void getCountVertex(Graph& graph, std::ostream& out);
   void outEdge(Graph& graph, std::ostream& out);
   void outMax(Graph& graph, std::ostream& out);
+  void outName(std::string key, std::ostream& out);
 }
 
 #endif

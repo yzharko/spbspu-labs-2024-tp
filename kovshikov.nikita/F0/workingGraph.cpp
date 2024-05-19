@@ -143,3 +143,8 @@ void kovshikov::outMax(Graph& graph, std::ostream& out)
 {
   graph.getMax(out);
 }
+
+void kovshikov::outName(std::string key, std::ostream& out)
+{
+  out << key << "\n";
+}
