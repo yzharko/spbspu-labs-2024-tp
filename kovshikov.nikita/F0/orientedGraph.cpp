@@ -55,6 +55,11 @@ std::string kovshikov::Graph::getVertex(std::pair< size_t, Node > vertex)
   return vertex.second.value;
 }
 
+size_t kovshikov::Graph::getCountEdge(std::pair< size_t, Node > vertex)
+{
+  return vertex.second.edges.size();
+}
+
 size_t kovshikov::getKey(std::pair< size_t, Graph::Node > vertex)
 {
   return vertex.first;
@@ -222,23 +227,9 @@ size_t kovshikov::Graph::getVertexWeight(size_t key)
   {
     throw;
   }
-  size_t degree = 0;
   std::vector< size_t > sum;
   std::transform(tree.at(key).edges.begin(), tree.at(key).edges.end(), std::back_inserter(sum), getWeightEdge);
-  degree += std::accumulate(sum.begin(), sum.end(), 0);
-  std::vector< size_t > allKeys;
-  std::transform(tree.begin(), tree.end(), std::back_inserter(allKeys), getKey);
-  std::vector< size_t > keys;
-  std::copy_if(allKeys.begin(), allKeys.end(), std::back_inserter(keys), std::bind(noThis, key, std::placeholders::_1));
-  size_t size = keys.size();
-  for(size_t i = 0; i < size; i++)
-  {
-    if(tree[keys[i]].edges.find(key) != tree[keys[i]].edges.end())
-    {
-      degree += tree[keys[i]].edges[key];
-    }
-  }
-  return degree;
+  return std::accumulate(sum.begin(), sum.end(), 0);
 }
 
 size_t kovshikov::Graph::getDegree(size_t key)
@@ -296,6 +287,13 @@ size_t kovshikov::Graph::getOwn(size_t key)
   return own;
 }
 
+size_t kovshikov::Graph::getEdges()
+{
+  std::vector< size_t > count;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(count), getCountEdge);
+  return std::accumulate(count.begin(), count.end(), 0);
+}
+
 //вывод
 void kovshikov::Graph::outKeys() //??
 {
@@ -306,11 +304,11 @@ void kovshikov::Graph::outKeys() //??
   std::cout << "\n";
 }
 
-void kovshikov::Graph::outGraph() const
+void kovshikov::Graph::outGraph(std::ostream& out) const
 {
   if(isEmpty())
   {
-    std::cout << "This graph is empty" << "\n";
+    out << "This graph is empty" << "\n";
   }
   else
   {
@@ -319,10 +317,10 @@ void kovshikov::Graph::outGraph() const
     size_t size = tree.size();
     for(size_t i = 0; i < size; i++)
     {
-      std::cout << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
+      out << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
       if(tree.at(keysList[i]).edges.empty())
       {
-        std::cout << 0 << "\n";
+        out << 0 << "\n";
       }
       else
       {
@@ -333,11 +331,11 @@ void kovshikov::Graph::outGraph() const
         {
           if(j == count - 1)
           {
-            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "\n";
+            out << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "\n";
           }
           else
           {
-            std::cout << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "  ";
+            out << keysWith[j] << " : " << tree.at(keysList[i]).edges.at(keysWith[j]) << "  ";
           }
         }
       }
@@ -355,4 +353,29 @@ bool kovshikov::Graph::isEmpty() const noexcept
 size_t kovshikov::Graph::getSize() const noexcept
 {
   return tree.size();
+}
+
+bool kovshikov::Graph::comp(std::pair< size_t, Node > left, std::pair< size_t, Node > right, Graph& graph)
+{
+  return graph.getDegree(left.first) > graph.getDegree(right.first);
+}
+void kovshikov::Graph::getMax(std::ostream& out)
+{
+  using namespace std::placeholders;
+  std::vector< std::pair< size_t, Node > > tempVector(tree.begin(), tree.end());
+  std::sort(tempVector.begin(), tempVector.end(), std::bind(comp, _1, _2, *this));
+  size_t max = tempVector.front().first;
+  std::vector< size_t > keys;
+  std::transform(tree.begin(), tree.end(), std::back_inserter(keys), getKey);
+  std::vector< size_t > keysWithout;
+  std::copy_if(keys.begin(), keys.end(), std::back_inserter(keysWithout), std::bind(noThis, max, _1));
+  size_t size = keysWithout.size();
+  for(size_t i = 0; i < size; i++)
+  {
+    if(getDegree(max) == getDegree(keysWithout[i]))
+    {
+      out << keysWithout[i] << " ";
+    }
+  }
+  out << max << "\n";
 }

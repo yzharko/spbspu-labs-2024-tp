@@ -95,26 +95,40 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
     working["own"] = std::bind(getOwn, _1, _2);
   }
 
+  std::map< std::string, std::function< void(Graph& graph, std::ostream& out) > > outInThisGraph;
+  {
+    using namespace std::placeholders;
+    outInThisGraph["vertex"] = std::bind(getCountVertex, _1, _2);
+    outInThisGraph["edge"] = std::bind(outEdge, _1, _2);
+    outInThisGraph["max"] = std::bind(outMax, _1, _2);
+  }
+
   std::string command;
-  while(std::cin >> command)
+  while(std::cin >> command && command != "stop")
   {
     try
     {
       working.at(command)(graphsList.at(key), std::cin);
     }
-    catch(const std::exception& error)
+    catch(const std::out_of_range& error)
     {
-      if(command == "vertex")
+      try
       {
-        getCountVertex(graphsList.at(key), std::cout);
+        outInThisGraph.at(command)(graphsList.at(key), std::cout);
       }
-      else
+      catch(const std::out_of_range& error)
       {
-        std::cout << "<ERROR>\n";
-        std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения
+        std::cout << "<INVALID COMMAND>\n";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-      }
+      }//нужна ли еще обработка логической ошибки???
+    }
+    catch(const std::logic_error& error)
+    {
+      std::cout << "<ERROR>\n";
+      std::cout << error.what() << "\n";
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 }
@@ -130,13 +144,7 @@ void kovshikov::outputGraphs(const std::map< std::string, Graph >& graphsList, s
 
 void kovshikov::outputVertexes(const std::map< std::string, Graph >& graphsList, std::ostream& out)
 {
-  std::vector < std::string > graphnames;
-  std::transform(graphsList.begin(), graphsList.end(), std::back_inserter(graphnames), getGraphname);
-  size_t size = graphnames.size();
-  for(size_t i = 0; i < size; i++)
-  {
-    std::string graphname = graphnames[i];
-    out << graphnames[i] << ":" << "\n";
-    graphsList.at(graphname).outGraph();
-  }
+  std::string graphname;
+  std::cin >> graphname;
+  graphsList.at(graphname).outGraph(out);
 }

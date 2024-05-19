@@ -133,3 +133,13 @@ void kovshikov::getCountVertex(Graph& graph, std::ostream& out)
 {
   out << graph.getSize() << "\n";
 }
+
+void kovshikov::outEdge(Graph& graph, std::ostream& out)
+{
+  out << graph.getEdges() << "\n";
+}
+
+void kovshikov::outMax(Graph& graph, std::ostream& out)
+{
+  graph.getMax(out);
+}

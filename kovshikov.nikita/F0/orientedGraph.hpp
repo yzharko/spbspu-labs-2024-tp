@@ -32,6 +32,7 @@ namespace kovshikov
     size_t getVertexWeight(size_t key);
     size_t getDegree(size_t key);
     size_t getOwn(size_t key);
+    size_t getEdges();
 
     void haveThisVertex(size_t key);
     void haveNot(size_t keyWho, size_t keyWith);
@@ -40,12 +41,16 @@ namespace kovshikov
 
     void getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey);
     std::string getVertex(std::pair< size_t, Node > vertex);
+    static size_t getCountEdge(std::pair< size_t, Node > vertex);
 
-    void outGraph() const; //вывод ключа, вершины, ребер
+    void outGraph(std::ostream& out) const; //вывод ключа, вершины, ребер
     void outKeys(); // вывод всех ключей нужен ли
 
+    void getMax(std::ostream& out);
     bool isEmpty() const noexcept;
     size_t getSize() const noexcept;
+
+    static bool comp(std::pair< size_t, Node > left, std::pair< size_t, Node > right, Graph& graph);
 
   private:
     std::map< size_t, Node > tree;
