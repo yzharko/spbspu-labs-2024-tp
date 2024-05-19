@@ -28,7 +28,7 @@ void sobolevsky::getCommands(std::istream & in, std::ostream & out)
   out << "7.5.save < filename > - saves the entire sorted frequency dictionary to a file\n";
 }
 
-void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in)
 {
   if (in.get() == '\n')
   {
@@ -72,7 +72,7 @@ void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec
   {
     myMultiMap.emplace(pair.second, pair.first);
   }
-  myVec->push_back(std::pair(file, myMultiMap));
+  myVec->push_back(std::pair< std::string, std::multimap<size_t, std::string> >(file, myMultiMap));
 }
 
 bool sobolevsky::isNameHere(mypair &pair,
@@ -81,7 +81,7 @@ const std::string &name)
   return pair.first == name;
 }
 
-void sobolevsky::getDelete(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getDelete(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in)
 {
   if (in.get() == '\n')
   {
@@ -123,7 +123,7 @@ void sobolevsky::getAllDicts(std::shared_ptr< std::vector< mypair > > myVec,std:
   }
 }
 
-void sobolevsky::getRename(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getRename(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in)
 {
   if (in.get() == '\n')
   {

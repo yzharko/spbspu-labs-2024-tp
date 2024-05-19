@@ -14,11 +14,11 @@ int main()
   myContainer(new std::vector< std::pair<std::string, std::multimap< size_t, std::string > > >());
   std::map< std::string, std::function< void(std::istream & in, std::ostream & out) > > cmds;
   cmds["commands"] = sobolevsky::getCommands;
-  cmds["loadAndCreate"] = std::bind(sobolevsky::getLoadAndCreate, myContainer, std::placeholders::_1, std::placeholders::_2);
+  cmds["loadAndCreate"] = std::bind(sobolevsky::getLoadAndCreate, myContainer, std::placeholders::_1);
   cmds["allDicts"] = std::bind(sobolevsky::getAllDicts, myContainer, std::placeholders::_1, std::placeholders::_2);
-  cmds["delete"] = std::bind(sobolevsky::getDelete, myContainer, std::placeholders::_1, std::placeholders::_2);
+  cmds["delete"] = std::bind(sobolevsky::getDelete, myContainer, std::placeholders::_1);
   cmds["select"] = std::bind(sobolevsky::getSelect, myContainer, std::placeholders::_1, std::placeholders::_2);
-  cmds["rename"] = std::bind(sobolevsky::getRename, myContainer, std::placeholders::_1, std::placeholders::_2);
+  cmds["rename"] = std::bind(sobolevsky::getRename, myContainer, std::placeholders::_1);
   std::string cmd;
   while (std::cin >> cmd)
   {
