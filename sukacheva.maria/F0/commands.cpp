@@ -5,13 +5,14 @@ namespace sukacheva
 {
   void help(std::ostream& out)
   {
-    out << "help – displays all available commands with parameters\n"; // +
+    out << "help - displays all available commands with parameters\n"; // +
     out << "create <graph> <graphname> - creating an empty graph called graphname\n"; //+
     out << "work <graphname> - switching to working with a graphname\n";
     out << "add <node> <name> – creating a graph vertex called name\n"; //+
-    out << "add < edge > < first_node, second_node, weight > - creating an edge between the vertices first_node and second_node with some weight\n"; //+
+    out << "add < edge > < first_node, second_node, weight > - "; //+
+    out << "creating an edge between the vertices first_node and second_node with some weight\n";
     out << "delete <node> <name> - deleting vertex name\n"; //+
-    out << "delete < edge > < first_node, second_node > - deleting an edge between the vertices first_node and second_node\n"; //+
+    out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n"; //+
     out << "capacity <graphname> - displays the number of vertices in the graph graphname\n"; //+
     out << "weightTable <graphname> - displays the weight table of the graph graphname\n";
     out << "get <shortest_path> <name> - getting the shortest path to vertex name\n";
