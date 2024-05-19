@@ -129,4 +129,7 @@ void kovshikov::getOwn(Graph& graph, std::istream& is)
   std::cout << graph.getOwn(key) << "\n";
 }
 
-
+void kovshikov::getCountVertex(Graph& graph, std::ostream& out)
+{
+  out << graph.getSize() << "\n";
+}

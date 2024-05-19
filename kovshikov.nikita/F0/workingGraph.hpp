@@ -15,6 +15,7 @@ namespace kovshikov
   void getWeight(Graph& graph, std::istream& is);
   void getDegree(Graph& graph, std::istream& is);
   void getOwn(Graph& graph, std::istream& is);
+  void getCountVertex(Graph& graph, std::ostream& out);
 }
 
 #endif

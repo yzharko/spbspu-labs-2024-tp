@@ -82,28 +82,33 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
   {
     throw std::logic_error("This graph is not there");
   }
-  else
-  {
-    std::map< std::string, std::function< void(Graph& graph, std::istream& is) > > working;
-    {
-      using namespace std::placeholders;
-      working["add"] = std::bind(add, _1, _2);
-      working["connect"] = std::bind(connect, _1, _2);
-      working["double"] = std::bind(getDouble, _1, _2);
-      working["delete"] = std::bind(deleteElement, _1, _2);
-      working["weight"] = std::bind(getWeight, _1, _2);
-      working["degree"] = std::bind(getDegree, _1, _2);
-      working["own"] = std::bind(getOwn, _1, _2);
-    }
 
-    std::string command;
-    while(std::cin >> command)
+  std::map< std::string, std::function< void(Graph& graph, std::istream& is) > > working;
+  {
+    using namespace std::placeholders;
+    working["add"] = std::bind(add, _1, _2);
+    working["connect"] = std::bind(connect, _1, _2);
+    working["double"] = std::bind(getDouble, _1, _2);
+    working["delete"] = std::bind(deleteElement, _1, _2);
+    working["weight"] = std::bind(getWeight, _1, _2);
+    working["degree"] = std::bind(getDegree, _1, _2);
+    working["own"] = std::bind(getOwn, _1, _2);
+  }
+
+  std::string command;
+  while(std::cin >> command)
+  {
+    try
     {
-      try
+      working.at(command)(graphsList.at(key), std::cin);
+    }
+    catch(const std::exception& error)
+    {
+      if(command == "vertex")
       {
-        working.at(command)(graphsList.at(key), std::cin);
+        getCountVertex(graphsList.at(key), std::cout);
       }
-      catch(const std::exception& error)
+      else
       {
         std::cout << "<ERROR>\n";
         std::cout << error.what() << "\n"; //при out_of_range не должно быть вывода сообщения
