@@ -187,6 +187,27 @@ size_t kovshikov::Graph::getWeight(size_t keyWho, size_t keyWith)
   }
 }
 
+void kovshikov::Graph::change(size_t count, size_t who, size_t with)
+{
+  if(tree.at(who).edges.find(with) == tree.at(who).edges.end())
+  {
+    throw std::logic_error("There is no connection");
+  }
+  if(tree.at(who).edges.at(with) < count)
+  {
+    throw std::logic_error("links are less than the requested number");
+  }
+  tree.at(who).edges.at(with) -= count;
+  if(tree.at(with).edges.find(who) == tree.at(with).edges.end())
+  {
+    createEdge(with, who, count);
+  }
+  else
+  {
+    tree.at(with).edges.at(who) += count;
+  }
+}
+
 //особенность создания графа
 void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
 {

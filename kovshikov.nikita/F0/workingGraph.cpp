@@ -148,3 +148,12 @@ void kovshikov::outName(std::string key, std::ostream& out)
 {
   out << key << "\n";
 }
+
+void kovshikov::change(Graph& graph, std::istream& is)
+{
+  size_t count;
+  size_t who;
+  size_t with;
+  is >> count >> who >> with;
+  graph.change(count, who, with);
+}

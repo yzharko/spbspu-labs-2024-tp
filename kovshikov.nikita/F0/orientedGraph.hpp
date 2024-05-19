@@ -26,6 +26,7 @@ namespace kovshikov
     void increaseWeight(size_t keyWho, size_t keyWith, size_t increase);
     void decreaseWeight(size_t keyWho, size_t keyWith, size_t decrease);
     size_t getWeight(size_t keyWho, size_t keyWith);
+    void change(size_t count, size_t who, size_t with);
 
     void connect(size_t whoKey, size_t count, size_t weight);
 

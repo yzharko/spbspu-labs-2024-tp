@@ -94,6 +94,7 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
     working["weight"] = std::bind(getWeight, _1, _2);
     working["degree"] = std::bind(getDegree, _1, _2);
     working["own"] = std::bind(getOwn, _1, _2);
+    working["change"] = std::bind(change, _1, _2);
   }
 
   std::map< std::string, std::function< void(Graph& graph, std::ostream& out) > > outInThisGraph;
@@ -105,65 +106,39 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
   }
 
   std::string command;
-  std::streambuf* original_cin = is.rdbuf();
-  bool fileStream = false;
 
   while(is >> command && command != "stop")
   {
-    if (command == "write")
+    try
     {
-      std::string filename;
-      is >> filename;
-      std::ifstream file(filename);
-      if(!file)
-      {
-        std::cout << "Failed to open file: " << filename << "\n";
-      }
-      else
-      {
-        is.rdbuf(file.rdbuf()); // Используем содержимое файла вместо std::cin
-        fileStream = true;
-      }
+      working.at(command)(graphsList.at(key), is);
     }
-    else
+    catch(const std::out_of_range& error)
     {
       try
       {
-        working.at(command)(graphsList.at(key), is);
+        outInThisGraph.at(command)(graphsList.at(key), std::cout);
       }
       catch(const std::out_of_range& error)
       {
-        try
+        if(command == "graphname")
         {
-          outInThisGraph.at(command)(graphsList.at(key), std::cout);
+          outName(key, std::cout);
         }
-        catch(const std::out_of_range& error)
+        else
         {
-          if(command == "graphname")
-          {
-            outName(key, std::cout);
-          }
-          else
-          {
-            std::cout << "<INVALID COMMAND>\n";
-            is.clear();
-            is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-          }
+          std::cout << "<INVALID COMMAND>\n";
+          is.clear();
+          is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
-      }//нужна ли еще обработка логической ошибки???
-      catch(const std::logic_error& error)
-      {
-        std::cout << "<ERROR>\n";
-        std::cout << error.what() << "\n";
-        is.clear();
-        is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
+    }//нужна ли еще обработка логической ошибки???
+    catch(const std::logic_error& error)
+    {
+      std::cout << error.what() << "\n";
+      is.clear();
+      is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-  }
-  if(fileStream == true && is.eof())
-  {
-    std::cout << "end\n"; //
-    is.rdbuf(original_cin);
   }
 }
 
