@@ -16,6 +16,7 @@ int main()
     availableCmds["print"] = std::bind(khoroshkin::printCmd, std::ref(graph), std::ref(std::cin), _1);
     availableCmds["edge"] = std::bind(khoroshkin::edgeCmd, std::ref(graph), std::ref(std::cin), _1);
     availableCmds["sort"] = std::bind(khoroshkin::sortCmd, std::ref(graph), std::ref(std::cin), _1);
+    availableCmds["save"] = std::bind(khoroshkin::saveCmd, std::ref(graph), std::ref(std::cin), _1);
   }
 
   std::string cmd;
