@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <functional>
 
+using mypair = std::pair< std::string, std::multimap< size_t, std::string > >;
+
 void sobolevsky::getCommands(std::istream & in, std::ostream & out)
 {
   if (in.get() != '\n')
@@ -26,8 +28,7 @@ void sobolevsky::getCommands(std::istream & in, std::ostream & out)
   out << "7.5.save < filename > - сохраняет в файл txt весь отсортированный частотный словарь\n";
 }
 
-void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
-std::string > > > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -74,14 +75,13 @@ std::string > > > > myVec, std::istream & in, std::ostream & out)
   myVec->push_back(std::pair(file, myMultiMap));
 }
 
-bool sobolevsky::isNameHere(std::pair< std::string, std::multimap< size_t, std::string > > &pair,
+bool sobolevsky::isNameHere(mypair &pair,
 const std::string &name)
 {
   return pair.first == name;
 }
 
-void sobolevsky::getDelete(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
-std::string > > > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getDelete(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -93,7 +93,7 @@ std::string > > > > myVec, std::istream & in, std::ostream & out)
   {
     throw std::invalid_argument("ERROR: INVALID COMMAND\n");
   }
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere
+  std::function< bool(mypair &) > bindIsNameHere
   = std::bind(isNameHere,std::placeholders::_1, name);
   if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
   {
@@ -105,8 +105,7 @@ std::string > > > > myVec, std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::getAllDicts(std::shared_ptr< std::vector< std::pair< std::string,
-std::multimap< size_t, std::string > > > > myVec,std::istream & in, std::ostream & out)
+void sobolevsky::getAllDicts(std::shared_ptr< std::vector< mypair > > myVec,std::istream & in, std::ostream & out)
 {
   if (myVec->size() == 0)
   {
@@ -118,14 +117,13 @@ std::multimap< size_t, std::string > > > > myVec,std::istream & in, std::ostream
     throw std::invalid_argument("ERROR: INVALID COMMAND\n");
   }
 
-  for (std::pair< std::string, std::multimap< size_t, std::string > > &pair : *myVec)
+  for (mypair &pair : *myVec)
   {
     out << pair.first << "\n";
   }
 }
 
-void sobolevsky::getRename(std::shared_ptr< std::vector< std::pair< std::string,
-std::multimap< size_t, std::string > > > > myVec, std::istream & in, std::ostream & out)
+void sobolevsky::getRename(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -133,9 +131,9 @@ std::multimap< size_t, std::string > > > > myVec, std::istream & in, std::ostrea
   }
   std::string oldName, newName;
   in >> oldName >> newName;
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindOldName
+  std::function< bool(mypair &) > bindOldName
   = std::bind(isNameHere, std::placeholders::_1, oldName);
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindNewName
+  std::function< bool(mypair &) > bindNewName
   = std::bind(isNameHere, std::placeholders::_1, newName);
   if(std::find_if(myVec->begin(), myVec->end(), bindOldName) != myVec->end() &&
   std::find_if(myVec->begin(), myVec->end(), bindNewName) == myVec->end())
@@ -152,7 +150,7 @@ std::multimap< size_t, std::string > > > > myVec, std::istream & in, std::ostrea
   }
 }
 
-void sobolevsky::dictOutput(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+void sobolevsky::dictOutput(mypair &myPair,
 std::ostream & out, size_t n, bool mode)
 {
   size_t i = 0;
@@ -173,7 +171,7 @@ std::ostream & out, size_t n, bool mode)
     }
 }
 
-void sobolevsky::holyTrinity(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+void sobolevsky::holyTrinity(mypair &myPair,
 std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
@@ -195,7 +193,7 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::printDict(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+void sobolevsky::printDict(mypair &myPair,
 std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
@@ -241,7 +239,7 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::uniqeWords(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+void sobolevsky::uniqeWords(mypair &myPair,
 std::istream & in, std::ostream & out)
 {
   if (in.get() != '\n')
@@ -258,7 +256,7 @@ std::istream & in, std::ostream & out)
   }
 }
 
-void sobolevsky::wordCount(std::pair< std::string, std::multimap< size_t, std::string > > &myPair,
+void sobolevsky::wordCount(mypair &myPair,
 std::istream & in, std::ostream & out)
 {
   if (in.get() != '\n')
@@ -268,7 +266,7 @@ std::istream & in, std::ostream & out)
   out << myPair.second.size() << "\n";
 }
 
-void sobolevsky::save(std::pair< std::string, std::multimap< size_t, std::string > > &myPair, std::istream &in)
+void sobolevsky::save(mypair &myPair, std::istream &in)
 {
   if (in.get() == '\n')
   {
@@ -286,6 +284,50 @@ void sobolevsky::save(std::pair< std::string, std::multimap< size_t, std::string
     throw std::invalid_argument("ERROR: INVALID COMMAND\n");
   }
   dictOutput(myPair, file, myPair.second.size(), true);
+}
+
+void sobolevsky::getSelect(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
+{
+  if (in.get() == '\n')
+  {
+    throw std::invalid_argument("ERROR: INVALID COMMAND\n");
+  }
+  std::string name;
+  in >> name;
+  std::function< bool(mypair &) > bindIsNameHere
+  = std::bind(isNameHere, std::placeholders::_1, name);
+  if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
+  {
+    throw std::invalid_argument("ERROR: NO DICT WITH SUCH NAME\n");
+  }
+  mypair
+  currPair(*std::find_if(myVec->begin(), myVec->end(), bindIsNameHere));
+  std::map< std::string, std::function< void(mypair &, std::istream &, std::ostream &) > > commands;
+  commands["holyTrinity"] = holyTrinity;
+  commands["printDict"] = printDict;
+  commands["uniqueWords"] = uniqeWords;
+  commands["wordCount"] = wordCount;
+  commands["save"] = std::bind(save, std::placeholders::_1, std::placeholders::_2);
+  std::string cmd;
+  while (in >> cmd)
+  {
+    try
+    {
+      commands.at(cmd)(currPair, in, out);
+    }
+    catch(const std::out_of_range & e)
+    {
+      sobolevsky::error(out, "ERROR: INVALID COMMAND\n");
+      in.clear();
+      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    catch(const std::invalid_argument & e)
+    {
+      sobolevsky::error(out, e.what());
+      in.clear();
+      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 }
 
 void sobolevsky::error(std::ostream & out, const std::string &text)
