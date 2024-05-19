@@ -12,17 +12,20 @@ void sobolevsky::getCommands(std::istream & in, std::ostream & out)
   {
     throw std::exception();
   }
-  out << "1.commands - вывод списка доступных пользователю команд\n";
-  out << "2.loadAndCreate < filename > - загрузка текста из файла и создание частотного словаря\n";
-  out << "3.delete < name > - удаление частотного словаря\n";
-  out << "4.allDicts - выводит имена всех словарей\n";
-  out << "5.compareDicts < name1 > < name2 > - сравнение двух частотных словарей\n";
-  out << "6.rename < oldName > < newName > - переименование словаря\n";
-  out << "7.1.1.holyTrinity - выводит три самых часто встречаемых слова в словаре\n";
-  out << "7.1.2.holyTrinity -amount - выводит три самых часто встречаемых слова в словаре\n";
-  out << "7.3.unigueWords - выводит список уникальных слов без повторений\n";
-  out << "7.4.wordCount - выводит кол-во слов в тексте\n";
-  out << "7.5.save < filename > - сохраняет в файл txt весь отсортированный частотный словарь\n";
+  out << "1.commands - output of the list of commands available to the user\n";
+  out << "2.loadAndCreate < filename > - loading text from a file and creating a frequency dictionary\n";
+  out << "3.delete < name > - frequency dictionary deletion\n";
+  out << "4.allDicts - displays the names of all dictionaries\n";
+  out << "5.compareDicts < name1 > < name2 > - comparison of two frequency dictionaries\n";
+  out << "6.rename < oldName > < newName > - dictionary renaming\n";
+  out << "7.select < name > - selecting a vocabulary for further work specifically with that vocabulary alone\n";
+  out << "7.1.1.holyTrinity - outputs the three most frequently occurring words in the dictionary\n";
+  out << "7.1.2.holyTrinity -amount - outputs the three most frequently occurring words in the dictionary\n";
+  out << "7.2.1.printDict -(n/all) - output a sorted list of a certain number of words without their frequency\n";
+  out << "7.2.2.printDict -(n/all) -amount - output a sorted list of a certain number of words with their frequency\n";
+  out << "7.3.unigueWords - outputs a list of unique words with no repetitions\n";
+  out << "7.4.wordCount - outputs the number of words in the text\n";
+  out << "7.5.save < filename > - saves the entire sorted frequency dictionary to a file\n";
 }
 
 void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in, std::ostream & out)
