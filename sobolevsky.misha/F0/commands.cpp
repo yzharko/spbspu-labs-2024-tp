@@ -288,52 +288,6 @@ void sobolevsky::save(std::pair< std::string, std::multimap< size_t, std::string
   dictOutput(myPair, file, myPair.second.size(), true);
 }
 
-void sobolevsky::getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
-std::string > > > > myVec, std::istream & in, std::ostream & out)
-{
-  if (in.get() == '\n')
-  {
-    throw std::invalid_argument("ERROR: INVALID COMMAND\n");
-  }
-  std::string name;
-  in >> name;
-  std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere
-  = std::bind(isNameHere, std::placeholders::_1, name);
-  if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
-  {
-    throw std::invalid_argument("ERROR: NO DICT WITH SUCH NAME\n");
-  }
-  std::pair< std::string, std::multimap< size_t, std::string > >
-  currPair(*std::find_if(myVec->begin(), myVec->end(), bindIsNameHere));
-  std::map< std::string, std::function< void(std::pair< std::string, std::multimap< size_t,
-  std::string > > &, std::istream &, std::ostream &) > > commands;
-  commands["holyTrinity"] = holyTrinity;
-  commands["printDict"] = printDict;
-  commands["uniqueWords"] = uniqeWords;
-  commands["wordCount"] = wordCount;
-  commands["save"] = std::bind(save, std::placeholders::_1, std::placeholders::_2);
-  std::string cmd;
-  while (in >> cmd)
-  {
-    try
-    {
-      commands.at(cmd)(currPair, in, out);
-    }
-    catch(const std::out_of_range & e)
-    {
-      sobolevsky::error(out, "ERROR: INVALID COMMAND\n");
-      in.clear();
-      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-    catch(const std::invalid_argument & e)
-    {
-      sobolevsky::error(out, e.what());
-      in.clear();
-      in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
-  }
-}
-
 void sobolevsky::error(std::ostream & out, const std::string &text)
 {
   out << text;
