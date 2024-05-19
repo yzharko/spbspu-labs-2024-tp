@@ -38,13 +38,11 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
     in >> temp;
     polygon.push_back(temp);
   }
-  ref = Polygon{polygon};
-  std::string tmp;
-  std::getline(in, tmp);
-  if (tmp != "")
+  if (polygon.size() != pointsAmount || in.get() != '\n')
   {
     in.setstate(std::ios::failbit);
   }
+  ref = Polygon{polygon};
   return in;
 };
 
