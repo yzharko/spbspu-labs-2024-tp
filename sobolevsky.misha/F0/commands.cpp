@@ -289,8 +289,7 @@ void sobolevsky::save(std::pair< std::string, std::multimap< size_t, std::string
 }
 
 void sobolevsky::getSelect(std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t,
-std::string > > > > myVec,
-std::istream & in, std::ostream & out)
+std::string > > > > myVec, std::istream & in, std::ostream & out)
 {
   if (in.get() == '\n')
   {
@@ -299,8 +298,7 @@ std::istream & in, std::ostream & out)
   std::string name;
   in >> name;
   std::function< bool(std::pair< std::string, std::multimap< size_t, std::string > > &) > bindIsNameHere
-  = std::bind(isNameHere,
-  std::placeholders::_1, name);
+  = std::bind(isNameHere, std::placeholders::_1, name);
   if (std::find_if(myVec->begin(), myVec->end(), bindIsNameHere) == myVec->end())
   {
     throw std::invalid_argument("ERROR: NO DICT WITH SUCH NAME\n");
