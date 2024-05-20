@@ -21,6 +21,7 @@ int main()
     cmds["enter"] = std::bind(commands::enter, _1, _2, _3, _4);
   }
 
+  std::cout << prompt(activeString);
   std::string currentCommand = "";
   while (std::cin >> currentCommand)
   {
@@ -38,6 +39,7 @@ int main()
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
+    std::cout << prompt(activeString);
   }
   return 0;
 }

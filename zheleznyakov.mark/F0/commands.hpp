@@ -19,5 +19,6 @@ namespace zheleznyakov
   }
 
   std::string statusString(std::string, std::string);
+  std::string prompt(std::string);
 }
 #endif

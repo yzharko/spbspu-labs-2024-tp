@@ -6,6 +6,11 @@ std::string zheleznyakov::statusString(std::string msg, std::string status)
   return "[" + status + "] " + msg;
 }
 
+std::string zheleznyakov::prompt(std::string active)
+{
+  return active == "" ? "menu> " : "(" + active + ")> ";
+}
+
 std::ostream & zheleznyakov::commands::help(std::istream & in, std::ostream & out)
 {
   if (in.peek() != '\n')
