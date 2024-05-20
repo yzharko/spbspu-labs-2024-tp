@@ -269,6 +269,44 @@ void doroshenko::sortByAlphabet(std::map< std::string, dictionary >& dicts, std:
   dicts.emplace(dictName, temp);
 }
 
+void doroshenko::printTop(std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
+{
+  auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
+  std::string dictName;
+  in >> dictName;
+  if (dicts.find(dictName) == dicts.end())
+  {
+    warningMes(out);
+    return;
+  }
+  dictionary dictToSort = dicts.find(dictName)->second;
+  if (dictToSort.empty())
+  {
+    return;
+  }
+  else if (std::isdigit(dictToSort.begin()->first[0]))
+  {
+    auto it = dictToSort.rbegin();
+    for (int i = 0; i < 3; ++i)
+    {
+      out << it->first << ": " << it->second << "\n";
+      ++it;
+    }
+    return;
+  }
+  std::multimap< std::string, std::string > temp;
+  for (const auto& pair : dictToSort)
+  {
+    temp.emplace(pair.second, pair.first);
+  }
+  auto it = temp.rbegin();
+  for (int i = 0; i < 3; ++i)
+  {
+    out << it->first << ": " << it->second << "\n";
+    ++it;
+  }
+}
+
 void doroshenko::warning(std::ostream& output, const std::string& mes)
 {
   output << mes;

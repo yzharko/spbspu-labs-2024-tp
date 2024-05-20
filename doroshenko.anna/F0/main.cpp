@@ -16,6 +16,7 @@ int main()
     commands["print"] = std::bind(doroshenko::printDict, _1, _2, _3);
     commands["sort"] = std::bind(doroshenko::sortDict, _1, _2, _3);
     commands["write"] = std::bind(doroshenko::writeToFile, _1, _2, _3);
+    commands["top"] = std::bind(doroshenko::printTop, _1, _2, _3);
   }
   auto warningInvCom = std::bind(doroshenko::warning, std::placeholders::_1, "<INVALID COMMAND>\n");
   std::string cmd;

@@ -18,6 +18,7 @@ namespace doroshenko
   void findKey(dictionary& dict, std::istream& input, std::ostream& output);
   void openFile(dictionary& dict, std::istream& input, std::ostream& output);
   void writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void printTop(std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out);
   void warning(std::ostream& output, const std::string& mes);
 }
 
