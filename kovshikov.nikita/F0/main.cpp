@@ -50,7 +50,6 @@ int main()
     }
     catch(const std::logic_error& error)
     {
-      std::cout << "<ERROR>\n"; //надо будет убрать
       std::cout << error.what() << "\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');

@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include <sstream>
 #include <vector>
 #include "createGraph.hpp"
 
@@ -12,7 +13,7 @@ void kovshikov::createGraph(std::map< std::string, Graph >& graphsList, std::ist
   is >> parameter;
   if(std::all_of(parameter.begin(), parameter.end(), isDigit) == true)
   {
-    unsigned long long count = std::stoll(parameter);  //create< count, graphname >
+    unsigned long long count = std::stoll(parameter);
     Graph graph;
     for(size_t i = 1; i <= count; i++)
     {
@@ -34,13 +35,13 @@ void kovshikov::createGraph(std::map< std::string, Graph >& graphsList, std::ist
   }
   else
   {
-    graphsList[parameter]; //create< graphname >
+    graphsList[parameter];
   }
 }
 
 void kovshikov::createLonely(std::map< std::string, Graph >& graphsList, std::istream& is)
 {
-  std::string graphname; //lonely< name > < count >
+  std::string graphname;
   is >> graphname;
   std::string parameter;
   is >> parameter;
@@ -62,7 +63,6 @@ void kovshikov::createLonely(std::map< std::string, Graph >& graphsList, std::is
 
 void kovshikov::deleteGraph(std::map< std::string, Graph >& graphsList, std::istream& is)
 {
-  //delete< graphname >
   std::string key;
   is >> key;
   if(graphsList.find(key) == graphsList.end())
@@ -106,9 +106,11 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
   }
 
   std::string command;
+  bool flag = false;
 
-  while(is >> command && command != "stop")
+  while(is >> command)
   {
+    flag = false;
     try
     {
       working.at(command)(graphsList.at(key), is);
@@ -127,17 +129,31 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
         }
         else
         {
+          flag = true;
           std::cout << "<INVALID COMMAND>\n";
           is.clear();
           is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
         }
       }
-    }//нужна ли еще обработка логической ошибки???
+    }
     catch(const std::logic_error& error)
     {
+      flag = true;
       std::cout << error.what() << "\n";
       is.clear();
       is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    if(flag == true && is.peek() == '\n')
+    {
+      break;
+    }
+    if(flag == false && is.get() == '\n' && is.peek() == '\n')
+    {
+      break;
+    }
+    else if(flag == false)
+    {
+      is.putback('\n');
     }
   }
 }

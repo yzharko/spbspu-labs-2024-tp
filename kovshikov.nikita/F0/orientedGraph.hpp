@@ -44,8 +44,7 @@ namespace kovshikov
     std::string getVertex(std::pair< size_t, Node > vertex);
     static size_t getCountEdge(std::pair< size_t, Node > vertex);
 
-    void outGraph(std::ostream& out) const; //вывод ключа, вершины, ребер
-    void outKeys(); // вывод всех ключей нужен ли
+    void outGraph(std::ostream& out) const;
 
     void getMax(std::ostream& out);
     bool isEmpty() const noexcept;

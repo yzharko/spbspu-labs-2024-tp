@@ -6,7 +6,6 @@
 #include <vector>
 #include "orientedGraph.hpp"
 
-//проверка-исключения
 void kovshikov::Graph::haveThisVertex(size_t key)
 {
   if(tree.find(key) == tree.end())
@@ -42,7 +41,6 @@ bool kovshikov::noThis(size_t whoKey, size_t randomKey)
   return whoKey != randomKey;
 }
 
-//возвращение элементов, вспомогатедьные функции
 void kovshikov::Graph::getConnectKeys(std::vector< size_t >& connectKeys, size_t whoKey)
 {
    std::vector< size_t > keys;
@@ -75,14 +73,13 @@ size_t kovshikov::getWeightEdge(std::pair< size_t, size_t > edge)
   return edge.second;
 }
 
-//добавление-удаление вершины
 void kovshikov::Graph::addVertex(size_t key, std::string str)
 {
   tree[key] = Node(str);
 }
 
 void kovshikov::Graph::deleteVertex(size_t key)
-{ //обратить внимание
+{
   try
   {
     haveThisVertex(key);
@@ -106,7 +103,6 @@ void kovshikov::Graph::deleteVertex(size_t key)
   tree.erase(key);
 }
 
-//взаимодействие с ребрами
 void kovshikov::Graph::createEdge(size_t keyWho, size_t keyWith, size_t weight)
 {
   try
@@ -208,7 +204,6 @@ void kovshikov::Graph::change(size_t count, size_t who, size_t with)
   }
 }
 
-//особенность создания графа
 void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
 {
   size_t size = getSize() - 1;
@@ -218,7 +213,6 @@ void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
   getConnectKeys(connectKeys, whoKey);
   for(size_t i = 1; i <= numCircules; i++)
   {
-    //STL с помощью адресной арифметики!!!!!
     if(i == numCircules)
     {
       for(size_t j = 1; j <= remainder; j++)
@@ -236,10 +230,8 @@ void kovshikov::Graph::connect(size_t whoKey, size_t count, size_t weight)
   }
 }
 
-//функции для системы команд
 size_t kovshikov::Graph::getVertexWeight(size_t key)
-{ // в других может быть такая же ошибка, надо проверить
-  //считал с учетом веса
+{
   try
   {
     haveThisVertex(key);
@@ -255,7 +247,6 @@ size_t kovshikov::Graph::getVertexWeight(size_t key)
 
 size_t kovshikov::Graph::getDegree(size_t key)
 {
-  //степень - количество ребер входящих и исходящих
   try
   {
     haveThisVertex(key);
@@ -283,7 +274,6 @@ size_t kovshikov::Graph::getDegree(size_t key)
 
 size_t kovshikov::Graph::getOwn(size_t key)
 {
-  //эту функцию можно использовать в методе getVertexWeight
   try
   {
     haveThisVertex(key);
@@ -315,16 +305,6 @@ size_t kovshikov::Graph::getEdges()
   return std::accumulate(count.begin(), count.end(), 0);
 }
 
-//вывод
-void kovshikov::Graph::outKeys() //??
-{
-  std::vector< size_t > keysList;
-  std::transform(tree.begin(), tree.end(), std::back_inserter(keysList), getKey);
-  using output_it = std::ostream_iterator< size_t >;
-  std::copy(keysList.cbegin(), keysList.cend(), output_it{std::cout, " "});
-  std::cout << "\n";
-}
-
 void kovshikov::Graph::outGraph(std::ostream& out) const
 {
   if(isEmpty())
@@ -338,7 +318,7 @@ void kovshikov::Graph::outGraph(std::ostream& out) const
     size_t size = tree.size();
     for(size_t i = 0; i < size; i++)
     {
-      out << keysList[i] << " " << tree.at(keysList[i]).value << " "; //ключ и вершину
+      out << keysList[i] << " " << tree.at(keysList[i]).value << " ";
       if(tree.at(keysList[i]).edges.empty())
       {
         out << 0 << "\n";
@@ -364,7 +344,6 @@ void kovshikov::Graph::outGraph(std::ostream& out) const
   }
 }
 
-//cтандартные проверки
 bool kovshikov::Graph::isEmpty() const noexcept
 {
   return tree.empty();
