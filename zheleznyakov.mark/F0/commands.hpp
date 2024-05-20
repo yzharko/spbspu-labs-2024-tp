@@ -13,5 +13,7 @@ namespace zheleznyakov
     std::ostream & list(strings_t & strings, std::istream & in, std::ostream & out);
     std::ostream & rm(strings_t & strings, std::istream & in, std::ostream & out);
   }
+
+  std::string statusString(std::string, std::string);
 }
 #endif

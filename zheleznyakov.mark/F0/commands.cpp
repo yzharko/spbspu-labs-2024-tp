@@ -1,11 +1,16 @@
 #include "commands.hpp"
 #include <iostream>
 
+std::string zheleznyakov::statusString(std::string msg, std::string status)
+{
+  return "[" + status + "] " + msg;
+}
+
 std::ostream & zheleznyakov::commands::help(std::istream & in, std::ostream & out)
 {
   if (in.peek() != '\n')
   {
-    throw std::logic_error("No additional args allowed");
+    out << statusString("No additional args allowed\n\n", "warn");
   }
 
   return out << "F0 - Cross-references\n"
