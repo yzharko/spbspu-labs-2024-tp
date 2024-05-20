@@ -1,0 +1,14 @@
+#ifndef DICT_HPP
+#define DICT_HPP
+#include <string>
+#include <map>
+
+namespace zheleznyakov
+{
+  using text_t = std::map< std::string, std::map< std::string, size_t > >;
+  using texts_t = std::map< std::string, text_t >;
+
+  size_t getWordsCount(std::string);
+  size_t getLinesCount(std::string);
+}
+#endif
