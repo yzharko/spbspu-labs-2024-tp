@@ -5,7 +5,7 @@
 
 namespace zheleznyakov
 {
-  using string_t = std::map< std::string, std::map< std::string, size_t > >;
+  using string_t = std::pair< std::string, std::map< std::string, size_t > >;
   using strings_t = std::map< std::string, string_t >;
 
   size_t getWordsCount(std::string);

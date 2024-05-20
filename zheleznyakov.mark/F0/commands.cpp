@@ -1,5 +1,7 @@
 #include "commands.hpp"
 #include <iostream>
+#include <fstream>
+#include <limits>
 
 std::string zheleznyakov::statusString(std::string msg, std::string status)
 {
@@ -15,7 +17,7 @@ std::ostream & zheleznyakov::commands::help(std::istream & in, std::ostream & ou
 {
   if (in.peek() != '\n')
   {
-    throw std::logic_error(statusString("No additional args allowed\n\n", "warn"));
+    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
   }
 
   return out << "F0 - Cross-references\n"
@@ -41,7 +43,7 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
 {
   if (in.peek() != '\n')
   {
-    throw std::logic_error(statusString("No additional args allowed\n\n", "warn"));
+    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
   }
 
   out << "Total: " << strings.size() << "\n";
@@ -97,11 +99,39 @@ std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & 
   return out;
 }
 
+std::ostream & zheleznyakov::commands::read(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
+{
+  if (active == "")
+  {
+    throw std::logic_error(statusString("Not in string mode\n", "error"));
+  }
+  if (in.peek() != '\n')
+  {
+    std::string flag = "";
+    in >> flag;
+    if (flag != "-f")
+    {
+      throw std::logic_error(statusString("No known flag is passed\n", "error"));
+    }
+    std::string filename = "";
+    in >> filename;
+    std::ifstream fin(filename);
+    if (!fin)
+    {
+      throw std::logic_error(statusString("Unable to read the file\n", "error"));
+    }
+    std::string contents((std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
+    string_t s{ contents, {} };
+    strings[active] = s;
+  }
+  return out;
+}
+
 std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream & in, std::ostream & out)
 {
   if (in.peek() != '\n')
   {
-    out << statusString("No additional args allowed\n\n", "warn");
+    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
   }
   if (active == "")
   {

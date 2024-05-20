@@ -15,6 +15,7 @@ namespace zheleznyakov
     std::ostream & create(strings_t & strings, std::istream & in, std::ostream & out);
     std::ostream & enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
 
+    std::ostream & read(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
     std::ostream & quit(std::string &, std::istream & in, std::ostream & out);
   }
 

@@ -7,7 +7,7 @@ int main()
   using namespace zheleznyakov;
   using std::istream;
   using std::ostream;
-  
+
   std::string activeString = "";
   strings_t strings;
 
@@ -20,6 +20,7 @@ int main()
     cmds["create"] = std::bind(commands::create, _1, _3, _4);
     cmds["enter"] = std::bind(commands::enter, _1, _2, _3, _4);
 
+    cmds["read"] = std::bind(commands::read, _1, _2, _3, _4);
     cmds["quit"] = std::bind(commands::quit, _2, _3, _4);
   }
 
