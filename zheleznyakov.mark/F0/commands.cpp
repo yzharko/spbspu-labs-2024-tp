@@ -41,3 +41,16 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
   }
   return out;
 }
+
+
+std::ostream & zheleznyakov::commands::rm(strings_t & strings, std::istream & in, std::ostream & out)
+{
+  std::string keyToDelete = "";
+  in >> keyToDelete;
+  if (strings.find(keyToDelete) == strings.end())
+  {
+    throw std::logic_error("Error: Key not found\n");
+  }
+  strings.erase(keyToDelete);
+  return out;
+}

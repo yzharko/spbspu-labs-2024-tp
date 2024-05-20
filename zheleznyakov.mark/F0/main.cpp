@@ -14,6 +14,7 @@ int main()
     using namespace std::placeholders;
     cmds["help"] = std::bind(zheleznyakov::commands::help, _2, _3);
     cmds["list"] = std::bind(zheleznyakov::commands::list, _1, _2, _3);
+    cmds["rm"] = std::bind(zheleznyakov::commands::rm, _1, _2, _3);
   }
 
   std::string currentCommand = "";
@@ -21,11 +22,15 @@ int main()
   {
     try
     {
+      if (cmds.find(currentCommand) == cmds.end())
+      {
+        throw std::logic_error("Command not found");
+      }
       cmds.at(currentCommand)(strings, std::cin, std::cout);
     }
-    catch (const std::exception &e)
+    catch (const std::exception & e)
     {
-      std::cout << "<INVALID COMMAND>\n";
+      std::cout << e.what() << '\n';
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
