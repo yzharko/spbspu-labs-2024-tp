@@ -36,17 +36,19 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
 {
   if (in.peek() != '\n')
   {
-    throw std::logic_error("No additional args allowed");
+    out << statusString("No additional args allowed\n\n", "warn");
   }
-
-  out << "Total: " << strings.size() << "\n\nNames:\n";
-  for (auto i = strings.begin(); i != strings.end(); i++)
+  out << "Total: " << strings.size() << "\n";
+  if (!strings.empty())
   {
-    out << i->first << '\n';
+    out << "\nNames:\n";
+    for (auto i = strings.begin(); i != strings.end(); i++)
+    {
+      out << i->first << '\n';
+    }
   }
   return out;
 }
-
 
 std::ostream & zheleznyakov::commands::rm(strings_t & strings, std::istream & in, std::ostream & out)
 {
@@ -54,8 +56,21 @@ std::ostream & zheleznyakov::commands::rm(strings_t & strings, std::istream & in
   in >> keyToDelete;
   if (strings.find(keyToDelete) == strings.end())
   {
-    throw std::logic_error("Error: Key not found\n");
+    throw std::logic_error(statusString("Key not found\n", "warn"));
   }
   strings.erase(keyToDelete);
+  return out;
+}
+
+std::ostream & zheleznyakov::commands::create(strings_t & strings, std::istream & in, std::ostream & out)
+{
+  std::string keyToCreate = "";
+  in >> keyToCreate;
+  if (strings.find(keyToCreate) != strings.end())
+  {
+    throw std::logic_error(statusString("Key is already in the list\n", "warn"));
+  }
+  string_t data;
+  strings.insert(std::make_pair(keyToCreate, data));
   return out;
 }

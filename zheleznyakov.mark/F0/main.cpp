@@ -17,6 +17,7 @@ int main()
     cmds["help"] = std::bind(commands::help, _3, _4);
     cmds["list"] = std::bind(commands::list, _1, _3, _4);
     cmds["rm"] = std::bind(commands::rm, _1, _3, _4);
+    cmds["create"] = std::bind(commands::create, _1, _3, _4);
   }
 
   std::string currentCommand = "";
