@@ -40,6 +40,8 @@ int main(int argc, char **argv)
         std::cout << count(polygons, std::cin) << "\n";
       } else if (cmd == "RECTS") {
       } else if (cmd == "RIGHTSHAPES") {
+      } else {
+        throw std::runtime_error("Invalid command");
       }
     } catch (const std::runtime_error &er) {
       iofmtguard guard(std::cout);

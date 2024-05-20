@@ -81,6 +81,9 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
   } else if (subcmd == "MEAN") {
     areas = getAreas(polygons);
     double sum = std::accumulate(areas.begin(), areas.end(), 0.0);
+    if (polygons.empty()) {
+      throw std::runtime_error("Invalid command");
+    }
     return sum / static_cast< double >(polygons.size());
   } else {
     size_t count;
