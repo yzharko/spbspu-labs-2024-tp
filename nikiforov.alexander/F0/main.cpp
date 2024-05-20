@@ -3,7 +3,7 @@
 #include "menu.hpp"
 #include "commands.hpp"
 
-int main()
+int main(int argc, char* argv[])
 {
   using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
@@ -14,7 +14,8 @@ int main()
   std::map< std::string, std::function < void(mapDictionaries_t&, std::istream&, std::ostream&) > > command;
   {
     command["help"] = std::bind(nikiforov::printCommands);
-    command["create"] = std::bind(nikiforov::createDictionary, _1, _2);
+    command["create"] = std::bind(nikiforov::createDictionary, _1, _2, "");
+    command["open"] = nikiforov::open;
     command["delete"] = nikiforov::deleteDictionary;
     command["list"] = std::bind(nikiforov::printNamesDictionaries, _1, _3);
     command["add"] = nikiforov::add;
@@ -31,7 +32,7 @@ int main()
   }
 
   std::string cmd = "";
-
+  
   std::cout << "Enter any valid command (the 'help' command to output all available commands)\n";
   while (std::cin >> cmd)
   {

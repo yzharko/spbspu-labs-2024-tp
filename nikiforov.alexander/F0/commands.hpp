@@ -10,8 +10,10 @@ namespace nikiforov
 {
   std::string cutNameFile(std::string& str);
 
-  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in);
+  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::string mkdir);
   std::map<std::string, size_t> getDictionary(std::istream& in);
+
+  void open(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 
   void deleteDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 

@@ -1,30 +1,45 @@
 #include "commands.hpp"
 #include <fstream>
+#include <string>
 
 std::string nikiforov::cutNameFile(std::string& str)
 {
-  return std::string(str.substr(0, str.find(".txt")));
+  size_t startPos = 0;
+  size_t finalPos = str.find(".txt");
+  if (str.find_last_of('\\') != std::string::npos)
+  {
+    startPos = str.find_last_of('\\') + 1;
+    finalPos -= 4;
+  }
+  return std::string(str.substr(startPos, finalPos));
 }
 
-void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in)
+void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::string mkdir)
 {
   std::string fileName = "";
   in >> fileName;
-  std::ifstream input;
-  input.open(fileName);
-
-  if (input.is_open())
+  if (!fileName.empty())
   {
-    std::string name = cutNameFile(fileName);
-    std::map< std::string, size_t > dictionary = nikiforov::getDictionary(input);
-    mapDictionaries.emplace(name, dictionary);
-  }
-  else
-  {
-    throw std::out_of_range("");
-  }
+    if (!mkdir.empty())
+    {
+      fileName = mkdir + "\\" + fileName;
+    }
+    std::ifstream input;
+    input.open(fileName);
 
-  input.close();
+    if (input.is_open())
+    {
+      std::string name = cutNameFile(fileName);
+      std::map< std::string, size_t > dictionary = nikiforov::getDictionary(input);
+      mapDictionaries.emplace(name, dictionary);
+    }
+    else
+    {
+      throw std::out_of_range("");
+    }
+
+    input.close();
+  }
 }
 
 std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
@@ -46,6 +61,28 @@ std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
     }
   }
   return std::map<std::string, size_t>(dictionary);
+}
+
+void nikiforov::open(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string mkdir = "";
+  in >> mkdir;
+  std::string intermediateFile = "intermediateFileWithFiles.txt";
+  std::string command = "dir " + mkdir + "\\*.txt /b > " + intermediateFile;
+  if (!std::system(command.c_str()))
+  {
+    std::ifstream fin;
+    fin.open(intermediateFile);
+    while (!fin.eof())
+    {
+      createDictionary(mapDictionaries, fin, mkdir);
+    }
+    out << " The files in the folder have been successfully read\n";
+  }
+  else
+  {
+    out << " There is no folder with the specified name\n";
+  }
 }
 
 void nikiforov::deleteDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
