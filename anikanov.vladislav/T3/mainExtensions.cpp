@@ -151,7 +151,7 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
 
     try {
       specificNumber = std::stoull(subcmd);
-      if (count < 3) {
+      if (specificNumber < 3) {
         throw std::runtime_error("Invalid command");
       }
     } catch (const std::exception &err) {
