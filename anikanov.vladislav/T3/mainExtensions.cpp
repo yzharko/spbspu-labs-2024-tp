@@ -107,14 +107,20 @@ void anikanov::max(const std::vector< Polygon > &polygons, std::istream &in, std
   in >> subcmd;
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
-    auto maxAreaPolygon = *std::max_element(areas.begin(), areas.end());
-    out << std::fixed << std::setprecision(1) << maxAreaPolygon << '\n';
-    return;
+    auto maxIter = std::max_element(areas.begin(), areas.end());
+    if (maxIter != areas.end()) {
+      auto maxAreaPolygon = *maxIter;
+      out << std::fixed << std::setprecision(1) << maxAreaPolygon << '\n';
+      return;
+    }
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
-    auto maxVertexesPolygon = *std::max_element(count.begin(), count.end());
-    out << std::fixed << std::setprecision(1) << maxVertexesPolygon << '\n';
-    return;
+    auto maxIter = std::max_element(count.begin(), count.end());
+    if (maxIter != count.end()) {
+      auto maxVertexesPolygon = *maxIter;
+      out << std::fixed << std::setprecision(1) << maxVertexesPolygon << '\n';
+      return;
+    }
   }
   throw std::runtime_error("Invalid command");
 }
@@ -125,14 +131,20 @@ void anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, std
   in >> subcmd;
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
-    auto minAreaPolygon = *std::min_element(areas.begin(), areas.end());
-    out << std::fixed << std::setprecision(1) << minAreaPolygon << '\n';
-    return;
+    auto minIter = std::min_element(areas.begin(), areas.end());
+    if (minIter != areas.end()) {
+      auto minAreaPolygon = *minIter;
+      out << std::fixed << std::setprecision(1) << minAreaPolygon << '\n';
+      return;
+    }
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
-    auto minVertexesPolygon = *std::min_element(count.begin(), count.end());
-    out << std::fixed << std::setprecision(1) << minVertexesPolygon << '\n';
-    return;
+    auto minIter = std::min_element(count.begin(), count.end());
+    if (minIter != count.end()) {
+      auto minVertexesPolygon = *minIter;
+      out << std::fixed << std::setprecision(1) << minVertexesPolygon << '\n';
+      return;
+    }
   }
   throw std::runtime_error("Invalid command");
 }
