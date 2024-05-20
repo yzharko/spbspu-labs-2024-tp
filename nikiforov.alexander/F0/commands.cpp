@@ -16,7 +16,7 @@ std::string nikiforov::cutNameFile(std::string& str)
   return std::string(str.substr(startPos, finalPos));
 }
 
-void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::string mkdir)
+void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out, std::string mkdir)
 {
   std::string fileName = "";
   in >> fileName;
@@ -37,7 +37,8 @@ void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istrea
     }
     else
     {
-      throw std::out_of_range("");
+      input.close();
+      out << " Invalid file name\n";
     }
 
     input.close();
@@ -98,7 +99,7 @@ bool nikiforov::deleteDelimeters(std::string& str)
   return true;
 }
 
-bool nikiforov::checkAlpha(std::string& str) 
+bool nikiforov::checkAlpha(std::string& str)
 {
   for (size_t i = 0; i < str.size(); i++)
   {

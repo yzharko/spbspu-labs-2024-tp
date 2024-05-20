@@ -10,7 +10,7 @@ namespace nikiforov
 {
   std::string cutNameFile(std::string& str);
 
-  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::string mkdir);
+  void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out, std::string mkdir);
   std::map<std::string, size_t> getDictionary(std::istream& in);
   bool deleteDelimeters(std::string& str);
   bool checkAlpha(std::string& str);

@@ -14,7 +14,7 @@ int main()
   std::map< std::string, std::function < void(mapDictionaries_t&, std::istream&, std::ostream&) > > command;
   {
     command["help"] = std::bind(nikiforov::printCommands);
-    command["create"] = std::bind(nikiforov::createDictionary, _1, _2, "");
+    command["create"] = std::bind(nikiforov::createDictionary, _1, _2, _3, "");
     command["open"] = nikiforov::open;
     command["delete"] = nikiforov::deleteDictionary;
     command["list"] = std::bind(nikiforov::printNamesDictionaries, _1, _3);
