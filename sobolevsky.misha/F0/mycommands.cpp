@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <functional>
 #include <cmath>
+#include <cctype>
 
 using mypair = std::pair< std::string, std::multimap< size_t, std::string > >;
 
@@ -27,6 +28,22 @@ void sobolevsky::getCommands(std::istream & in, std::ostream & out)
   out << "7.3.unigueWords - outputs a list of unique words with no repetitions\n";
   out << "7.4.wordCount - outputs the number of words in the text\n";
   out << "7.5.save < filename > - saves the entire sorted frequency dictionary to a file\n";
+}
+
+char sobolevsky::charCheck(char in)
+{
+  if (in <= 'Z' && in >= 'A')
+  {
+    return in - ('Z' - 'z');
+  }
+  else if (in <= 'z' && in >= 'a')
+  {
+    return in;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec, std::istream & in)
@@ -55,9 +72,13 @@ void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec
       text.clear();
       text.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-
     std::string word;
     text >> word;
+    std::transform(word.begin(), word.end(), word.begin(), charCheck);
+    if (word[0] > 'z' || word[0] < 'a')
+    {
+      continue;
+    }
     if (myMap.find(word) == myMap.end())
     {
       myMap.emplace(word, 1);

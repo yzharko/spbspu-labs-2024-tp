@@ -27,6 +27,7 @@ namespace sobolevsky
   void error(std::ostream & out, const std::string &text);
   bool isNameHere(mypair &pair, const std::string &name);
   void dictOutput(mypair &myPair, std::ostream & out, size_t n, bool mode);
+  char charCheck(char in);
 }
 
 #endif
