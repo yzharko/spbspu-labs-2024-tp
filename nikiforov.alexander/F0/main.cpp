@@ -32,7 +32,7 @@ int main(int argc, char* argv[])
   }
 
   std::string cmd = "";
-  
+
   std::cout << "Enter any valid command (the 'help' command to output all available commands)\n";
   while (std::cin >> cmd)
   {
