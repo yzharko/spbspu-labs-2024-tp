@@ -13,18 +13,18 @@ void doroshenko::help(std::istream& input, std::ostream& output)
   {
     throw std::exception();
   }
-  std::string text = "   1) help - вывод списка доступных команд\n \
-  2) create <name> - создание словаря с именем name\n \
-  3) remove <name> - удаление словаря с именем name\n \
-  4) print <name> - вывод содержимого словаря с именем name\n \
-  5) sort <frequency> <name> - сортировка словаря по частоте\n \
-  6) sort <alphabet> <name> - сортировка словаря по алфавиту\n \
-  7) delete <key> - удаление элемента с ключом key\n \
-  8) find <key> - вывод частоты словаря с ключом key\n \
-  9) open <filename> - открытие файла для создание из его содержимого словаря\n \
-  10) write <filename> - открытие файла для записи словаря\n \
-  11) stop - закрытие словаря для записи\n \
-  12) save - завершение работы с файлом, выход из режима редактирования, сохранение данных\n";
+  std::string text = "   1) help - output of available commands\n \
+  2) create <name> - create a dictionary named name\n \
+  3) remove <name> - delete a dictionary named name\n \
+  4) print <name> - output the contents of the dictionary named name\n \
+  5) sort <frequency> <name> - sort the dictionary by frequency\n \
+  6) sort <alphabet> <name> - sort the dictionary by alphabet\n \
+  7) delete <key> - delete the element\n \
+  8) find <key> - output the frequency of an element\n \
+  9) open <filename> - open a file to create dictionary from its contents\n \
+  10) write <filename> - open a file to write a dictionary\n \
+  11) stop - close the dictionary to edit\n \
+  12) save - shut down a file, exit edit module, save data\n";
   output << text;
 }
 
@@ -274,3 +274,4 @@ void doroshenko::warning(std::ostream& output, const std::string& mes)
 {
   output << mes;
 }
+
