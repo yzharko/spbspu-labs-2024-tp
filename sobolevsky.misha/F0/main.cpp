@@ -9,7 +9,7 @@
 
 int main()
 {
-  std::cout << "Для просмотра доступных команд введите \"commands\"\n";
+  std::cout << "To view the available commands, type \"commands\"\n";
   std::shared_ptr< std::vector< std::pair< std::string, std::multimap< size_t, std::string > > > >
   myContainer(new std::vector< std::pair<std::string, std::multimap< size_t, std::string > > >());
   std::map< std::string, std::function< void(std::istream & in, std::ostream & out) > > cmds;

@@ -75,7 +75,8 @@ void sobolevsky::getLoadAndCreate(std::shared_ptr< std::vector< mypair > > myVec
     std::string word;
     text >> word;
     std::transform(word.begin(), word.end(), word.begin(), charCheck);
-    if (word[0] > 'z' || word[0] < 'a')
+    word.erase(remove(word.begin(),word.end(),0),word.end());
+    if (word.length() < 1)
     {
       continue;
     }
