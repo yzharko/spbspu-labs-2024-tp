@@ -121,8 +121,19 @@ std::ostream & zheleznyakov::commands::read(strings_t & strings, std::string & a
       throw std::logic_error(statusString("Unable to read the file\n", "error"));
     }
     std::string contents((std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
-    string_t s{ contents, {} };
-    strings[active] = s;
+    wordpairs_t pairs = getDict(contents);
+    string_t currentStruct{ contents, pairs };
+    strings[active] = currentStruct;
+  }
+  return out;
+}
+
+std::ostream & zheleznyakov::commands::table(strings_t & strings, std::string & active, std::ostream & out)
+{
+  const wordpairs_t pairs = strings.at(active).second;
+  for (auto i = pairs.begin(); i != pairs.end(); i++)
+  {
+    out << i->first << ':' << i->second << '\n';
   }
   return out;
 }

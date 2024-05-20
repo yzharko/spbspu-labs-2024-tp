@@ -5,10 +5,13 @@
 
 namespace zheleznyakov
 {
-  using string_t = std::pair< std::string, std::map< std::string, size_t > >;
+  using wordpairs_t = std::map< std::string, size_t >;
+  using string_t = std::pair< std::string, wordpairs_t >;
   using strings_t = std::map< std::string, string_t >;
 
   size_t getWordsCount(std::string);
   size_t getLinesCount(std::string);
+
+  wordpairs_t getDict(const std::string &);
 }
 #endif

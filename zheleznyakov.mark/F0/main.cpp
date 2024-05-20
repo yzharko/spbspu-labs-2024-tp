@@ -21,6 +21,7 @@ int main()
     cmds["enter"] = std::bind(commands::enter, _1, _2, _3, _4);
 
     cmds["read"] = std::bind(commands::read, _1, _2, _3, _4);
+    cmds["table"] = std::bind(commands::table, _1, _2, _4);
     cmds["quit"] = std::bind(commands::quit, _2, _3, _4);
   }
 
