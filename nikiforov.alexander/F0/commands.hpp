@@ -12,6 +12,7 @@ namespace nikiforov
 
   void createDictionary(mapDictionaries_t& mapDictionaries, std::istream& in, std::string mkdir);
   std::map<std::string, size_t> getDictionary(std::istream& in);
+  bool deleteDelimeters(std::string& str);
 
   void open(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 

@@ -1,6 +1,7 @@
 #include "commands.hpp"
 #include <fstream>
 #include <string>
+#include <list>
 
 std::string nikiforov::cutNameFile(std::string& str)
 {
@@ -9,7 +10,7 @@ std::string nikiforov::cutNameFile(std::string& str)
   if (str.find_last_of('\\') != std::string::npos)
   {
     startPos = str.find_last_of('\\') + 1;
-    finalPos -= 4;
+    finalPos -= 5;
   }
   return std::string(str.substr(startPos, finalPos));
 }
@@ -47,27 +48,57 @@ std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
   std::map<std::string, size_t> dictionary;
 
   std::string word;
-  size_t frequency = 0;
 
   while (!in.eof())
   {
     if (in >> word)
     {
-      if (std::all_of(begin(word), end(word), std::isalpha))
+      if (deleteDelimeters(word))
       {
-        auto search = dictionary.find(word);
-        if (search == dictionary.end())
+        if (std::all_of(begin(word), end(word), std::isalpha))
         {
-          dictionary.emplace(word, 1);
-        }
-        else
-        {
-          dictionary.at(word) = search->second + 1;
+          auto search = dictionary.find(word);
+          if (search == dictionary.end())
+          {
+            dictionary.emplace(word, 1);
+          }
+          else
+          {
+            dictionary.at(word) = search->second + 1;
+          }
         }
       }
     }
   }
   return std::map<std::string, size_t>(dictionary);
+}
+
+bool nikiforov::deleteDelimeters(std::string& str)
+{
+  std::map< char, char > delimiters;
+  {
+    delimiters['"'] = '"';
+    delimiters['\''] = '\'';
+    delimiters['('] = ')';
+    delimiters['['] = ']';
+    delimiters['<'] = '>';
+    delimiters['{'] = '}';
+  }
+  auto pairDelimetrs = delimiters.find(str.front());
+  if (pairDelimetrs != delimiters.end())
+  {
+    if (str.back() == pairDelimetrs->second)
+    {
+      str.erase(str.begin());
+      str.erase(str.end() - 1);
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  return true;
 }
 
 void nikiforov::open(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
