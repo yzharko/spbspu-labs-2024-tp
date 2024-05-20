@@ -5,7 +5,7 @@
 
 int main()
 {
-  using dictionary = std::map< std::string, std::string >;
+  using dictionary = std::multimap< std::string, std::string >;
   std::map< std::string, dictionary > dicts;
   std::map< std::string, std::function< void(std::map< std::string, dictionary >&, std::istream&, std::ostream&) > > commands;
   {

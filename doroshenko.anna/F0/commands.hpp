@@ -6,7 +6,7 @@
 
 namespace doroshenko
 {
-  using dictionary = std::map< std::string, std::string >;
+  using dictionary = std::multimap< std::string, std::string >;
   void help(std::istream& input, std::ostream& output);
   void createDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
   void removeDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);

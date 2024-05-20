@@ -5,9 +5,9 @@
 #include <fstream>
 #include <vector>
 
-using dictionary = std::map< std::string, std::string >;
+using dictionary = std::multimap< std::string, std::string >;
 
-void doroshenko::help(std::istream & input, std::ostream & output)
+void doroshenko::help(std::istream& input, std::ostream& output)
 {
   if (input.peek() != '\n')
   {
@@ -54,7 +54,7 @@ void doroshenko::createDict(std::map< std::string, dictionary >& dicts, std::ist
       cmdDict.at(cmdType)(currentDict, input, output);
       dicts[dictName] = currentDict;
     }
-    catch(const std::out_of_range& e)
+    catch (const std::out_of_range& e)
     {
       warningMes(output);
       std::cin.clear();
@@ -110,7 +110,7 @@ void doroshenko::openFile(dictionary& dict, std::istream& input, std::ostream& o
       word.begin(),
       word.end(),
       lowercaseWord.begin(),
-      [](char c){ return std::tolower(c); }
+      [](char c) { return std::tolower(c); }
     );
     words.push_back(lowercaseWord);
   }
@@ -122,11 +122,14 @@ void doroshenko::openFile(dictionary& dict, std::istream& input, std::ostream& o
       words.end(),
       *it
     );
-    dict.emplace(*it, std::to_string(frequency));
+    if (dict.find(*it) == dict.end())
+    {
+      dict.emplace(*it, std::to_string(frequency));
+    }
   }
 }
 
-void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
+void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& outp)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "File does not exist\n");
   std::string filename;
@@ -135,7 +138,7 @@ void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, s
   out.open(filename, std::ios::app);
   if (!out)
   {
-    warningMes(output);
+    warningMes(outp);
     return;
   }
   auto warningMesDict = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
@@ -143,7 +146,7 @@ void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, s
   input >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMesDict(output);
+    warningMesDict(outp);
     return;
   }
   dictionary dict = dicts.find(dictName)->second;
@@ -193,7 +196,8 @@ void doroshenko::printDict(const std::map< std::string, dictionary >& dicts, std
 void doroshenko::sortDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
 {
   using namespace std::placeholders;
-  std::map< std::string, std::function< void(std::map< std::string, dictionary >&, std::istream&, std::ostream&) > > cmdSort;
+  using func = std::function< void(std::map< std::string, dictionary >&, std::istream&, std::ostream&) >;
+  std::map< std::string, func > cmdSort;
   cmdSort["frequency"] = std::bind(doroshenko::sortByFrequency, _1, _2, _3);
   cmdSort["alphabet"] = std::bind(doroshenko::sortByAlphabet, _1, _2, _3);
   auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
@@ -233,10 +237,10 @@ void doroshenko::sortByFrequency(std::map< std::string, dictionary >& dicts, std
   {
     return;
   }
-  std::map< std::string, std::string > temp;
+  std::multimap< std::string, std::string > temp;
   for (const auto& pair : dictToSort)
   {
-    temp[pair.second] = pair.first;
+    temp.emplace(pair.second, pair.first);
   }
   dicts.erase(dictName);
   dicts.emplace(dictName, temp);
@@ -257,10 +261,10 @@ void doroshenko::sortByAlphabet(std::map< std::string, dictionary >& dicts, std:
   {
     return;
   }
-  std::map< std::string, std::string > temp;
+  std::multimap< std::string, std::string > temp;
   for (const auto& pair : dictToSort)
   {
-    temp[pair.second] = pair.first;
+    temp.emplace(pair.second, pair.first);
   }
   dicts.erase(dictName);
   dicts.emplace(dictName, temp);
