@@ -1,5 +1,4 @@
 #include "dataTypes.hpp"
-#include <iostream>
 
 std::istream & zheleznyakov::operator>>(std::istream & in, IntIO &&dest)
 {
