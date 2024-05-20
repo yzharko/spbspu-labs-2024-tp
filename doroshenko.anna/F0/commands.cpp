@@ -129,67 +129,67 @@ void doroshenko::openFile(dictionary& dict, std::istream& input, std::ostream& o
   }
 }
 
-void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& outp)
+void doroshenko::writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "File does not exist\n");
   std::string filename;
-  input >> filename;
-  std::ofstream out;
-  out.open(filename, std::ios::app);
-  if (!out)
+  in >> filename;
+  std::ofstream output;
+  output.open(filename, std::ios::app);
+  if (!output)
   {
-    warningMes(outp);
+    warningMes(out);
     return;
   }
   auto warningMesDict = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
   std::string dictName;
-  input >> dictName;
+  in >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMesDict(outp);
+    warningMesDict(out);
     return;
   }
   dictionary dict = dicts.find(dictName)->second;
-  out << "\n" << dictName << "\n";
+  output << "\n" << dictName << "\n";
   for (auto it = dict.begin(); it != dict.end(); it++)
   {
-    out << it->first << ": " << it->second << "\n";
+    output << it->first << ": " << it->second << "\n";
   }
-  out.close();
+  output.close();
 }
 
-void doroshenko::removeDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
+void doroshenko::removeDict(std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
   std::string dictName;
-  input >> dictName;
+  in >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMes(output);
+    warningMes(out);
     return;
   }
   dicts.erase(dictName);
 }
 
-void doroshenko::printDict(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
+void doroshenko::printDict(const std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
   std::string dictName;
-  input >> dictName;
+  in >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMes(output);
+    warningMes(out);
     return;
   }
   dictionary dictToPrint = dicts.find(dictName)->second;
-  output << dictName << "\n";
+  out << dictName << "\n";
   if (dictToPrint.empty())
   {
     return;
   }
   for (auto it = dictToPrint.begin(); it != dictToPrint.end(); it++)
   {
-    output << it->first << ": " << it->second << "\n";
+    out << it->first << ": " << it->second << "\n";
   }
 }
 
@@ -222,14 +222,14 @@ void doroshenko::sortDict(std::map< std::string, dictionary >& dicts, std::istre
   }
 }
 
-void doroshenko::sortByFrequency(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
+void doroshenko::sortByFrequency(std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
   std::string dictName;
-  input >> dictName;
+  in >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMes(output);
+    warningMes(out);
     return;
   }
   dictionary dictToSort = dicts.find(dictName)->second;
@@ -246,14 +246,14 @@ void doroshenko::sortByFrequency(std::map< std::string, dictionary >& dicts, std
   dicts.emplace(dictName, temp);
 }
 
-void doroshenko::sortByAlphabet(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
+void doroshenko::sortByAlphabet(std::map< std::string, dictionary >& dicts, std::istream& in, std::ostream& out)
 {
   auto warningMes = std::bind(warning, std::placeholders::_1, "Dictionary does not exist\n");
   std::string dictName;
-  input >> dictName;
+  in >> dictName;
   if (dicts.find(dictName) == dicts.end())
   {
-    warningMes(output);
+    warningMes(out);
     return;
   }
   dictionary dictToSort = dicts.find(dictName)->second;
