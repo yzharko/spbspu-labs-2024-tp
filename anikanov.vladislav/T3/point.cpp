@@ -12,7 +12,7 @@ anikanov::Point &anikanov::Point::operator=(const anikanov::Point &point)
   return *this;
 }
 
-int anikanov::Point::operator-(const anikanov::Point &other) const
+double anikanov::Point::operator-(const anikanov::Point &other) const
 {
   return std::sqrt(std::pow(x - other.x, 2) + std::pow(y - other.y, 2));
 }

@@ -39,7 +39,9 @@ int main(int argc, char **argv)
       } else if (cmd == "COUNT") {
         std::cout << count(polygons, std::cin) << "\n";
       } else if (cmd == "RECTS") {
+        std::cout << rects(polygons) << "\n";
       } else if (cmd == "RIGHTSHAPES") {
+        std::cout << rightShapes(polygons) << "\n";
       } else {
         throw std::runtime_error("Invalid command");
       }

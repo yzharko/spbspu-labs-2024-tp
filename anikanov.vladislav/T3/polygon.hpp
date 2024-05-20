@@ -16,6 +16,7 @@ namespace anikanov {
     Polygon &operator=(const Polygon &polygon);
     size_t operator%(const size_t number) const;
     Point &operator[](size_t index);
+    const Point &operator[](size_t index) const;
     double getArea() const;
     double areaHelper(const Point &point1, const Point &point2) const;
     size_t getSize() const;

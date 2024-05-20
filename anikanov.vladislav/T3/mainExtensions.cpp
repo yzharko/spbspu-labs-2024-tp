@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 #include "polygon.hpp"
 
 using polygonArr = std::vector< anikanov::Polygon >;
@@ -182,4 +183,53 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
     });
   }
   return count;
+}
+
+bool anikanov::isRightAngle(const anikanov::Point& A, const anikanov::Point& B, const anikanov::Point& C) {
+  // Вычисляем длины сторон треугольника
+  double AB = A - B;
+  double BC = B - C;
+  double AC = A - C;
+
+  // Проверяем теорему Пифагора
+  return std::abs(AB * AB + BC * BC - AC * AC) < 1e-9;
+}
+
+
+size_t anikanov::rects(const std::vector< Polygon > &polygons)
+{
+  return std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+    if (pol.getSize() != 4) {
+      return false;
+    }
+
+    double side1 = pol[0] - pol[1];
+    double side2 = pol[1] - pol[2];
+    double side3 = pol[2] - pol[3];
+    double side4 = pol[3] - pol[0];
+
+    return side1 == side3 && side2 == side4 && isRightAngle(pol[0], pol[1], pol[2]);
+  });
+}
+
+bool anikanov::hasRightAngle(const anikanov::Polygon& polygon, size_t index) {
+  // Базовый случай: если мы проверили все углы, возвращаем false
+  if (index == polygon.getSize()) {
+    return false;
+  }
+
+  // Проверяем, является ли текущий угол прямым
+  if (isRightAngle(polygon[index], polygon[(index+1)%polygon.getSize()], polygon[(index+2)%polygon.getSize()])) {
+    return true;
+  }
+
+  // Рекурсивный вызов для следующего угла
+  return anikanov::hasRightAngle(polygon, index + 1);
+}
+
+size_t anikanov::rightShapes(const std::vector< Polygon > &polygons)
+{
+  return  std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol){
+    return anikanov::hasRightAngle(pol);
+  });
 }

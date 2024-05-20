@@ -21,6 +21,11 @@ anikanov::Point &anikanov::Polygon::operator[](size_t index)
   return points[index];
 }
 
+const anikanov::Point &anikanov::Polygon::operator[](size_t index) const
+{
+  return points[index];
+}
+
 size_t anikanov::Polygon::getSize() const
 {
   return points.size();
