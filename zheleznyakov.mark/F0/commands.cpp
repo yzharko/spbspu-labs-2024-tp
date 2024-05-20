@@ -133,7 +133,27 @@ std::ostream & zheleznyakov::commands::table(strings_t & strings, std::string & 
   const wordpairs_t pairs = strings.at(active).second;
   for (auto i = pairs.begin(); i != pairs.end(); i++)
   {
-    out << i->first << ':' << i->second << '\n';
+    out << i->first << ':' << i->second.size() << '\n';
+  }
+  return out;
+}
+
+std::ostream & zheleznyakov::commands::stats(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
+{
+  std::string word = "";
+  in >> word;
+  auto currentString = strings.at(active);
+  if (currentString.second.find(word) == currentString.second.end())
+  {
+    throw std::logic_error(statusString("Word is not found\n", "error"));
+  }
+  auto currentWord = currentString.second[word];
+  out << word << '\n'
+  << "Repeats: " << currentWord.size() << '\n'
+  << "Coords:\n";
+  for (auto i = currentWord.begin(); i != currentWord.end(); i++)
+  {
+    out << i->first << ';' << i->second << '\n';
   }
   return out;
 }
