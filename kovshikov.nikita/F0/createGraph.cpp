@@ -1,11 +1,11 @@
+#include "createGraph.hpp"
 #include <algorithm>
-#include <functional>
 #include <fstream>
-#include <iterator>
+#include <functional>
 #include <iostream>
+#include <iterator>
 #include <sstream>
 #include <vector>
-#include "createGraph.hpp"
 
 void kovshikov::createGraph(std::map< std::string, Graph >& graphsList, std::istream& is)
 {

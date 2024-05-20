@@ -1,7 +1,7 @@
 #ifndef WORKINGGRAPH_HPP
 #define WORKINGGRAPH_HPP
-#include "orientedGraph.hpp"
 #include <iostream>
+#include "orientedGraph.hpp"
 
 namespace kovshikov
 {

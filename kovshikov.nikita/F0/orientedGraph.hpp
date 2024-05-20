@@ -1,10 +1,10 @@
 #ifndef ORIENTEDGRAPH_HPP
 #define ORIENTEDGRAPH_HPP
-#include <vector>
-#include <string>
 #include <cstddef>
 #include <map>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace kovshikov
 {

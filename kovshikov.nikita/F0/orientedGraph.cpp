@@ -1,10 +1,10 @@
+#include "orientedGraph.hpp"
 #include <algorithm>
 #include <functional>
-#include <iterator>
 #include <iostream>
+#include <iterator>
 #include <numeric>
 #include <vector>
-#include "orientedGraph.hpp"
 
 void kovshikov::Graph::haveThisVertex(size_t key)
 {

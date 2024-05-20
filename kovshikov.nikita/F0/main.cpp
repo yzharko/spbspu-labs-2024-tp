@@ -1,5 +1,5 @@
-#include <functional>
 #include <exception>
+#include <functional>
 #include <iostream>
 #include <limits>
 #include "createGraph.hpp"
