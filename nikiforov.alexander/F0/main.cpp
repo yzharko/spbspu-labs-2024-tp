@@ -3,7 +3,7 @@
 #include "menu.hpp"
 #include "commands.hpp"
 
-int main(int argc, char* argv[])
+int main()
 {
   using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
