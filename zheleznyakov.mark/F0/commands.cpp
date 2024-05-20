@@ -138,7 +138,7 @@ std::ostream & zheleznyakov::commands::table(strings_t & strings, std::string & 
   return out;
 }
 
-std::ostream & zheleznyakov::commands::stats(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
+std::ostream & zheleznyakov::commands::info(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
 {
   std::string word = "";
   in >> word;

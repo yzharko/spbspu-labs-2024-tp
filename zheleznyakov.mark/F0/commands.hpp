@@ -17,7 +17,7 @@ namespace zheleznyakov
 
     std::ostream & read(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
     std::ostream & table(strings_t & strings, std::string & active, std::ostream & out);
-    std::ostream & stats(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
+    std::ostream & info(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
     std::ostream & quit(std::string &, std::istream & in, std::ostream & out);
   }
 
