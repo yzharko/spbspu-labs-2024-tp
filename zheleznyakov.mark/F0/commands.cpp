@@ -83,6 +83,41 @@ std::ostream & zheleznyakov::commands::create(strings_t & strings, std::istream 
   return out;
 }
 
+std::ostream & zheleznyakov::commands::cmp(strings_t & strings, std::istream & in, std::ostream & out)
+{
+  std::string l1 = "";
+  in >> l1;
+  if (!in)
+  {
+    in.setstate(std::ios::failbit);
+  }
+  if (strings.find(l1) == strings.end())
+  {
+    throw std::logic_error(statusString("Key 1 is not found\n", "error"));
+  }
+  std::string l2 = "";
+  in >> l2;
+  if (!in)
+  {
+    in.setstate(std::ios::failbit);
+  }
+  if (strings.find(l2) == strings.end())
+  {
+    throw std::logic_error(statusString("Key 2 is not found\n", "error"));
+  }
+  wordpairs_t s1 = strings.at(l1).second;
+  wordpairs_t s2 = strings.at(l2).second;
+  std::vector < std::string > matches;
+  for (auto i = s1.begin(); i != s1.end(); i++)
+  {
+    if (s2.find(i->first) != s2.end())
+    {
+      out << i->first << '\n';
+    }
+  }
+  return out;
+}
+
 std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
 {
   if (active != "")
@@ -143,12 +178,36 @@ std::ostream & zheleznyakov::commands::read(strings_t & strings, std::string & a
   return out;
 }
 
-std::ostream & zheleznyakov::commands::table(strings_t & strings, std::string & active, std::ostream & out)
+std::ostream & zheleznyakov::commands::table(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
 {
-  const wordpairs_t pairs = strings.at(active).second;
-  for (auto i = pairs.begin(); i != pairs.end(); i++)
+  if (active == "")
   {
-    out << i->first << ':' << i->second.size() << '\n';
+    throw std::logic_error(statusString("Not in string mode\n", "error"));
+  }
+  if (in.peek() != '\n')
+  {
+    std::string flag = "";
+    in >> flag;
+    if (flag != "-f")
+    {
+      throw std::logic_error(statusString("No known flag is passed\n", "error"));
+    }
+    std::string filename = "";
+    in >> filename;
+    std::ofstream fout(filename);
+    const wordpairs_t pairs = strings.at(active).second;
+    for (auto i = pairs.begin(); i != pairs.end(); i++)
+    {
+      fout << i->first << ':' << i->second.size() << '\n';
+    }
+  }
+  else
+  {
+    const wordpairs_t pairs = strings.at(active).second;
+    for (auto i = pairs.begin(); i != pairs.end(); i++)
+    {
+      out << i->first << ':' << i->second.size() << '\n';
+    }
   }
   return out;
 }

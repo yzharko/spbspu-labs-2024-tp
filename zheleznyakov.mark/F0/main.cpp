@@ -18,10 +18,11 @@ int main()
     cmds["list"] = std::bind(commands::list, _1, _3, _4);
     cmds["rm"] = std::bind(commands::rm, _1, _3, _4);
     cmds["create"] = std::bind(commands::create, _1, _3, _4);
+    cmds["cmp"] = std::bind(commands::cmp, _1, _3, _4);
     cmds["enter"] = std::bind(commands::enter, _1, _2, _3, _4);
 
     cmds["read"] = std::bind(commands::read, _1, _2, _3, _4);
-    cmds["table"] = std::bind(commands::table, _1, _2, _4);
+    cmds["table"] = std::bind(commands::table, _1, _2, _3, _4);
     cmds["info"] = std::bind(commands::info, _1, _2, _3, _4);
     cmds["stats"] = std::bind(commands::stats, _1, _2, _3, _4);
     cmds["quit"] = std::bind(commands::quit, _2, _3, _4);
