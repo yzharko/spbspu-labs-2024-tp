@@ -13,6 +13,9 @@ namespace zheleznyakov
     std::ostream & list(strings_t & strings, std::istream & in, std::ostream & out);
     std::ostream & rm(strings_t & strings, std::istream & in, std::ostream & out);
     std::ostream & create(strings_t & strings, std::istream & in, std::ostream & out);
+    std::ostream & enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out);
+
+    std::ostream & quit(std::string &, std::istream & in, std::ostream & out);
   }
 
   std::string statusString(std::string, std::string);

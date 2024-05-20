@@ -74,3 +74,19 @@ std::ostream & zheleznyakov::commands::create(strings_t & strings, std::istream 
   strings.insert(std::make_pair(keyToCreate, data));
   return out;
 }
+
+std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
+{
+  if (active != "")
+  {
+    throw std::logic_error(statusString("Already in string mode\n", "error"));
+  }
+  std::string toEnter = "";
+  in >> toEnter;
+  if (strings.find(toEnter) == strings.end())
+  {
+    throw std::logic_error(statusString("Key is not in the list\n", "error"));
+  }
+  active = toEnter;
+  return out << statusString("Now on string '" + active + "'\n", "info");
+}
