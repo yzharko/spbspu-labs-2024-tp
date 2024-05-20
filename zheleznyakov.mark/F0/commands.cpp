@@ -158,6 +158,18 @@ std::ostream & zheleznyakov::commands::info(strings_t & strings, std::string & a
   return out;
 }
 
+std::ostream & zheleznyakov::commands::stats(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
+{
+  if (in.peek() != '\n')
+  {
+    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
+  }
+  string_t currentString = strings.at(active);
+  out << "Total words in dict: " << currentString.second.size() << '\n'
+  << "Total chars: " << currentString.first.size() << "\n";
+  return out;
+}
+
 std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream & in, std::ostream & out)
 {
   if (in.peek() != '\n')
@@ -169,5 +181,9 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
     throw std::logic_error(statusString("Already in menu\n", "error"));
   }
   active = "";
+  if (in.peek() != '\n')
+  {
+    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
+  }
   return out;
 }

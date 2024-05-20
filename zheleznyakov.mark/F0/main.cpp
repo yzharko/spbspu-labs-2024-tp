@@ -23,6 +23,7 @@ int main()
     cmds["read"] = std::bind(commands::read, _1, _2, _3, _4);
     cmds["table"] = std::bind(commands::table, _1, _2, _4);
     cmds["info"] = std::bind(commands::info, _1, _2, _3, _4);
+    cmds["stats"] = std::bind(commands::stats, _1, _2, _3, _4);
     cmds["quit"] = std::bind(commands::quit, _2, _3, _4);
   }
 
