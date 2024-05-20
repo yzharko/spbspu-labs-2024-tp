@@ -15,7 +15,7 @@ std::ostream & zheleznyakov::commands::help(std::istream & in, std::ostream & ou
 {
   if (in.peek() != '\n')
   {
-    out << statusString("No additional args allowed\n\n", "warn");
+    throw std::logic_error(statusString("No additional args allowed\n\n", "warn"));
   }
 
   return out << "F0 - Cross-references\n"
@@ -41,8 +41,9 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
 {
   if (in.peek() != '\n')
   {
-    out << statusString("No additional args allowed\n\n", "warn");
+    throw std::logic_error(statusString("No additional args allowed\n\n", "warn"));
   }
+
   out << "Total: " << strings.size() << "\n";
   if (!strings.empty())
   {
@@ -93,5 +94,19 @@ std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & 
     throw std::logic_error(statusString("Key is not in the list\n", "error"));
   }
   active = toEnter;
-  return out << statusString("Now on string '" + active + "'\n", "info");
+  return out;
+}
+
+std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream & in, std::ostream & out)
+{
+  if (in.peek() != '\n')
+  {
+    out << statusString("No additional args allowed\n\n", "warn");
+  }
+  if (active == "")
+  {
+    throw std::logic_error(statusString("Already in menu\n", "error"));
+  }
+  active = "";
+  return out;
 }

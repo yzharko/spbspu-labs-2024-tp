@@ -19,6 +19,8 @@ int main()
     cmds["rm"] = std::bind(commands::rm, _1, _3, _4);
     cmds["create"] = std::bind(commands::create, _1, _3, _4);
     cmds["enter"] = std::bind(commands::enter, _1, _2, _3, _4);
+
+    cmds["quit"] = std::bind(commands::quit, _2, _3, _4);
   }
 
   std::cout << prompt(activeString);
