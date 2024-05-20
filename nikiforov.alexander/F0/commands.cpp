@@ -51,12 +51,19 @@ std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
 
   while (!in.eof())
   {
-    if (in >> word >> frequency)
+    if (in >> word)
     {
-      auto search = dictionary.find(word);
-      if (search == dictionary.end())
+      if (std::all_of(begin(word), end(word), std::isalpha))
       {
-        dictionary.emplace(word, frequency);
+        auto search = dictionary.find(word);
+        if (search == dictionary.end())
+        {
+          dictionary.emplace(word, 1);
+        }
+        else
+        {
+          dictionary.at(word) = search->second + 1;
+        }
       }
     }
   }
