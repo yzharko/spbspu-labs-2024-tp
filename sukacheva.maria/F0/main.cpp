@@ -1,35 +1,41 @@
 #include <iostream>
+#include <fstream>
+#include <functional>
+#include <map>
+#include <iterator>
+#include <limits>
 #include "graph.hpp"
+#include "commands.hpp"
 
 int main()
 {
   using namespace sukacheva;
-  Graph graph("ExampleGraph");
-
-  graph.addVertex("A");
-  graph.addVertex("B");
-  graph.addVertex("C");
-  graph.addVertex("D");
-
-  graph.addEdge("A", "B", 1);
-  graph.addEdge("A", "C", 4);
-  graph.addEdge("B", "C", 2);
-  graph.addEdge("B", "D", 5);
-  graph.addEdge("C", "D", 1);
-
-  size_t start = graph.getVertexIndex("A");
-  size_t end = graph.getVertexIndex("D");
-  std::pair<std::map<size_t, size_t>, std::map<size_t, size_t>> dijkstra = graph.dijkstraDistances("A");
-
-  std::cout << "Shortest distance from A to D: " << dijkstra.first[end] << std::endl;
-
-  std::vector< std::string > path = graph.dijkstraPath(dijkstra.second, "A", "D");
-  std::cout << "Path: ";
-  for (std::vector< std::string >::iterator it = path.begin(); it != path.end(); it++)
+  GraphList graphList;
+  std::map< std::string, std::function < void(GraphList& graphList, std::istream& in, std::ostream& out) > > commands;
   {
-    std::cout << *it << " ";
+    using namespace std::placeholders;
+    commands["help"] = std::bind(help, _3);
+    commands["create"] = std::bind(commandCreateGraph, _1, _2, _3);
+    commands["add"] = std::bind(commandAdd, _1, _2, _3);
+    commands["list"] = std::bind(printGraphList, _3, _1);
+    commands["graphname"] = std::bind(graphName, _1, _3);
+    commands["clear"] = std::bind(clearGraph, _1, _3);
+    commands["capacity"] = std::bind(capacity, _1, _2, _3);
+    commands["print"] = std::bind(commandPrint, _1, _2, _3);
   }
-  std::cout << std::endl;
-
+  std::string inputCommand = {};
+  while (std::cin >> inputCommand)
+  {
+    try
+    {
+      commands.at(inputCommand)(graphList, std::cin, std::cout);
+    }
+    catch (const std::exception& e)
+    {
+      std::cout << e.what();
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
   return 0;
 }

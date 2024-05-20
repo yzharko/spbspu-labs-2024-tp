@@ -2,27 +2,43 @@
 #include <queue>
 #include <limits>
 #include <stdexcept>
+#include <algorithm>
+#include <iterator>
 
 sukacheva::Graph::Graph(std::string GraphName_):
   GraphName(GraphName_),
   AdjacencyList()
 {}
 
-void sukacheva::Graph::addVertex(std::string name)
+void sukacheva::Graph::addVertex(std::string& name)
 {
+  auto it = std::find_if(
+    VertexesList.begin(),
+    VertexesList.end(),
+    [&name](const auto& vertex) { return vertex.second == name; }
+  );
+  if (it != VertexesList.end())
+  {
+    throw std::logic_error("Vertex with this name already exists.\n");
+  }
   size_t key = AdjacencyList.size();
   VertexesList.insert({key, name});
   std::map< size_t, size_t > edges;
-  AdjacencyList.insert({ key, edges});
+  AdjacencyList.insert({key, edges});
 }
 
-void sukacheva::Graph::addEdge(std::string start, std::string end, size_t weight)
+void sukacheva::Graph::addEdge(std::string& start, std::string& end, size_t weight)
 {
   size_t keyStart = getVertexIndex(start);
   size_t keyEnd = getVertexIndex(end);
   if (keyStart == keyEnd)
   {
     throw std::logic_error("<INVALID COMMAND>\n");
+  }
+  auto it = AdjacencyList[keyStart].find(keyEnd);
+  if (it != AdjacencyList[keyStart].end())
+  {
+    throw std::logic_error("Edge between these vertices already exists.\n");
   }
   AdjacencyList[keyStart][keyEnd] = weight;
   AdjacencyList[keyEnd][keyStart] = weight;
@@ -33,6 +49,33 @@ void sukacheva::Graph::deleteVertex(std::string name)
   size_t key = getVertexIndex(name);
   AdjacencyList.erase(key);
   VertexesList.erase(key);
+  std::map< size_t, std::string > updatedVertexesList;
+  std::transform(
+    VertexesList.begin(),
+    VertexesList.end(),
+    std::inserter(updatedVertexesList, updatedVertexesList.end()),
+    [key](const auto& vertex) { return std::make_pair(vertex.first > key ? vertex.first - 1 : vertex.first, vertex.second); }
+  );
+  VertexesList = std::move(updatedVertexesList);
+
+  std::map< size_t, std::map< size_t, size_t > > updatedAdjacencyList;
+  std::transform(
+    AdjacencyList.begin(),
+    AdjacencyList.end(),
+    std::inserter(updatedAdjacencyList, updatedAdjacencyList.end()),
+    [key](auto& adjPair) {
+      size_t newKey = adjPair.first > key ? adjPair.first - 1 : adjPair.first;
+      std::map< size_t, size_t > updatedAdj;
+      std::transform(
+        adjPair.second.begin(),
+        adjPair.second.end(),
+        std::inserter(updatedAdj, updatedAdj.end()),
+        [key](const auto& adj) {
+          return std::make_pair(adj.first > key ? adj.first - 1 : adj.first, adj.second);
+        });
+      return std::make_pair(newKey, std::move(updatedAdj));
+    });
+  AdjacencyList = std::move(updatedAdjacencyList);
 }
 
 void sukacheva::Graph::deleteEdge(std::string start, std::string end)
@@ -61,24 +104,21 @@ void sukacheva::Graph::clear()
   VertexesList.clear();
 }
 
-size_t sukacheva::Graph::getVertexIndex(std::string name)
+size_t sukacheva::Graph::getVertexIndex(std::string& name)
 {
-  size_t key = 0;
-  bool flag = false;
-  using const_iterator = std::map< size_t, std::string >::const_iterator;
-  for (const_iterator it = VertexesList.cbegin(); it != VertexesList.cend(); ++it)
+  auto it = std::find_if(
+    VertexesList.begin(),
+    VertexesList.end(),
+    [&name](const auto& vertex) { return vertex.second == name; }
+  );
+  if (it != VertexesList.end())
   {
-    if (it->second == name)
-    {
-      key = it->first;
-      flag = true;
-    }
+    return it->first;
   }
-  if (!flag)
+  else
   {
     throw std::logic_error("<INVALID COMMAND>\n");
   }
-  return key;
 }
 
 std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Graph::dijkstraDistances(std::string name)
@@ -120,7 +160,8 @@ std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Gr
       }
     }
   }
-  return { distances, predecessors };
+  std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > result = { distances, predecessors };
+  return result;
 }
 
 std::vector< std::string > sukacheva::Graph::dijkstraPath(const std::map<size_t, size_t>& predecessors, std::string start, std::string end)
@@ -128,7 +169,8 @@ std::vector< std::string > sukacheva::Graph::dijkstraPath(const std::map<size_t,
   std::vector< std::string > path;
   size_t keyStart = getVertexIndex(start);
   size_t keyEnd = getVertexIndex(end);
-  for (size_t at = keyEnd; at != keyStart; at = predecessors.at(at)) {
+  for (size_t at = keyEnd; at != keyStart; at = predecessors.at(at))
+{
     path.push_back(VertexesList[at]);
   }
   path.push_back(VertexesList[keyStart]);
