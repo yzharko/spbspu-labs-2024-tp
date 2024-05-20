@@ -5,8 +5,8 @@
 
 namespace zheleznyakov
 {
-  using text_t = std::map< std::string, std::map< std::string, size_t > >;
-  using texts_t = std::map< std::string, text_t >;
+  using string_t = std::map< std::string, std::map< std::string, size_t > >;
+  using strings_t = std::map< std::string, string_t >;
 
   size_t getWordsCount(std::string);
   size_t getLinesCount(std::string);

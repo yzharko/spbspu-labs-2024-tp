@@ -1,14 +1,15 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
 #include <map>
-#include <istream>
+#include <ios>
+#include <functional>
 #include "dict.hpp"
 
 namespace zheleznyakov
 {
   namespace commands
   {
-    void help(std::istream, std::ostream);
+    std::ostream & help(std::istream & in, std::ostream & out);
   }
 }
 #endif
