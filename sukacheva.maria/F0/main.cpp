@@ -17,10 +17,19 @@ int main()
   graph.addEdge("B", "D", 5);
   graph.addEdge("C", "D", 1);
 
-  auto distances = graph.dijkstra(0);
+  size_t start = graph.getVertexIndex("A");
+  size_t end = graph.getVertexIndex("D");
+  std::pair<std::map<size_t, size_t>, std::map<size_t, size_t>> dijkstra = graph.dijkstraDistances("A");
 
-  for (std::map< size_t, size_t >::iterator it = distances.begin(); it != distances.end(); it++)
+  std::cout << "Shortest distance from A to D: " << dijkstra.first[end] << std::endl;
+
+  std::vector< std::string > path = graph.dijkstraPath(dijkstra.second, "A", "D");
+  std::cout << "Path: ";
+  for (std::vector< std::string >::iterator it = path.begin(); it != path.end(); it++)
   {
-    std::cout << "Distance from A to " << graph.VertexesList[it->first] << ": " << it->second << std::endl;
+    std::cout << *it << " ";
   }
+  std::cout << std::endl;
+
+  return 0;
 }

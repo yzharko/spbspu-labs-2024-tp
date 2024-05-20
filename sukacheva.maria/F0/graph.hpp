@@ -1,6 +1,6 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
-#include <iostream>
+#include <string>
 #include <map>
 #include <vector>
 
@@ -10,7 +10,6 @@ namespace sukacheva
   {
   public:
     std::string GraphName;
-    std::map< size_t, std::string > VertexesList;
 
     Graph() = default;
     Graph(std::string GraphName_);
@@ -24,11 +23,13 @@ namespace sukacheva
     void deleteEdge(std::string start, std::string end);
     size_t capacity();
     void clear();
-    std::map<size_t, size_t> dijkstra(size_t startKey);
+    size_t getVertexIndex(std::string name);
+    std::pair<std::map<size_t, size_t>, std::map<size_t, size_t>> dijkstraDistances(std::string name);
+    std::vector< std::string > dijkstraPath(const std::map<size_t, size_t>& predecessors, std::string start, std::string end);
     std::vector< std::vector< long long int > > weightTable();
   private:
     std::map< size_t, std::map< size_t, size_t > > AdjacencyList;
-    //std::map< size_t, std::string > VertexesList;
+    std::map< size_t, std::string > VertexesList;
   };
 }
 

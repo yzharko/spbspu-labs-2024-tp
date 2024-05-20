@@ -1,5 +1,7 @@
 #include "graph.hpp"
 #include <queue>
+#include <limits>
+#include <stdexcept>
 
 sukacheva::Graph::Graph(std::string GraphName_):
   GraphName(GraphName_),
@@ -16,20 +18,8 @@ void sukacheva::Graph::addVertex(std::string name)
 
 void sukacheva::Graph::addEdge(std::string start, std::string end, size_t weight)
 {
-  size_t keyStart = 0;
-  size_t keyEnd = 0;
-  using const_iterator = typename std::map< size_t, std::string >::const_iterator;
-  for (const_iterator it = VertexesList.cbegin(); it != VertexesList.cend(); ++it)
-  {
-    if (it->second == start)
-    {
-      keyStart = it->first;
-    }
-    if (it->second == end)
-    {
-      keyEnd = it->first;
-    }
-  }
+  size_t keyStart = getVertexIndex(start);
+  size_t keyEnd = getVertexIndex(end);
   if (keyStart == keyEnd)
   {
     throw std::logic_error("<INVALID COMMAND>\n");
@@ -40,46 +30,16 @@ void sukacheva::Graph::addEdge(std::string start, std::string end, size_t weight
 
 void sukacheva::Graph::deleteVertex(std::string name)
 {
-  using const_iterator = typename std::map< size_t, std::string >::const_iterator;
-  size_t key = 0;
-  bool flag = false;
-  for (const_iterator it = VertexesList.cbegin(); it != VertexesList.cend(); ++it)
-  {
-    if (it->second == name)
-    {
-      key = it->first;
-      flag = true;
-    }
-  }
-  if (!flag)
-  {
-    throw std::logic_error("<INVALID COMMAND>\n");
-  }
+  size_t key = getVertexIndex(name);
   AdjacencyList.erase(key);
   VertexesList.erase(key);
 }
 
 void sukacheva::Graph::deleteEdge(std::string start, std::string end)
 {
-  size_t keyStart = 0;
-  size_t keyEnd = 0;
-  bool startFlag = false;
-  bool endFlag = false;
-  using const_iterator = std::map< size_t, std::string >::const_iterator;
-  for (const_iterator it = VertexesList.cbegin(); it != VertexesList.cend(); ++it)
-  {
-    if (it->second == start)
-    {
-      keyStart = it->first;
-      startFlag = true;
-    }
-    if (it->second == end)
-    {
-      keyEnd = it->first;
-      endFlag = true;
-    }
-  }
-  if (startFlag && endFlag)
+  size_t keyStart = getVertexIndex(start);
+  size_t keyEnd = getVertexIndex(end);
+  if (keyStart != keyEnd)
   {
     AdjacencyList[keyStart].erase(keyEnd);
     AdjacencyList[keyEnd].erase(keyStart);
@@ -101,10 +61,32 @@ void sukacheva::Graph::clear()
   VertexesList.clear();
 }
 
-std::map<size_t, size_t> sukacheva::Graph::dijkstra(size_t startKey)
+size_t sukacheva::Graph::getVertexIndex(std::string name)
 {
-  std::map< size_t, size_t > distances;
-  std::map< size_t, bool > visited;
+  size_t key = 0;
+  bool flag = false;
+  using const_iterator = std::map< size_t, std::string >::const_iterator;
+  for (const_iterator it = VertexesList.cbegin(); it != VertexesList.cend(); ++it)
+  {
+    if (it->second == name)
+    {
+      key = it->first;
+      flag = true;
+    }
+  }
+  if (!flag)
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
+  return key;
+}
+
+std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Graph::dijkstraDistances(std::string name)
+{
+  size_t startKey = getVertexIndex(name);
+  std::map<size_t, size_t> distances;
+  std::map<size_t, size_t> predecessors;
+  std::map<size_t, bool> visited;
   using iterator = std::map< size_t, std::string >::iterator;
   for (iterator it = VertexesList.begin(); it != VertexesList.end(); it++)
   {
@@ -134,8 +116,22 @@ std::map<size_t, size_t> sukacheva::Graph::dijkstra(size_t startKey)
       if (!visited[it->first] && distances[minVertex] + it->second < distances[it->first])
       {
         distances[it->first] = distances[minVertex] + it->second;
+        predecessors[it->first] = minVertex;
       }
     }
   }
-  return distances;
+  return { distances, predecessors };
+}
+
+std::vector< std::string > sukacheva::Graph::dijkstraPath(const std::map<size_t, size_t>& predecessors, std::string start, std::string end)
+{
+  std::vector< std::string > path;
+  size_t keyStart = getVertexIndex(start);
+  size_t keyEnd = getVertexIndex(end);
+  for (size_t at = keyEnd; at != keyStart; at = predecessors.at(at)) {
+    path.push_back(VertexesList[at]);
+  }
+  path.push_back(VertexesList[keyStart]);
+  std::reverse(path.begin(), path.end());
+  return path;
 }
