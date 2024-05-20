@@ -118,6 +118,50 @@ std::ostream & zheleznyakov::commands::cmp(strings_t & strings, std::istream & i
   return out;
 }
 
+std::ostream & zheleznyakov::commands::diff(strings_t & strings, std::istream & in, std::ostream & out)
+{
+  std::string l1 = "";
+  in >> l1;
+  if (!in)
+  {
+    in.setstate(std::ios::failbit);
+  }
+  if (strings.find(l1) == strings.end())
+  {
+    throw std::logic_error(statusString("Key 1 is not found\n", "error"));
+  }
+  std::string l2 = "";
+  in >> l2;
+  if (!in)
+  {
+    in.setstate(std::ios::failbit);
+  }
+  if (strings.find(l2) == strings.end())
+  {
+    throw std::logic_error(statusString("Key 2 is not found\n", "error"));
+  }
+  wordpairs_t s1 = strings.at(l1).second;
+  wordpairs_t s2 = strings.at(l2).second;
+  std::vector < std::string > matches;
+  out << "Only in '" << l1 << "':\n";
+  for (auto i = s1.begin(); i != s1.end(); i++)
+  {
+    if (s2.find(i->first) == s2.end())
+    {
+      out << i->first << '\n';
+    }
+  }
+  out << "\nOnly in '" << l2 << "':\n";
+  for (auto i = s2.begin(); i != s2.end(); i++)
+  {
+    if (s1.find(i->first) == s1.end())
+    {
+      out << i->first << '\n';
+    }
+  }
+  return out;
+}
+
 std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)
 {
   if (active != "")
