@@ -108,11 +108,11 @@ double anikanov::max(const std::vector< Polygon > &polygons, std::istream &in, s
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
     auto maxAreaPolygon = *std::max_element(areas.begin(), areas.end());
-    std::cout << std::fixed << std::setprecision(1) << maxAreaPolygon << '\n';
+    out << std::fixed << std::setprecision(1) << maxAreaPolygon << '\n';
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
     auto maxVertexesPolygon = *std::max_element(count.begin(), count.end());
-    std::cout << std::fixed << std::setprecision(1) << maxVertexesPolygon << '\n';
+    out << std::fixed << std::setprecision(1) << maxVertexesPolygon << '\n';
   }
   throw std::runtime_error("Invalid command");
 }
@@ -124,11 +124,11 @@ double anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, s
   if (subcmd == "AREA") {
     std::vector< double > areas = getAreas(polygons);
     auto minAreaPolygon = *std::min_element(areas.begin(), areas.end());
-    std::cout << std::fixed << std::setprecision(1) << minAreaPolygon << '\n';
+    out << std::fixed << std::setprecision(1) << minAreaPolygon << '\n';
   } else if (subcmd == "VERTEXES") {
     std::vector< size_t > count = getVertexes(polygons);
     auto minVertexesPolygon = *std::min_element(count.begin(), count.end());
-    std::cout << std::fixed << std::setprecision(1) << minVertexesPolygon << '\n';
+    out << std::fixed << std::setprecision(1) << minVertexesPolygon << '\n';
   }
   throw std::runtime_error("Invalid command");
 }
