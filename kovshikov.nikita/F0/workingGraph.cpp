@@ -69,11 +69,11 @@ void kovshikov::getDouble(Graph& graph, std::istream& is)
   {
     if(graph.isDouble(num1, num2) == true)
     {
-      std::cout << "They are double connected" << "\n";
+      std::cout << "TRUE" << "\n";
     }
     else
     {
-      std::cout << "No" << "\n";
+      std::cout << "FALSE" << "\n";
     }
   }
   else

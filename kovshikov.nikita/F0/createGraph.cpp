@@ -175,5 +175,12 @@ void kovshikov::outputVertexes(const std::map< std::string, Graph >& graphsList,
 {
   std::string graphname;
   std::cin >> graphname;
-  graphsList.at(graphname).outGraph(out);
+  if(graphsList.find(graphname) == graphsList.end())
+  {
+    out << "The entered graph is missing" << "\n";
+  }
+  else
+  {
+    graphsList.at(graphname).outGraph(out);
+  }
 }

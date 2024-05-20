@@ -4,6 +4,7 @@
 #include <limits>
 #include "createGraph.hpp"
 #include "orientedGraph.hpp"
+#include "outMessage.hpp"
 
 int main()
 {
@@ -31,28 +32,35 @@ int main()
 
   while(std::cin >> command)
   {
-    try
+    if(command == "help")
     {
-      interaction.at(command)(graphsList, std::cin);
+      outDescription(std::cout);
     }
-    catch(const std::out_of_range& error)
+    else
     {
       try
       {
-        outGraph.at(command)(graphsList, std::cout);
+        interaction.at(command)(graphsList, std::cin);
       }
       catch(const std::out_of_range& error)
       {
-        std::cout << "<INVALID COMMAND>\n";
+        try
+        {
+          outGraph.at(command)(graphsList, std::cout);
+        }
+        catch(const std::out_of_range& error)
+        {
+          std::cout << "<INVALID COMMAND>\n";
+          std::cin.clear();
+          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        }
+      }
+      catch(const std::logic_error& error)
+      {
+        std::cout << error.what() << "\n";
         std::cin.clear();
         std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
-    }
-    catch(const std::logic_error& error)
-    {
-      std::cout << error.what() << "\n";
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
 }

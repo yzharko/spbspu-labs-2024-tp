@@ -5,7 +5,6 @@
 
 namespace kovshikov
 {
-// для создания графа надо устроить проверку на уникальность ключа
   void createGraph(std::map< std::string, Graph >& graphsList, std::istream& is);
   void createLonely(std::map< std::string, Graph >& graphsList, std::istream& is);
   void deleteGraph(std::map< std::string, Graph >& graphsList, std::istream& is);
