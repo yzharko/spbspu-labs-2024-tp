@@ -21,10 +21,11 @@ void doroshenko::help(std::istream& input, std::ostream& output)
   output << "6) sort <alphabet> <name> - sort the dictionary by alphabet\n";
   output << "7) delete <key> - delete the element\n";
   output << "8) find <key> - output the frequency of an element\n";
-  output << "9) open <filename> - open a file to create dictionary from its contents\n";
-  output << "10) write <filename> - open a file to write a dictionary\n";
-  output << "11) stop - close the dictionary to edit\n";
-  output << "12) save - shut down a file, exit edit module, save data\n";
+  output << "9) top <name> - output of the tree most common words\n";
+  output << "10) open <filename> - open a file to create dictionary from its contents\n";
+  output << "11) write <filename> - open a file to write a dictionary\n";
+  output << "12) stop - close the dictionary to edit\n";
+  output << "13) save - shut down a file, exit edit module, save data\n";
 }
 
 void doroshenko::createDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
