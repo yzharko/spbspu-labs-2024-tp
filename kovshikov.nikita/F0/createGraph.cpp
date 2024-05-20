@@ -106,11 +106,12 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
   }
 
   std::string command;
-  bool flag = false;
+  bool isError = false;
+  bool end = false;
 
-  while(is >> command)
+  while(end == false && is >> command)
   {
-    flag = false;
+    isError = false;
     try
     {
       working.at(command)(graphsList.at(key), is);
@@ -129,7 +130,7 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
         }
         else
         {
-          flag = true;
+          isError = true;
           std::cout << "<INVALID COMMAND>\n";
           is.clear();
           is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
@@ -138,22 +139,25 @@ void kovshikov::workWith(std::map< std::string, Graph >& graphsList, std::istrea
     }
     catch(const std::logic_error& error)
     {
-      flag = true;
+      isError = true;
       std::cout << error.what() << "\n";
       is.clear();
       is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-    if(flag == true && is.peek() == '\n')
+    if(isError == true && is.peek() == '\n')
     {
-      break;
+      end = true;
     }
-    if(flag == false && is.get() == '\n' && is.peek() == '\n')
+    else if(isError == false)
     {
-      break;
-    }
-    else if(flag == false)
-    {
-      is.putback('\n');
+      if(is.get() == '\n' && is.peek() == '\n')
+      {
+        end = true;
+      }
+      else
+      {
+        is.putback('\n');
+      }
     }
   }
 }
