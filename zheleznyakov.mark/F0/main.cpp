@@ -13,6 +13,7 @@ int main()
   {
     using namespace std::placeholders;
     cmds["help"] = std::bind(zheleznyakov::commands::help, _2, _3);
+    cmds["list"] = std::bind(zheleznyakov::commands::list, _1, _2, _3);
   }
 
   std::string currentCommand = "";

@@ -26,3 +26,18 @@ std::ostream & zheleznyakov::commands::help(std::istream & in, std::ostream & ou
   << "  stats                       Print an overall string stats: total words count and an unique words count\n"
   << "  quit                        Quit from a 'string' mode\n";
 }
+
+std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & in, std::ostream & out)
+{
+  if (in.peek() != '\n')
+  {
+    throw std::logic_error("No additional args allowed");
+  }
+
+  out << "Total: " << strings.size() << "\n\nNames:\n";
+  for (auto i = strings.begin(); i != strings.end(); i++)
+  {
+    out << i->first << '\n';
+  }
+  return out;
+}
