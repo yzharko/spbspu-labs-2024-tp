@@ -110,9 +110,20 @@ void doroshenko::openFile(dictionary& dict, std::istream& input, std::ostream& o
       word.begin(),
       word.end(),
       lowercaseWord.begin(),
-      [](char c) { return std::tolower(c); }
+      [](char c)
+      {
+        return std::tolower(c);
+      }
     );
-    words.push_back(lowercaseWord);
+    std::string result = "";
+    for (char c : lowercaseWord)
+    {
+      if (std::isalnum(c))
+      {
+        result += c;
+      }
+    }
+    words.push_back(result);
   }
   for (auto it = words.begin(); it != words.end(); it++)
   {
