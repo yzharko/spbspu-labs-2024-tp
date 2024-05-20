@@ -125,6 +125,21 @@ std::ostream & zheleznyakov::commands::read(strings_t & strings, std::string & a
     string_t currentStruct{ contents, pairs };
     strings[active] = currentStruct;
   }
+  else
+  {
+    std::string contents;
+    std::string line;
+    while (std::getline(std::cin, line)) {
+      if (line == "end")
+      {
+        break;
+      }
+      contents += line + '\n';
+    }
+    wordpairs_t pairs = getDict(contents);
+    string_t currentStruct{ contents, pairs };
+    strings[active] = currentStruct;
+  }
   return out;
 }
 
@@ -181,9 +196,5 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
     throw std::logic_error(statusString("Already in menu\n", "error"));
   }
   active = "";
-  if (in.peek() != '\n')
-  {
-    throw std::logic_error(statusString("No additional args allowed\n", "warn"));
-  }
   return out;
 }
