@@ -97,6 +97,14 @@ bool nikiforov::deleteDelimeters(std::string& str)
       return false;
     }
   }
+
+  if (str.back() == ',' || str.back() == '.' ||
+    str.back() == ':' || str.back() == ';' ||
+    str.back() == '!' || str.back() == '?')
+  {
+    str.erase(str.end() - 1);
+    return true;
+  }
   return true;
 }
 
