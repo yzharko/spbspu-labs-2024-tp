@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <list>
+#include <cctype>
 
 std::string nikiforov::cutNameFile(std::string& str)
 {
@@ -46,7 +47,6 @@ void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istrea
 std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
 {
   std::map<std::string, size_t> dictionary;
-
   std::string word;
 
   while (!in.eof())
