@@ -11,7 +11,7 @@ std::string nikiforov::cutNameFile(std::string& str)
   if (str.find_last_of('\\') != std::string::npos)
   {
     startPos = str.find_last_of('\\') + 1;
-    finalPos -= 5;
+    finalPos -= 4;
   }
   return std::string(str.substr(startPos, finalPos));
 }
@@ -34,6 +34,7 @@ void nikiforov::createDictionary(mapDictionaries_t& mapDictionaries, std::istrea
       std::string name = cutNameFile(fileName);
       std::map< std::string, size_t > dictionary = nikiforov::getDictionary(input);
       mapDictionaries.emplace(name, dictionary);
+      out << " The " << name << " dictionary has been added successfully\n";
     }
     else
     {
@@ -123,7 +124,7 @@ void nikiforov::open(mapDictionaries_t& mapDictionaries, std::istream& in, std::
     fin.open(intermediateFile);
     while (!fin.eof())
     {
-      createDictionary(mapDictionaries, fin, mkdir);
+      createDictionary(mapDictionaries, fin, out, mkdir);
     }
     out << " The files in the folder have been successfully read\n";
   }
