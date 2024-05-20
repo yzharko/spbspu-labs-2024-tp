@@ -22,6 +22,8 @@ int main()
     commands["clear"] = std::bind(clearGraph, _1, _3);
     commands["capacity"] = std::bind(capacity, _1, _2, _3);
     commands["print"] = std::bind(commandPrint, _1, _2, _3);
+    commands["delete"] = std::bind(commandDelete, _1, _2, _3);
+    commands["work"] = std::bind(commandSwitch, _1, _2, _3);
   }
   std::string inputCommand = {};
   while (std::cin >> inputCommand)

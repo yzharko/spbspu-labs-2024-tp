@@ -1,5 +1,4 @@
 #include "graph.hpp"
-#include <queue>
 #include <limits>
 #include <stdexcept>
 #include <algorithm>

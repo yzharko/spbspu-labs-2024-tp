@@ -9,21 +9,21 @@ namespace sukacheva
   {
     out << "help - displays all available commands with parameters\n"; // + +
     out << "create <graph> <graphname> - creating an empty graph called graphname\n"; //+ +
-    out << "work <graphname> - switching to working with a graphname\n";
+    out << "work <graphname> - switching to working with a graphname\n"; // + +
     out << "add <node> <name> – creating a graph vertex called name\n"; //+ +
     out << "add < edge > < first_node, second_node, weight > - "; //+ +
     out << "creating an edge between the vertices first_node and second_node with some weight\n";
-    out << "delete <node> <name> - deleting vertex name\n"; // +
-    out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n"; //+
+    out << "delete <node> <name> - deleting vertex name\n"; // + +
+    out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n"; //+ +
     out << "capacity <graphname> - displays the number of vertices in the graph graphname\n"; //+ +
     out << "weightTable <graphname> - displays the weight table of the graph graphname\n";
-    out << "print <path> <name> - prints the shortest paths from the top name to the rest.\n"; //+
-    out << "print <distance> <name> - prints the lengths of the shortest paths from the vertex name to the rest.\n"; //+
+    out << "print <path> <name> - prints the shortest paths from the top name to the rest.\n"; //+ +
+    out << "print <distance> <name> - prints the lengths of the shortest paths from the vertex name to the rest.\n"; //+ +
     out << "open <filename> - open a file for reading with a given name\n";
     out << "save <filename> - open a file for output with the specified parameters\n";
     out << "list - display a list of graphs\n"; //+ +
     out << "graphname - displays the name of the graph being worked on\n"; //+ +
-    out << "delete <graphname> - deleting graph graphname\n"; //+
+    out << "delete <graph> <graphname> - deleting graph graphname\n"; //+ +
     out << "clear - deleting all vertices of the actual graph\n";//+ +
   }
 
@@ -32,6 +32,7 @@ namespace sukacheva
     Graph graph(graphName);
     Workspace actual(graph);
     graphList.graphList.insert({ graphName, actual });
+    graph = graphList.switchActualGraph(graphName);
   }
 
   void sukacheva::addVertex(GraphList& graphList, std::string& name)
@@ -190,13 +191,17 @@ namespace sukacheva
       else if (command == "edge")
       {
         in >> end >> weight;
+        if (in.fail())
+        {
+          throw std::logic_error("<INVALID COMMAND>\n");
+        }
         addEdge(graphList, start, end, weight);
         out << "Edge between " << start << " and " << end << " with weight " << weight << " is added.\n";
       }
     }
     catch (const std::exception& e)
     {
-      out << "Error: " << e.what();
+      throw std::logic_error("<INVALID COMMAND>\n");
     }
   }
 
@@ -214,6 +219,51 @@ namespace sukacheva
       commandKey.at(command)(graphList, name, out);
     }
     catch (const std::out_of_range& e)
+    {
+      throw std::logic_error("<INVALID COMMAND>\n");
+    }
+  }
+
+  void sukacheva::commandDelete(GraphList& graphList, std::istream& in, std::ostream& out)
+  {
+    using namespace std::placeholders;
+    std::map< std::string, std::function< void(GraphList& graphList, std::string& name) > > commandKey;
+    commandKey["vertex"] = std::bind(deleteVertex, _1, _2);
+    commandKey["graph"] = std::bind(deleteGraph, _1, _2);
+    std::string command;
+    std::string name;
+    std::string end;
+    in >> command >> name;
+    try
+    {
+      commandKey.at(command)(graphList, name);
+      out << "Struct " << command << " " << name << " was deleted.\n";
+    }
+    catch (const std::out_of_range& e)
+    {
+      if (command == "edge")
+      {
+        in >> end;
+        deleteEdge(graphList, name, end);
+        out << "Edge between " << name << " and " << end << " deleted.\n";
+      }
+      else
+      {
+        throw std::logic_error("<INVALID COMMAND>\n");
+      }
+    }
+  }
+
+  void sukacheva::commandSwitch(GraphList& graphList, std::istream& in, std::ostream& out)
+  {
+    std::string name;
+    in >> name;
+    try
+    {
+      graphList.switchActualGraph(name);
+      out << "Now work is being done on the graph " << name << "\n";
+    }
+    catch (const std::exception& e)
     {
       throw std::logic_error("<INVALID COMMAND>\n");
     }

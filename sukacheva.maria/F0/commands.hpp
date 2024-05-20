@@ -26,6 +26,8 @@ namespace sukacheva
   void commandCreateGraph(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandAdd(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandPrint(GraphList& graphList, std::istream& in, std::ostream& out);
+  void commandDelete(GraphList& graphList, std::istream& in, std::ostream& out);
+  void commandSwitch(GraphList& graphList, std::istream& in, std::ostream& out);
 }
 
 #endif
