@@ -13,19 +13,18 @@ void doroshenko::help(std::istream& input, std::ostream& output)
   {
     throw std::exception();
   }
-  std::string text = "   1) help - output of available commands\n \
-  2) create <name> - create a dictionary named name\n \
-  3) remove <name> - delete a dictionary named name\n \
-  4) print <name> - output the contents of the dictionary named name\n \
-  5) sort <frequency> <name> - sort the dictionary by frequency\n \
-  6) sort <alphabet> <name> - sort the dictionary by alphabet\n \
-  7) delete <key> - delete the element\n \
-  8) find <key> - output the frequency of an element\n \
-  9) open <filename> - open a file to create dictionary from its contents\n \
-  10) write <filename> - open a file to write a dictionary\n \
-  11) stop - close the dictionary to edit\n \
-  12) save - shut down a file, exit edit module, save data\n";
-  output << text;
+  output << "1) help - output of available commands\n";
+  output << "2) create <name> - create a dictionary named name\n";
+  output << "3) remove <name> - delete a dictionary named name\n";
+  output << "4) print <name> - output the contents of the dictionary named name\n";
+  output << "5) sort <frequency> <name> - sort the dictionary by frequency\n";
+  output << "6) sort <alphabet> <name> - sort the dictionary by alphabet\n";
+  output << "7) delete <key> - delete the element\n";
+  output << "8) find <key> - output the frequency of an element\n";
+  output << "9) open <filename> - open a file to create dictionary from its contents\n";
+  output << "10) write <filename> - open a file to write a dictionary\n";
+  output << "11) stop - close the dictionary to edit\n";
+  output << "12) save - shut down a file, exit edit module, save data\n";
 }
 
 void doroshenko::createDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output)
