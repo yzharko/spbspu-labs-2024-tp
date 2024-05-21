@@ -2,6 +2,7 @@
 #define COMMANDS_HPP
 #include <ios>
 #include "geometry.hpp"
+#include "iofmtguard.hpp"
 namespace zheleznyakov
 {
   namespace commands
@@ -46,5 +47,7 @@ namespace zheleznyakov
   Point diffVector(const Point & p1, const Point & p2);
   bool hasLayeredPoints(const Polygon & p1, const Point & p2, const Point & movement);
   bool arePointsLayering(const Point & p1, const Point & p2, const Point & movement);
+
+  void outMessage(std::ostream &, std::string);
 }
 #endif

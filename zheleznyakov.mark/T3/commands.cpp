@@ -299,3 +299,9 @@ bool zheleznyakov::arePointsLayering(const Point & p1, const Point & p2, const P
 {
   return Point{p1.x + movement.x, p1.y + movement.y} == p2;
 }
+
+void zheleznyakov::outMessage(std::ostream & out, std::string msg)
+{
+  iofmtguard fmtguard(out);
+  out << msg;
+}
