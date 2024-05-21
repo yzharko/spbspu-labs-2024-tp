@@ -41,6 +41,7 @@ void psarev::cmdCreate(std::map< std::string, storage_t >& depot, std::istream& 
       depot.emplace(name, storage_t());
       storage_t tempoStorage = depot[name];
       tempoStorage = readStorage(fileIn);
+      out << "Storage " << name << " has been created!\n";
     }
   }
   else
@@ -82,3 +83,17 @@ void psarev::cmdChoose(std::map< std::string, storage_t >& depot, std::istream& 
   }
 }
 
+void psarev::cmdDelete(std::istream& in, std::ostream& out, depot_t& depot)
+{
+  std::string tempoS = "";
+  in >> tempoS;
+
+  if (depot.erase(tempoS))
+  {
+    out << "Storage " << tempoS << " has been deleted!\n";
+  }
+  else
+  {
+    out << "Storage with name " << tempoS << "doesn't exists!\n";
+  }
+}
