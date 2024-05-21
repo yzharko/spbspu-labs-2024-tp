@@ -22,7 +22,7 @@ void psarev::cmdHelp(std::istream& in, std::ostream& out)
   out << "7.4 save < name > < dest > - Saving the < name > storage to the < dest > directory.\n";
 }
 
-void psarev::cmdCreate(std::map< std::string, storage_t >& depot, std::istream& in, std::ostream& out)
+void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
 {
   std::string file = "";
   in >> file;
@@ -40,7 +40,7 @@ void psarev::cmdCreate(std::map< std::string, storage_t >& depot, std::istream& 
       }
       depot.emplace(name, storage_t());
       storage_t tempoStorage = depot[name];
-      tempoStorage = readStorage(fileIn);
+      tempoStorage = psarev::readStorage(fileIn);
       out << "Storage " << name << " has been created!\n";
     }
   }
@@ -50,7 +50,7 @@ void psarev::cmdCreate(std::map< std::string, storage_t >& depot, std::istream& 
   }
 }
 
-void psarev::cmdChoose(std::map< std::string, storage_t >& depot, std::istream& in, std::ostream& out)
+void psarev::cmdChoose(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
 {
   std::string name = "";
   in >> name;
@@ -83,7 +83,7 @@ void psarev::cmdChoose(std::map< std::string, storage_t >& depot, std::istream& 
   }
 }
 
-void psarev::cmdDelete(std::istream& in, std::ostream& out, depot_t& depot)
+void psarev::cmdDelete(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
 {
   std::string tempoS = "";
   in >> tempoS;

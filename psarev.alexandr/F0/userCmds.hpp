@@ -4,17 +4,15 @@
 #include <iostream>
 #include <fstream>
 
-using depot_t = std::map< std::string, storage_t >;
-
 namespace psarev
 {
   void cmdHelp(std::istream& in, std::ostream& out);
-  void cmdCreate(std::map< std::string, storage_t >& depot, std::istream& in, std::ostream& out);
-  void cmdDelete(std::istream& in, std::ostream& out, depot_t& depot);
+  void cmdCreate(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
+  void cmdDelete(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdList(std::istream& in, std::ostream& out);
   void cmdShow(std::istream& in, std::ostream& out);
   void cmdRename(std::istream& in, std::ostream& out);
-  void cmdChoose(std::map< std::string, storage_t >& depot, std::istream& in, std::ostream& out);
+  void cmdChoose(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdSave(std::istream& in, std::ostream& out);
 
   void cmdPrint(storage_t& storage, std::istream& in, std::ostream& out);

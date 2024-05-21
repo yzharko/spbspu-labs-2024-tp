@@ -8,7 +8,7 @@ int main()
 {
   using storage_t = std::map< std::string, std::vector< std::string > >;
   std::map< std::string, storage_t > depot;
-  std::map< std::string, std::function < void (std::map< std::string, storage_t >&, std::istream&, std::ostream&) > > userCmds;
+  std::map< std::string, std::function < void (std::istream&, std::ostream&, std::map< std::string, storage_t >&) > > userCmds;
   {
     using namespace std::placeholders;
     userCmds["help"] = std::bind(psarev::cmdHelp, _2, _3);
@@ -26,7 +26,7 @@ int main()
   {
     try
     {
-      userCmds.at(userCmd)(depot, std::cin, std::cout);
+      userCmds.at(userCmd)(std::cin, std::cout, depot);
     }
     catch (const std::logic_error&)
     {
