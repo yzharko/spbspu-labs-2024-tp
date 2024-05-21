@@ -1,24 +1,57 @@
 #include "commands.hpp"
+#include <fstream>
+#include <ios>
+#include "helpDelimiters.hpp"
 
 void mihalchenko::help(std::ostream &out)
 {
-  setlocale(LC_ALL, "ru");
-  out << "Список команд:\n\
-  1. help - вывод всех комманд(активно сейчас)\n\
-  2. open < filename > - открытие файла словаря, если его нет, то создать и открыть\n\
-  3. close < filename > - закрытие файла filename, если такого файла нет, то вывести сообщение об ошибке\n\
-  4. save < filename > - сохранение изменений в файле filename\n\
-  5. edit < filename > - редактирование файла filename\n\
-  6. insert < filename > < word > < frequency > - вставка пары слово-частота в файл filename\n\
-  7. remove < filename > < word / frequency > - удаление элемента(ов) из словаря по слову / частоте / слову и частоте\n\
-  8. find < filename > < word / frequency > - вывод элементов по слову или с заданной частотой\n\
-  9. print < filename > < sort:alph / sort:freq > < reverse:true/false > - вывод отсортированных элементов файла\n\
-  10. view < partOfName > - вывод названий существующих словарей, дополнительный параметр - часть от названия\n\
-  11. clear <filename > < start > < stop > - очистить весь словарь или в выбранном диапазоне\n\
-  12. merge < filename1 > < filename2 > - обмен содержимого словарей, если возникает проблема - \
-  программа выводит сообщение об ошибке\n\
-  13. unique < filename1 > < filename2 > < newFileName > - сохраняет уникальные элементы из словарей в новом файле, \
-  если какого-то из файлов нет или возникает любая другая проблема - также выводится сообщение об ошибке\n\
-  14. count < filename > < name / frequency > - подсчет элементов с таким же именем или частотой\n\
-  15. size < filename > - вывести размер словаря\n";
+  out << "List of available commands:\n\
+  1. help - output of all commands(active now)\n\
+  2. open < filename > - opening a dictionary file, if there is no file - create and open\n\
+  3. close < filename > - closing the filename file, if there is no such file - error message\n\
+  4. save < filename > - saving changes to the 'filename' file\n\
+  5. edit < filename > - editing the 'filename' file\n\
+  6. insert < filename > < word > < frequency > - inserting a word-frequency pair into a 'filename' file\n\
+  7. remove < filename > < word / frequency > - deleting an item(s) from the dictionary by word / frequency / word and frequency\n\
+  8. find < filename > < word / frequency > - output of elements by word or with a given frequency\n\
+  9. print < filename > < sort:alph / sort:freq > < reverse:true/false > - output of sorted file elements\n\
+  10. view < partOfName > - the output of the names of existing dictionaries, an additional parameter is a part of the name\n\
+  11. clear <filename > < start > < stop > - clear the entire dictionary or in the selected range\n\
+  12. merge < filename1 > < filename2 > - the exchange of dictionary contents, if there is a problem, the program displays\n\
+  the corresponding message\n\
+  13. unique < filename1 > < filename2 > < newFileName > - saves unique elements from dictionaries in a new file,\n\
+  if any of the files are missing or any other problem occurs, the corresponding message is also displayed\n\
+  14. count < filename > < name / frequency > - counting elements with the same name or frequency\n\
+  15. size < filename > - print the size of the dictionary\n";
+}
+
+void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
+{
+  std::string fileName = "";
+  is >> fileName;
+  std::ifstream inputFile;
+  inputFile.open(fileName);
+  if (inputFile.is_open())
+  {
+    dict_t dict;
+    std::string nameOfDict = mihalchenko::getDictName(fileName);
+    while (!is.eof())
+    {
+      mihalchenko::dict_t dict;
+      is >> dict;
+    }
+    mapOfDictionaries.emplace(nameOfDict, dict);
+  }
+  inputFile.close();
+}
+
+void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string fileName = "";
+  is >> fileName;
+  std::ofstream outputFile(fileName);
+  if (!outputFile)
+  {
+    throw std::invalid_argument("ERROR: CANT FIND/OPEN FILE\n");
+  }
 }

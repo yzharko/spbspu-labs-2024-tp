@@ -8,21 +8,21 @@
 
 int main()
 {
-  setlocale(LC_ALL, "ru");
-  std::cout << "Чтобы вывести все команды, введите 'help'\n";
-  mihalchenko::dictElement element;
-  std::map<std::string, std::function<void(mihalchenko::dictElement &, std::istream &, std::ostream &)>>
+  std::cout << "To see all available commands, enter 'help'\n";
+  mihalchenko::mapOfDicts_t mapOfDictionaries;
+  std::map<std::string, std::function<void(mihalchenko::mapOfDicts_t &, std::istream &, std::ostream &)>>
       cmds;
   {
     using namespace std::placeholders;
     cmds["help"] = std::bind(mihalchenko::help, _3);
+    cmds["open"] = std::bind(mihalchenko::open, _1, _2);
   }
   std::string command = "";
   while (std::cin >> command)
   {
     try
     {
-      cmds.at(command)(element, std::cin, std::cout);
+      cmds.at(command)(mapOfDictionaries, std::cin, std::cout);
     }
     catch (const std::exception &)
     {
