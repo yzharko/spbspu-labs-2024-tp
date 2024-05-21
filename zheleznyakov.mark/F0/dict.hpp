@@ -14,5 +14,6 @@ namespace zheleznyakov
   size_t getLinesCount(std::string);
 
   wordpairs_t getDict(const std::string &);
+  bool isPunctuationMark(const char c);
 }
 #endif

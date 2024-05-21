@@ -35,10 +35,9 @@ zheleznyakov::wordpairs_t zheleznyakov::getDict(const std::string & str)
     {
       line++;
       position = 1;
-      continue;
     }
 
-    if (c == ' ')
+    if (c == ' ' || c == '\n')
     {
       if (!word.empty())
       {
@@ -49,7 +48,10 @@ zheleznyakov::wordpairs_t zheleznyakov::getDict(const std::string & str)
     }
     else
     {
-      word += c;
+      if (!zheleznyakov::isPunctuationMark(c))
+      {
+        word += c;
+      }
     }
   }
 
@@ -59,4 +61,9 @@ zheleznyakov::wordpairs_t zheleznyakov::getDict(const std::string & str)
   }
 
   return wordMap;
+}
+
+bool zheleznyakov::isPunctuationMark(const char c)
+{
+  return c == '.' || c == ',' || c == ';' || c == '!' || c == '?' || c == ':' || c == ';';
 }
