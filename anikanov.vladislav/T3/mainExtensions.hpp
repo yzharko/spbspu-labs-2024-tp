@@ -8,6 +8,8 @@
 
 namespace anikanov {
   double getLenght(const Point &p1, const Point &p2);
+  double getArea(const Polygon &polygon);
+  double areaHelper(const Point &point1, const Point &point2);
   std::vector< Polygon > readPolygons(const std::string &filename);
   std::vector< double > getAreas(const std::vector< Polygon > &polygons);
   std::vector< double > getAreasIf(const std::vector< Polygon > &polygons, std::function< bool(const Polygon &) >);

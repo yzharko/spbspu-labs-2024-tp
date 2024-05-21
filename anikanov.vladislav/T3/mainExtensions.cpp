@@ -19,6 +19,28 @@ double anikanov::getLenght(const Point &p1, const Point &p2)
   return std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2));
 }
 
+double anikanov::getArea(const Polygon &polygon)
+{
+  auto &points = polygon.points;
+  auto points_cycled = points;
+  points_cycled.push_back(points[0]);
+
+  std::vector<double> areas;
+  std::transform(points_cycled.begin(), --points_cycled.end(), ++points_cycled.begin(), areas.begin(),
+                 [](const Point &point1, const Point &point2) {
+                   return areaHelper(point1, point2);
+                 });
+
+  double area = std::accumulate(areas.begin(), areas.end(), 0.0);
+
+  return std::fabs(area / 2.0);
+}
+
+double anikanov::areaHelper(const Point &point1, const Point &point2)
+{
+  return (point1.x * point2.y - point1.y * point2.x);
+}
+
 std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filename)
 {
   std::vector< Polygon > polygons;
@@ -45,9 +67,9 @@ std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filen
 std::vector< double > anikanov::getAreas(const polygonArr &polygons)
 {
   std::vector< double > areas;
-  for (const auto &polygon: polygons) {
-    areas.push_back(polygon.getArea());
-  }
+  std::transform(polygons.begin(), polygons.end(), areas.begin(), [](const auto &polygon) {
+    return getArea(polygon);
+  });
   return areas;
 }
 
@@ -56,7 +78,7 @@ std::vector< double > anikanov::getAreasIf(const polygonArr &polygons, funcShema
   std::vector< double > areas;
   for (const auto &polygon: polygons) {
     if (func(polygon)) {
-      areas.push_back(polygon.getArea());
+      areas.push_back(getArea(polygon));
     }
   }
   return areas;
@@ -66,7 +88,7 @@ std::vector< size_t > anikanov::getVertexes(const polygonArr &polygons)
 {
   std::vector< size_t > vertexes;
   for (const auto &polygon: polygons) {
-    vertexes.push_back(polygon.getSize());
+    vertexes.push_back(polygon.points.size());
   }
   return vertexes;
 }
@@ -78,11 +100,11 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
   std::vector< double > areas;
   if (subcmd == "ODD") {
     areas = getAreasIf(polygons, [](const Polygon &pol) {
-      return pol.getSize() % 2 == 1;
+      return pol.points.size() % 2 == 1;
     });
   } else if (subcmd == "EVEN") {
     areas = getAreasIf(polygons, [](const Polygon &pol) {
-      return pol.getSize() % 2 == 0;
+      return pol.points.size() % 2 == 0;
     });
   } else if (subcmd == "MEAN") {
     areas = getAreas(polygons);
@@ -104,7 +126,7 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
     }
 
     areas = getAreasIf(polygons, [&count](const Polygon &pol) {
-      return pol.getSize() == count;
+      return pol.points.size() == count;
     });
   }
   return std::accumulate(areas.begin(), areas.end(), 0.0);
@@ -165,11 +187,11 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
   in >> subcmd;
   if (subcmd == "ODD") {
     count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
-      return pol.getSize() % 2 == 1;
+      return pol.points.size() % 2 == 1;
     });
   } else if (subcmd == "EVEN") {
     count = std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
-      return pol.getSize() % 2 == 0;
+      return pol.points.size() % 2 == 0;
     });
   } else {
     size_t specificNumber;
@@ -184,7 +206,7 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
     }
 
     count = std::count_if(polygons.begin(), polygons.end(), [&specificNumber](const Polygon &pol) {
-      return pol.getSize() == specificNumber;
+      return pol.points.size() == specificNumber;
     });
   }
   return count;
@@ -202,29 +224,29 @@ bool anikanov::isRightAngle(const anikanov::Point &A, const anikanov::Point &B, 
 size_t anikanov::rects(const std::vector< Polygon > &polygons)
 {
   return std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
-    if (pol.getSize() != 4) {
+    if (pol.points.size() != 4) {
       return false;
     }
 
-    double side1 = getLenght(pol[0], pol[1]);
-    double side2 = getLenght(pol[1], pol[2]);
-    double side3 = getLenght(pol[2], pol[3]);
-    double side4 = getLenght(pol[3], pol[0]);
+    double side1 = getLenght(pol.points[0], pol.points[1]);
+    double side2 = getLenght(pol.points[1], pol.points[2]);
+    double side3 = getLenght(pol.points[2], pol.points[3]);
+    double side4 = getLenght(pol.points[3], pol.points[0]);
 
-    return side1 == side3 && side2 == side4 && isRightAngle(pol[0], pol[1], pol[2]);
+    return side1 == side3 && side2 == side4 && isRightAngle(pol.points[0], pol.points[1], pol.points[2]);
   });
 }
 
 bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
 {
   // Базовый случай: если мы проверили все углы, возвращаем false
-  if (index == polygon.getSize()) {
+  if (index == polygon.points.size()) {
     return false;
   }
 
   // Проверяем, является ли текущий угол прямым
-  if (isRightAngle(polygon[index], polygon[(index + 1) % polygon.getSize()],
-                   polygon[(index + 2) % polygon.getSize()])) {
+  if (isRightAngle(polygon.points[index], polygon.points[(index + 1) % polygon.points.size()],
+                   polygon.points[(index + 2) % polygon.points.size()])) {
     return true;
   }
 
