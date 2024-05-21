@@ -55,7 +55,8 @@ std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
   {
     if (in >> word)
     {
-      if (isDelimeters(word) && checkAlpha(word))
+      deleteDelimeters(word);
+      if (checkAlpha(word))
       {
         auto search = dictionary.find(word);
         if (search == dictionary.end())
@@ -72,7 +73,7 @@ std::map<std::string, size_t> nikiforov::getDictionary(std::istream& in)
   return std::map<std::string, size_t>(dictionary);
 }
 
-bool nikiforov::isDelimeters(std::string& str)
+void nikiforov::deleteDelimeters(std::string& str)
 {
   std::map< char, char > delimiters;
   {
@@ -99,7 +100,6 @@ bool nikiforov::isDelimeters(std::string& str)
     }
     str.erase(str.begin());
   }
-  return true;
 }
 
 bool nikiforov::checkAlpha(std::string& str)
