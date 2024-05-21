@@ -100,7 +100,7 @@ std::vector< size_t > anikanov::getVertexes(const polygonArr &polygons)
   return vertexes;
 }
 
-double anikanov::area(const polygonArr &polygons, std::istream &in)
+void anikanov::area(const polygonArr &polygons, std::istream &in, std::ostream &out)
 {
   std::string subcmd;
   in >> subcmd;
@@ -119,7 +119,8 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
     if (polygons.empty()) {
       throw std::runtime_error("Invalid command");
     }
-    return sum / static_cast< double >(polygons.size());
+    out << sum / static_cast< double >(polygons.size());
+    return;
   } else {
     size_t count;
 
@@ -136,7 +137,8 @@ double anikanov::area(const polygonArr &polygons, std::istream &in)
       return pol.points.size() == count;
     });
   }
-  return std::accumulate(areas.begin(), areas.end(), 0.0);
+  out << std::accumulate(areas.begin(), areas.end(), 0.0);
+  return;
 }
 
 void anikanov::max(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
@@ -187,7 +189,7 @@ void anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, std
   throw std::runtime_error("Invalid command");
 }
 
-size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
+void anikanov::count(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
 {
   size_t count;
   std::string subcmd;
@@ -216,7 +218,7 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
       return pol.points.size() == specificNumber;
     });
   }
-  return count;
+  out << count;
 }
 
 bool anikanov::isRightAngle(const anikanov::Point &A, const anikanov::Point &B, const anikanov::Point &C)
@@ -228,9 +230,9 @@ bool anikanov::isRightAngle(const anikanov::Point &A, const anikanov::Point &B, 
   return std::abs(AB * AB + BC * BC - AC * AC) < 1e-9;
 }
 
-size_t anikanov::rects(const std::vector< Polygon > &polygons)
+void anikanov::rects(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
 {
-  return std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+  out << std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
     if (pol.points.size() != 4) {
       return false;
     }
@@ -258,9 +260,9 @@ bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
   return anikanov::hasRightAngle(polygon, index + 1);
 }
 
-size_t anikanov::rightShapes(const std::vector< Polygon > &polygons)
+void anikanov::rightShapes(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
 {
-  return std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+  out << std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
     return anikanov::hasRightAngle(pol);
   });
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <map>
 
 #include "polygon.hpp"
 #include "mainExtensions.hpp"
@@ -24,23 +25,20 @@ int main(int argc, char **argv)
     return 2;
   }
 
+  std::map< std::string, std::function< void(std::vector< Polygon > &, std::istream &, std::ostream &)>> cmds;
+  cmds["AREA"] = std::bind(area, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["MAX"] = std::bind(anikanov::max, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["MIN"] = std::bind(anikanov::max, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["COUNT"] = std::bind(count, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["RECTS"] = std::bind(rects, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+  cmds["RIGHTSHAPES"] = std::bind(rightShapes, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+
   std::string cmd;
   while (std::cin >> cmd) {
     try {
-      if (cmd == "AREA") {
-        std::cout << std::fixed << std::setprecision(1) << area(polygons, std::cin) << '\n';
-      } else if (cmd == "MAX") {
-        max(polygons, std::cin, std::cout);
-      } else if (cmd == "MIN") {
-       min(polygons, std::cin, std::cout);
-      } else if (cmd == "COUNT") {
-        std::cout << count(polygons, std::cin) << "\n";
-      } else if (cmd == "RECTS") {
-        std::cout << rects(polygons) << "\n";
-      } else if (cmd == "RIGHTSHAPES") {
-        std::cout << rightShapes(polygons) << "\n";
-      } else {
-        throw std::runtime_error("Invalid command");
+      auto it = cmds.find(cmd);
+      if (it != cmds.end()) {
+        it->second(polygons, std::cin, std::cout);
       }
     } catch (const std::runtime_error &er) {
       printErrorMessage(std::cout);
