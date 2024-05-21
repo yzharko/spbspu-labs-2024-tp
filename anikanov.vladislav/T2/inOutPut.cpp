@@ -129,18 +129,3 @@ std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
   out << ":key3 \"" << src.key3 << "\":)";
   return out;
 }
-
-anikanov::iofmtguard::iofmtguard(std::basic_ios< char > &s) :
-    s_(s),
-    fill_(s.fill()),
-    precision_(s.precision()),
-    fmt_(s.flags())
-{
-}
-
-anikanov::iofmtguard::~iofmtguard()
-{
-  s_.fill(fill_);
-  s_.precision(precision_);
-  s_.flags(fmt_);
-}
