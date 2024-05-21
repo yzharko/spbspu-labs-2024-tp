@@ -159,3 +159,76 @@ void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::
   }
 }
 
+void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string graphName;
+  is >> graphName;
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  if (!list.isGraphInList(graphName))
+  {
+    throw std::logic_error("can't get capacity of a graph which does not exist\n");
+  }
+  size_t capacity;
+  try
+  {
+    capacity = list.findGraphByName(graphName)->graph_.getCapacity();
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Capacity of graph " << graphName << " is " << capacity << "\n";
+}
+
+void reznikova::adjacentCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  size_t first_index;
+  size_t second_index;
+  if (!(is >> first_index >> second_index))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  bool isEdge;
+  try
+  {
+    WorkObject * graph = list.getActiveGraph();
+    isEdge = graph->graph_.isEdge(first_index, second_index);
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Edge between " << first_index << " and " << second_index;
+  if (isEdge == true)
+  {
+    out << " is exist\n";
+  }
+  else
+  {
+    out << " is not exist\n";
+  }
+}
+
+void reznikova::listCommand(std::ostream & out, reznikova::GraphList & list)
+{
+  if (list.graphList_.empty())
+  {
+    out << "graph list is empty\n";
+  }
+  else
+  {
+    for (auto graph: list.graphList_)
+    {
+      out << graph->graph_.getGraphName() << "\n";
+    }
+  }
+}

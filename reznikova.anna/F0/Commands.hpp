@@ -13,6 +13,9 @@ namespace reznikova
   void deleteVertex(std::istream & is, std::ostream & out, GraphList & list);
   void deleteEdge(std::istream & is, std::ostream & out, GraphList & list);
   void deleteCommand(std::istream & is, std::ostream & out, GraphList & list);
+  void capacityCommand(std::istream & is, std::ostream & out, GraphList & list);
+  void adjacentCommand(std::istream & is, std::ostream & out, GraphList & list);
+  void listCommand(std::ostream & out, GraphList & list);
 }
 
 #endif
