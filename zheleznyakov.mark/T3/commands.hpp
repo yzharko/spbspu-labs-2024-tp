@@ -18,7 +18,7 @@ namespace zheleznyakov
   double areaAccumulator(const Polygon & poly);
   double oddAreaAccumulator(const Polygon & poly);
   double evenAreaAccumulator(const Polygon & poly);
-  double vertexAreaAccumulator(double currentSum, const Polygon & poly, size_t vertexes);
+  double vertexAreaAccumulator(const Polygon & poly, size_t vertexes);
 
   double processAreaEven(const std::vector< Polygon > & polygons);
   double processAreaOdd(const std::vector< Polygon > & polygons);

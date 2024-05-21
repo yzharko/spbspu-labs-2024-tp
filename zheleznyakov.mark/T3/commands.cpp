@@ -49,9 +49,9 @@ double zheleznyakov::evenAreaAccumulator(const Polygon & polygon)
   return polygon.points.size() % 2 == 0 ? calculatePolygonArea(polygon, 0, 0.0) : 0;
 }
 
-double zheleznyakov::vertexAreaAccumulator(double currentSum, const Polygon & polygon, size_t vertexes)
+double zheleznyakov::vertexAreaAccumulator(const Polygon & polygon, size_t vertexes)
 {
-  return currentSum + (polygon.points.size() == vertexes ? calculatePolygonArea(polygon, 0, 0.0) : 0);
+  return polygon.points.size() == vertexes ? calculatePolygonArea(polygon, 0, 0.0) : 0;
 }
 
 double zheleznyakov::processAreaEven(const std::vector< Polygon > & polygons)
@@ -69,7 +69,7 @@ double zheleznyakov::processAreaOdd(const std::vector< Polygon > & polygons)
 }
 
 double zheleznyakov::processAreaMean(const std::vector< Polygon > & polygons)
-{ 
+{
   std::vector< double > areas;
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), areaAccumulator);
   return static_cast< double >(std::accumulate(areas.begin(), areas.end(), 0)) / polygons.size();
@@ -78,7 +78,9 @@ double zheleznyakov::processAreaMean(const std::vector< Polygon > & polygons)
 double zheleznyakov::processAreaVertexes(const std::vector< Polygon > & polygons, size_t vertexes)
 {
   using namespace std::placeholders;
-  return std::accumulate(polygons.begin(), polygons.end(), 0, std::bind(vertexAreaAccumulator, _1, _2, vertexes));
+  std::vector< double > areas;
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), std::bind(vertexAreaAccumulator, _1, vertexes));
+  return std::accumulate(areas.begin(), areas.end(), 0);
 }
 
 std::ostream & zheleznyakov::commands::max(const std::vector< Polygon > & polygons, std::istream & in, std::ostream & out)
