@@ -4,6 +4,8 @@
 #include<fstream>
 #include<functional>
 #include<map>
+#include <iterator>
+
 using namespace hohlova;
 int main(int argc, char* argv[])
 {
