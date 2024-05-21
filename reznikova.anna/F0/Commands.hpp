@@ -7,6 +7,9 @@
 namespace reznikova
 {
   void helpCommand(std::ostream & out);
+  void addVertex(std::istream & is, std::ostream & out, GraphList & list);
+  void addEdge(std::istream & is, std::ostream & out, GraphList & list);
+  void addCommand(std::istream & is, std::ostream & out, GraphList & list);
 }
 
 #endif
