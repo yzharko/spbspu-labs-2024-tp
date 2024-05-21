@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include <limits>
+#include <guard.hpp>
 #include <numeric>
 #include <iomanip>
 #include <iostream>
@@ -14,6 +15,13 @@
 using polygonArr = std::vector< anikanov::Polygon >;
 using funcShema = std::function< bool(const anikanov::Polygon &) >;
 
+void anikanov::printErrorMessage(std::ostream& out) {
+  iofmtguard guard(std::cout);
+  out << std::fixed << std::setprecision(1);
+
+  out << "<INVALID COMMAND>\n";
+}
+
 double anikanov::getLenght(const Point &p1, const Point &p2)
 {
   return std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2));
@@ -21,11 +29,11 @@ double anikanov::getLenght(const Point &p1, const Point &p2)
 
 double anikanov::getArea(const Polygon &polygon)
 {
-  auto &points = polygon.points;
-  auto points_cycled = points;
-  points_cycled.push_back(points[0]);
+  auto points_cycled = polygon.points;
+  points_cycled.push_back(polygon.points[0]);
 
-  std::vector<double> areas(points_cycled.size());
+  std::vector<double> areas;
+  areas.resize(points_cycled.size());
   std::transform(points_cycled.begin(), --points_cycled.end(), ++points_cycled.begin(), areas.begin(),
                  [](const Point &point1, const Point &point2) {
                    return areaHelper(point1, point2);
@@ -239,18 +247,15 @@ size_t anikanov::rects(const std::vector< Polygon > &polygons)
 
 bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
 {
-  // Базовый случай: если мы проверили все углы, возвращаем false
   if (index == polygon.points.size()) {
     return false;
   }
 
-  // Проверяем, является ли текущий угол прямым
   if (isRightAngle(polygon.points[index], polygon.points[(index + 1) % polygon.points.size()],
                    polygon.points[(index + 2) % polygon.points.size()])) {
     return true;
   }
 
-  // Рекурсивный вызов для следующего угла
   return anikanov::hasRightAngle(polygon, index + 1);
 }
 

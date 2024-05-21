@@ -1,9 +1,6 @@
-#include <algorithm>
 #include <iostream>
 #include <iomanip>
 #include <limits>
-#include <numeric>
-#include <guard.hpp>
 
 #include "polygon.hpp"
 #include "mainExtensions.hpp"
@@ -46,10 +43,7 @@ int main(int argc, char **argv)
         throw std::runtime_error("Invalid command");
       }
     } catch (const std::runtime_error &er) {
-      iofmtguard guard(std::cout);
-      std::cout << std::fixed << std::setprecision(1);
-
-      std::cout << "<INVALID COMMAND>\n";
+      printErrorMessage(std::cout);
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
 

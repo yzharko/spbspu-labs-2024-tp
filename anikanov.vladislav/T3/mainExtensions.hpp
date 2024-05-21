@@ -7,6 +7,7 @@
 #include "polygon.hpp"
 
 namespace anikanov {
+  void printErrorMessage(std::ostream& out);
   double getLenght(const Point &p1, const Point &p2);
   double getArea(const Polygon &polygon);
   double areaHelper(const Point &point1, const Point &point2);
