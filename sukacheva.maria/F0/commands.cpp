@@ -293,7 +293,7 @@ namespace sukacheva
     }
   }
 
-  void commandOpen(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandOpen(GraphList& graphList, std::istream& in)
   {
     Graph graph;
     std::string filename;
