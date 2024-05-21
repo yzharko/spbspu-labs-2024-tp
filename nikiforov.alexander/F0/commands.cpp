@@ -83,27 +83,21 @@ bool nikiforov::isDelimeters(std::string& str)
     delimiters['<'] = '>';
     delimiters['{'] = '}';
   }
+
+  if ((str.back() == ',' || str.back() == '.' ||
+    str.back() == ':' || str.back() == ';' ||
+    str.back() == '!' || str.back() == '?'))
+  {
+    str.erase(str.end() - 1);
+  }
   auto pairDelimetrs = delimiters.find(str.front());
   if (pairDelimetrs != delimiters.end())
   {
     if (str.back() == pairDelimetrs->second)
     {
-      str.erase(str.begin());
       str.erase(str.end() - 1);
-      return true;
     }
-    else
-    {
-      return false;
-    }
-  }
-
-  if (str.back() == ',' || str.back() == '.' ||
-    str.back() == ':' || str.back() == ';' ||
-    str.back() == '!' || str.back() == '?')
-  {
-    str.erase(str.end() - 1);
-    return true;
+    str.erase(str.begin());
   }
   return true;
 }
@@ -293,7 +287,7 @@ void nikiforov::save(const mapDictionaries_t& mapDictionaries, std::istream& in,
     std::string consent = "";
     in >> consent;
 
-    if (consent == "yes")
+    if (consent == "yes" || consent == "y")
     {
       writingDictionaries(mapDictionaries, nameMkdir, fout);
       out << " The data was successfully written to the folder" << nameMkdir << "\n";
