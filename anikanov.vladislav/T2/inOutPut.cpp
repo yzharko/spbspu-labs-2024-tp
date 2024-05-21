@@ -3,7 +3,6 @@
 #include <iostream>
 #include <bitset>
 #include <string>
-
 #include <delimiter.hpp>
 #include <inDelim.hpp>
 #include <guard.hpp>
@@ -12,21 +11,6 @@
 #include "stringIO.hpp"
 #include "delStrIO.hpp"
 #include "dataStruct.hpp"
-
-
-std::istream &anikanov::operator>>(std::istream &in, DelimiterIO &&dest)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry) {
-    return in;
-  }
-  char c = '0';
-  in >> c;
-  if (in && (std::tolower(c) != std::tolower(dest.exp))) {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
-}
 
 std::istream &anikanov::operator>>(std::istream &in, UllLitIO &&dest)
 {
