@@ -1,7 +1,7 @@
 #include <iostream>
 #include <functional>
-#include <map>
 #include <string>
+#include <map>
 #include "command.hpp"
 
 int main()
