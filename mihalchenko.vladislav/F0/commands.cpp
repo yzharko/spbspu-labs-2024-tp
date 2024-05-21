@@ -45,13 +45,30 @@ void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.close();
 }
 
-void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::save(const mapOfDicts_t &mapOfDictionaries, std::istream &is)
 {
-  std::string fileName = "";
-  is >> fileName;
-  std::ofstream outputFile(fileName);
-  if (!outputFile)
+  // std::string fileName = "";
+  // is >> fileName;
+  // std::ofstream outputFile(fileName);
+  /*if (!outputFile)
   {
-    throw std::invalid_argument("ERROR: CANT FIND/OPEN FILE\n");
+    throw std::invalid_argument("ERROR with file\n");
+  }*/
+  for (auto iterOfDicts : mapOfDictionaries)
+  {
+    std::ofstream outputFile(mapOfDictionaries);
+    if (!outputFile)
+    {
+      throw std::invalid_argument("ERROR with file\n");
+    }
+    outputFile.open(iterOfDicts.first + "txt");
+    if (outputFile.is_open())
+    {
+      for (auto it : iterOfDicts.second)
+      {
+        outputFile << it.first << " " << it.second << "\n";
+      }
+    }
+    outputFile.close();
   }
 }

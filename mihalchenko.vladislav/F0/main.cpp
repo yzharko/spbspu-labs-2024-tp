@@ -16,6 +16,7 @@ int main()
     using namespace std::placeholders;
     cmds["help"] = std::bind(mihalchenko::help, _3);
     cmds["open"] = std::bind(mihalchenko::open, _1, _2);
+    cmds["save"] = std::bind(mihalchenko::save, _1, _2);
   }
   std::string command = "";
   while (std::cin >> command)
