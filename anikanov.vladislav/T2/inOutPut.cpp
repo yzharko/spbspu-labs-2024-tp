@@ -5,6 +5,7 @@
 #include <string>
 #include <delimiter.hpp>
 #include <inDelim.hpp>
+#include <inDelim.cpp>
 #include <guard.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
