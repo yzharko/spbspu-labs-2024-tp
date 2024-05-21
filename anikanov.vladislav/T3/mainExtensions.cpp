@@ -137,7 +137,7 @@ void anikanov::area(const polygonArr &polygons, std::istream &in, std::ostream &
       return pol.points.size() == count;
     });
   }
-  out << std::accumulate(areas.begin(), areas.end(), 0.0) << "\n";
+  out << std::fixed << std::setprecision(1) << std::accumulate(areas.begin(), areas.end(), 0.0) << "\n";
   return;
 }
 
