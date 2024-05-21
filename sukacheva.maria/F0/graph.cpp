@@ -259,7 +259,7 @@ std::istream& sukacheva::operator>>(std::istream& in, Graph& applicant)
         graph.addEdge(start, end, weight);
       }
     }
-    if (vertices == graph.capacity())
+    if (in)
     {
       applicant = graph;
     }

@@ -293,7 +293,7 @@ namespace sukacheva
     }
   }
 
-  void commandOpen(GraphList& graphList, std::istream& in)
+  void commandOpen(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     Graph graph;
     std::string filename;
@@ -308,9 +308,14 @@ namespace sukacheva
     {
       input.clear();
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      throw std::logic_error("Something wrong.\n");
     }
-    Workspace actual(graph);
-    graphList.graphList.insert({ graph.GraphName, actual });
-    graph = graphList.switchActualGraph(graph.GraphName);
+    else
+    {
+      Workspace actual(graph);
+      graphList.graphList.insert({ graph.GraphName, actual });
+      graph = graphList.switchActualGraph(graph.GraphName);
+      out << "Work with graph " << graph.GraphName << " that was read from a file " << filename << ".\n";
+    }
   }
 }
