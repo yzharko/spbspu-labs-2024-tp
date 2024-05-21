@@ -1,8 +1,9 @@
-#ifndef IOFMTGUARD_HPP
-#define IOFMTGUARD_HPP
+#ifndef SCOPEGUARD_HPP
+#define SCOPEGUARD_HPP
+
 #include <iomanip>
 
-namespace taskaev
+namespace reznikova
 {
   class iofmtguard
   {
@@ -16,4 +17,6 @@ namespace taskaev
     std::basic_ios< char >::fmtflags fmt_;
   };
 }
+
 #endif
+

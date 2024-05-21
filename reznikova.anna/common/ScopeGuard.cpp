@@ -1,6 +1,6 @@
-#include "iofmtguard.hpp"
+#include "ScopeGuard.hpp"
 
-namespace taskaev
+namespace reznikova
 {
   iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept:
     s_(s),
@@ -16,3 +16,4 @@ namespace taskaev
     s_.flags(fmt_);
   }
 }
+

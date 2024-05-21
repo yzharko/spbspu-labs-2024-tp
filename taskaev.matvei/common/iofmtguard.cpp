@@ -1,8 +1,8 @@
-#include "ScopeGuard.hpp"
+#include "iofmtguard.hpp"
 
-namespace reznikova
+namespace taskaev
 {
-  iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept:
+  iofmtguard::iofmtguard(std::basic_ios< char > &s) noexcept :
     s_(s),
     fill_(s.fill()),
     precision_(s.precision()),
