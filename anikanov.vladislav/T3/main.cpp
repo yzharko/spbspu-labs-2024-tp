@@ -39,6 +39,8 @@ int main(int argc, char **argv)
       auto it = cmds.find(cmd);
       if (it != cmds.end()) {
         it->second(polygons, std::cin, std::cout);
+      } else {
+        throw std::runtime_error("Invalid command");
       }
     } catch (const std::runtime_error &er) {
       printErrorMessage(std::cout);
