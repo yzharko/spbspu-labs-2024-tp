@@ -3,8 +3,7 @@
 #include <cmath>
 #include <scopeGuard.hpp>
 
-void mihalchenko::printArea(const std::vector< Polygon > &polygons,
-  std::istream &is, std::ostream &out)
+void mihalchenko::printArea(const std::vector< Polygon > &polygons, std::istream &is, std::ostream &out)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -74,8 +73,7 @@ void mihalchenko::printMin(const std::vector< Polygon > &polygons, std::istream 
   }
 }
 
-void mihalchenko::printCount(const std::vector< Polygon > &polygons,
-  std::istream &is, std::ostream &out)
+void mihalchenko::printCount(const std::vector< Polygon > &polygons, std::istream &is, std::ostream &out)
 {
   std::string partOfCmd;
   is >> partOfCmd;
@@ -97,8 +95,7 @@ void mihalchenko::printCount(const std::vector< Polygon > &polygons,
   }
 }
 
-void mihalchenko::printPerms(const std::vector< Polygon > &polygons,
-  std::istream &is, std::ostream &out)
+void mihalchenko::printPerms(const std::vector< Polygon > &polygons, std::istream &is, std::ostream &out)
 {
   using namespace std::placeholders;
   Polygon copyPolygon;

@@ -67,8 +67,7 @@ void mihalchenko::getAreaMean(const std::vector< Polygon > &polygons, std::ostre
   getAreaResult(copyPolygons, true, out);
 }
 
-void mihalchenko::getAreaVertexes(const std::vector< Polygon > &polygons,
-  size_t num, std::ostream &out)
+void mihalchenko::getAreaVertexes(const std::vector< Polygon > &polygons, size_t num, std::ostream &out)
 {
   using namespace std::placeholders;
   std::vector< Polygon > copyPolygonIfEqual;
@@ -81,7 +80,7 @@ void mihalchenko::getAreaVertexes(const std::vector< Polygon > &polygons,
 }
 
 std::ostream &mihalchenko::getAreaResult(const std::vector< Polygon > &copyPolygons,
-  bool isMeanPredicate, std::ostream &out)
+                                          bool isMeanPredicate, std::ostream &out)
 {
   using namespace std::placeholders;
   iofmtguard fmtguard(out);
@@ -174,8 +173,7 @@ std::ostream &mihalchenko::countEven(const std::vector< Polygon > &polygons, std
   return out;
 }
 
-std::ostream &mihalchenko::countVertexes(const std::vector< Polygon > &polygons,
-  size_t num, std::ostream &out)
+std::ostream &mihalchenko::countVertexes(const std::vector< Polygon > &polygons, size_t num, std::ostream &out)
 {
   using namespace std::placeholders;
   iofmtguard fmtguard(out);
@@ -257,8 +255,7 @@ bool mihalchenko::isRightPolygon(const Polygon &polygon)
     std::next(polygon.points.begin()),
     std::back_inserter(vectorOfPoints),
     std::bind(getVector, _1, _2));
-  vectorOfPoints.push_back(std::bind(getVector, _1, _2)(polygon.points.back(),
-                                                        polygon.points.front()));
+  vectorOfPoints.push_back(std::bind(getVector, _1, _2)(polygon.points.back(), polygon.points.front()));
   std::vector< double > cosOfVectors;
   std::transform(
     vectorOfPoints.begin(),
@@ -266,8 +263,7 @@ bool mihalchenko::isRightPolygon(const Polygon &polygon)
     std::next(vectorOfPoints.begin()),
     std::back_inserter(cosOfVectors),
     std::bind(getCos, _1, _2));
-  cosOfVectors.push_back(std::bind(getCos, _1, _2)(vectorOfPoints.back(),
-                                                   vectorOfPoints.front()));
+  cosOfVectors.push_back(std::bind(getCos, _1, _2)(vectorOfPoints.back(), vectorOfPoints.front()));
   return std::find_if(
     cosOfVectors.begin(),
     cosOfVectors.end(),
