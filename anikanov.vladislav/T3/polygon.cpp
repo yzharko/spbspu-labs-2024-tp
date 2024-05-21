@@ -3,7 +3,7 @@
 #include <numeric>
 #include <iostream>
 #include <limits>
-#include <inOutPut.hpp>
+#include <inDelim.hpp>
 
 anikanov::Polygon &anikanov::Polygon::operator=(const anikanov::Polygon &polygon)
 {
@@ -48,12 +48,14 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
   }
 
   for (size_t i = 0; i < size; ++i) {
-    Point p;
+    int x, y;
 
-    if (!(in >> p)) {
+    if (!(in >> DelimiterIO{ '(' } >> x >> DelimiterIO{ ';' } >> y >> DelimiterIO{ ')' })) {
       in.setstate(std::ios::failbit);
       return in;
     }
+
+    Point p{x, y};
 
     dest.points.push_back(p);
   }

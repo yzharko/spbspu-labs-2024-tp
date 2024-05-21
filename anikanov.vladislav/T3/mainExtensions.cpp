@@ -14,6 +14,11 @@
 using polygonArr = std::vector< anikanov::Polygon >;
 using funcShema = std::function< bool(const anikanov::Polygon &) >;
 
+double anikanov::getLenght(const Point &p1, const Point &p2)
+{
+  return std::sqrt(std::pow(p1.x - p2.x, 2) + std::pow(p1.y - p2.y, 2));
+}
+
 std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filename)
 {
   std::vector< Polygon > polygons;
@@ -185,16 +190,14 @@ size_t anikanov::count(const std::vector< Polygon > &polygons, std::istream &in)
   return count;
 }
 
-bool anikanov::isRightAngle(const anikanov::Point& A, const anikanov::Point& B, const anikanov::Point& C) {
-  // Вычисляем длины сторон треугольника
-  double AB = A - B;
-  double BC = B - C;
-  double AC = A - C;
+bool anikanov::isRightAngle(const anikanov::Point &A, const anikanov::Point &B, const anikanov::Point &C)
+{
+  double AB = getLenght(A, B);
+  double BC = getLenght(B, C);
+  double AC = getLenght(A, C);
 
-  // Проверяем теорему Пифагора
   return std::abs(AB * AB + BC * BC - AC * AC) < 1e-9;
 }
-
 
 size_t anikanov::rects(const std::vector< Polygon > &polygons)
 {
@@ -203,23 +206,25 @@ size_t anikanov::rects(const std::vector< Polygon > &polygons)
       return false;
     }
 
-    double side1 = pol[0] - pol[1];
-    double side2 = pol[1] - pol[2];
-    double side3 = pol[2] - pol[3];
-    double side4 = pol[3] - pol[0];
+    double side1 = getLenght(pol[0], pol[1]);
+    double side2 = getLenght(pol[1], pol[2]);
+    double side3 = getLenght(pol[2], pol[3]);
+    double side4 = getLenght(pol[3], pol[0]);
 
     return side1 == side3 && side2 == side4 && isRightAngle(pol[0], pol[1], pol[2]);
   });
 }
 
-bool anikanov::hasRightAngle(const anikanov::Polygon& polygon, size_t index) {
+bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
+{
   // Базовый случай: если мы проверили все углы, возвращаем false
   if (index == polygon.getSize()) {
     return false;
   }
 
   // Проверяем, является ли текущий угол прямым
-  if (isRightAngle(polygon[index], polygon[(index+1)%polygon.getSize()], polygon[(index+2)%polygon.getSize()])) {
+  if (isRightAngle(polygon[index], polygon[(index + 1) % polygon.getSize()],
+                   polygon[(index + 2) % polygon.getSize()])) {
     return true;
   }
 
@@ -229,7 +234,7 @@ bool anikanov::hasRightAngle(const anikanov::Polygon& polygon, size_t index) {
 
 size_t anikanov::rightShapes(const std::vector< Polygon > &polygons)
 {
-  return  std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol){
+  return std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
     return anikanov::hasRightAngle(pol);
   });
 }
