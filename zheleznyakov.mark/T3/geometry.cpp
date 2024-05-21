@@ -85,7 +85,9 @@ double zheleznyakov::calculatePolygonArea(const Polygon & poly, int i, double ar
   if (i < n - 1) {
     area += calculateCrossProduct(poly.points[i], poly.points[i + 1]);
     return calculatePolygonArea(poly, i + 1, area);
-  } else {
+  }
+  else
+  {
     area += calculateCrossProduct(poly.points[n - 1], poly.points[0]);
     area = std::abs(area) / 2.0;
     return area;
