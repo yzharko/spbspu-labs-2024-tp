@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include "HuffmanTree.hpp"
-#include "Command.hpp"
+#include "command.hpp"
 
 void HuffmanApp::showHelp() {
   std::cout << "Commands:\n"
