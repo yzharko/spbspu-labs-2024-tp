@@ -1,5 +1,6 @@
 #include "workspace.hpp"
 #include <stdexcept>
+#include <algorithm>
 
 namespace sukacheva
 {

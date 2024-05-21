@@ -27,10 +27,13 @@ namespace sukacheva
     size_t getVertexIndex(std::string& name);
     std::pair< std::map< size_t, size_t >, std::map< size_t, size_t > > dijkstraDistances(std::string name);
     std::vector< std::string > dijkstraPath(const std::map< size_t, size_t >& predecessors, std::string start, std::string end);
-    std::vector< std::vector< long long int > > weightTable();
+    std::vector< std::vector< size_t > > weightTable();
+    bool isVertexExist(std::string& name);
+    bool isEdgeExist(std::string& start, std::string& end);
   private:
     std::map< size_t, std::map< size_t, size_t > > AdjacencyList;
   };
+  std::istream& operator>>(std::istream& in, Graph& applicant);
 }
 
 #endif

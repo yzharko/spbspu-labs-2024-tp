@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <iterator>
+#include <iostream>
 
 sukacheva::Graph::Graph(std::string GraphName_):
   GraphName(GraphName_),
@@ -11,12 +12,7 @@ sukacheva::Graph::Graph(std::string GraphName_):
 
 void sukacheva::Graph::addVertex(std::string& name)
 {
-  auto it = std::find_if(
-    VertexesList.begin(),
-    VertexesList.end(),
-    [&name](const auto& vertex) { return vertex.second == name; }
-  );
-  if (it != VertexesList.end())
+  if (isVertexExist(name))
   {
     throw std::logic_error("Vertex with this name already exists.\n");
   }
@@ -24,6 +20,18 @@ void sukacheva::Graph::addVertex(std::string& name)
   VertexesList.insert({key, name});
   std::map< size_t, size_t > edges;
   AdjacencyList.insert({key, edges});
+}
+
+bool sukacheva::Graph::isEdgeExist(std::string& start, std::string& end)
+{
+  size_t keyStart = getVertexIndex(start);
+  size_t keyEnd = getVertexIndex(end);
+  auto it = AdjacencyList[keyStart].find(keyEnd);
+  if (it != AdjacencyList[keyStart].end())
+  {
+    return true;
+  }
+  return false;
 }
 
 void sukacheva::Graph::addEdge(std::string& start, std::string& end, size_t weight)
@@ -34,8 +42,7 @@ void sukacheva::Graph::addEdge(std::string& start, std::string& end, size_t weig
   {
     throw std::logic_error("<INVALID COMMAND>\n");
   }
-  auto it = AdjacencyList[keyStart].find(keyEnd);
-  if (it != AdjacencyList[keyStart].end())
+  if (isEdgeExist(start, end))
   {
     throw std::logic_error("Edge between these vertices already exists.\n");
   }
@@ -175,4 +182,91 @@ std::vector< std::string > sukacheva::Graph::dijkstraPath(const std::map<size_t,
   path.push_back(VertexesList[keyStart]);
   std::reverse(path.begin(), path.end());
   return path;
+}
+
+std::vector< std::vector< size_t > > sukacheva::Graph::weightTable()
+{
+  size_t vertexCount = VertexesList.size();
+  std::vector< std::vector< size_t > > matrix(vertexCount, std::vector< size_t >(vertexCount, std::numeric_limits< size_t >::max()));
+  for (size_t i = 0; i < vertexCount; ++i)
+  {
+    matrix[i][i] = 0;
+  }
+  for (auto it = AdjacencyList.cbegin(); it != AdjacencyList.cend(); ++it)
+  {
+    size_t from = it->first;
+    const auto& edges = it->second;
+    for (auto edgeIt = edges.cbegin(); edgeIt != edges.cend(); ++edgeIt)
+    {
+      size_t to = edgeIt->first;
+      size_t weight = edgeIt->second;
+      matrix[from][to] = weight;
+    }
+  }
+  return matrix;
+}
+
+bool sukacheva::Graph::isVertexExist(std::string& name)
+{
+  auto it = std::find_if(
+    VertexesList.begin(),
+    VertexesList.end(),
+    [&name](const auto& vertex) { return vertex.second == name; }
+  );
+  if (it != VertexesList.end())
+  {
+    return true;
+  }
+  return false;
+}
+
+std::istream& sukacheva::operator>>(std::istream& in, Graph& applicant)
+{
+  std::istream::sentry guard(in);
+  Graph graph;
+  if (!guard)
+  {
+    return in;
+  }
+  size_t vertices = 0;
+  size_t edges = 0;
+  in >> graph.GraphName >> vertices >> edges;
+  for (size_t i = 0; i < edges + 1; i++)
+  {
+    std::string start;
+    std::string end;
+    size_t weight;
+    std::istream::pos_type startPos = in.tellg();
+    if (!(in >> start) || !(in >> end) || !(in >> weight))
+    {
+      in.clear();
+      in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      in.seekg(startPos);
+      break;
+    }
+    else
+    {
+      if (!graph.isVertexExist(start))
+      {
+        graph.addVertex(start);
+      }
+      if (!graph.isVertexExist(end))
+      {
+        graph.addVertex(end);
+      }
+      if (!graph.isEdgeExist(start, end))
+      {
+        graph.addEdge(start, end, weight);
+      }
+    }
+    if (vertices == graph.capacity())
+    {
+      applicant = graph;
+    }
+    else
+    {
+      in.setstate(std::ios::failbit);
+    }
+  }
+  return in;
 }

@@ -2,7 +2,6 @@
 #define WORKSPACE_HPP
 #include <map>
 #include <string>
-#include <stdexcept>
 #include "graph.hpp"
 
 namespace sukacheva

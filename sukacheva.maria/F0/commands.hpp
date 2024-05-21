@@ -23,11 +23,13 @@ namespace sukacheva
   void printPathes(GraphList& graphList, std::string& name, std::ostream& out);
   void printDistances(GraphList& graphList, std::string& name, std::ostream& out);
 
+  void printMatrix(GraphList& graphList, std::ostream& out);
   void commandCreateGraph(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandAdd(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandPrint(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandDelete(GraphList& graphList, std::istream& in, std::ostream& out);
   void commandSwitch(GraphList& graphList, std::istream& in, std::ostream& out);
+  void commandOpen(GraphList& graphList, std::istream& in, std::ostream& out);
 }
 
 #endif

@@ -2,6 +2,9 @@
 #include <iostream>
 #include <functional>
 #include <algorithm>
+#include <fstream>
+#include <limits>
+#include <iterator>
 
 namespace sukacheva
 {
@@ -16,18 +19,18 @@ namespace sukacheva
     out << "delete <node> <name> - deleting vertex name\n"; // + +
     out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n"; //+ +
     out << "capacity <graphname> - displays the number of vertices in the graph graphname\n"; //+ +
-    out << "weightTable <graphname> - displays the weight table of the graph graphname\n";
+    out << "weightTable <graphname> - displays the weight table of the graph graphname\n"; //+ +
     out << "print <path> <name> - prints the shortest paths from the top name to the rest.\n"; //+ +
     out << "print <distance> <name> - prints the lengths of the shortest paths from the vertex name to the rest.\n"; //+ +
-    out << "open <filename> - open a file for reading with a given name\n";
-    out << "save <filename> - open a file for output with the specified parameters\n";
+    out << "open <filename> - open a file for reading with a given name\n"; // - -
+    out << "save <filename> - open a file for output with the specified parameters\n"; // - -
     out << "list - display a list of graphs\n"; //+ +
     out << "graphname - displays the name of the graph being worked on\n"; //+ +
     out << "delete <graph> <graphname> - deleting graph graphname\n"; //+ +
     out << "clear - deleting all vertices of the actual graph\n";//+ +
   }
 
-  void sukacheva::createGraph(GraphList& graphList, std::string& graphName)
+  void createGraph(GraphList& graphList, std::string& graphName)
   {
     Graph graph(graphName);
     Workspace actual(graph);
@@ -35,27 +38,27 @@ namespace sukacheva
     graph = graphList.switchActualGraph(graphName);
   }
 
-  void sukacheva::addVertex(GraphList& graphList, std::string& name)
+  void addVertex(GraphList& graphList, std::string& name)
   {
     graphList.findActiveWorkspace().addVertex(name);
   }
 
-  void sukacheva::addEdge(GraphList& graphList, std::string& start, std::string& end, size_t weight)
+  void addEdge(GraphList& graphList, std::string& start, std::string& end, size_t weight)
   {
     graphList.findActiveWorkspace().addEdge(start, end, weight);
   }
 
-  void sukacheva::deleteVertex(GraphList& graphList, std::string& name)
+  void deleteVertex(GraphList& graphList, std::string& name)
   {
     graphList.findActiveWorkspace().deleteVertex(name);
   }
 
-  void sukacheva::deleteEdge(GraphList& graphList, std::string& start, std::string& end)
+  void deleteEdge(GraphList& graphList, std::string& start, std::string& end)
   {
     graphList.findActiveWorkspace().deleteEdge(start, end);
   }
 
-  void sukacheva::capacity(GraphList& graphList, std::istream& in, std::ostream& out)
+  void capacity(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     std::string graphName;
     in >> graphName;
@@ -63,23 +66,23 @@ namespace sukacheva
     out << graphList.findGraphName(graphName).capacity() << "\n";
   }
 
-  void sukacheva::graphName(GraphList& graphList, std::ostream& out)
+  void graphName(GraphList& graphList, std::ostream& out)
   {
     out << graphList.findActiveWorkspace().GraphName << "\n";
   }
 
-  void sukacheva::deleteGraph(GraphList& graphList, std::string& graphName)
+  void deleteGraph(GraphList& graphList, std::string& graphName)
   {
     graphList.graphList.erase(graphName);
   }
 
-  void sukacheva::clearGraph(GraphList& graphList, std::ostream& out)
+  void clearGraph(GraphList& graphList, std::ostream& out)
   {
     graphList.findActiveWorkspace().clear();
     out << "Actual graph has 0 vertexes.\n";
   }
 
-  void sukacheva::printGraphList(std::ostream& out, GraphList graphList)
+  void printGraphList(std::ostream& out, GraphList graphList)
   {
     for (auto it = graphList.graphList.begin(); it != graphList.graphList.end(); ++it)
     {
@@ -87,17 +90,17 @@ namespace sukacheva
     }
   }
 
-  std::pair< std::map< size_t, size_t >, std::map< size_t, size_t > > sukacheva::getDistances(GraphList& graphList, std::string& name)
+  std::pair< std::map< size_t, size_t >, std::map< size_t, size_t > > getDistances(GraphList& graphList, std::string& name)
   {
     return graphList.findActiveWorkspace().dijkstraDistances(name);
   }
 
-  std::vector< std::string > sukacheva::getPath(GraphList& graphList, std::string& start, std::string& end)
+  std::vector< std::string > getPath(GraphList& graphList, std::string& start, std::string& end)
   {
     return graphList.findActiveWorkspace().dijkstraPath(graphList.findActiveWorkspace().dijkstraDistances(start).second, start, end);
   }
 
-  std::map< size_t, std::vector< std::string > > sukacheva::getPathes(GraphList& graphList, std::string& name)
+  std::map< size_t, std::vector< std::string > > getPathes(GraphList& graphList, std::string& name)
   {
     size_t capacity = graphList.findActiveWorkspace().capacity();
     std::map< size_t, std::vector< std::string > > result;
@@ -108,7 +111,7 @@ namespace sukacheva
     return result;
   }
 
-  void sukacheva::printPath(std::vector<std::string> path, std::ostream& out)
+  void printPath(std::vector<std::string> path, std::ostream& out)
   {
     size_t capacity = path.size();
     for (size_t i = 0; i != capacity; i++)
@@ -121,7 +124,7 @@ namespace sukacheva
     }
   }
 
-  void sukacheva::printPathes(GraphList& graphList, std::string& name, std::ostream& out)
+  void printPathes(GraphList& graphList, std::string& name, std::ostream& out)
   {
     std::map< size_t, std::vector< std::string > > pathesList = getPathes(graphList, name);
     size_t capacity = graphList.findActiveWorkspace().capacity();
@@ -155,7 +158,7 @@ namespace sukacheva
     std::copy(outputLines.begin(), outputLines.end(), std::ostream_iterator<std::string>(out));
   }
 
-  void sukacheva::commandCreateGraph(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandCreateGraph(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     using namespace std::placeholders;
     std::map< std::string, std::function< void(GraphList& graphList, std::string& graphName) > > commandKey;
@@ -174,7 +177,7 @@ namespace sukacheva
     }
   }
 
-  void sukacheva::commandAdd(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandAdd(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     std::string command;
     std::string start;
@@ -205,7 +208,7 @@ namespace sukacheva
     }
   }
 
-  void sukacheva::commandPrint(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandPrint(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     using namespace std::placeholders;
     std::map< std::string, std::function< void(GraphList& graphList, std::string& name, std::ostream& out) > > commandKey;
@@ -224,7 +227,7 @@ namespace sukacheva
     }
   }
 
-  void sukacheva::commandDelete(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandDelete(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     using namespace std::placeholders;
     std::map< std::string, std::function< void(GraphList& graphList, std::string& name) > > commandKey;
@@ -254,7 +257,7 @@ namespace sukacheva
     }
   }
 
-  void sukacheva::commandSwitch(GraphList& graphList, std::istream& in, std::ostream& out)
+  void commandSwitch(GraphList& graphList, std::istream& in, std::ostream& out)
   {
     std::string name;
     in >> name;
@@ -267,5 +270,47 @@ namespace sukacheva
     {
       throw std::logic_error("<INVALID COMMAND>\n");
     }
+  }
+
+  void printMatrix(GraphList& graphList, std::ostream& out)
+  {
+    std::vector< std::vector< size_t > > weightTable = graphList.findActiveWorkspace().weightTable();
+    size_t rows = weightTable.size();
+    for (size_t i = 0; i < rows; i++)
+    {
+      for (size_t j = 0; j < rows; j++)
+      {
+        if (weightTable[i][j] == std::numeric_limits<size_t>::max())
+        {
+          out << "inf ";
+        }
+        else
+        {
+          out << weightTable[i][j] << " ";
+        }
+      }
+      out << "\n";
+    }
+  }
+
+  void commandOpen(GraphList& graphList, std::istream& in, std::ostream& out)
+  {
+    Graph graph;
+    std::string filename;
+    in >> filename;
+    std::ifstream input(filename);
+    if (!input)
+    {
+      throw std::logic_error("There is no such file.\n");
+    }
+    input >> graph;
+    if (input.fail())
+    {
+      input.clear();
+      input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+    Workspace actual(graph);
+    graphList.graphList.insert({ graph.GraphName, actual });
+    graph = graphList.switchActualGraph(graph.GraphName);
   }
 }
