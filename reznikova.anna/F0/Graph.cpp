@@ -110,3 +110,40 @@ void reznikova::Graph::removeEdge(size_t first_index, size_t second_index)
   first_vertex->remove(second_vertex);
   second_vertex->remove(first_vertex);
 }
+
+
+void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
+{
+  Vertex* start_vertex = findVertex(start_index);
+  if (!start_vertex) {
+    throw std::logic_error("start index wasn't found");
+  }
+  std::queue< Vertex * > to_visit;
+  std::unordered_set< size_t > visited;
+  std::vector< size_t > visit_order;
+  to_visit.push(start_vertex);
+  visited.insert(start_vertex->getIndex());
+  while (!to_visit.empty()) 
+  {
+    Vertex * current = to_visit.front();
+    to_visit.pop();
+    visit_order.push_back(current->getIndex());
+    for (Vertex * neighbor : current->relatedVertices_)
+    {
+      if (visited.find(neighbor->getIndex()) == visited.end()) 
+      {
+        to_visit.push(neighbor);
+        visited.insert(neighbor->getIndex());
+      }
+    }
+  }
+  for (size_t i = 0; i < visit_order.size(); ++i) 
+  {
+    out << visit_order[i];
+    if (i < visit_order.size() - 1) 
+    {
+      out << " ";
+    }
+  }
+  out << "\n";
+}
