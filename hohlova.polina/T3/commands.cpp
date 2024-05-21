@@ -333,7 +333,8 @@ int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygo
       isPermutation = false;
       for (size_t i = 0; i < polyg.points.size(); ++i)
       {
-        if (!used[i] && ((point.x == polyg.points[i].x && point.y == polyg.points[i].y) || (point.x == polyg.points[i].y && point.y == polyg.points[i].x)))
+        if (!used[i] && ((point.x == polyg.points[i].x && point.y == polyg.points[i].y) ||
+          (point.x == polyg.points[i].y && point.y == polyg.points[i].x)))
         {
           used[i] = true;
           isPermutation = true;
