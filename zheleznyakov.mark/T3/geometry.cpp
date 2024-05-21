@@ -1,6 +1,7 @@
 #include "geometry.hpp"
 #include <limits>
 #include <iostream>
+#include <iterator>
 #include <string>
 
 std::istream & zheleznyakov::operator>>(std::istream & in, Point & ref)
@@ -53,11 +54,9 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
 
 std::ostream & zheleznyakov::operator<<(std::ostream & out, const Polygon & ref)
 {
-  for (size_t i = 0; i < ref.points.size(); i++)
-  {
-    out << ref.points.at(i);
-    out << (i == ref.points.size() - 1 ?'\n' : ' ');
-  }
+  std::ostream_iterator< Point > out_it(out, " ");
+  std::copy(ref.points.begin(), ref.points.end(), out_it);
+  out << '\n';
   return out;
 }
 
