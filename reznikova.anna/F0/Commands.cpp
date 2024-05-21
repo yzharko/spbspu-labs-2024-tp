@@ -232,3 +232,68 @@ void reznikova::listCommand(std::ostream & out, reznikova::GraphList & list)
     }
   }
 }
+
+void reznikova::graphNameCommand(std::ostream & out, reznikova::GraphList & list)
+{
+  if (list.graphList_.empty())
+  {
+    out << "graph list is empty\n";
+  }
+  else
+  {
+    out << list.getActiveGraph()->graph_.getGraphName() << "\n";
+  }
+}
+
+void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  size_t index;
+  if (!(is >> index))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  try
+  {
+    WorkObject * graph = list.getActiveGraph();
+    graph->graph_.BFS(index, out);
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+}
+
+void reznikova::readMatrix(std::istream & is, std::vector< std::vector< size_t > > & table)
+{
+  std::string line;
+  while (std::getline(is, line))
+  {
+    std::istringstream iss(line);
+    std::vector< size_t > row;
+    size_t num;
+    while (iss >> num) 
+    {
+      row.push_back(num);
+    }
+    table.push_back(row);
+  }
+  size_t n = table.size();
+  bool is_square = true;
+  for (const auto & row : table)
+  {
+    if (row.size() != n)
+    {
+      is_square = false;
+      break;
+    }
+  }
+  if (!is_square) 
+  {
+     throw std::logic_error("The input table is not square\n");
+  }
+}
