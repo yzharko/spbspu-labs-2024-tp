@@ -88,3 +88,74 @@ void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::Gra
     throw std::logic_error("wrong parameters\n");
   }
 }
+
+void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  size_t index;
+  if (!(is >> index))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  try
+  {
+    WorkObject * graph = list.getActiveGraph();
+    graph->graph_.removeVertex(index);
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Vertex with index " << index << " were deleted\n";
+}
+
+void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  size_t first_index;
+  size_t second_index;
+  if (!(is >> first_index >> second_index))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  try
+  {
+    WorkObject * graph = list.getActiveGraph();
+    graph->graph_.removeEdge(first_index, second_index);
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Edge between " << first_index << " and " << second_index << " indexes were deleted\n";
+}
+
+void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string second_parameter;
+  if (!(is >> second_parameter))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (second_parameter == "vertex")
+  {
+    deleteVertex(is, out, list);
+  }
+  else if (second_parameter == "edge")
+  {
+    deleteEdge(is, out, list);
+  }
+  else
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+}
+
