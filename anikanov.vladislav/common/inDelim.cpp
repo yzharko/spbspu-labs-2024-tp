@@ -1,15 +1,9 @@
 #include "inDelim.hpp"
 
 #include <iostream>
-#include <bitset>
 #include <string>
 
 #include "delimiter.hpp"
-#include "../T2/ullBinIO.hpp"
-#include "../T2/ullLitIO.hpp"
-#include "../T2/stringIO.hpp"
-#include "../T2/delStrIO.hpp"
-#include "../T2/dataStruct.hpp"
 #include "guard.hpp"
 
 

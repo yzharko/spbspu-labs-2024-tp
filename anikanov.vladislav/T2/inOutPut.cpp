@@ -4,8 +4,7 @@
 #include <bitset>
 #include <string>
 #include <delimiter.hpp>
-#include <inDelim.hpp>
-#include <inDelim.cpp>
+#include <inDelim>
 #include <guard.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
