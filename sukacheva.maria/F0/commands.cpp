@@ -10,24 +10,24 @@ namespace sukacheva
 {
   void help(std::ostream& out)
   {
-    out << "help - displays all available commands with parameters\n"; // + +
-    out << "create <graph> <graphname> - creating an empty graph called graphname\n"; //+ +
-    out << "work <graphname> - switching to working with a graphname\n"; // + +
-    out << "add <node> <name> – creating a graph vertex called name\n"; //+ +
-    out << "add < edge > < first_node, second_node, weight > - "; //+ +
+    out << "help - displays all available commands with parameters\n";
+    out << "create <graph> <graphname> - creating an empty graph called graphname\n";
+    out << "work <graphname> - switching to working with a graphname\n";
+    out << "add <node> <name> – creating a graph vertex called name\n";
+    out << "add < edge > < first_node, second_node, weight > - ";
     out << "creating an edge between the vertices first_node and second_node with some weight\n";
-    out << "delete <node> <name> - deleting vertex name\n"; // + +
-    out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n"; //+ +
-    out << "capacity <graphname> - displays the number of vertices in the graph graphname\n"; //+ +
-    out << "weightTable <graphname> - displays the weight table of the graph graphname\n"; //+ +
-    out << "print <path> <name> - prints the shortest paths from the top name to the rest.\n"; //+ +
-    out << "print <distance> <name> - prints the lengths of the shortest paths from the vertex name to the rest.\n"; //+ +
-    out << "open <filename> - open a file for reading with a given name\n"; // - -
-    out << "save <filename> - open a file for output with the specified parameters\n"; // - -
-    out << "list - display a list of graphs\n"; //+ +
-    out << "graphname - displays the name of the graph being worked on\n"; //+ +
-    out << "delete <graph> <graphname> - deleting graph graphname\n"; //+ +
-    out << "clear - deleting all vertices of the actual graph\n";//+ +
+    out << "delete <node> <name> - deleting vertex name\n";
+    out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n";
+    out << "capacity <graphname> - displays the number of vertices in the graph graphname\n";
+    out << "weightTable <graphname> - displays the weight table of the graph graphname\n";
+    out << "print <path> <name> - prints the shortest paths from the top name to the rest.\n";
+    out << "print <distance> <name> - prints the lengths of the shortest paths from the vertex name to the rest.\n";
+    out << "open <filename> - open a file for reading with a given name\n";
+    out << "save <filename> - open a file for output with a given name\n";
+    out << "list - display a list of graphs\n";
+    out << "graphname - displays the name of the graph being worked on\n";
+    out << "delete <graph> <graphname> - deleting graph graphname\n";
+    out << "clear - deleting all vertices of the actual graph\n";
   }
 
   void createGraph(GraphList& graphList, std::string& graphName)
@@ -308,7 +308,6 @@ namespace sukacheva
     {
       input.clear();
       input.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-      throw std::logic_error("Something wrong.\n");
     }
     else
     {
@@ -317,5 +316,19 @@ namespace sukacheva
       graph = graphList.switchActualGraph(graph.GraphName);
       out << "Work with graph " << graph.GraphName << " that was read from a file " << filename << ".\n";
     }
+  }
+
+  void commandSave(GraphList& graphList, std::istream& in, std::ostream& out)
+  {
+    std::string filename;
+    in >> filename;
+    std::ofstream output;
+    output.open(filename, std::ios::app);
+    if (!output)
+    {
+      throw std::logic_error("There is no such file.\n");
+    }
+    printMatrix(graphList, output);
+    out << "Graph was saved to file " << filename << ".\n";
   }
 }
