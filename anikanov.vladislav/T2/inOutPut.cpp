@@ -3,14 +3,16 @@
 #include <iostream>
 #include <bitset>
 #include <string>
-#include <delimiter.hpp>
 #include <inDelim.hpp>
+#include <delimiter.hpp>
 #include <guard.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
 #include "stringIO.hpp"
 #include "delStrIO.hpp"
 #include "dataStruct.hpp"
+
+using namespace anikanov;
 
 std::istream &anikanov::operator>>(std::istream &in, UllLitIO &&dest)
 {

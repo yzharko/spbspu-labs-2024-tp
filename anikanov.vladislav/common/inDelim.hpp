@@ -1,5 +1,5 @@
-#ifndef INOUTPUT_HPP
-#define INOUTPUT_HPP
+#ifndef INDELIM_HPP
+#define INDELIM_HPP
 
 #include <iosfwd>
 #include "delimiter.hpp"

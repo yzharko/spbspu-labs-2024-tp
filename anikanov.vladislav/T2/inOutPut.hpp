@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <delimiter.hpp>
+#include <inDelim.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
 #include "stringIO.hpp"
