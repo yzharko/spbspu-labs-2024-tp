@@ -39,9 +39,9 @@ double zheleznyakov::areaAccumulator(double currentSum, const Polygon & polygon)
   return currentSum + calculatePolygonArea(polygon, 0, 0.0);
 }
 
-double zheleznyakov::oddAreaAccumulator(double currentSum, const Polygon & polygon)
+double zheleznyakov::oddAreaAccumulator(const Polygon & polygon)
 {
-  return currentSum + (polygon.points.size() % 2 != 0 ? calculatePolygonArea(polygon, 0, 0.0) : 0);
+  return polygon.points.size() % 2 != 0 ? calculatePolygonArea(polygon, 0, 0.0) : 0;
 }
 
 double zheleznyakov::evenAreaAccumulator(const Polygon & polygon)
@@ -63,7 +63,9 @@ double zheleznyakov::processAreaEven(const std::vector< Polygon > & polygons)
 
 double zheleznyakov::processAreaOdd(const std::vector< Polygon > & polygons)
 {
-  return std::accumulate(polygons.begin(), polygons.end(), 0, oddAreaAccumulator);
+  std::vector< double > areas;
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), oddAreaAccumulator);
+  return std::accumulate(areas.begin(), areas.end(), 0);
 }
 
 double zheleznyakov::processAreaMean(const std::vector< Polygon > & polygons)
