@@ -4,7 +4,7 @@
 #include <string>
 #include "Command.h"
 
-int main() 
+int main()
 {
   HuffmanApp app;
   std::cout << "hello in Huffman code, please work:\n";
