@@ -19,6 +19,7 @@ namespace reznikova
     void removeVertex(size_t index);
     void removeEdge(size_t first_index, size_t second_index);
     void BFS(size_t start_index, std::ostream & out) const;
+    void printAdjacencyMatrix(std::ostream & out) const;
   private:
     std::vector< Vertex * > graph_;
     std::string graphName_;

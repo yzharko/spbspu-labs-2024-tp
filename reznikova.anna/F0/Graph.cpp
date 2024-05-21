@@ -147,3 +147,43 @@ void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
   }
   out << "\n";
 }
+
+void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
+{
+  std::map< size_t, size_t > indexOrder;
+  size_t currentIndex = 0;
+  for (const auto & vertex : graph_)
+  {
+    indexOrder[vertex->index_] = currentIndex++;
+  }
+  size_t n = graph_.size();
+  std::vector< std::vector< size_t > > adjacencyMatrix(n, std::vector< size_t >(n, 0));
+  for (const auto & vertex : graph_)
+  {
+    for (const auto & neighbor : vertex->relatedVertices_)
+    {
+      size_t row = indexOrder[vertex->index_];
+      size_t col = indexOrder[neighbor->index_];
+      adjacencyMatrix[row][col] = 1;
+    }
+  }
+  std::vector< size_t > indices;
+  for (const auto & pair : indexOrder)
+  {
+    indices.push_back(pair.first);
+  }
+  std::sort(indices.begin(), indices.end());
+  out << "  ";
+  for (size_t idx : indices)
+  {
+    out << idx << " ";
+  }
+  out << "\n";
+  for (size_t i = 0; i < n; ++i) {
+    out << indices[i] << " ";
+    for (size_t j = 0; j < n; ++j) {
+      out << adjacencyMatrix[i][j] << " ";
+    }
+    out << "\n";
+  }
+}
