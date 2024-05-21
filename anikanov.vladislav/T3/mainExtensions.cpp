@@ -15,7 +15,8 @@
 using polygonArr = std::vector< anikanov::Polygon >;
 using funcShema = std::function< bool(const anikanov::Polygon &) >;
 
-void anikanov::printErrorMessage(std::ostream& out) {
+void anikanov::printErrorMessage(std::ostream &out)
+{
   iofmtguard guard(std::cout);
   out << std::fixed << std::setprecision(1);
 
@@ -32,15 +33,13 @@ double anikanov::getArea(const Polygon &polygon)
   auto points_cycled = polygon.points;
   points_cycled.push_back(polygon.points[0]);
 
-  std::vector<double> areas;
-  areas.resize(points_cycled.size());
+  std::vector< double > areas;
+  areas.resize(points_cycled.size() - 1);
   std::transform(points_cycled.begin(), --points_cycled.end(), ++points_cycled.begin(), areas.begin(),
                  [](const Point &point1, const Point &point2) {
                    return areaHelper(point1, point2);
                  });
-
   double area = std::accumulate(areas.begin(), areas.end(), 0.0);
-
   return std::fabs(area / 2.0);
 }
 
@@ -75,7 +74,7 @@ std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filen
 std::vector< double > anikanov::getAreas(const polygonArr &polygons)
 {
   std::vector< double > areas;
-  std::transform(polygons.begin(), polygons.end(), areas.begin(), [](const auto &polygon) {
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), [](const auto &polygon) {
     return getArea(polygon);
   });
   return areas;
