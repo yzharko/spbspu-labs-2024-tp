@@ -14,6 +14,10 @@ namespace reznikova
     Vertex * findVertex(size_t index) const;
     bool isVertex(size_t index) const;
     bool isEdge(size_t first_index, size_t second_index) const;
+    void addVertex(size_t index);
+    void addEdge(std::size_t first_index, size_t second_index);
+    void removeVertex(size_t index);
+    void removeEdge(size_t first_index, size_t second_index);
   private:
     std::vector< Vertex * > graph_;
     std::string graphName_;
