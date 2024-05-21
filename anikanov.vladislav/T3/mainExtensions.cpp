@@ -25,7 +25,7 @@ double anikanov::getArea(const Polygon &polygon)
   auto points_cycled = points;
   points_cycled.push_back(points[0]);
 
-  std::vector<double> areas;
+  std::vector<double> areas(points_cycled.size());
   std::transform(points_cycled.begin(), --points_cycled.end(), ++points_cycled.begin(), areas.begin(),
                  [](const Point &point1, const Point &point2) {
                    return areaHelper(point1, point2);
