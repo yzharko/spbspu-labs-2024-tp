@@ -37,7 +37,7 @@ zheleznyakov::wordpairs_t zheleznyakov::getDict(const std::string & str)
       position = 1;
       continue;
     }
-    
+
     if (c == ' ')
     {
       if (!word.empty())
