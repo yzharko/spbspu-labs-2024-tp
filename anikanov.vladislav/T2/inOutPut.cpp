@@ -4,13 +4,14 @@
 #include <bitset>
 #include <string>
 
-#include "delimiterIO.hpp"
+#include <delimiter.hpp>
+#include <inDelim.hpp>
+#include <guard.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
 #include "stringIO.hpp"
 #include "delStrIO.hpp"
 #include "dataStruct.hpp"
-#include "iofmtguard.hpp"
 
 
 std::istream &anikanov::operator>>(std::istream &in, DelimiterIO &&dest)
