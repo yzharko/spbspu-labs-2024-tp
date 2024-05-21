@@ -21,6 +21,7 @@ namespace zheleznyakov
   bool operator==(const Point & point1, const Point & point2);
 
   std::istream & operator>>(std::istream & in, Polygon & ref);
+  std::istream & readPoint(std::istream & in, Polygon & ref, std::vector< Point > & polygon, size_t pointsAmount, size_t i);
   std::ostream & operator<<(std::ostream & out, const Polygon & ref);
   bool operator==(const Polygon & poly1, const Polygon & poly2);
 

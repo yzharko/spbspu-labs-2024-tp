@@ -31,9 +31,16 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
   if (pointsAmount < 3)
   {
     in.setstate(std::ios::failbit);
+    return in;
   }
+
   std::vector< Point > polygon;
-  for (size_t i = 0; i < pointsAmount; i++)
+  return readPoint(in, ref, polygon, pointsAmount, 0);
+}
+
+std::istream & zheleznyakov::readPoint(std::istream & in, Polygon & ref, std::vector< Point > & polygon, size_t pointsAmount, size_t i)
+{
+  if (i < pointsAmount)
   {
     if (in.get() == '\n')
     {
@@ -43,14 +50,19 @@ std::istream & zheleznyakov::operator>>(std::istream & in, Polygon & ref)
     Point temp{};
     in >> temp;
     polygon.push_back(temp);
+    return readPoint(in, ref, polygon, pointsAmount, i + 1);
   }
-  if (polygon.size() != pointsAmount || in.get() != '\n')
+  else
   {
-    in.setstate(std::ios::failbit);
+    if (polygon.size() != pointsAmount || in.get() != '\n')
+    {
+      in.setstate(std::ios::failbit);
+    }
+    ref = Polygon{polygon};
+    return in;
   }
-  ref = Polygon{polygon};
-  return in;
-};
+}
+
 
 std::ostream & zheleznyakov::operator<<(std::ostream & out, const Polygon & ref)
 {
