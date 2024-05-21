@@ -34,6 +34,10 @@ namespace hohlova
     {
       in.setstate(std::ios::failbit);
     }
+    if (in.peek() == '\n')
+    {
+      in.setstate(std::ios::failbit);
+    }
     return in;
   }
 }

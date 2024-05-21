@@ -17,5 +17,6 @@ namespace hohlova
   std::istream& operator>>(std::istream& in, Point& dest);
   std::istream& operator>>(std::istream& in, Polygon& dest);
   bool operator==(const Polygon& firstpolygon, const Polygon& secondpolygon);
+  bool checkPointCount(size_t expectedPoints, size_t actualPoints);
 }
 #endif
