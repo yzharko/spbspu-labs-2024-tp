@@ -34,9 +34,9 @@ std::ostream & zheleznyakov::commands::area(const std::vector< Polygon > & polyg
   return out << processAreaVertexes(polygons, vertexes) << '\n';
 }
 
-double zheleznyakov::areaAccumulator(double currentSum, const Polygon & polygon)
+double zheleznyakov::areaAccumulator(const Polygon & polygon)
 {
-  return currentSum + calculatePolygonArea(polygon, 0, 0.0);
+  return calculatePolygonArea(polygon, 0, 0.0);
 }
 
 double zheleznyakov::oddAreaAccumulator(const Polygon & polygon)
@@ -69,8 +69,10 @@ double zheleznyakov::processAreaOdd(const std::vector< Polygon > & polygons)
 }
 
 double zheleznyakov::processAreaMean(const std::vector< Polygon > & polygons)
-{
-  return static_cast< double >(std::accumulate(polygons.begin(), polygons.end(), 0, areaAccumulator)) / polygons.size();
+{ 
+  std::vector< double > areas;
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), areaAccumulator);
+  return static_cast< double >(std::accumulate(areas.begin(), areas.end(), 0)) / polygons.size();
 }
 
 double zheleznyakov::processAreaVertexes(const std::vector< Polygon > & polygons, size_t vertexes)

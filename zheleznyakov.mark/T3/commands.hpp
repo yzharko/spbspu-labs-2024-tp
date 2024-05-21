@@ -15,7 +15,7 @@ namespace zheleznyakov
     std::ostream & same(const std::vector< Polygon > &, std::istream &, std::ostream &);
   }
 
-  double areaAccumulator(double currentSum, const Polygon & poly);
+  double areaAccumulator(const Polygon & poly);
   double oddAreaAccumulator(const Polygon & poly);
   double evenAreaAccumulator(const Polygon & poly);
   double vertexAreaAccumulator(double currentSum, const Polygon & poly, size_t vertexes);
