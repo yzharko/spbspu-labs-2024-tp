@@ -230,7 +230,7 @@ bool anikanov::isRightAngle(const anikanov::Point &A, const anikanov::Point &B, 
   return std::abs(AB * AB + BC * BC - AC * AC) < 1e-9;
 }
 
-void anikanov::rects(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
+void anikanov::rects(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out)
 {
   out << std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
     if (pol.points.size() != 4) {
@@ -260,7 +260,7 @@ bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
   return anikanov::hasRightAngle(polygon, index + 1);
 }
 
-void anikanov::rightShapes(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
+void anikanov::rightShapes(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out)
 {
   out << std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
     return anikanov::hasRightAngle(pol);

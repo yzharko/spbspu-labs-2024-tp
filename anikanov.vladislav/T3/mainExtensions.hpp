@@ -19,8 +19,8 @@ namespace anikanov {
   void min(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out);
   void max(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out);
   void count(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out);
-  void rects(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out);
-  void rightShapes(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out);
+  void rects(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out);
+  void rightShapes(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out);
   bool isRightAngle(const anikanov::Point &A, const anikanov::Point &B, const anikanov::Point &C);
   bool hasRightAngle(const anikanov::Polygon &polygon, size_t index = 0);
 }
