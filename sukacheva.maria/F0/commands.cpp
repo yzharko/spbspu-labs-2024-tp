@@ -13,10 +13,10 @@ namespace sukacheva
     out << "help - displays all available commands with parameters\n";
     out << "create <graph> <graphname> - creating an empty graph called graphname\n";
     out << "work <graphname> - switching to working with a graphname\n";
-    out << "add <node> <name> – creating a graph vertex called name\n";
+    out << "add <vertex> <name> – creating a graph vertex called name\n";
     out << "add < edge > < first_node, second_node, weight > - ";
     out << "creating an edge between the vertices first_node and second_node with some weight\n";
-    out << "delete <node> <name> - deleting vertex name\n";
+    out << "delete <vertex> <name> - deleting vertex name\n";
     out << "delete < edge > < first, second > - deleting an edge between the vertices first and second\n";
     out << "capacity <graphname> - displays the number of vertices in the graph graphname\n";
     out << "weightTable <graphname> - displays the weight table of the graph graphname\n";
@@ -111,7 +111,7 @@ namespace sukacheva
     return result;
   }
 
-  void printPath(std::vector<std::string> path, std::ostream& out)
+  void printPath(std::vector< std::string > path, std::ostream& out)
   {
     size_t capacity = path.size();
     for (size_t i = 0; i != capacity; i++)
@@ -138,8 +138,8 @@ namespace sukacheva
 
   void printDistances(GraphList& graphList, std::string& name, std::ostream& out)
   {
-    std::pair<std::map<size_t, size_t>, std::map<size_t, size_t>> result = getDistances(graphList, name);
-    std::map<size_t, size_t> distances = result.first;
+    std::pair< std::map< size_t, size_t >, std::map< size_t, size_t > > result = getDistances(graphList, name);
+    std::map< size_t, size_t > distances = result.first;
 
     Graph activeWorkspace = graphList.findActiveWorkspace();
 
@@ -151,9 +151,9 @@ namespace sukacheva
       distances.end(),
       std::back_inserter(outputLines),
       [&name, &activeWorkspace](const auto& distancePair) {
-        return "Distance from " + name + " to " + activeWorkspace.VertexesList[distancePair.first] + " : "
-          + std::to_string(distancePair.second) + "\n";
-      });
+        return "Distance from " + name + " to " + activeWorkspace.VertexesList[distancePair.first]
+          + " : " + std::to_string(distancePair.second) + "\n"; }
+    );
 
     std::copy(outputLines.begin(), outputLines.end(), std::ostream_iterator<std::string>(out));
   }
@@ -184,18 +184,36 @@ namespace sukacheva
     std::string end;
     size_t weight;
     in >> command >> start;
+    if (command.empty() || start.empty())
+    {
+      out << "<INVALID COMMAND>\n";
+      in.clear();
+      in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      return;
+    }
     try
     {
       if (command == "vertex")
       {
+        std::string extra;
+        in >> extra;
+        if (!extra.empty())
+        {
+          out << "<INVALID COMMAND>\n";
+          in.clear();
+          in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+          return;
+        }
         addVertex(graphList, start);
         out << "Vertex " << start << " is added.\n";
       }
       else if (command == "edge")
       {
         in >> end >> weight;
-        if (in.fail())
+        if (in.fail() || end.empty())
         {
+          in.clear();
+          in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
           throw std::logic_error("<INVALID COMMAND>\n");
         }
         addEdge(graphList, start, end, weight);

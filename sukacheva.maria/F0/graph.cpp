@@ -130,19 +130,28 @@ size_t sukacheva::Graph::getVertexIndex(std::string& name)
 std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Graph::dijkstraDistances(std::string name)
 {
   size_t startKey = getVertexIndex(name);
-  std::map<size_t, size_t> distances;
-  std::map<size_t, size_t> predecessors;
-  std::map<size_t, bool> visited;
+  std::map< size_t, size_t > distances;
+  std::map< size_t, size_t > predecessors;
+  std::map< size_t, bool > visited;
   using iterator = std::map< size_t, std::string >::iterator;
-  for (iterator it = VertexesList.begin(); it != VertexesList.end(); it++)
-  {
-    distances[it->first] = std::numeric_limits< size_t >::max();
-    visited[it->first] = false;
-  }
+  std::transform(
+    VertexesList.begin(),
+    VertexesList.end(),
+    std::inserter(distances, distances.end()),
+    [](const std::pair< size_t, std::string >& vertex) { return std::make_pair(vertex.first, std::numeric_limits< size_t >::max()); }
+  );
+
+  std::transform(
+    VertexesList.begin(),
+    VertexesList.end(),
+    std::inserter(visited, visited.end()),
+    [](const std::pair< size_t, std::string >& vertex) { return std::make_pair(vertex.first, false); }
+  );
   distances[startKey] = 0;
+
   for (size_t i = 0; i < VertexesList.size(); ++i)
   {
-    size_t minDistance = std::numeric_limits<size_t>::max();
+    size_t minDistance = std::numeric_limits< size_t >::max();
     size_t minVertex = startKey;
     for (std::map< size_t, size_t >::iterator it = distances.begin(); it != distances.end(); it++)
     {
@@ -152,8 +161,9 @@ std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Gr
         minVertex = it->first;
       }
     }
-    if (minDistance == std::numeric_limits<size_t>::max())
+    if (minDistance == std::numeric_limits< size_t >::max())
     {
+      predecessors[i] = std::numeric_limits< size_t >::max();
       break;
     }
     visited[minVertex] = true;
@@ -166,7 +176,7 @@ std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Gr
       }
     }
   }
-  std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > result = { distances, predecessors };
+  std::pair< std::map< size_t, size_t >, std::map< size_t, size_t > > result = { distances, predecessors };
   return result;
 }
 
@@ -176,7 +186,12 @@ std::vector< std::string > sukacheva::Graph::dijkstraPath(const std::map<size_t,
   size_t keyStart = getVertexIndex(start);
   size_t keyEnd = getVertexIndex(end);
   for (size_t at = keyEnd; at != keyStart; at = predecessors.at(at))
-{
+  {
+    if (at == std::numeric_limits< size_t >::max())
+    {
+      path.push_back("unattainable");
+      return path;
+    }
     path.push_back(VertexesList[at]);
   }
   path.push_back(VertexesList[keyStart]);
