@@ -16,10 +16,10 @@ namespace taskaev
     void encode();
     void data();
     void showEncoded();
-    void saveEncoded()
-    void saveCodeTable()
+    void saveEncoded();
+    void saveCodeTable();
     void showFreq();
-    void mergeFiles()
+    void mergeFiles();
   private:
     std::string text_;
     std::string encodedText_;
