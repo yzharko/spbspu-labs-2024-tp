@@ -207,7 +207,7 @@ std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const 
 {
   std::string arg = "";
   in >> arg;
-  if (arg == "-f")
+  if (arg == "-r")
   {
     std::string filename = workspace.current.filename;
     std::ofstream output(filename);
@@ -220,7 +220,7 @@ std::ostream& miheev::commands::save(std::ostream& out, std::istream& in, const 
     output << workspace.current.name << '\n';
     workspace.current.printAllEdges(output);
   }
-  return out;
+  return sendMessage(out, "[INFO] graph \"" + workspace.current.name + "\" saved succesfully");
 }
 
 std::ostream& miheev::commands::help(std::ostream& out, std::istream&, const miheev::Workspace&)

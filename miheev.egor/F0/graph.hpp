@@ -19,7 +19,7 @@ namespace miheev
     Graph() = default;
 
     void addNode(int name);
-    void addEdge(int lnode, int rnode, size_t weight = 2);
+    void addEdge(int lnode, int rnode, size_t weight = 1);
     void rmNode(int name);
     void rmEdge(int lnode, int rnode);
 
