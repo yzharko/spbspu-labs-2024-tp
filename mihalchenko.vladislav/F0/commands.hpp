@@ -14,6 +14,7 @@ namespace mihalchenko
   void find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
   void rename(mapOfDicts_t &mapOfDictionaries, std::istream& is, std::ostream& out);
   void deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream& is, std::ostream& out);
+  void edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
 }
 
 #endif

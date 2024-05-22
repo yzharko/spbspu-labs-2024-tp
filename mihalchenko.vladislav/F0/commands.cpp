@@ -153,6 +153,33 @@ void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, 
   }
   else
   {
-    out << "Delete dict\n";
+    out << "Dict deleted\n";
+  }
+}
+
+void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  std::string param = "";
+  std::string word = "";
+  size_t newFreq;
+
+  is >> nameOfDict >> word;
+
+  auto iterOfDict = mapOfDictionaries.find(nameOfDict);
+  if (is >> newFreq)
+  {
+    if (iterOfDict->first.find(word) == *iterOfDict->first.end())
+    {
+      printErrorMessage(out);
+    }
+    else
+    {
+      iterOfDict->second.find(word)->second = newFreq;
+    }
+  }
+  else
+  {
+    printErrorMessage(out);
   }
 }
