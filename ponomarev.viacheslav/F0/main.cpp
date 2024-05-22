@@ -15,6 +15,8 @@ int main()
     commands["encode"] = ponomarev::chooseEncode;
     commands["write"] = ponomarev::writeTextIntoFile;
     commands["set"] = ponomarev::setDecode;
+    commands["combine"] = ponomarev::combineFiles;
+    commands["table"] = ponomarev::showTable;
   }
 
   ponomarev::printWelcomeMessage(std::cout);

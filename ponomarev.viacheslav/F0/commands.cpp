@@ -132,10 +132,38 @@ void ponomarev::setDecode(std::string & parameters, HuffmanCode & data)
   ponomarev::fillFreq(parameter, data);
 }
 
+void ponomarev::combineFiles(std::string & parameters, HuffmanCode &)
+{
+  std::string file1 = cutType(parameters);
+  std::string file2 = cutType(parameters);
+  std::string file3 = cutType(parameters);
+  if (!parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
 
+  std::ifstream if_a(file1, std::ios_base::binary);
+  std::ifstream if_b(file2, std::ios_base::binary);
+  std::ofstream of_c(file3, std::ios_base::binary);
+  if (!if_a || !if_b || !of_c)
+  {
+    throw std::logic_error("can't open the file");
+  }
+  of_c << if_a.rdbuf() << if_b.rdbuf();
+}
 
+void ponomarev::showTable(std::string & parameters, HuffmanCode & data)
+{
+  if (!parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
 
-
+  for (auto v = data.codes.begin(); v != data.codes.end(); v++)
+  {
+    std::cout << v->first << ' ' << v->second << "\n";
+  }
+}
 
 
 
