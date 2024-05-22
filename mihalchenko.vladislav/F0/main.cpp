@@ -23,6 +23,7 @@ int main()
     cmds["rename"] = std::bind(mihalchenko::rename, _1, _2, _3);
     cmds["delete"] = std::bind(mihalchenko::deleteDict, _1, _2, _3);
     cmds["edit"] = std::bind(mihalchenko::edit, _1, _2, _3);
+    cmds["insert"] = std::bind(mihalchenko::insert, _1, _2, _3);
   }
   std::string command = "";
   while (std::cin >> command)

@@ -183,3 +183,25 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     printErrorMessage(out);
   }
 }
+
+void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  std::string word;
+  size_t freq;
+  is >> nameOfDict;
+  auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
+  if (iterOfDicts != mapOfDictionaries.end())
+  {
+    auto iterOfElem = iterOfDicts->second;
+    is >> word >> freq;
+    if (iterOfElem.find(nameOfDict) != iterOfElem.end())
+    {
+      iterOfDicts->second.insert({word, freq});
+    }
+    else
+    {
+      printErrorMessage(out);
+    }
+  }
+}
