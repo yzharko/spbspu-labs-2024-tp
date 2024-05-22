@@ -81,17 +81,21 @@ std::string psarev::getSpType(std::string& word)
 
   storage_t rusEnds;
 
-  rusEnds["noun"] = { "а", "ев", "ов", "ье", "иями", "ями", "ами", "еи", "ии", "и", "ией", "ей", "ой", "ий", "й", "иям", "ям", "ием" };
-  std::vector< std::string > nSec = { "ем", "ам", "ом", "о", "у", "ах", "иях", "ях", "ы", "ь", "ию", "ью", "ю", "ия", "ья" };
+  rusEnds["noun"] = { "а", "ев", "ов", "ье", "иями", "ями", "ами", "еи", "ии", "и", "ией", "ей", "ой" };
+  std::vector< std::string > nSec = { "ем", "ам", "ом", "о", "у", "ах", "иях", "ях", "ы", "ь", "ию", "ью" };
   std::vector< std::string > nThi = { "я", "ок", "мва", "яна", "ровать", "ег", "ги", "га", "сть", "сти" };
+  std::vector< std::string > nFou = { "ий", "й", "иям", "ю", "ия", "ья", "ям", "ием" };
   rusEnds["noun"].insert(rusEnds["noun"].end(), std::make_move_iterator(nSec.begin()), std::make_move_iterator(nSec.end()));
   rusEnds["noun"].insert(rusEnds["noun"].end(), std::make_move_iterator(nThi.begin()), std::make_move_iterator(nThi.end()));
+  rusEnds["noun"].insert(rusEnds["noun"].end(), std::make_move_iterator(nFou.begin()), std::make_move_iterator(nFou.end()));
 
-  rusEnds["verb"] = { "ила", "ыла", "ена", "ейте", "уйте", "ите", "или", "ыли", "ей", "уй", "ил", "ыл", "им", "ым", "ен", "ило", "ыло" };
-  std::vector< std::string > vSec = { "ено", "ят", "ует", "уют", "ит", "ыт", "ены", "ить", "ыть", "ишь", "ую", "ю", "ла" };
-  std::vector< std::string > vThi = { "на", "ете", "йте", "ли", "й", "л", "ем", "н", "ло", "ет", "ют", "ны", "ть", "ешь", "нно" };
+  rusEnds["verb"] = { "ила", "ыла", "ена", "ейте", "уйте", "ите", "или", "ыли", "ей", "уй", "ил", "ыл" };
+  std::vector< std::string > vSec = { "ено", "ят", "ует", "уют", "ит", "ыт", "ены", "ить", "ыть", "ишь", "ую" };
+  std::vector< std::string > vThi = { "на", "ете", "йте", "ли", "й", "л", "ем", "н", "ло", "ет", "ют", "ны"};
+  std::vector< std::string > vFou = { "им", "ым", "ен", "ило", "ыло", "ть", "ешь", "нно", "ю", "ла" };
   rusEnds["verb"].insert(rusEnds["verb"].end(), std::make_move_iterator(vSec.begin()), std::make_move_iterator(vSec.end()));
   rusEnds["verb"].insert(rusEnds["verb"].end(), std::make_move_iterator(vThi.begin()), std::make_move_iterator(vThi.end()));
+  rusEnds["verb"].insert(rusEnds["verb"].end(), std::make_move_iterator(vFou.begin()), std::make_move_iterator(vFou.end()));
 
   rusEnds["adjective"] = { "ее", "ие", "ые", "ое", "ими", "ыми", "ей", "ий", "ый", "ой", "ем", "им", "ым", "ом" };
   std::vector< std::string > aSec = { "его", "ого", "ему", "ому", "их", "ых", "ую", "юю", "ая", "яя", "ою", "ею" };
@@ -99,18 +103,20 @@ std::string psarev::getSpType(std::string& word)
 
   rusEnds["adverb"] = { "чно", "еко", "око", "имо", "мно", "жно", "жко", "ело", "тно", "льно", "здо", "зко", "шо", "хо", "но" };
 
-  rusEnds["numeric"] = { "много", "еро", "вое", "рое", "еро", "сти", "двух", "рех", "еми", "яти", "ьми", "ати", "мью", "тью", "одним" };
-  std::vector< std::string > nSec = { "дного", "сот", "сто", "ста", "тысяча", "тысячи", "две", "три", "одна", "умя", "тью", "мя", "тью" };
+  rusEnds["numeric"] = { "много", "еро", "вое", "рое", "еро", "сти", "двух", "рех", "еми", "яти", "ьми", "ати" };
+  std::vector< std::string > nSec = { "дного", "сот", "сто", "ста", "тысяча", "тысячи", "две", "три", "одна" };
+  std::vector< std::string > nThi = { "мью", "тью", "одним", "умя", "тью", "мя", "тью" };
   rusEnds["numeric"].insert(rusEnds["numeric"].end(), std::make_move_iterator(nSec.begin()), std::make_move_iterator(nSec.end()));
+  rusEnds["numeric"].insert(rusEnds["numeric"].end(), std::make_move_iterator(nThi.begin()), std::make_move_iterator(nThi.end()));
 
-  rusEnds["conjuct"] = { "более", "менее", "очень", "крайне", "когда", "однако", "если", "чтоб", "хотя", "как", "также", "так" };
-  std::vector< std::string > pSec = { "зато", "что", "или", "потом", "это", "того", "тоже", "словно", "ежели" };
-  std::vector< std::string > pThi = { "и", "да", "кабы", "коли", "ничем", "чем" };
-  rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), std::make_move_iterator(pSec.begin()), std::make_move_iterator(pSec.end()));
-  rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), std::make_move_iterator(pThi.begin()), std::make_move_iterator(pThi.end()));
+  rusEnds["conjuct"] = { "более", "менее", "очень", "крайне", "когда", "однако", "если", "чтоб", "хотя", "как", };
+  std::vector< std::string > cSec = { "зато", "что", "или", "потом", "это", "того", "тоже", "словно", "ежели" };
+  std::vector< std::string > cThi = { "и", "да", "кабы", "коли", "ничем", "чем", "также", "так" };
+  rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), std::make_move_iterator(cSec.begin()), std::make_move_iterator(cSec.end()));
+  rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), std::make_move_iterator(cThi.begin()), std::make_move_iterator(cThi.end()));
 
-  rusEnds["prepos"] = { "в", "на", "по", "из", "за", "у", "от", "с", "об", "к", "перед", "между", "под", "без", "около", "из-за" };
-  std::vector< std::string > pSec = { "из-под", "для", "про", "до", "о", "вокруг", "при", "возле" };
+  rusEnds["prepos"] = { "в", "на", "по", "из", "за", "у", "от", "с", "об", "к", "перед", "между", "под", "около" };
+  std::vector< std::string > pSec = { "из-под", "для", "про", "до", "о", "вокруг", "при", "возле", "из-за", "без" };
   rusEnds["prepos"].insert(rusEnds["prepos"].end(), std::make_move_iterator(pSec.begin()), std::make_move_iterator(pSec.end()));
 
   for (auto iter = rusEnds["prepos"].begin(); iter != rusEnds["prepos"].end(); ++iter)
