@@ -11,7 +11,7 @@ namespace psarev
   void cmdDelete(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdList(std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdShow(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
-  void cmdRename(std::istream& in, std::ostream& out);
+  void cmdRename(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdChoose(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
   void cmdSave(std::istream& in, std::ostream& out);
 

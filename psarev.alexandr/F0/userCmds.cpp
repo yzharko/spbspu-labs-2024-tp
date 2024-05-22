@@ -118,3 +118,30 @@ void psarev::cmdShow(std::istream& in, std::ostream& out, std::map< std::string,
     out << (*iter).first << ": " << ((*iter).second).size() << " ";
   }
 }
+
+void psarev::cmdRename(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
+{
+  std::string name = "";
+  std::string newName = "";
+  in >> name >> newName;
+
+  auto desireSt = depot.find(name);
+  if (desireSt != depot.end())
+  {
+    auto renamedSt = depot.find(newName);
+    if (renamedSt == depot.end())
+    {
+      depot.emplace(newName, desireSt->second);
+      depot.erase(desireSt);
+      out << "Storage " << name << " has been renamed to " << newName << "!\n";
+    }
+    else
+    {
+      out << "Storage " << newName << " already exists! Try another name!" << "\n";
+    }
+  }
+  else
+  {
+    out << "There is no storage " << name << "! Can't rename so!\n";
+  }
+}
