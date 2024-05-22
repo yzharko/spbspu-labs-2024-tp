@@ -48,6 +48,6 @@ namespace zheleznyakov
   bool hasLayeredPoints(const Polygon & p1, const Point & p2, const Point & movement);
   bool arePointsLayering(const Point & p1, const Point & p2, const Point & movement);
 
-  void outMessage(std::ostream &, std::string);
+  std::ostream & outInvalidCommand(std::ostream &);
 }
 #endif

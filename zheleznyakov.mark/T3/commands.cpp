@@ -22,14 +22,14 @@ std::ostream & zheleznyakov::commands::area(const std::vector< Polygon > & polyg
   {
     if (polygons.empty())
     {
-      throw std::logic_error("Polygons are empty");
+      return outInvalidCommand(out);
     }
     return out << processAreaMean(polygons) << '\n';
   }
   size_t vertexes = std::stoll(subCmd);
   if (vertexes <= 2)
   {
-    throw std::logic_error("Not enough vertexes");
+    return outInvalidCommand(out);
   }
   return out << processAreaVertexes(polygons, vertexes) << '\n';
 }
@@ -89,7 +89,7 @@ std::ostream & zheleznyakov::commands::max(const std::vector< Polygon > & polygo
   in >> subCmd;
   if (polygons.empty())
   {
-    throw std::logic_error("Polygons are empty");
+    return outInvalidCommand(out);
   }
   out << std::fixed << std::setprecision(1);
   if (subCmd == "AREA")
@@ -174,7 +174,7 @@ std::ostream & zheleznyakov::commands::count(const std::vector< Polygon > & poly
     size_t vertexes = std::stoll(subCmd);
     if (vertexes <= 2)
     {
-      throw std::logic_error("Not enough vertexes");
+      return outInvalidCommand(out);
     }
     return out << processCountVertex(polygons, vertexes) << '\n';
   }
@@ -215,16 +215,16 @@ std::ostream & zheleznyakov::commands::maxseq(const std::vector< Polygon > & pol
 {
   Polygon target;
   in >> target;
+  if (polygon.size() <= 2)
+  {
+    return outInvalidCommand(std::cout);
+  }
   size_t v = processMaxseq(polygon, target);
   return out << v << '\n';
 }
 
 size_t zheleznyakov::processMaxseq(const std::vector<Polygon>& polygons, const Polygon& target)
 {
-  if (polygons.size() <= 2)
-  {
-    throw std::logic_error("Not enough polygons");
-  }
   std::vector< size_t > results;
   {
     using namespace std::placeholders;
@@ -308,8 +308,8 @@ bool zheleznyakov::arePointsLayering(const Point & p1, const Point & p2, const P
   return Point{p1.x + movement.x, p1.y + movement.y} == p2;
 }
 
-void zheleznyakov::outMessage(std::ostream & out, std::string msg)
+std::ostream & zheleznyakov::outInvalidCommand(std::ostream & out)
 {
-  iofmtguard fmtguard(out);
-  out << msg;
+  out << "<INVALID COMMAND>\n";
+  return out;
 }
