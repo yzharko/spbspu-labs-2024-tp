@@ -15,12 +15,13 @@
 using polygonArr = std::vector< anikanov::Polygon >;
 using funcShema = std::function< bool(const anikanov::Polygon &) >;
 
-void anikanov::printErrorMessage(std::ostream &out)
+void anikanov::printErrorMessage(std::istream &in, std::ostream &out)
 {
   iofmtguard guard(std::cout);
   out << std::fixed << std::setprecision(1);
 
   out << "<INVALID COMMAND>\n";
+  in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
 }
 
 double anikanov::getLenght(const Point &p1, const Point &p2)
@@ -117,7 +118,8 @@ void anikanov::area(const polygonArr &polygons, std::istream &in, std::ostream &
     areas = getAreas(polygons);
     double sum = std::accumulate(areas.begin(), areas.end(), 0.0);
     if (polygons.empty()) {
-      throw std::runtime_error("Invalid command");
+      printErrorMessage(in, out);
+      return;
     }
     out << std::fixed << std::setprecision(1) << sum / static_cast< double >(polygons.size()) << "\n";
     return;
@@ -127,10 +129,12 @@ void anikanov::area(const polygonArr &polygons, std::istream &in, std::ostream &
     try {
       count = std::stoull(subcmd);
       if (count < 3) {
-        throw std::runtime_error("Invalid command");
+        printErrorMessage(in, out);
+        return;
       }
     } catch (const std::exception &err) {
-      throw std::runtime_error("Invalid command");
+      printErrorMessage(in, out);
+      return;
     }
 
     areas = getAreasIf(polygons, [&count](const Polygon &pol) {
@@ -162,7 +166,8 @@ void anikanov::max(const std::vector< Polygon > &polygons, std::istream &in, std
       return;
     }
   }
-  throw std::runtime_error("Invalid command");
+  printErrorMessage(in, out);
+  return;
 }
 
 void anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
@@ -186,7 +191,8 @@ void anikanov::min(const std::vector< Polygon > &polygons, std::istream &in, std
       return;
     }
   }
-  throw std::runtime_error("Invalid command");
+  printErrorMessage(in, out);
+  return;
 }
 
 void anikanov::count(const std::vector< Polygon > &polygons, std::istream &in, std::ostream &out)
@@ -208,10 +214,12 @@ void anikanov::count(const std::vector< Polygon > &polygons, std::istream &in, s
     try {
       specificNumber = std::stoull(subcmd);
       if (specificNumber < 3) {
-        throw std::runtime_error("Invalid command");
+        printErrorMessage(in, out);
+        return;
       }
     } catch (const std::exception &err) {
-      throw std::runtime_error("Invalid command");
+      printErrorMessage(in, out);
+      return;
     }
 
     count = std::count_if(polygons.begin(), polygons.end(), [&specificNumber](const Polygon &pol) {
@@ -262,7 +270,8 @@ bool anikanov::hasRightAngle(const anikanov::Polygon &polygon, size_t index)
 
 void anikanov::rightShapes(const std::vector< Polygon > &polygons, std::istream &, std::ostream &out)
 {
-  out << std::count_if(polygons.begin(), polygons.end(), [](const Polygon &pol) {
+  auto comp = [](const Polygon &pol) {
     return anikanov::hasRightAngle(pol);
-  }) << "\n";
+  };
+  out << std::count_if(polygons.begin(), polygons.end(), comp) << "\n";
 }
