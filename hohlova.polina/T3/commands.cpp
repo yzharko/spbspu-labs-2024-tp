@@ -6,7 +6,7 @@
 #include <functional>
 #include <limits>
 
-void hohlova::Error(std::ostream& out)
+void hohlova::Error()
 {
   std::cout << "<INVALID COMMAND>\n";
 }
@@ -318,7 +318,7 @@ void hohlova::PERMSCommandMenu(const std::vector<Polygon>& polygons, std::istrea
   }
 }
 
-int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygons, std::ostream& out)
+int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygons)
 {
   int count = 0;
   for (const auto& polygon : polygons)

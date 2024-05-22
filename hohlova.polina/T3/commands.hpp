@@ -5,7 +5,7 @@
 
 namespace hohlova
 {
-  void Error(std::ostream& out);
+  void Error();
   double CalcArea(const Polygon& polygons);
   int countVertices(const Polygon& polygon);
 
@@ -29,7 +29,7 @@ namespace hohlova
   void COUNTCommandNumVertices(const std::vector< Polygon >& polygons, int numVertices, std::ostream& out);
 
   void PERMSCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
-  int PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons, std::ostream& out);
+  int PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons);
 
   void MAXSEQCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
 
