@@ -40,7 +40,6 @@ storage_t psarev::readStorage(std::istream& in)
 void psarev::cleanUpWord(std::string& word)
 {
   std::string puncts = ".,:;?!";
-  char curPunct = word.back();
   for (char p : puncts )
   {
     if (word.back() == p )

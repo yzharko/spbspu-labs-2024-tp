@@ -28,6 +28,10 @@ void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::strin
   in >> file;
   if (!file.empty())
   {
+    if (!dest.empty())
+    {
+      file = dest + "\\" + file;
+    }
     std::fstream fileIn;
     fileIn.open(file);
     if (fileIn.is_open())
