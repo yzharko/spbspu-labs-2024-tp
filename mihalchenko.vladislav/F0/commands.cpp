@@ -5,32 +5,32 @@
 
 void mihalchenko::help(std::ostream &out)
 {
-  out << "List of available commands:\n\
-  1. help - displays information about available commands(active now)\n\
-  2. create < filename > - opening the filename file, if it does not exist,\n\
-  then creating it and forming a dictionary with the same name from its data\n\
-  3. save < filename > - saving changes to the 'filename' file\n\
-  4. edit < name > < word > < new frequency > - edit dictionary elements,\n\
-  their names and frequencies\n\
-  5. insert < name > < word > < frequency > - inserting a word-frequency pair\n\
-  6. remove < name > < word > - deleting an item(s) from the dictionary\n\
-  by word / frequency / word and frequency\n\
-  7. find < name > < word / frequency > - output of element(s) by word\n\
-  8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output \n\
-  dictionary elements according to the specified sorting conditions\n\
-  9. view - the output of the names of existing dictionaries\n\
-  10. clear < name > < start > < stop > - clear the entire dictionary or\n\
-  in the selected range\n\
-  11. swap < name1 > < name2 > - the exchange of dictionary contents,\n\
-  if there is a problem, the program displays the corresponding message\n\
-  12. merge < name1 > < name2 > < newname > - combines the contents of\n\
-  the first two dictionaries in the third\n\
-  13. unique < name1 > < name2 > < newName > - saves unique elements\n\
-  from dictionaries in a new file, if any of the files are missing or\n\
-  any other problem occurs, the corresponding message is also displayed\n\
-  14. count < name > < word / frequency > - counting elements with \n\
-  the same name or frequency\n\
-  15. size < name > - print the size of the dictionary\n";
+  out << "List of available commands:";
+  out << "1. help - displays information about available commands(active now)\n";
+  out << "2. create < filename > - opening the filename file, if it does not exist,\n";
+  out << "then creating it and forming a dictionary with the same name from its data\n";
+  out << "3. save < filename > - saving changes to the 'filename' file\n";
+  out << "4. edit < name > < word > < new frequency > - edit dictionary elements,\n";
+  out << "their names and frequencies\n";
+  out << "5. insert < name > < word > < frequency > - inserting a word-frequency pair\n";
+  out << "6. remove < name > < word > - deleting an item(s) from the dictionary\n";
+  out << "by word / frequency / word and frequency\n";
+  out << "7. find < name > < word / frequency > - output of element(s) by word\n";
+  out << "8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output\n";
+  out << "dictionary elements according to the specified sorting conditions\n";
+  out << "9. view - the output of the names of existing dictionaries\n";
+  out << "10. clear < name > < start > < stop > - clear the entire dictionary or\n";
+  out << "in the selected range\n";
+  out << "11. swap < name1 > < name2 > - the exchange of dictionary contents,\n";
+  out << "if there is a problem, the program displays the corresponding message\n";
+  out << "12. merge < name1 > < name2 > < newname > - combines the contents of\n";
+  out << "the first two dictionaries in the third\n";
+  out << "13. unique < name1 > < name2 > < newName > - saves unique elements\n";
+  out << "from dictionaries in a new file, if any of the files are missing or\n";
+  out << "any other problem occurs, the corresponding message is also displayed\n";
+  out << "14. count < name > < word / frequency > - counting elements with \n";
+  out << "the same name or frequency\n";
+  out << "15. size < name > - print the size of the dictionary\n";
 }
 
 void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
@@ -90,7 +90,8 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is,
                        std::ostream &out)
 {
   size_t num = 1;
-  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
+  for (auto iter = mapOfDictionaries.cbegin();
+       iter != mapOfDictionaries.cend(); ++iter)
   {
     num++;
     out << num << ". " << iter->first << ", size = ";
@@ -98,7 +99,8 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   }
 }
 
-void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                       std::ostream &out)
 {
   std::string name = "";
   is >> name;

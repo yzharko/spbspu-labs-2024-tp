@@ -10,7 +10,8 @@ int main()
 {
   std::cout << "To see all available commands, enter 'help'\n";
   mihalchenko::mapOfDicts_t mapOfDictionaries;
-  std::map<std::string, std::function<void(mihalchenko::mapOfDicts_t &, std::istream &, std::ostream &)>>
+  std::map<std::string, std::function<void(mihalchenko::mapOfDicts_t &,
+                                           std::istream &, std::ostream &)>>
       cmds;
   {
     using namespace std::placeholders;

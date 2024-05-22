@@ -7,14 +7,16 @@ std::string mihalchenko::getDictName(std::string &str)
   return str.substr(0, str.find(".txt"));
 }
 
-size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict)
+size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries,
+                            const std::string &nameOfDict)
 {
   size_t size = 0;
-  for(auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
+  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
   {
     if (iter->first == nameOfDict)
     {
-      for(auto iterDictElem = iter->second.cbegin(); iterDictElem != iter->second.cend(); ++iterDictElem)
+      for (auto iterDictElem = iter->second.cbegin();
+           iterDictElem != iter->second.cend(); ++iterDictElem)
       {
         size++;
       }
