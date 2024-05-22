@@ -13,7 +13,7 @@ namespace hohlova
   void AREACommandEven(const std::vector< Polygon >& polygons, std::ostream& out);
   void AREACommandOdd(const std::vector< Polygon >& polygons, std::ostream& out);
   void AREACommandMean(const std::vector< Polygon >& polygons, std::ostream& out);
-  void AREACommandNumVertices(const std::vector< Polygon >& polygons, unsigned long long numVertices, std::ostream& out);
+  void AREACommandNumVertices(const std::vector< Polygon >& polygons, int numVertices, std::ostream& out);
 
   void MAXCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   void MAXCommandArea(const std::vector< Polygon >& polygons, std::ostream& out);
@@ -26,7 +26,7 @@ namespace hohlova
   void COUNTCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   void COUNTCommandOdd(const std::vector< Polygon >& polygons, std::ostream& out);
   void COUNTCommandEven(const std::vector< Polygon >& polygons, std::ostream& out);
-  void COUNTCommandNumVertices(const std::vector< Polygon >& polygons, unsigned long long numVertices, std::ostream& out);
+  void COUNTCommandNumVertices(const std::vector< Polygon >& polygons, int numVertices, std::ostream& out);
 
   void PERMSCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   int PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons, std::ostream& out);
