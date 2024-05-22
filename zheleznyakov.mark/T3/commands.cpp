@@ -22,14 +22,14 @@ std::ostream & zheleznyakov::commands::area(const std::vector< Polygon > & polyg
   {
     if (polygons.empty())
     {
-      throw std::logic_error("<INVALID COMMAND>");
+      throw std::logic_error("Polygons are empty");
     }
     return out << processAreaMean(polygons) << '\n';
   }
   size_t vertexes = std::stoll(subCmd);
   if (vertexes <= 2)
   {
-    throw std::logic_error("<INVALID COMMAND>");
+    throw std::logic_error("Not enough vertexes");
   }
   return out << processAreaVertexes(polygons, vertexes) << '\n';
 }
@@ -89,7 +89,7 @@ std::ostream & zheleznyakov::commands::max(const std::vector< Polygon > & polygo
   in >> subCmd;
   if (polygons.empty())
   {
-    throw std::logic_error("<INVALID COMMAND>");
+    throw std::logic_error("Polygons are empty");
   }
   out << std::fixed << std::setprecision(1);
   if (subCmd == "AREA")
@@ -174,7 +174,7 @@ std::ostream & zheleznyakov::commands::count(const std::vector< Polygon > & poly
     size_t vertexes = std::stoll(subCmd);
     if (vertexes <= 2)
     {
-      throw std::logic_error("<INVALID COMMAND>");
+      throw std::logic_error("Not enough vertexes");
     }
     return out << processCountVertex(polygons, vertexes) << '\n';
   }
@@ -223,7 +223,7 @@ size_t zheleznyakov::processMaxseq(const std::vector<Polygon>& polygons, const P
 {
   if (polygons.size() <= 2)
   {
-    throw std::logic_error("<INVALID COMMAND>");
+    throw std::logic_error("Not enough polygons");
   }
   std::vector< size_t > results;
   {
@@ -259,7 +259,7 @@ std::ostream & zheleznyakov::commands::same(const std::vector< Polygon > & polyg
   in >> target;
   if (!in)
   {
-    throw std::logic_error("");
+    throw std::logic_error("Unable to read target polygon");
   }
   size_t v = processSame(polygon, target);
   return out << v << '\n';
