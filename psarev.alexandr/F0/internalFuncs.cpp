@@ -25,7 +25,7 @@ storage_t psarev::readStorage(std::istream& in)
         {
           std::vector< std::string > words;
           words.push_back(word);
-          resStorage.emplace(spType, word);
+          resStorage.emplace(spType, words);
         }
         else
         {
