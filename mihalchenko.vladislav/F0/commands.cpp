@@ -109,10 +109,10 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   auto iterOfDict = mapOfDictionaries.find(name);
   if (is >> word)
   {
-    if (iterOfDict->first.find(word) == *iterOfDict->first.end())
+    /*if (iterOfDict->first.find(word) == *iterOfDict->first.end())
     {
       printErrorMessage(out);
-    }
+    }*/
     out << iterOfDict->first.find(word);
   }
   else if (is >> freq)
@@ -185,7 +185,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   is >> nameOfDict >> word;
 
   auto iterOfDict = mapOfDictionaries.find(nameOfDict);
-  if (is >> newFreq)
+  /*if (is >> newFreq)
   {
     if (iterOfDict->first.find(word) == *iterOfDict->first.end())
     {
@@ -199,7 +199,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   else
   {
     printErrorMessage(out);
-  }
+  }*/
 }
 
 void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is,
