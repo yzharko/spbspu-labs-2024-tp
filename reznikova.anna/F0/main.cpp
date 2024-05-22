@@ -1,7 +1,8 @@
 #include <iostream>
 #include <map>
-#include "Commands.hpp"
 #include <limits>
+#include <functional>
+#include "Commands.hpp"
 
 int main()
 {
