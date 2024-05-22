@@ -168,17 +168,26 @@ void psarev::cmdSave(std::istream& in, std::ostream& out, std::map< std::string,
   }
 }
 
-void psarev::cmdPrint(std::ostream& out, std::map<std::string, storage_t>& depot, std::string& storage)
+void psarev::cmdPrint(std::istream& in, std::ostream& out, std::map<std::string, storage_t>& depot, std::string& storage)
 {
+  std::string speechType = "";
+  in >> speechType;
+  if (!in)
+  {
+    return;
+  }
   auto chStorage = depot.find(storage);
   storage_t curStorage = (*chStorage).second;
   for (auto iter = curStorage.begin(); iter != curStorage.end(); iter++)
   {
-    out << (*iter).first << ": \n";
-    for (size_t i = 0; i < (*iter).second.size(); i++)
+    if ((*iter).first == speechType)
     {
-      out << (*iter).second[i] << " ";
+      out << (*iter).first << ": \n";
+      for (size_t i = 0; i < (*iter).second.size(); i++)
+      {
+        out << (*iter).second[i] << " ";
+      }
+      out << "\n";
     }
-    out << "\n";
   }
 }
