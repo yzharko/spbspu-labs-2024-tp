@@ -10,7 +10,7 @@ void psarev::cmdHelp(std::istream& in, std::ostream& out)
     throw std::logic_error("<INVALID COMMAND>");
   }
   out << "1. help - Displaying commands available to the user.\n";
-  out << "2. create < filename > < name > - Creating a storage < name >, containing all the words from the text in the file < filename >, sorted by speechType.\n";
+  out << "2. create < filename > < name > - Creating a storage < name >, with all the words from the text in the file < filename >.\n";
   out << "3. delete < name > - Deleting the < name > storage.\n";
   out << "4. list - Displaying the names of all existing storages.\n";
   out << "5. show < name > - Displaying all the speechType types and equivalent lists lengths in the < name > storage.\n";
@@ -18,7 +18,7 @@ void psarev::cmdHelp(std::istream& in, std::ostream& out)
   out << "7. choose < name > - Selecting the < name > storage for further interaction with its elements.\n";
   out << "7.1 print < speechType > - Displaying a list of all words of the specified < speechType > from the choosed storage.\n";
   out << "7.2 fono < word > - Performing phonetic analisys of the word < word > and displaying the result on the screen.\n";
-  out << "7.3 makeSent < num > - Making a sentence from numder <= < num > of each speech type in the choosed storage and displaying it on the screen.\n";
+  out << "7.3 makeSent < num > - Making a sentence from < num > words in the choosed storage, if it possible.\n";
   out << "7.4 save < dest > - Saving whole depot to the < dest > directory.\n";
 }
 
