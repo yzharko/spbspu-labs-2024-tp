@@ -19,10 +19,10 @@ void psarev::cmdHelp(std::istream& in, std::ostream& out)
   out << "7.1 print < speechType > - Displaying a list of all words of the specified < speechType > from the choosed storage.\n";
   out << "7.2 fono < word > - Performing phonetic analisys of the word < word > and displaying the result on the screen.\n";
   out << "7.3 makeSent < num > - Making a sentence from numder <= < num > of each speech type in the choosed storage and displaying it on the screen.\n";
-  out << "7.4 save < name > < dest > - Saving the < name > storage to the < dest > directory.\n";
+  out << "7.4 save < dest > - Saving whole depot to the < dest > directory.\n";
 }
 
-void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
+void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot, std::string dest)
 {
   std::string file = "";
   in >> file;
@@ -143,5 +143,39 @@ void psarev::cmdRename(std::istream& in, std::ostream& out, std::map< std::strin
   else
   {
     out << "There is no storage " << name << "! Can't rename so!\n";
+  }
+}
+
+void psarev::cmdSave(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
+{
+  std::string dest = "";
+  in >> dest;
+  std::string maekDest = "mkdir " + dest;
+
+  std::ofstream fileOut;
+  if (!std::system(maekDest.c_str()))
+  {
+    outDepot(dest, fileOut, depot);
+    out << "Whole depot was printed at the directory " << dest << "!\n";
+  }
+  else
+  {
+    out << "Directory with that name already exists, do you want to overwrite it? (Y/N)\n";
+
+    std::string decis = "";
+    in >> decis;
+    if (decis == "Y")
+    {
+      outDepot(dest, fileOut, depot);
+      out << "Whole depot was printed at the directory " << dest << "!\n";
+    }
+    else if (decis == "N")
+    {
+      out << "Depot wasn't printed at the directory " << dest << "!\n";
+    }
+    else
+    {
+      out << "Please, type Y to print or N otherwise!" << "\n";
+    }
   }
 }

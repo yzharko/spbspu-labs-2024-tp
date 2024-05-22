@@ -12,7 +12,7 @@ int main()
   {
     using namespace std::placeholders;
     userCmds["help"] = std::bind(psarev::cmdHelp, _1, _2);
-    userCmds["create"] = psarev::cmdCreate;
+    userCmds["create"] = std::bind(psarev::cmdCreate, _1, _2, _3, "");
     userCmds["delete"] = psarev::cmdDelete;
     userCmds["list"] = std::bind(psarev::cmdList, _2, _3);
     userCmds["show"] = psarev::cmdShow;

@@ -148,3 +148,23 @@ bool psarev::checkType(std::string& word, size_t& endSize, std::vector< std::str
   }
   return false;
 }
+
+void psarev::outDepot(std::string dest, std::ofstream& out, std::map< std::string, storage_t >& depot)
+{
+  for (auto storage : depot)
+  {
+    out.open(dest + "\\" + storage.first + ".txt");
+    if (out.is_open())
+    {
+      for (auto iter : storage.second)
+      {
+        size_t len = (iter.second).size();
+        for (size_t i = 0; i < len; i++)
+        {
+          out << iter.second[i] << " ";
+        }
+      }
+    }
+    out.close();
+  }
+}
