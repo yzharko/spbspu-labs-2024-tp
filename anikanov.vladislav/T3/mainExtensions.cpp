@@ -7,6 +7,7 @@
 #include <numeric>
 #include <iomanip>
 #include <iostream>
+#include <inDelim.hpp>
 #include <string>
 #include <vector>
 #include <cmath>
@@ -47,6 +48,24 @@ double anikanov::getArea(const Polygon &polygon)
 double anikanov::areaHelper(const Point &point1, const Point &point2)
 {
   return (point1.x * point2.y - point1.y * point2.x);
+}
+
+bool anikanov::readPoints(std::istream &in, std::vector< Point > &points, int n)
+{
+  if (n == 0) {
+    return true;
+  }
+
+  int x = 0;
+  int y = 0;
+
+  if (!(in >> DelimiterIO{'('} >> x >> DelimiterIO{';'} >> y >> DelimiterIO{')'})) {
+    in.setstate(std::ios::failbit);
+    return false;
+  }
+
+  points.push_back(Point{x, y});
+  return readPoints(in, points, n - 1);
 }
 
 std::vector< anikanov::Polygon > anikanov::readPolygons(const std::string &filename)

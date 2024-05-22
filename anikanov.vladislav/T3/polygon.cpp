@@ -5,6 +5,8 @@
 #include <limits>
 #include <inDelim.hpp>
 
+#include "mainExtensions.hpp"
+
 std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
 {
   std::istream::sentry sentry(in);
@@ -21,17 +23,9 @@ std::istream &anikanov::operator>>(std::istream &in, anikanov::Polygon &dest)
     return in;
   }
 
-  for (size_t i = 0; i < size; ++i) {
-    int x, y;
-
-    if (!(in >> DelimiterIO{ '(' } >> x >> DelimiterIO{ ';' } >> y >> DelimiterIO{ ')' })) {
-      in.setstate(std::ios::failbit);
-      return in;
-    }
-
-    Point p{x, y};
-
-    dest.points.push_back(p);
+  if (!readPoints(in, dest.points, size)) {
+    in.setstate(std::ios::failbit);
+    return in;
   }
 
   if (dest.points.size() != size) {
