@@ -22,8 +22,9 @@ void reznikova::helpCommand(std::ostream & out)
   << "исходной вершины first_vertice\n";
   out << "clean < filename > — очищает содержимое файла\n";
   out << "open < read >< filename > — открытие файла с заданным названием и чтение его"
-  << содержимого\n";
-  out << "open < write >< filename > — открытие файла с заданным названием для записи данных\n";
+  << "содержимого\n";
+  out << "open < write >< filename > — открытие файла с заданным названием для записи"
+  << "данных\n";
 }
 
 bool reznikova::checkWrongNumParameters(std::istream & is)
@@ -36,7 +37,8 @@ bool reznikova::checkWrongNumParameters(std::istream & is)
   return true;
 }
 
-void reznikova::createCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::createCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -67,7 +69,8 @@ void reznikova::createCommand(std::istream & is, std::ostream & out, reznikova::
   out << "Graph " << graphName << " created. This graph is active\n";
 }
 
-void reznikova::switchCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::switchCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
@@ -95,7 +98,8 @@ void reznikova::switchCommand(std::istream & is, std::ostream & out, reznikova::
   out << "Switched to graph " << graphName << "\n";
 }
 
-void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::addVertex(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -139,10 +143,12 @@ void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphL
   {
     throw std::logic_error(e.what());
   }
-  out << "Edge between " << first_index << " and " << second_index << " indexes were added\n";
+  out << "Edge between " << first_index << " and " << second_index
+  out << " indexes were added\n";
 }
 
-void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::addCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -163,7 +169,8 @@ void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::Gra
   }
 }
 
-void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::deleteVertex(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -186,7 +193,8 @@ void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::G
   out << "Vertex with index " << index << " were deleted\n";
 }
 
-void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::deleteEdge(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -207,10 +215,12 @@ void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::Gra
   {
     throw std::logic_error(e.what());
   }
-  out << "Edge between " << first_index << " and " << second_index << " indexes were deleted\n";
+  out << "Edge between " << first_index << " and " << second_index;
+  out << " indexes were deleted\n";
 }
 
-void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::deleteCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -317,7 +327,8 @@ void reznikova::graphNameCommand(std::ostream & out, reznikova::GraphList & list
   }
 }
 
-void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::bfsCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -446,7 +457,8 @@ void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
   << filename;
 }
 
-void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::openCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
