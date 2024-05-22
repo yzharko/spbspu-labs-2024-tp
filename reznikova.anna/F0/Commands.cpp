@@ -21,7 +21,8 @@ void reznikova::helpCommand(std::ostream & out)
   out << "BFS < first_vertice > - возвращает список вершин в порядке обхода в ширину из"
   << "исходной вершины first_vertice\n";
   out << "clean < filename > — очищает содержимое файла\n";
-  out << "open < read >< filename > — открытие файла с заданным названием и чтение его содержимого\n";
+  out << "open < read >< filename > — открытие файла с заданным названием и чтение его"
+  << содержимого\n";
   out << "open < write >< filename > — открытие файла с заданным названием для записи данных\n";
 }
 
