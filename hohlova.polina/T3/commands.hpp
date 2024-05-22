@@ -5,7 +5,7 @@
 
 namespace hohlova
 {
-  void Error(std::ostream& out);
+  void Error();
   double CalcArea(const Polygon& polygons);
   int countVertices(const Polygon& polygon);
 
