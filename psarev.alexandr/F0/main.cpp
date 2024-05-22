@@ -11,10 +11,10 @@ int main()
   std::map< std::string, std::function < void (std::istream&, std::ostream&, std::map< std::string, storage_t >&) > > userCmds;
   {
     using namespace std::placeholders;
-    userCmds["help"] = std::bind(psarev::cmdHelp, _2, _3);
+    userCmds["help"] = std::bind(psarev::cmdHelp, _1, _2);
     userCmds["create"] = psarev::cmdCreate;
     userCmds["delete"] = psarev::cmdDelete;
-    userCmds["list"] = psarev::cmdList;
+    userCmds["list"] = std::bind(psarev::cmdList, _2, _3);
     userCmds["show"] = psarev::cmdShow;
     userCmds["rename"] = psarev::cmdRename;
     userCmds["choose"] = psarev::cmdChoose;

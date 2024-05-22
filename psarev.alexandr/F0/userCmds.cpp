@@ -97,3 +97,24 @@ void psarev::cmdDelete(std::istream& in, std::ostream& out, std::map< std::strin
     out << "Storage with name " << tempoS << "doesn't exists!\n";
   }
 }
+
+void psarev::cmdList(std::ostream& out, std::map< std::string, storage_t >& depot)
+{
+  for (auto iter = depot.begin(); iter != depot.end(); ++iter)
+  {
+    out << "Storage " << (*iter).first <<"\n";
+  }
+}
+
+void psarev::cmdShow(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
+{
+  std::string tempoS = "";
+  in >> tempoS;
+
+  out << "Storage " << tempoS << " content:\n";
+
+  for (auto iter = depot[tempoS].begin(); iter != depot[tempoS].end(); ++iter)
+  {
+    out << (*iter).first << ": " << ((*iter).second).size() << " ";
+  }
+}
