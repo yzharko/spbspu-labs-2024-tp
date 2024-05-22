@@ -16,7 +16,10 @@ int main()
     using namespace std::placeholders;
     cmds["help"] = std::bind(mihalchenko::help, _3);
     cmds["open"] = std::bind(mihalchenko::open, _1, _2);
-    cmds["save"] = std::bind(mihalchenko::save, _1, _2);
+    cmds["save"] = std::bind(mihalchenko::save, _1, _2, _3);
+    cmds["size"] = std::bind(mihalchenko::size, _1, _2, _3);
+    cmds["view"] = std::bind(mihalchenko::view, _1, _2, _3);
+    cmds["find"] = std::bind(mihalchenko::find, _1, _2, _3);
   }
   std::string command = "";
   while (std::cin >> command)
@@ -27,7 +30,7 @@ int main()
     }
     catch (const std::exception &)
     {
-      std::cout << "<INVALID ARGUMENT>\n";
+      mihalchenko::printInvalidCommand(std::cout);
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }

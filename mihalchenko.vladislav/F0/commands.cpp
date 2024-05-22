@@ -45,18 +45,11 @@ void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.close();
 }
 
-void mihalchenko::save(const mapOfDicts_t &mapOfDictionaries, std::istream &is)
+void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
-  // std::string fileName = "";
-  // is >> fileName;
-  // std::ofstream outputFile(fileName);
-  /*if (!outputFile)
-  {
-    throw std::invalid_argument("ERROR with file\n");
-  }*/
   for (auto iterOfDicts : mapOfDictionaries)
   {
-    std::ofstream outputFile(mapOfDictionaries);
+    std::ofstream outputFile(iterOfDicts.first);
     if (!outputFile)
     {
       throw std::invalid_argument("ERROR with file\n");
@@ -69,6 +62,49 @@ void mihalchenko::save(const mapOfDicts_t &mapOfDictionaries, std::istream &is)
         outputFile << it.first << " " << it.second << "\n";
       }
     }
+    out << " The data was successfully written to the file" << iterOfDicts.first << '\n';
     outputFile.close();
+  }
+  out << " The data was successfully written to all files" << '\n';
+}
+
+void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDictionary = "";
+  is >> nameOfDictionary;
+  out << getSize(mapOfDictionaries, nameOfDictionary);
+}
+
+void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  size_t num = 1;
+  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
+  {
+    num++;
+    std::cout << num << ". " << iter->first << ", size = " << getSize(mapOfDictionaries, iter->first) << "\n";
+  }
+}
+
+void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  is >> nameOfDict;
+  std::string word = "";
+  if (is >> word)
+  {
+    for (auto iterOfDicts : mapOfDictionaries)
+    {
+      if (iterOfDicts.first == nameOfDict)
+      {
+        for (auto it : iterOfDicts.second)
+        {
+          if (it.first.find(word) == *it.first.end())
+          {
+            printErrorMessage(out);
+          }
+          out << it.first.find(word);
+        }
+      }
+    }
   }
 }
