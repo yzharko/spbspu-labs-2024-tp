@@ -7,23 +7,29 @@ void mihalchenko::help(std::ostream &out)
 {
   out << "List of available commands:\n\
   1. help - displays information about available commands(active now)\n\
-  2. create < filename > - opening the filename file, if it does not exist, then creating it and forming\n\
-  a dictionary with the same name from its data\n\
+  2. create < filename > - opening the filename file, if it does not exist,\n\
+  then creating it and forming a dictionary with the same name from its data\n\
   3. save < filename > - saving changes to the 'filename' file\n\
-  4. edit < name > < word > < new frequency > - edit dictionary elements, their names and frequencies\n\
+  4. edit < name > < word > < new frequency > - edit dictionary elements,\n\
+  their names and frequencies\n\
   5. insert < name > < word > < frequency > - inserting a word-frequency pair\n\
-  6. remove < name > < word > - deleting an item(s) from the dictionary by word / frequency / word and frequency\n\
+  6. remove < name > < word > - deleting an item(s) from the dictionary\n\
+  by word / frequency / word and frequency\n\
   7. find < name > < word / frequency > - output of element(s) by word\n\
-  8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output dictionary elements according to \n\
-  the specified sorting conditions\n\
+  8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output \n\
+  dictionary elements according to the specified sorting conditions\n\
   9. view - the output of the names of existing dictionaries\n\
-  10. clear < name > < start > < stop > - clear the entire dictionary or in the selected range\n\
-  11. swap < name1 > < name2 > - the exchange of dictionary contents, if there is a problem, the program displays\n\
-  the corresponding message\n\
-  12. merge < name1 > < name2 > < newname > - combines the contents of the first two dictionaries in the third\n\
-  13. unique < name1 > < name2 > < newName > - saves unique elements from dictionaries in a new file,\n\
-  if any of the files are missing or any other problem occurs, the corresponding message is also displayed\n\
-  14. count < name > < word / frequency > - counting elements with the same name or frequency\n\
+  10. clear < name > < start > < stop > - clear the entire dictionary or\n\
+  in the selected range\n\
+  11. swap < name1 > < name2 > - the exchange of dictionary contents,\n\
+  if there is a problem, the program displays the corresponding message\n\
+  12. merge < name1 > < name2 > < newname > - combines the contents of\n\
+  the first two dictionaries in the third\n\
+  13. unique < name1 > < name2 > < newName > - saves unique elements\n\
+  from dictionaries in a new file, if any of the files are missing or\n\
+  any other problem occurs, the corresponding message is also displayed\n\
+  14. count < name > < word / frequency > - counting elements with \n\
+  the same name or frequency\n\
   15. size < name > - print the size of the dictionary\n";
 }
 
@@ -47,7 +53,8 @@ void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.close();
 }
 
-void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                       std::ostream &out)
 {
   for (auto iterOfDicts : mapOfDictionaries)
   {
@@ -64,26 +71,30 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
         outputFile << it.first << " " << it.second << "\n";
       }
     }
-    out << " The data was successfully written to the file" << iterOfDicts.first << '\n';
+    out << " The data was successfully written to the file";
+    out << iterOfDicts.first << '\n';
     outputFile.close();
   }
   out << " The data was successfully written to all files" << '\n';
 }
 
-void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                       std::ostream &out)
 {
   std::string nameOfDictionary = "";
   is >> nameOfDictionary;
   out << getSize(mapOfDictionaries, nameOfDictionary);
 }
 
-void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                       std::ostream &out)
 {
   size_t num = 1;
   for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
   {
     num++;
-    std::cout << num << ". " << iter->first << ", size = " << getSize(mapOfDictionaries, iter->first) << "\n";
+    out << num << ". " << iter->first << ", size = ";
+    out << getSize(mapOfDictionaries, iter->first) << "\n";
   }
 }
 
@@ -118,7 +129,8 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   }
 }
 
-void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                         std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string newnameOfDict = "";
@@ -145,7 +157,8 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   }
 }
 
-void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                             std::ostream &out)
 {
   std::string nameOfDelDict = "";
   is >> nameOfDelDict;
@@ -159,7 +172,8 @@ void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, 
   }
 }
 
-void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                       std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string param = "";
@@ -186,7 +200,8 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   }
 }
 
-void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+                         std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string word;
