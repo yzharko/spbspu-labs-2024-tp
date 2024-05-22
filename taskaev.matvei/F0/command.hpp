@@ -11,7 +11,7 @@ namespace taskaev
     HuffmanApp() = default;
     void showHelp();
     void input();
-    void file()
+    void file();
     void genRandom();
     void encode();
     void data();
