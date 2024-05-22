@@ -22,8 +22,8 @@ int main()
     userCmds["save"] = psarev::cmdSave;
 
     userCmds["print"] = std::bind(psarev::cmdPrint, _1, _2, _3, defaultSt);
-    userCmds["fono"] = psarev::cmdFono;
-    userCmds["makeSent"] = psarev::cmdMakeSent;
+    //userCmds["fono"] = psarev::cmdFono;
+    //userCmds["makeSent"] = psarev::cmdMakeSent;
   }
 
   std::string userCmd = "";

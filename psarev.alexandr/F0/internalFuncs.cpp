@@ -112,12 +112,12 @@ std::string psarev::getSpType(std::string& word)
   rusEnds["adjective"].insert(rusEnds["adjective"].end(), dSec.begin(), dSec.end());
 
   rusEnds["numeric"] = { "много", "еро", "вое", "рое", "еро", "сти", "двух", "рех", "еми" };
-  std::vector< std::string > nSec = { "дного", "сот", "сто", "ста", "тысяча", "тысячи" };
-  std::vector< std::string > nThi = { "мью", "тью", "одним", "умя", "тью", "мя", "тью" };
-  std::vector< std::string > nFou = { "три", "одна", "яти", "ьми", "ати", "две" };
-  rusEnds["numeric"].insert(rusEnds["numeric"].end(), nSec.begin(), nSec.end());
-  rusEnds["numeric"].insert(rusEnds["numeric"].end(), nThi.begin(), nThi.end());
-  rusEnds["numeric"].insert(rusEnds["numeric"].end(), nFou.begin(), nFou.end());
+  std::vector< std::string > uSec = { "дного", "сот", "сто", "ста", "тысяча", "тысячи" };
+  std::vector< std::string > uThi = { "мью", "тью", "одним", "умя", "тью", "мя", "тью" };
+  std::vector< std::string > uFou = { "три", "одна", "яти", "ьми", "ати", "две" };
+  rusEnds["numeric"].insert(rusEnds["numeric"].end(), uSec.begin(), uSec.end());
+  rusEnds["numeric"].insert(rusEnds["numeric"].end(), uThi.begin(), uThi.end());
+  rusEnds["numeric"].insert(rusEnds["numeric"].end(), uFou.begin(), uFou.end());
 
   rusEnds["conjuct"] = { "более", "менее", "очень", "крайне", "когда", "однако", "если" };
   std::vector< std::string > cSec = { "зато", "что", "или", "потом", "это", "того", "тоже" };
