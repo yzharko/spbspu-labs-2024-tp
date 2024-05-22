@@ -16,6 +16,7 @@ namespace ponomarev
   void makeDecode(std::string & parameters, HuffmanCode & data);
   void makeClean(std::string & parameters, HuffmanCode &);
   void makeDelete(std::string & parameters, HuffmanCode &);
+  void makeSave(std::string & parameters, HuffmanCode & data);
 }
 
 #endif

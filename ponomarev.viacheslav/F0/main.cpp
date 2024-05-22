@@ -20,6 +20,7 @@ int main()
     commands["decode"] = ponomarev::makeDecode;
     commands["delete"] = ponomarev::makeDelete;
     commands["clean"] = ponomarev::makeClean;
+    commands["save"] = ponomarev::makeSave;
   }
 
   ponomarev::printWelcomeMessage(std::cout);

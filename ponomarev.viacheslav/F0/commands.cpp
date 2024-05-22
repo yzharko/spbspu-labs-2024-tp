@@ -239,3 +239,14 @@ void ponomarev::makeDelete(std::string & parameters, HuffmanCode &)
     }
   }
 }
+
+void ponomarev::makeSave(std::string & parameters, HuffmanCode & data)
+{
+  std::string parameter = ponomarev::cutType(parameters);
+  if (parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+  std::ofstream out(parameter);
+  out << data.text << "\n" << data.decodingText;
+}
