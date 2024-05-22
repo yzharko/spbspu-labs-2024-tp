@@ -133,7 +133,6 @@ std::pair< std::map<size_t, size_t >, std::map< size_t, size_t > > sukacheva::Gr
   std::map< size_t, size_t > distances;
   std::map< size_t, size_t > predecessors;
   std::map< size_t, bool > visited;
-  using iterator = std::map< size_t, std::string >::iterator;
   std::transform(
     VertexesList.begin(),
     VertexesList.end(),
