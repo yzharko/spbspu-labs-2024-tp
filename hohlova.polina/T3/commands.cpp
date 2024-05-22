@@ -6,7 +6,7 @@
 #include <functional>
 #include <limits>
 
-void hohlova::Error()
+void hohlova::Error(std::ostream& out)
 {
   std::cout << "<INVALID COMMAND>\n";
 }
