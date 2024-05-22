@@ -32,3 +32,17 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters)
     throw std::logic_error("error: wrong parameters");
   }
 }
+
+void ponomarev::makeInput(std::string & parameters)
+{
+  std::string str = "";
+  std::string text = "";
+  if (parameters.empty())
+  {
+    while (std::getline(std::cin, str))
+    {
+      res += str;
+      res += '\n';
+    }
+  }
+}

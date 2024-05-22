@@ -9,7 +9,7 @@ int main()
   std::map< std::string, std::function< void & (std::string) > > commands;
   {
     commands["help"] = outputInfoAboutCommands;
-    commands["input"] = ;
+    commands["input"] = makeInput;
     commands["encode"] = ;
     commands["write"] = ;
     commands["set"] = ;

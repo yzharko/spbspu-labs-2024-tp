@@ -6,6 +6,7 @@
 namespace ponomarev
 {
   void outputInfoAboutCommands(const std::string & parameters);
+  void makeInput(std::string & parameters);
 }
 
 #endif
