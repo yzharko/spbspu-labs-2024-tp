@@ -19,6 +19,8 @@ int main()
     commands["list"] = std::bind(listCommand, _2, _3);
     commands["graphName"] = std::bind(graphNameCommand, _2, _3);
     commands["BFS"] = std::bind(bfsCommand, _1, _2, _3);
+    commands["clear"] = std::bind(clearCommand, _1, _2);
+    commands["open"] = std::bind(openCommand, _1, _2, _3);
   }
   std::string inputCommand;
   while (std::cin >> inputCommand)

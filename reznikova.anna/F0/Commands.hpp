@@ -7,6 +7,7 @@
 namespace reznikova
 {
   void helpCommand(std::ostream & out);
+  bool checkWrongNumParameters(std::istream & is);
   void createCommand(std::istream & is, std::ostream & out, GraphList & list);
   void switchCommand(std::istream & is, std::ostream & out, GraphList & list);
   void addVertex(std::istream & is, std::ostream & out, GraphList & list);
@@ -20,7 +21,13 @@ namespace reznikova
   void listCommand(std::ostream & out, GraphList & list);
   void graphNameCommand(std::ostream & out, GraphList & list);
   void bfsCommand(std::istream & is, std::ostream & out, GraphList & list);
-  void readMatrix(std::istream & is, std::vector< std::vector< size_t > > & table);
+  void readMatrix(const std::string &filename, std::string &graphname, size_t &num, 
+  std::vector<size_t> &indices, std::vector<std::vector<size_t>> &matrix);
+  void clearCommand(std::istream & is, std::ostream & out);
+  void openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list);
+  void openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list);
+  void openCommand(std::istream & is, std::ostream & out, GraphList & list);
 }
 
 #endif
+

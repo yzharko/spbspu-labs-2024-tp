@@ -1,24 +1,99 @@
 #include "Commands.hpp"
 #include <iostream>
+#include <fstream>
 #include <sstream>
 
 void reznikova::helpCommand(std::ostream & out)
 {
   out << "create < graph > < graphname > - создание пустого графа с названием  graphname\n";
   out << "add < vertice > < index > – создание вершины графа с индексом index\n";
-  out << "add < edge > < first_vertice, second_vertice > - создание ребра между вершинами first_vertice и second_vertice\n";
+  out << "add < edge > < first_vertice, second_vertice > - создание ребра между"
+  << "вершинами first_vertice и second_vertice\n";
   out << "delete < vertice > < name > - удаление вершины name\n";
-  out << "delete < edge > < first_vertice, second_vertice > - удаление ребра между вершинами first_vertice и second_vertice\n";
+  out << "delete < edge > < first_vertice, second_vertice > - удаление ребра между"
+  << "вершинами first_vertice и second_vertice\n";
   out << "capacity <  graphname > - вывод количества вершин в графе graphname\n";
-  out << "adjacent < first_vertice, second_ vertice > - проверяет наличие ребра между вершинами first_vertice и second_vertice\n";
+  out << "adjacent < first_vertice, second_ vertice > - проверяет наличие ребра между"
+  << "вершинами first_vertice и second_vertice\n";
   out << "list — вывод списка графов\n";
   out << "switch < graphName > - переключение на работу с графом GraphName\n";
   out << "graphname — выводит имя графа, над которым ведется работа\n";
-  out << "BFS < first_vertice > - возвращает список вершин в порядке обхода в ширину из исходной вершины first_vertice\n";
+  out << "BFS < first_vertice > - возвращает список вершин в порядке обхода в ширину из"
+  << "исходной вершины first_vertice\n";
   out << "clean < filename > — очищает содержимое файла\n";
   out << "open < read >< filename > — открытие файла с заданным названием и чтение его содержимого\n";
   out << "open < write >< filename > — открытие файла с заданным названием для записи данных\n";
 }
+
+bool reznikova::checkWrongNumParameters(std::istream & is)
+{
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    return false;
+  }
+  return true;
+}
+
+void reznikova::createCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string second_parameter;
+  if (!(is >> second_parameter))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  else if (second_parameter != "graph")
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  std::string graphName;
+  if (!(is >> graphName))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (!checkWrongNumParameters(is))
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  try
+  {
+    list.addToList(Graph(graphName));
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Graph " << graphName << " created. This graph is active\n";
+}
+
+void reznikova::switchCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string graphName;
+  is >> graphName;
+  if (!checkWrongNumParameters(is))
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  if (!list.isGraphInList(graphName))
+  {
+    throw std::logic_error("can't switch to graph which does not exist\n");
+  }
+  else if (list.findGraphByName(graphName)->isActive_ == true)
+  {
+    throw std::logic_error("this graph is active already\n");
+  }
+  list.resetActiveFlags();
+  try
+  {
+    list.findGraphByName(graphName)->isActive_ = true;
+  }
+  catch (const std::exception & e)
+  {
+    throw std::logic_error(e.what());
+  }
+  out << "Switched to graph " << graphName << "\n";
+}
+
 void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
@@ -26,8 +101,7 @@ void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::Grap
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -51,8 +125,7 @@ void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphL
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -96,8 +169,7 @@ void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::G
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -121,8 +193,7 @@ void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::Gra
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -163,8 +234,7 @@ void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova
 {
   std::string graphName;
   is >> graphName;
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -192,8 +262,7 @@ void reznikova::adjacentCommand(std::istream & is, std::ostream & out, reznikova
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -252,8 +321,7 @@ void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::Gra
   {
     throw std::logic_error("wrong parameters\n");
   }
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
+  if (!checkWrongNumParameters(is))
   {
     throw std::logic_error("too much parameters\n");
   }
@@ -268,32 +336,123 @@ void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::Gra
   }
 }
 
-void reznikova::readMatrix(std::istream & is, std::vector< std::vector< size_t > > & table)
+void reznikova::readMatrix(const std::string & filename, std::string & graphname, size_t & num, 
+std::vector< size_t > & indices, std::vector< std::vector< size_t > > & matrix)
 {
-  std::string line;
-  while (std::getline(is, line))
+  std::ifstream ifs(filename);
+  if (!ifs)
   {
-    std::istringstream iss(line);
-    std::vector< size_t > row;
-    size_t num;
-    while (iss >> num) 
-    {
-      row.push_back(num);
-    }
-    table.push_back(row);
+    throw std::logic_error("File does not exist\n");
   }
-  size_t n = table.size();
-  bool is_square = true;
-  for (const auto & row : table)
-  {
-    if (row.size() != n)
-    {
-      is_square = false;
-      break;
+  if (!std::getline(ifs, graphname)) {
+    throw std::logic_error("Unable to read graph name\n");
+  }
+  if (!(ifs >> num)) {
+    throw std::logic_error("Unable to read number of vertices\n");
+  }
+  ifs.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  indices.resize(num);
+  for (size_t i = 0; i < num; ++i) {
+    if (!(ifs >> indices[i])) {
+      throw std::logic_error("Unable to read vertex indices\n");
     }
   }
-  if (!is_square) 
+  ifs.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  matrix.resize(num, std::vector<size_t>(num));
+  size_t extra;
+  for (size_t i = 0; i < num; ++i)
   {
-     throw std::logic_error("The input table is not square\n");
+    ifs >> extra;
+    for (size_t j = 0; j < num; ++j)
+    {
+      if (!(ifs >> matrix[i][j]))
+      {
+        throw std::logic_error("Unable to read adjacency matrix\n");
+      }
+    }
+  }
+}
+
+void reznikova::clearCommand(std::istream & is, std::ostream & out)
+{
+  std::string filename;
+  if (!(is >> filename))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (!checkWrongNumParameters(is))
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  std::ofstream ofs(filename, std::ios::trunc);
+  if (!ofs.is_open()) 
+  {
+    throw std::logic_error("no such file\n");
+  }
+  ofs.close();
+  out << "File " << filename << " were cleared\n";
+}
+
+void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string filename;
+  if (!(is >> filename))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (!checkWrongNumParameters(is))
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  std::string graphName;
+  size_t num;
+  std::vector< std::vector< size_t > > matrix;
+  std::vector< size_t > indices;
+  readMatrix(filename, graphName, num, indices, matrix);
+  Graph graph = createGraphFromAdjacencyMatrix(indices, matrix, graphName);
+  list.addToList(graph);
+  out << "Graph " << graphName << " were read from file " << filename << "\n";
+}
+
+void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string filename;
+  if (!(is >> filename))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (!checkWrongNumParameters(is))
+  {
+    throw std::logic_error("too much parameters\n");
+  }
+  std::ofstream ofs(filename);
+  if (!ofs.is_open())
+  {
+    throw std::logic_error("no such file\n");
+  }
+  WorkObject * graph = list.getActiveGraph();
+  graph->graph_.printAdjacencyMatrix(ofs);
+  ofs.close();
+  out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file " << filename;
+}
+
+void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+{
+  std::string second_parameter;
+  if (!(is >> second_parameter))
+  {
+    throw std::logic_error("wrong parameters\n");
+  }
+  if (second_parameter == "read")
+  {
+    openFileToRead(is, out, list);
+  }
+  else if (second_parameter == "write")
+  {
+    openFileToWrite(is, out, list);
+  }
+  else
+  {
+    throw std::logic_error("wrong parameters\n");
   }
 }

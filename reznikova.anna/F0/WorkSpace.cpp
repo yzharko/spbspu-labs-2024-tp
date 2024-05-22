@@ -70,3 +70,4 @@ reznikova::WorkObject * reznikova::GraphList::getActiveGraph() const
     });
   return *graph;
 }
+

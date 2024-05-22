@@ -25,6 +25,8 @@ namespace reznikova
     std::string graphName_;
     size_t capacity_;
   };
+Graph createGraphFromAdjacencyMatrix(const std::vector< size_t > & indices, const std::vector< std::vector< size_t > > & matrix,
+const std::string & name);
 }
 
 #endif

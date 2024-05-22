@@ -111,7 +111,6 @@ void reznikova::Graph::removeEdge(size_t first_index, size_t second_index)
   second_vertex->remove(first_vertex);
 }
 
-
 void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
 {
   Vertex* start_vertex = findVertex(start_index);
@@ -173,6 +172,8 @@ void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
     indices.push_back(pair.first);
   }
   std::sort(indices.begin(), indices.end());
+  out << graphName_ << "\n";
+  out << capacity_ << "\n";
   out << "  ";
   for (size_t idx : indices)
   {
@@ -187,3 +188,27 @@ void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
     out << "\n";
   }
 }
+
+reznikova::Graph reznikova::createGraphFromAdjacencyMatrix(const std::vector< size_t > & indices, 
+const std::vector< std::vector< size_t > > & matrix, const std::string & name)
+{
+  Graph graph(name);
+  for (size_t index : indices) 
+  {
+    graph.addVertex(index);
+  }
+  size_t n = indices.size();
+  for (size_t i = 0; i < n; ++i)
+  {
+    for (size_t j = 0; j < n; ++j)
+    {
+      if (matrix[i][j] == 1 and !graph.isEdge(indices[i], indices[j]))
+      {
+        graph.addEdge(indices[i], indices[j]);
+      }
+    }
+  }
+  return graph;
+}
+
+
