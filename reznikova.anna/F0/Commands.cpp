@@ -231,7 +231,8 @@ void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::
   }
 }
 
-void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::capacityCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
@@ -255,7 +256,8 @@ void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova
   out << "Capacity of graph " << graphName << " is " << capacity << "\n";
 }
 
-void reznikova::adjacentCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::adjacentCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -398,7 +400,8 @@ void reznikova::clearCommand(std::istream & is, std::ostream & out)
   out << "File " << filename << " were cleared\n";
 }
 
-void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::openFileToRead(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -419,7 +422,8 @@ void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova:
   out << "Graph " << graphName << " were read from file " << filename << "\n";
 }
 
-void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -438,7 +442,8 @@ void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova
   WorkObject * graph = list.getActiveGraph();
   graph->graph_.printAdjacencyMatrix(ofs);
   ofs.close();
-  out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file " << filename;
+  out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file "
+  << filename;
 }
 
 void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
