@@ -53,7 +53,7 @@ void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.close();
 }
 
-void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &is,
+void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &,
                        std::ostream &out)
 {
   for (auto iterOfDicts : mapOfDictionaries)
@@ -105,7 +105,7 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   std::string name = "";
   is >> name;
   std::string word = "";
-  size_t freq = 0;
+  int freq = 0;
   auto iterOfDict = mapOfDictionaries.find(name);
   if (is >> word)
   {
@@ -180,7 +180,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   std::string nameOfDict = "";
   std::string param = "";
   std::string word = "";
-  size_t newFreq;
+  int newFreq;
 
   is >> nameOfDict >> word;
 

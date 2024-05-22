@@ -23,6 +23,7 @@ size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries,
       break;
     }
   }
+  return size;
 }
 
 std::ostream &mihalchenko::printInvalidCommand(std::ostream &out)
