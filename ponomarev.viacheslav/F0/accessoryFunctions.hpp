@@ -9,6 +9,7 @@ namespace ponomarev
   std::string cutType(std::string & line);
 
   std::ostream & printInvalidCommandMessage(std::ostream & out);
+  std::ostream & printWelcomeMessage(std::ostream & out);
 }
 
 #endif

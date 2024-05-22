@@ -8,7 +8,7 @@ int main()
 {
   std::map< std::string, std::function< void & (std::string) > > commands;
   {
-    commands["help"] = ;
+    commands["help"] = outputInfoAboutCommands;
     commands["input"] = ;
     commands["encode"] = ;
     commands["write"] = ;
@@ -20,6 +20,8 @@ int main()
     commands["clean"] = ;
     commands["save"] = ;
   }
+
+  ponomarev::printWelcomeMessage(std::cout);
 
   std::string command = "";
   std::string type = "";

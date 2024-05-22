@@ -20,3 +20,12 @@ std::ostream & ponomarev::printInvalidCommandMessage(std::ostream & out)
   out << message << "\n";
   return out;
 }
+
+std::ostream & ponomarev::printWelcomeMessage(std::ostream & out)
+{
+  std::string startMessage = "-----Start working-----";
+  std::string helpfulMessage = "Hello, dear user! You can write 'help' for more information about commands";
+  out << startMessage << "\n";
+  out << helpfulMessage << "\n";
+  return out;
+}
