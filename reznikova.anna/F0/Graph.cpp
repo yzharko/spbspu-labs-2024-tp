@@ -190,7 +190,7 @@ void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
 }
 
 reznikova::Graph reznikova::createGraphFromAdjacencyMatrix(const std::vector< size_t > & indices, 
-const std::vector< std::vector< size_t > > & matrix, const std::string & name)
+  const std::vector< std::vector< size_t > > & matrix, const std::string & name)
 {
   Graph graph(name);
   for (size_t index : indices) 

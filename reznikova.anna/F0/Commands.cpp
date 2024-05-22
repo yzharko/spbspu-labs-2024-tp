@@ -337,7 +337,7 @@ void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::Gra
 }
 
 void reznikova::readMatrix(const std::string & filename, std::string & graphname, size_t & num, 
-std::vector< size_t > & indices, std::vector< std::vector< size_t > > & matrix)
+  std::vector< size_t > & indices, std::vector< std::vector< size_t > > & matrix)
 {
   std::ifstream ifs(filename);
   if (!ifs)
