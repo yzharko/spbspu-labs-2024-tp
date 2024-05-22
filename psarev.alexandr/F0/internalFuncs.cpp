@@ -157,7 +157,7 @@ std::string psarev::getSpType(std::string& word)
   std::vector< std::string > spTypes = { "noun", "verb", "adjective", "adverb", "numeric" };
   for (auto iter = spTypes.begin(); iter != spTypes.end(); ++iter)
   {
-    for (size_t i; i <= 6; i++)
+    for (size_t i = 0; i <= 6; i++)
     {
       if (checkType(word, i, rusEnds[*iter]))
       {
