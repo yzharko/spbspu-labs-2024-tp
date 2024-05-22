@@ -5,8 +5,9 @@
 
 namespace ponomarev
 {
-  void outputInfoAboutCommands(const std::string & parameters);
-  void makeInput(std::string & parameters);
+  void outputInfoAboutCommands(const std::string & parameters, HuffmanCode &);
+  void makeInput(std::string & parameters, HuffmanCode & data);
+  void makeEncode(std::string & parameters, HuffmanCode & data);
 }
 
 #endif

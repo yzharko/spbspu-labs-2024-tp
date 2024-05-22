@@ -3,14 +3,15 @@
 #include <limits>
 #include "commands.hpp"
 #include "accessoryFunctions.hpp"
+#include "codingHuffman.hpp"
 
 int main()
 {
-  std::map< std::string, std::function< void & (std::string) > > commands;
+  std::map< std::string, std::function< void & (std::string &, ponomarev::HuffmanCode &) > > commands;
   {
     commands["help"] = outputInfoAboutCommands;
     commands["input"] = makeInput;
-    commands["encode"] = ;
+    commands["encode"] = chooseEncode;
     commands["write"] = ;
     commands["set"] = ;
     commands["combine"] = ;
@@ -25,12 +26,13 @@ int main()
 
   std::string command = "";
   std::string type = "";
+  ponomarev::HuffmanCode data;
   while (std::cin >> command)
   {
     type = ponomarev::cutType(command);
     try
     {
-      commands.at(type)(command);
+      commands.at(type)(command, data);
     }
     catch (const std::logic_error &)
     {

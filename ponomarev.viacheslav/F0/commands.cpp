@@ -1,7 +1,7 @@
 #include "commands.hpp"
 #include <iostream>
 
-void ponomarev::outputInfoAboutCommands(const std::string & parameters)
+void ponomarev::outputInfoAboutCommands(const std::string & parameters, HuffmanCode &)
 {
   if (parameters.empty())
   {
@@ -33,16 +33,59 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters)
   }
 }
 
-void ponomarev::makeInput(std::string & parameters)
+void ponomarev::makeInput(std::string & parameters, HuffmanCode & data)
 {
-  std::string str = "";
-  std::string text = "";
   if (parameters.empty())
   {
-    while (std::getline(std::cin, str))
+    ponomarev::getText(std::cin, data);
+  }
+}
+
+void ponomarev::choooseEncode(std::string & parameters, HuffmanCode data)
+{
+  if (parameters.empty())
+  {
+    ponomarev::makeEncode(data);
+  }
+  else
+  {
+    std::string parameter = cutType(parameters);
+    if (!isNum(parameter))
     {
-      res += str;
-      res += '\n';
+      std::ifstream input(parameter);
+      if (!input)
+      {
+        throw std::logic_error("can't open the file");
+      }
+
+      ponomarev::getText(input, data);
+      ponomarev::makeEncode(data);
+    }
+    else
+    {
+      long long n = std::stoll(parameter);
+      long long k = 0;
+      parameter = cutType(parameters);
+      if (!isNum(parameter))
+      {
+        throw std::logic_error("error: wrong parameters");
+      }
+      else
+      {
+        k = std::stoll(parameter);
+        parameter = cutType(parameters);
+        if (parameters.empty())
+        {
+          std::ifstream input(parameter);
+          ponomarev::cutTextInFile(n, k, data, input);
+          ponomarev::makeEncode(data);
+        }
+        else
+        {
+          throw std::logic_error("error: wrong parameters");
+        }
+      }
     }
   }
 }
+
