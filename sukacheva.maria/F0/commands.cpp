@@ -195,15 +195,6 @@ namespace sukacheva
     {
       if (command == "vertex")
       {
-        std::string extra;
-        in >> extra;
-        if (!extra.empty())
-        {
-          out << "<INVALID COMMAND>\n";
-          in.clear();
-          in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-          return;
-        }
         addVertex(graphList, start);
         out << "Vertex " << start << " is added.\n";
       }
