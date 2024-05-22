@@ -1,5 +1,4 @@
 #include "separators.hpp"
-
 namespace zheleznyakov
 {
   std::istream &operator>>(std::istream &in, SeparatorIO &&dest)
