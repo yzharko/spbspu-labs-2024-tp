@@ -16,11 +16,6 @@ int main(int argc, char* argv[])
         std::cerr << "wrong input\n";
         return 1;
     }
-    if (!in.is_open())
-    {
-      std::cerr << "Failed to open file: " << argv[1] << std::endl;
-      return 1;
-    }
     std::vector< Polygon > polygons;
     while (!in.eof())
     {
