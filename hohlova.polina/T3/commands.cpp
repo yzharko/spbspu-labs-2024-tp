@@ -52,7 +52,7 @@ void hohlova::AREACommandMenu(const std::vector< Polygon >& polygons, std::istre
       AREACommandNumVertices(polygons, numVertices, out);
     }
     else
-      Error(out);
+      Error();
   }
 }
 
@@ -98,7 +98,7 @@ void hohlova::AREACommandMean(const std::vector< Polygon >& polygons, std::ostre
   }
   else
   {
-    Error(out);
+    Error();
   }
 }
 
@@ -107,7 +107,7 @@ void hohlova::AREACommandNumVertices(const std::vector< Polygon >& polygons, int
   double totalArea = 0.0;
   if (numVertices < 3)
   {
-    Error(out);
+    Error();
   }
   else
   {
@@ -139,7 +139,7 @@ void hohlova::MAXCommandMenu(const std::vector<Polygon>& polygons, std::istream&
   }
   catch (const std::exception& e)
   {
-    Error(out);
+    Error();
   }
 }
 
@@ -157,7 +157,7 @@ void hohlova::MAXCommandArea(const std::vector< Polygon >& polygons, std::ostrea
     }
   }
   if (count == 0)
-    Error(out);
+    Error();
   else
     out << std::fixed << std::setprecision(1) << maxValue << "\n";
 }
@@ -176,7 +176,7 @@ void hohlova::MAXCommandVertices(const std::vector< Polygon >& polygons, std::os
     }
   }
   if (count == 0)
-    Error(out);
+    Error();
   else
     out << maxVertices << "\n";
 }
@@ -198,7 +198,7 @@ void hohlova::MINCommandMenu(const std::vector< Polygon >& polygons, std::istrea
   }
   catch (const std::exception& e)
   {
-    Error(out);
+    Error();
   }
 }
 
@@ -254,7 +254,7 @@ void hohlova::COUNTCommandMenu(const std::vector<Polygon>& polygons, std::istrea
       COUNTCommandNumVertices(polygons, numVertices, out);
     }
     else
-      Error(out);
+      Error();
   }
 }
 
@@ -289,7 +289,7 @@ void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons, int 
   int count = 0;
   if (numVertices < 3)
   {
-    Error(out);
+    Error();
     return;
   }
   for (const auto& polygon : polygons)
@@ -360,7 +360,7 @@ void hohlova::MAXSEQCommandMenu(const std::vector<Polygon>& polygons, std::istre
   in >> polygon;
   if (in.fail())
   {
-    Error(out);
+    Error();
     in.clear();
     in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     return;
