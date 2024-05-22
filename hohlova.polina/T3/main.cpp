@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     std::ifstream in(argv[1]);
     if (argc != 2)
     {
-        std::cerr << "Usage: " << argv[0] << " <filename>\n";
+        std::cerr << "wrong input\n";
         return 1;
     }
     std::vector< Polygon > polygons;
