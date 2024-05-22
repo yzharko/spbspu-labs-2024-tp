@@ -6,23 +6,24 @@
 void mihalchenko::help(std::ostream &out)
 {
   out << "List of available commands:\n\
-  1. help - output of all commands(active now)\n\
-  2. open < filename > - opening a dictionary file, if there is no file - create and open\n\
-  3. close < filename > - closing the filename file, if there is no such file - error message\n\
-  4. save < filename > - saving changes to the 'filename' file\n\
-  5. edit < filename > - editing the 'filename' file\n\
-  6. insert < filename > < word > < frequency > - inserting a word-frequency pair into a 'filename' file\n\
-  7. remove < filename > < word / frequency > - deleting an item(s) from the dictionary by word / frequency / word and frequency\n\
-  8. find < filename > < word / frequency > - output of elements by word or with a given frequency\n\
-  9. print < filename > < sort:alph / sort:freq > < reverse:true/false > - output of sorted file elements\n\
-  10. view < partOfName > - the output of the names of existing dictionaries, an additional parameter is a part of the name\n\
-  11. clear <filename > < start > < stop > - clear the entire dictionary or in the selected range\n\
-  12. merge < filename1 > < filename2 > - the exchange of dictionary contents, if there is a problem, the program displays\n\
+  1. help - displays information about available commands(active now)\n\
+  2. create < filename > - opening the filename file, if it does not exist, then creating it and forming a dictionary\n\
+  with the same name from its data\n\
+  3. save < filename > - saving changes to the 'filename' file\n\
+  4. edit < name > < word > < new frequency > - edit dictionary elements, their names and frequencies\n\
+  5. insert < name > < word > < frequency > - inserting a word-frequency pair\n\
+  6. remove < name > < word > - deleting an item(s) from the dictionary by word / frequency / word and frequency\n\
+  7. find < name > < word / frequency > - output of element(s) by word\n\
+  8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output dictionary elements according to the specified sorting conditions\n\
+  9. view - the output of the names of existing dictionaries\n\
+  10. clear < name > < start > < stop > - clear the entire dictionary or in the selected range\n\
+  11. swap < name1 > < name2 > - the exchange of dictionary contents, if there is a problem, the program displays\n\
   the corresponding message\n\
-  13. unique < filename1 > < filename2 > < newFileName > - saves unique elements from dictionaries in a new file,\n\
+  12. merge < name1 > < name2 > < newname > - combines the contents of the first two dictionaries in the third\n\
+  13. unique < name1 > < name2 > < newName > - saves unique elements from dictionaries in a new file,\n\
   if any of the files are missing or any other problem occurs, the corresponding message is also displayed\n\
-  14. count < filename > < name / frequency > - counting elements with the same name or frequency\n\
-  15. size < filename > - print the size of the dictionary\n";
+  14. count < name > < word / frequency > - counting elements with the same name or frequency\n\
+  15. size < name > - print the size of the dictionary\n";
 }
 
 void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
