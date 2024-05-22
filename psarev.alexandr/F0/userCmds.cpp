@@ -41,7 +41,7 @@ void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::strin
       depot.emplace(name, storage_t());
       storage_t tempoStorage = depot[name];
       tempoStorage = psarev::readStorage(fileIn);
-      out << "Storage " << name << " has been created!\n";
+      out << "Storage <" << name << "> has been created!\n";
     }
   }
   else
@@ -50,36 +50,24 @@ void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::strin
   }
 }
 
-void psarev::cmdChoose(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot)
+void psarev::cmdChoose(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot, std::string& storage)
 {
-  std::string name = "";
-  in >> name;
+  std::string chName = "";
+  in >> chName;
   if (!in)
   {
     return;
   }
 
-  std::map< std::string, std::function < void(storage_t&, std::istream&, std::ostream&) > > storageCmds;
+  auto chStorage = depot.find(chName);
+  if (chStorage != depot.end())
   {
-    using namespace std::placeholders;
-    storageCmds["print"] = psarev::cmdPrint;
-    storageCmds["fono"] = psarev::cmdFono;
-    storageCmds["makeSent"] = psarev::cmdMakeSent;
+    storage = chName;
+    out << "Storage <" << chName << "> has been choosen!\n";
   }
-
-  std::string storageCmd = "";
-  while (std::cin >> storageCmd)
+  else
   {
-    try
-    {
-      storageCmds.at(storageCmd)(depot[name], std::cin, std::cout);
-    }
-    catch (const std::logic_error&)
-    {
-      psarev::outError(std::cout, "<INVALID COMMAND>");
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
-    }
+    out << "Dictionary <" << chName << "> doesn't exists!\n";
   }
 }
 
@@ -90,11 +78,11 @@ void psarev::cmdDelete(std::istream& in, std::ostream& out, std::map< std::strin
 
   if (depot.erase(tempoS))
   {
-    out << "Storage " << tempoS << " has been deleted!\n";
+    out << "Storage <" << tempoS << "> has been deleted!\n";
   }
   else
   {
-    out << "Storage with name " << tempoS << "doesn't exists!\n";
+    out << "Storage with name <" << tempoS << "> doesn't exists!\n";
   }
 }
 
@@ -102,7 +90,7 @@ void psarev::cmdList(std::ostream& out, std::map< std::string, storage_t >& depo
 {
   for (auto iter = depot.begin(); iter != depot.end(); ++iter)
   {
-    out << "Storage " << (*iter).first <<"\n";
+    out << "Storage <" << (*iter).first <<"> \n";
   }
 }
 
@@ -111,7 +99,7 @@ void psarev::cmdShow(std::istream& in, std::ostream& out, std::map< std::string,
   std::string tempoS = "";
   in >> tempoS;
 
-  out << "Storage " << tempoS << " content:\n";
+  out << "Storage <" << tempoS << "> content:\n";
 
   for (auto iter = depot[tempoS].begin(); iter != depot[tempoS].end(); ++iter)
   {
@@ -133,16 +121,16 @@ void psarev::cmdRename(std::istream& in, std::ostream& out, std::map< std::strin
     {
       depot.emplace(newName, desireSt->second);
       depot.erase(desireSt);
-      out << "Storage " << name << " has been renamed to " << newName << "!\n";
+      out << "Storage <" << name << "> has been renamed to <" << newName << ">!\n";
     }
     else
     {
-      out << "Storage " << newName << " already exists! Try another name!" << "\n";
+      out << "Storage <" << newName << "> already exists! Try another name!" << "\n";
     }
   }
   else
   {
-    out << "There is no storage " << name << "! Can't rename so!\n";
+    out << "There is no storage <" << name << ">! Can't rename so!\n";
   }
 }
 
@@ -156,7 +144,7 @@ void psarev::cmdSave(std::istream& in, std::ostream& out, std::map< std::string,
   if (!std::system(maekDest.c_str()))
   {
     outDepot(dest, fileOut, depot);
-    out << "Whole depot was printed at the directory " << dest << "!\n";
+    out << "Whole depot was printed at the directory <" << dest << ">!\n";
   }
   else
   {
@@ -167,15 +155,30 @@ void psarev::cmdSave(std::istream& in, std::ostream& out, std::map< std::string,
     if (decis == "Y")
     {
       outDepot(dest, fileOut, depot);
-      out << "Whole depot was printed at the directory " << dest << "!\n";
+      out << "Whole depot was printed at the directory <" << dest << ">!\n";
     }
     else if (decis == "N")
     {
-      out << "Depot wasn't printed at the directory " << dest << "!\n";
+      out << "Depot wasn't printed at the directory <" << dest << ">!\n";
     }
     else
     {
       out << "Please, type Y to print or N otherwise!" << "\n";
     }
+  }
+}
+
+void psarev::cmdPrint(std::ostream& out, std::map<std::string, storage_t>& depot, std::string& storage)
+{
+  auto chStorage = depot.find(storage);
+  storage_t curStorage = (*chStorage).second;
+  for (auto iter = curStorage.begin(); iter != curStorage.end(); iter++)
+  {
+    out << (*iter).first << ": \n";
+    for (size_t i = 0; i < (*iter).second.size(); i++)
+    {
+      out << (*iter).second[i] << " ";
+    }
+    out << "\n";
   }
 }
