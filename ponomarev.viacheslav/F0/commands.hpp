@@ -9,6 +9,8 @@ namespace ponomarev
   void outputInfoAboutCommands(const std::string & parameters, HuffmanCode &);
   void makeInput(std::string & parameters, HuffmanCode & data);
   void chooseEncode(std::string & parameters, HuffmanCode & data);
+  void writeTextIntoFile(std::string & parameters, HuffmanCode & data);
+  void setDecode(std::string & parameters, HuffmanCode & data);
 }
 
 #endif

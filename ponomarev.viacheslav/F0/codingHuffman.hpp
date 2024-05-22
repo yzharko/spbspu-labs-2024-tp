@@ -42,6 +42,7 @@ namespace ponomarev
   void calcFreq(std::string str, HuffmanCode & data);
   std::string decodeFile(struct MinHeapNode* root, std::string s);
   void makeEncode(HuffmanCode & data);
+  void fillFreq(std::string parameter, HuffmanCode & data);
 }
 
 #endif

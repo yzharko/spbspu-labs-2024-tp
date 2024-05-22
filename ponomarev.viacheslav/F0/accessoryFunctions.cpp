@@ -23,12 +23,13 @@ void ponomarev::getText(std::istream & input, HuffmanCode & data)
 {
   std::string str = "";
   std::string text = "";
+  std::getline(input, str);
 
-  while (!input.eof())
+  while (!input.eof() && str != "end")
   {
-    std::getline(input, str);
     text += str;
     text += '\n';
+    std::getline(input, str);
   }
   data.text = text;
 }
@@ -80,5 +81,17 @@ std::ostream & ponomarev::printInvalidEncodeMessage(std::ostream & out)
 std::ostream & ponomarev::printSuccessfullyEncodeMessage(std::ostream & out)
 {
   out << "Great! The encoding was completed successfully" << "\n";
+  return out;
+}
+
+std::ostream & ponomarev::printSuccessfullyInputMessage(std::ostream & out)
+{
+  out << "The data was entered successfully\n";
+  return out;
+}
+
+std::ostream & ponomarev::printSuccessfullyWriteMessage(std::ostream & out)
+{
+  out << "The data was successfully wrote into file\n";
   return out;
 }

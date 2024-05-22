@@ -11,6 +11,7 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomare
     std::cout << "------------------------------------------------------------------------\n";
     std::cout << "1) 'help' - output information about commands\n";
     std::cout << "2) 'input' - start working with standart input from user\n";
+    std::cout << "Note: the command ends with the input of the keyword 'end'\n";
     std::cout << "------------------------------------------------------------------------\n";
     std::cout << "3) 'encode' - encoding of text entered from standard input\n";
     std::cout << "4) 'encode <filename>' - encoding of text in the filename\n";
@@ -41,6 +42,7 @@ void ponomarev::makeInput(std::string & parameters, ponomarev::HuffmanCode & dat
   if (parameters.empty())
   {
     ponomarev::getText(std::cin, data);
+    ponomarev::printSuccessfullyInputMessage(std::cout);
   }
 }
 
@@ -60,6 +62,10 @@ void ponomarev::chooseEncode(std::string & parameters, HuffmanCode & data)
       {
         throw std::logic_error("can't open the file");
       }
+      else if (!parameters.empty())
+      {
+        throw std::logic_error("error: wrong parameters");
+      }
 
       ponomarev::getText(input, data);
       ponomarev::makeEncode(data);
@@ -73,22 +79,69 @@ void ponomarev::chooseEncode(std::string & parameters, HuffmanCode & data)
       {
         throw std::logic_error("error: wrong parameters");
       }
+      k = std::stoll(parameter);
+      parameter = cutType(parameters);
+      if (parameters.empty())
+      {
+        std::ifstream input(parameter);
+        ponomarev::cutTextInFile(n, k, data, input);
+        ponomarev::makeEncode(data);
+      }
       else
       {
-        k = std::stoll(parameter);
-        parameter = cutType(parameters);
-        if (parameters.empty())
-        {
-          std::ifstream input(parameter);
-          ponomarev::cutTextInFile(n, k, data, input);
-          ponomarev::makeEncode(data);
-        }
-        else
-        {
-          throw std::logic_error("error: wrong parameters");
-        }
+        throw std::logic_error("error: wrong parameters");
       }
     }
   }
 }
+
+void ponomarev::writeTextIntoFile(std::string & parameters, HuffmanCode & data)
+{
+  std::string parameter = cutType(parameters);
+
+  if (!parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+
+  std::ofstream fout(parameter);
+  if (!fout)
+  {
+    throw std::logic_error("can't open the file");
+  }
+  fout << data.text;
+  ponomarev::printSuccessfullyWriteMessage(std::cout);
+}
+
+void ponomarev::setDecode(std::string & parameters, HuffmanCode & data)
+{
+  std::string parameter = cutType(parameters);
+
+  if (parameter != "decode")
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+
+  parameter = cutType(parameters);
+
+  if (!parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+
+  ponomarev::fillFreq(parameter, data);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

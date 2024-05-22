@@ -16,6 +16,8 @@ namespace ponomarev
   std::ostream & printWelcomeMessage(std::ostream & out);
   std::ostream & printInvalidEncodeMessage(std::ostream & out);
   std::ostream & printSuccessfullyEncodeMessage(std::ostream & out);
+  std::ostream & printSuccessfullyInputMessage(std::ostream & out);
+  std::ostream & printSuccessfullyWriteMessage(std::ostream & out);
 }
 
 #endif

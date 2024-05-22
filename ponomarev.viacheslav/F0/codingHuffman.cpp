@@ -1,6 +1,7 @@
 #include "codingHuffman.hpp"
 #include <iterator>
 #include <iostream>
+#include <fstream>
 #include "accessoryFunctions.hpp"
 
 ponomarev::MinHeapNode::MinHeapNode(char data, int freq)
@@ -128,3 +129,24 @@ void ponomarev::makeEncode(HuffmanCode & data)
     ponomarev::printSuccessfullyEncodeMessage(std::cout);
   }
 }
+
+void ponomarev::fillFreq(std::string parameter, HuffmanCode & data)
+{
+  std::ifstream input(parameter);
+  if (!input)
+  {
+    throw std::logic_error("can't open the file");
+  }
+  std::string str = "";
+  while (input >> str)
+  {
+    char symbol = cutType(str)[0];
+    int freq = std::stoi(str);
+    data.freq[symbol] = freq;
+  }
+  std::cout << "Frequence successfully completed\n";
+}
+
+
+
+

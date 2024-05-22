@@ -13,6 +13,8 @@ int main()
     commands["help"] = ponomarev::outputInfoAboutCommands;
     commands["input"] = ponomarev::makeInput;
     commands["encode"] = ponomarev::chooseEncode;
+    commands["write"] = ponomarev::writeTextIntoFile;
+    commands["set"] = ponomarev::setDecode;
   }
 
   ponomarev::printWelcomeMessage(std::cout);
