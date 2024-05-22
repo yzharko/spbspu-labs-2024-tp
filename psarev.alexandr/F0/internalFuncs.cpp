@@ -81,8 +81,6 @@ std::string psarev::getSpType(std::string& word)
 
   storage_t rusEnds;
 
-  
-
   for (auto iter = rusEnds["prepos"].begin(); iter != rusEnds["prepos"].end(); ++iter)
   {
     if (word == *iter)
