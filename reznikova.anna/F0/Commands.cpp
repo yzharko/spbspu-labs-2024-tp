@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 void reznikova::helpCommand(std::ostream & out)
 {
