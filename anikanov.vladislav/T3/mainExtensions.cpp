@@ -102,21 +102,28 @@ std::vector< double > anikanov::getAreas(const polygonArr &polygons)
 
 std::vector< double > anikanov::getAreasIf(const polygonArr &polygons, funcShema func)
 {
-  std::vector< double > areas;
-  for (const auto &polygon: polygons) {
-    if (func(polygon)) {
-      areas.push_back(getArea(polygon));
+  auto transformFunc = [func](const Polygon &pol) {
+    if (func(pol)) {
+      return getArea(pol);
+    } else {
+      return 0.0;
     }
-  }
+  };
+
+  std::vector< double > areas;
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(areas), transformFunc);
+  areas.erase(std::remove(areas.begin(), areas.end(), 0.0), areas.end());
   return areas;
 }
 
 std::vector< size_t > anikanov::getVertexes(const polygonArr &polygons)
 {
+  auto transformFunc = [](const Polygon &pol) {
+    return pol.points.size();
+  };
+
   std::vector< size_t > vertexes;
-  for (const auto &polygon: polygons) {
-    vertexes.push_back(polygon.points.size());
-  }
+  std::transform(polygons.begin(), polygons.end(), std::back_inserter(vertexes), transformFunc);
   return vertexes;
 }
 
