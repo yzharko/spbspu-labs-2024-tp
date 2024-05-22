@@ -1,4 +1,7 @@
 #include "accessoryFunctions.hpp"
+#include <cstdio>
+#include <fstream>
+#include <iostream>
 
 std::string ponomarev::cutType(std::string & line)
 {
@@ -94,4 +97,35 @@ std::ostream & ponomarev::printSuccessfullyWriteMessage(std::ostream & out)
 {
   out << "The data was successfully wrote into file\n";
   return out;
+}
+
+void ponomarev::deleteFile(std::string parameter)
+{
+  if (std::remove(parameter.c_str()) == 0)
+  {
+      std::cout << "File delete successfully\n";
+  }
+}
+
+void ponomarev::deleteTextInFile(long long n, long long k, std::string parameter)
+{
+  std::string str = "";
+  std::string text = "";
+  std::ifstream input(parameter);
+  while (std::getline(input, str))
+  {
+    text += str;
+    text += '\n';
+  }
+
+  if (n > k)
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+  std::string firstPart = text.substr(0, n);
+  std::string secondPart = text.substr(k);
+  std::string res = firstPart + secondPart;
+  deleteFile(parameter);
+  std::ofstream out(parameter);
+  out << res << "\n";
 }

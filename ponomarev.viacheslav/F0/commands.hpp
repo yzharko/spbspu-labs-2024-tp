@@ -15,6 +15,7 @@ namespace ponomarev
   void showTable(std::string & parameters, HuffmanCode & data);
   void makeDecode(std::string & parameters, HuffmanCode & data);
   void makeClean(std::string & parameters, HuffmanCode &);
+  void makeDelete(std::string & parameters, HuffmanCode &);
 }
 
 #endif

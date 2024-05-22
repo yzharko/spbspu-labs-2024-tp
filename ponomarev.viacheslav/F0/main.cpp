@@ -18,6 +18,7 @@ int main()
     commands["combine"] = ponomarev::combineFiles;
     commands["table"] = ponomarev::showTable;
     commands["decode"] = ponomarev::makeDecode;
+    commands["delete"] = ponomarev::makeDelete;
     commands["clean"] = ponomarev::makeClean;
   }
 

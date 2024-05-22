@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "accessoryFunctions.hpp"
+#include "codingHuffman.hpp"
 
 void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomarev::HuffmanCode &)
 {
@@ -201,5 +202,40 @@ void ponomarev::makeClean(std::string & parameters, HuffmanCode &)
     std::ofstream ofs;
     ofs.open(fileClean, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
+  }
+}
+
+void ponomarev::makeDelete(std::string & parameters, HuffmanCode &)
+{
+
+  if (parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+
+  std::string parameter = ponomarev::cutType(parameters);
+  if (!ponomarev::isNum(parameter) && parameters.empty())
+  {
+    ponomarev::deleteFile(parameter);
+  }
+  else
+  {
+    long long n = std::stoll(parameter);
+    long long k = 0;
+    parameter = ponomarev::cutType(parameters);
+    if (!ponomarev::isNum(parameter))
+    {
+      throw std::logic_error("error: wrong parameters");
+    }
+    k = std::stoll(parameter);
+    parameter = ponomarev::cutType(parameters);
+    if (parameters.empty())
+    {
+      ponomarev::deleteTextInFile(n, k, parameter);
+    }
+    else
+    {
+      throw std::logic_error("error: wrong parameters");
+    }
   }
 }
