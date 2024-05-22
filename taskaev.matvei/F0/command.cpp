@@ -8,7 +8,7 @@
 #include "HuffmanTree.hpp"
 #include "command.hpp"
 
-void HuffmanApp::showHelp() {
+void taskaev::HuffmanApp::showHelp() {
   std::cout << "Commands:\n"
     << "help - Show commands\n"
     << "input - Input text from keyboard\n"
@@ -23,13 +23,27 @@ void HuffmanApp::showHelp() {
     << "merge <file1> <file2> - Merge two files\n";
 }
 
-void HuffmanApp::input()
+void taskaev::HuffmanApp::input()
 {
   std::cout << "Enter text: ";
   std::getline(std::cin, text_);
 }
 
-void HuffmanApp::genRandom()
+void taskaev::HuffmanApp::file()
+{
+  std::string filename;
+  std::cin >> filename;
+  std::cin.ignore();
+  std::ifstream inFile(filename);
+  if (!inFile)
+  {
+    std::cerr << "Error: Cannot open file" << filename << "\n";
+    return;
+  }
+  text_.assign((std::istreambuf_iterator< char > (inFile)), std::istreambuf_iterator< char >());
+}
+
+void taskaev::HuffmanApp::genRandom()
 {
   const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   const size_t maxLength = 100;
@@ -40,7 +54,7 @@ void HuffmanApp::genRandom()
   std::cout << "Generated string in 100 size: " << text_ << '\n';
 }
 
-void HuffmanApp::encode()
+void taskaev::HuffmanApp::encode()
 {
   if (text_.empty()) {
     std::cerr << "Error: No text to encode\n";
@@ -50,12 +64,12 @@ void HuffmanApp::encode()
   encodedText_ = tree_.encode(text_);
 }
 
-void HuffmanApp::data()
+void taskaev::HuffmanApp::data()
 {
   tree_.codeTable(std::cout);
 }
 
-void HuffmanApp::showEncoded()
+void taskaev::HuffmanApp::showEncoded()
 {
   if (encodedText_.empty()) {
     std::cerr << "Error: No encoded data to display\n";
@@ -64,7 +78,57 @@ void HuffmanApp::showEncoded()
   std::cout << "Encoded text: " << encodedText_ << '\n';
 }
 
-void HuffmanApp::showFreq()
+void taskaev::HuffmanApp::saveEncoded()
+{
+  std::string filename;
+  std::cin >> filename;
+  std::cin.ignore();
+  std::ofstream outFile(filename);
+  if (!outFile)
+  {
+    std::cerr << "Error: Cannot open file " << filename << "\n";
+    return;
+  }
+  outFile << encodedText_;
+}
+
+void taskaev::HuffmanApp::saveCodeTable()
+{
+  std::string filename;
+  std::cin >> filename;
+  std::cin.ignore();
+  std::ofstream outFile(filename);
+  if (!outFile)
+  {
+    std::cerr << "Error: Cannot open file " << filename << "\n";
+    return;
+  }
+  tree_.codeTable(outFile);
+}
+
+void taskaev::HuffmanApp::showFreq()
 {
   tree_.freqTable(std::cout);
+}
+
+void taskaev::HuffmanApp::mergeFiles()
+{
+  std::string filenameOne, filenameTwo;
+  std::cin >> filenameOne >> filenameTwo;
+  std::cin.ignore();
+  std::ifstream fileOne(filenameOne);
+  std::ifstream fileTwo(filenameTwo);
+  if (!fileOne || !fileTwo)
+  {
+    std::cerr << "Error: Cannot open one of the files " << filenameOne << " or " << filenameTwo << "\n";
+    return;
+  }
+  std::string mergeFilename = "merge_" + filenameOne + "_" + filenameTwo;
+  std::ofstream outFile(mergeFilename);
+  if (!outFile)
+  {
+    std::cerr << "Error: Cannot create file " << mergeFilename << "\n";
+    return;
+  }
+  outFile << fileOne.rdbuf() << fileTwo.rdbuf();
 }

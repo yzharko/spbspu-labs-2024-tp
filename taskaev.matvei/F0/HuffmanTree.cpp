@@ -9,7 +9,7 @@
 #include <cstdlib>
 #include "HuffmanTree.hpp"
 
-void HuffmanTree::build(const std::string& text)
+void taskaev::HuffmanTree::build(const std::string& text)
 {
   freq_ = std::accumulate(
     text.begin(),
@@ -42,7 +42,7 @@ void HuffmanTree::build(const std::string& text)
   genCode(root_, "");
 }
 
-void HuffmanTree::genCode(Node* node, const std::string& code)
+void taskaev::HuffmanTree::genCode(Node* node, const std::string& code)
 {
   if (!node) return;
   if (!node->left_ && !node->right_)
@@ -53,7 +53,7 @@ void HuffmanTree::genCode(Node* node, const std::string& code)
   genCode(node->right_, code + "1");
 }
 
-std::string HuffmanTree::encode(const std::string& text)
+std::string taskaev::HuffmanTree::encode(const std::string& text)
 {
   return std::accumulate(
     text.begin(),
@@ -67,7 +67,7 @@ std::string HuffmanTree::encode(const std::string& text)
   );
 }
 
-void HuffmanTree::freqTable(std::ostream& out)
+void taskaev::HuffmanTree::freqTable(std::ostream& out)
 {
   for (const auto& kv : freq_)
   {
@@ -75,7 +75,7 @@ void HuffmanTree::freqTable(std::ostream& out)
   }
 }
 
-void HuffmanTree::codeTable(std::ostream& out)
+void taskaev::HuffmanTree::codeTable(std::ostream& out)
 {
   for (const auto& kv : codes_)
   {
