@@ -3,6 +3,8 @@
 
 #include <map>
 #include <vector>
+#include <queue>
+#include <string>
 
 namespace ponomarev
 {
@@ -27,20 +29,19 @@ namespace ponomarev
 
     void putText(std::string data);
 
-  private:
-    map<char, string> codes;
-    map<char, int> freq;
+    std::map<char, std::string> codes;
+    std::map<char, int> freq;
     std::string text;
     std::string decodingText;
-    priority_queue<MinHeapNode*, vector<MinHeapNode*>, Compare> minHeap;
-  }
+    std::priority_queue<MinHeapNode*, std::vector<MinHeapNode*>, Compare> minHeap;
+  };
 
-    void printCodes(MinHeapNode* root, std::string str);
-    void storeCodes(MinHeapNode* root, std::string str, HuffmanCode & data);
-    void createTree(int size, HuffmanCode & data);
-    void calcFreq(std::string str, int n, HuffmanCode & data);
-    string decodeFile(struct MinHeapNode* root, std::string s);
-    void makeEncode(HuffmanCode & data);
+  void printCodes(MinHeapNode* root, std::string str);
+  void storeCodes(MinHeapNode* root, std::string str, HuffmanCode & data);
+  void createTree(HuffmanCode & data);
+  void calcFreq(std::string str, HuffmanCode & data);
+  std::string decodeFile(struct MinHeapNode* root, std::string s);
+  void makeEncode(HuffmanCode & data);
 }
 
 #endif

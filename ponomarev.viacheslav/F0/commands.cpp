@@ -1,7 +1,9 @@
 #include "commands.hpp"
 #include <iostream>
+#include <fstream>
+#include "accessoryFunctions.hpp"
 
-void ponomarev::outputInfoAboutCommands(const std::string & parameters, HuffmanCode &)
+void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomarev::HuffmanCode &)
 {
   if (parameters.empty())
   {
@@ -33,7 +35,7 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters, HuffmanC
   }
 }
 
-void ponomarev::makeInput(std::string & parameters, HuffmanCode & data)
+void ponomarev::makeInput(std::string & parameters, ponomarev::HuffmanCode & data)
 {
   if (parameters.empty())
   {
@@ -41,7 +43,7 @@ void ponomarev::makeInput(std::string & parameters, HuffmanCode & data)
   }
 }
 
-void ponomarev::choooseEncode(std::string & parameters, HuffmanCode data)
+void ponomarev::chooseEncode(std::string & parameters, HuffmanCode & data)
 {
   if (parameters.empty())
   {

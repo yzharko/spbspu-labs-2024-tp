@@ -1,25 +1,18 @@
 #include <iostream>
 #include <map>
 #include <limits>
+#include <functional>
 #include "commands.hpp"
 #include "accessoryFunctions.hpp"
 #include "codingHuffman.hpp"
 
 int main()
 {
-  std::map< std::string, std::function< void & (std::string &, ponomarev::HuffmanCode &) > > commands;
+  std::map< std::string, std::function< void (std::string &, ponomarev::HuffmanCode &) > > commands;
   {
-    commands["help"] = outputInfoAboutCommands;
-    commands["input"] = makeInput;
-    commands["encode"] = chooseEncode;
-    commands["write"] = ;
-    commands["set"] = ;
-    commands["combine"] = ;
-    commands["table"] = ;
-    commands["decode"] = ;
-    commands["delete"] = ;
-    commands["clean"] = ;
-    commands["save"] = ;
+    commands["help"] = ponomarev::outputInfoAboutCommands;
+    commands["input"] = ponomarev::makeInput;
+    commands["encode"] = ponomarev::chooseEncode;
   }
 
   ponomarev::printWelcomeMessage(std::cout);

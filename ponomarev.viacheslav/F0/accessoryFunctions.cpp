@@ -24,15 +24,16 @@ void ponomarev::getText(std::istream & input, HuffmanCode & data)
   std::string str = "";
   std::string text = "";
 
-  while (std::getline(input, str))
+  while (!input.eof())
   {
+    std::getline(input, str);
     text += str;
     text += '\n';
   }
-  data.putText(text);
+  data.text = text;
 }
 
-void ponomarev::cutTextInFile(long long n, long long k, HuffmanCode & data, input)
+void ponomarev::cutTextInFile(long long n, long long k, ponomarev::HuffmanCode & data, std::istream & input)
 {
   std::string str = "";
   std::string text = "";
@@ -49,7 +50,7 @@ void ponomarev::cutTextInFile(long long n, long long k, HuffmanCode & data, inpu
   }
   else
   {
-    text = line.substr(n, (k - n));
+    text = text.substr(n, (k - n));
     data.putText(text);
   }
 }

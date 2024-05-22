@@ -1,5 +1,7 @@
 #include "codingHuffman.hpp"
 #include <iterator>
+#include <iostream>
+#include "accessoryFunctions.hpp"
 
 ponomarev::MinHeapNode::MinHeapNode(char data, int freq)
 {
@@ -35,7 +37,7 @@ void ponomarev::printCodes(MinHeapNode* root, std::string str)
     }
     if (root->data != '$')
     {
-        cout << root->data << ": " << str << "\n";
+        std::cout << root->data << ": " << str << "\n";
     }
     printCodes(root->left, str + "0");
     printCodes(root->right, str + "1");
@@ -51,14 +53,14 @@ void ponomarev::storeCodes(MinHeapNode* root, std::string str, HuffmanCode & dat
     {
         data.codes[root->data] = str;
     }
-    storeCodes(root->left, str + "0", HuffmanCode & data);
-    storeCodes(root->right, str + "1", HuffmanCode & data);
+    storeCodes(root->left, str + "0", data);
+    storeCodes(root->right, str + "1", data);
 }
 
-void ponomarev::createTree(int size, HuffmanCode & data)
+void ponomarev::createTree(HuffmanCode & data)
 {
     MinHeapNode *left, *right, *top;
-    for (map<char, int>::iterator v = data.freq.begin(); v != data.freq.end(); v++)
+    for (std::map<char, int>::iterator v = data.freq.begin(); v != data.freq.end(); v++)
     {
         data.minHeap.push(new MinHeapNode(v->first, v->second));
     }
@@ -73,12 +75,12 @@ void ponomarev::createTree(int size, HuffmanCode & data)
         top->right = right;
         data.minHeap.push(top);
     }
-    storeCodes(data.minHeap.top(), "", HuffmanCode & data);
+    storeCodes(data.minHeap.top(), "", data);
 }
 
-void ponomarev::calcFreq(std::string str, int n, HuffmanCode & data)
+void ponomarev::calcFreq(std::string str, HuffmanCode & data)
 {
-    for (int i = 0; i < str.size(); i++)
+    for (size_t i = 0; i < str.size(); i++)
     {
         data.freq[str[i]]++;
     }
@@ -88,7 +90,7 @@ std::string ponomarev::decodeFile(MinHeapNode* root, std::string s)
 {
     std::string ans = "";
     MinHeapNode* curr = root;
-    for (int i = 0; i < s.size(); i++)
+    for (size_t i = 0; i < s.size(); i++)
     {
       if (s[i] == '0')
       {
@@ -112,17 +114,17 @@ void ponomarev::makeEncode(HuffmanCode & data)
   std::string str = data.text;
   if (str.empty())
   {
-    ponomarev::printInvalidEncodeMessage();
+    ponomarev::printInvalidEncodeMessage(std::cout);
   }
   else
   {
-    ponomarev::calcFreq(str, str.length(), data);
-    ponomarev::createTree(str.length(), data);
+    ponomarev::calcFreq(str, data);
+    ponomarev::createTree(data);
     std:: string encodedString = "";
     for (auto i : str)
     {
       encodedString += data.codes[i];
     }
-    ponomarev::printSuccessfullyEncodeMessage();
+    ponomarev::printSuccessfullyEncodeMessage(std::cout);
   }
 }

@@ -2,14 +2,15 @@
 #define ACCESSORY_FUNCTIONS_HPP
 
 #include <string>
-#include <ostream>
+#include <iostream>
+#include "codingHuffman.hpp"
 
 namespace ponomarev
 {
   std::string cutType(std::string & line);
   bool isNum(const std::string & str);
   void getText(std::istream & input, HuffmanCode & data);
-  void cutTextInFile(long long n, long long k, HuffmanCode & data, input);
+  void cutTextInFile(long long n, long long k, HuffmanCode & data, std::istream & input);
 
   std::ostream & printInvalidCommandMessage(std::ostream & out);
   std::ostream & printWelcomeMessage(std::ostream & out);
