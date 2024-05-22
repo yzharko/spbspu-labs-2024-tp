@@ -93,7 +93,8 @@ double zheleznyakov::calculateCrossProduct(const Point & p1, const Point & p2)
 double zheleznyakov::calculatePolygonArea(const Polygon & poly, int i, double area)
 {
   int n = poly.points.size();
-  if (i < n - 1) {
+  if (i < n - 1)
+  {
     area += calculateCrossProduct(poly.points[i], poly.points[i + 1]);
     return calculatePolygonArea(poly, i + 1, area);
   }
