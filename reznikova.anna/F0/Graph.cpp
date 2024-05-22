@@ -2,6 +2,7 @@
 #include <queue>
 #include <map>
 #include <unordered_set>
+#include <algorithm>
 
 reznikova::Graph::Graph(std::string name):
 graphName_(name),

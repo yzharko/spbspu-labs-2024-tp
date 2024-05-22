@@ -144,7 +144,7 @@ void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphL
   {
     throw std::logic_error(e.what());
   }
-  out << "Edge between " << first_index << " and " << second_index
+  out << "Edge between " << first_index << " and " << second_index;
   out << " indexes were added\n";
 }
 

@@ -1,6 +1,7 @@
 #include "WorkSpace.hpp"
 #include <iterator>
 #include <functional>
+#include <algorithm>
 
 bool reznikova::GraphList::isGraphInList(std::string graphName) const
 {
