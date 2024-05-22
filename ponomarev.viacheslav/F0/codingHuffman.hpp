@@ -40,7 +40,7 @@ namespace ponomarev
   void storeCodes(MinHeapNode* root, std::string str, HuffmanCode & data);
   void createTree(HuffmanCode & data);
   void calcFreq(std::string str, HuffmanCode & data);
-  std::string decodeFile(struct MinHeapNode* root, std::string s);
+  void decodeFile(HuffmanCode & data);
   void makeEncode(HuffmanCode & data);
   void fillFreq(std::string parameter, HuffmanCode & data);
 }

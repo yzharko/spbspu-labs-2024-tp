@@ -17,6 +17,8 @@ int main()
     commands["set"] = ponomarev::setDecode;
     commands["combine"] = ponomarev::combineFiles;
     commands["table"] = ponomarev::showTable;
+    commands["decode"] = ponomarev::makeDecode;
+    commands["clean"] = ponomarev::makeClean;
   }
 
   ponomarev::printWelcomeMessage(std::cout);

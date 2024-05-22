@@ -87,8 +87,10 @@ void ponomarev::calcFreq(std::string str, HuffmanCode & data)
     }
 }
 
-std::string ponomarev::decodeFile(MinHeapNode* root, std::string s)
+void ponomarev::decodeFile(HuffmanCode & data)
 {
+    MinHeapNode * root = data.minHeap.top();
+    std::string s = data.decodingText;
     std::string ans = "";
     MinHeapNode* curr = root;
     for (size_t i = 0; i < s.size(); i++)
@@ -107,7 +109,7 @@ std::string ponomarev::decodeFile(MinHeapNode* root, std::string s)
         }
       }
     }
-    return ans + '\0';
+    data.text = ans;
 }
 
 void ponomarev::makeEncode(HuffmanCode & data)

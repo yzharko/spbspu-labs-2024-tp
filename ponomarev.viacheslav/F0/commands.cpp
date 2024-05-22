@@ -25,7 +25,7 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomare
     std::cout << "------------------------------------------------------------------------\n";
     std::cout << "10) 'delete <n> <k> <filename> ' - deleting characters n through k in filename\n";
     std::cout << "11) 'delete <filename> ' - delete a file\n";
-    std::cout << "12) 'clean' - delete all files\n";
+    std::cout << "12) 'clean <filename1>  <filename2> … <filenameN>' - delete all files\n";
     std::cout << "13) 'clean <filename>' - clear the contents of the file\n";
     std::cout << "------------------------------------------------------------------------\n";
     std::cout << "14) 'table' - output of the character encoding table for the encoding result\n";
@@ -165,11 +165,41 @@ void ponomarev::showTable(std::string & parameters, HuffmanCode & data)
   }
 }
 
+void ponomarev::makeDecode(std::string & parameters, HuffmanCode & data)
+{
+  std::string fileDecode = cutType(parameters);
+  std::string fileFreqs = cutType(parameters);
+  if (!parameters.empty())
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
 
+  std::ifstream input(fileDecode);
 
+  std::string str = "";
+  std::string text = "";
+  std::getline(input, str);
 
+  while (!input.eof() && str != "end")
+  {
+    text += str;
+    text += '\n';
+    std::getline(input, str);
+  }
+  data.decodingText = text;
 
+  ponomarev::fillFreq(fileFreqs, data);
+  ponomarev::createTree(data);
+  ponomarev::decodeFile(data);
+}
 
-
-
-
+void ponomarev::makeClean(std::string & parameters, HuffmanCode &)
+{
+  std::string fileClean = cutType(parameters);
+  if (parameters.empty())
+  {
+    std::ofstream ofs;
+    ofs.open(fileClean, std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
+  }
+}
