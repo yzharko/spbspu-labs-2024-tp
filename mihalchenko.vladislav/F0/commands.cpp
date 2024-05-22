@@ -87,24 +87,72 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
 
 void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
-  std::string nameOfDict = "";
-  is >> nameOfDict;
+  std::string name = "";
+  is >> name;
   std::string word = "";
+  size_t freq = 0;
+  auto iterOfDict = mapOfDictionaries.find(name);
   if (is >> word)
   {
-    for (auto iterOfDicts : mapOfDictionaries)
+    if (iterOfDict->first.find(word) == *iterOfDict->first.end())
     {
-      if (iterOfDicts.first == nameOfDict)
+      printErrorMessage(out);
+    }
+    out << iterOfDict->first.find(word);
+  }
+  else if (is >> freq)
+  {
+    for (auto it : iterOfDict->second)
+    {
+      if (it.second == freq)
       {
-        for (auto it : iterOfDicts.second)
-        {
-          if (it.first.find(word) == *it.first.end())
-          {
-            printErrorMessage(out);
-          }
-          out << it.first.find(word);
-        }
+        out << it.first << "\n";
+      }
+      else
+      {
+        printErrorMessage(out);
       }
     }
+  }
+}
+
+void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  std::string newnameOfDict = "";
+
+  is >> nameOfDict >> newnameOfDict;
+
+  auto iterOfDictName = mapOfDictionaries.find(nameOfDict);
+  if (iterOfDictName != mapOfDictionaries.end())
+  {
+    auto iterOfNewDictName = mapOfDictionaries.find(newnameOfDict);
+    if (iterOfNewDictName == mapOfDictionaries.end())
+    {
+      mapOfDictionaries.emplace(newnameOfDict, iterOfDictName->second);
+      mapOfDictionaries.erase(iterOfDictName);
+    }
+    else
+    {
+      printErrorMessage(out);
+    }
+  }
+  else
+  {
+    printErrorMessage(out);
+  }
+}
+
+void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDelDict = "";
+  is >> nameOfDelDict;
+  if (!mapOfDictionaries.erase(nameOfDelDict))
+  {
+    printErrorMessage(out);
+  }
+  else
+  {
+    out << "Delete dict\n";
   }
 }

@@ -20,6 +20,8 @@ int main()
     cmds["size"] = std::bind(mihalchenko::size, _1, _2, _3);
     cmds["view"] = std::bind(mihalchenko::view, _1, _2, _3);
     cmds["find"] = std::bind(mihalchenko::find, _1, _2, _3);
+    cmds["rename"] = std::bind(mihalchenko::rename, _1, _2, _3);
+    cmds["delete"] = std::bind(mihalchenko::deleteDict, _1, _2, _3);
   }
   std::string command = "";
   while (std::cin >> command)
