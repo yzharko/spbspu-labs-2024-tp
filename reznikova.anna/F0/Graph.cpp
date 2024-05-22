@@ -84,9 +84,9 @@ void reznikova::Graph::removeVertex(size_t index)
     throw std::logic_error("can't remove vertex which does not exist\n");
   }
   Vertex * target = findVertex(index);
-  for (auto vertex: graph_) 
+  for (auto vertex: graph_)
   {
-    if (vertex != target) 
+    if (vertex != target)
     {
       vertex->remove(target);
     }
@@ -114,7 +114,8 @@ void reznikova::Graph::removeEdge(size_t first_index, size_t second_index)
 void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
 {
   Vertex* start_vertex = findVertex(start_index);
-  if (!start_vertex) {
+  if (!start_vertex)
+  {
     throw std::logic_error("start index wasn't found");
   }
   std::queue< Vertex * > to_visit;
@@ -122,7 +123,7 @@ void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
   std::vector< size_t > visit_order;
   to_visit.push(start_vertex);
   visited.insert(start_vertex->getIndex());
-  while (!to_visit.empty()) 
+  while (!to_visit.empty())
   {
     Vertex * current = to_visit.front();
     to_visit.pop();
@@ -180,9 +181,11 @@ void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
     out << idx << " ";
   }
   out << "\n";
-  for (size_t i = 0; i < n; ++i) {
+  for (size_t i = 0; i < n; ++i)
+  {
     out << indices[i] << " ";
-    for (size_t j = 0; j < n; ++j) {
+    for (size_t j = 0; j < n; ++j)
+    {
       out << adjacencyMatrix[i][j] << " ";
     }
     out << "\n";

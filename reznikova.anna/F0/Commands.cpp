@@ -344,16 +344,20 @@ void reznikova::readMatrix(const std::string & filename, std::string & graphname
   {
     throw std::logic_error("File does not exist\n");
   }
-  if (!std::getline(ifs, graphname)) {
+  if (!std::getline(ifs, graphname))
+  {
     throw std::logic_error("Unable to read graph name\n");
   }
-  if (!(ifs >> num)) {
+  if (!(ifs >> num))
+  {
     throw std::logic_error("Unable to read number of vertices\n");
   }
   ifs.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   indices.resize(num);
-  for (size_t i = 0; i < num; ++i) {
-    if (!(ifs >> indices[i])) {
+  for (size_t i = 0; i < num; ++i)
+  {
+    if (!(ifs >> indices[i]))
+    {
       throw std::logic_error("Unable to read vertex indices\n");
     }
   }
@@ -385,7 +389,7 @@ void reznikova::clearCommand(std::istream & is, std::ostream & out)
     throw std::logic_error("too much parameters\n");
   }
   std::ofstream ofs(filename, std::ios::trunc);
-  if (!ofs.is_open()) 
+  if (!ofs.is_open())
   {
     throw std::logic_error("no such file\n");
   }
