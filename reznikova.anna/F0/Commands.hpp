@@ -21,8 +21,8 @@ namespace reznikova
   void listCommand(std::ostream & out, GraphList & list);
   void graphNameCommand(std::ostream & out, GraphList & list);
   void bfsCommand(std::istream & is, std::ostream & out, GraphList & list);
-  void readMatrix(const std::string &filename, std::string &graphname, size_t &num, 
-    std::vector<size_t> &indices, std::vector<std::vector<size_t>> &matrix);
+  void readMatrix(const std::string &filename, std::string &graphname, size_t &num, std::vector<size_t> &indices,
+    std::vector<std::vector<size_t>> &matrix);
   void clearCommand(std::istream & is, std::ostream & out);
   void openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list);
   void openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list);
@@ -30,4 +30,3 @@ namespace reznikova
 }
 
 #endif
-

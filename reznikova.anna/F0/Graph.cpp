@@ -129,17 +129,17 @@ void reznikova::Graph::BFS(size_t start_index, std::ostream & out) const
     visit_order.push_back(current->getIndex());
     for (Vertex * neighbor : current->relatedVertices_)
     {
-      if (visited.find(neighbor->getIndex()) == visited.end()) 
+      if (visited.find(neighbor->getIndex()) == visited.end())
       {
         to_visit.push(neighbor);
         visited.insert(neighbor->getIndex());
       }
     }
   }
-  for (size_t i = 0; i < visit_order.size(); ++i) 
+  for (size_t i = 0; i < visit_order.size(); ++i)
   {
     out << visit_order[i];
-    if (i < visit_order.size() - 1) 
+    if (i < visit_order.size() - 1)
     {
       out << " ";
     }
@@ -189,11 +189,11 @@ void reznikova::Graph::printAdjacencyMatrix(std::ostream & out) const
   }
 }
 
-reznikova::Graph reznikova::createGraphFromAdjacencyMatrix(const std::vector< size_t > & indices, 
+reznikova::Graph reznikova::createGraphFromAdjacencyMatrix(const std::vector< size_t > & indices,
   const std::vector< std::vector< size_t > > & matrix, const std::string & name)
 {
   Graph graph(name);
-  for (size_t index : indices) 
+  for (size_t index : indices)
   {
     graph.addVertex(index);
   }
@@ -210,5 +210,3 @@ reznikova::Graph reznikova::createGraphFromAdjacencyMatrix(const std::vector< si
   }
   return graph;
 }
-
-
