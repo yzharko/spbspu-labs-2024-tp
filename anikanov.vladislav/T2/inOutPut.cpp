@@ -3,29 +3,16 @@
 #include <iostream>
 #include <bitset>
 #include <string>
-
-#include "delimiterIO.hpp"
+#include <inDelim.hpp>
+#include <delimiter.hpp>
+#include <guard.hpp>
 #include "ullBinIO.hpp"
 #include "ullLitIO.hpp"
 #include "stringIO.hpp"
 #include "delStrIO.hpp"
 #include "dataStruct.hpp"
-#include "iofmtguard.hpp"
 
-
-std::istream &anikanov::operator>>(std::istream &in, DelimiterIO &&dest)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry) {
-    return in;
-  }
-  char c = '0';
-  in >> c;
-  if (in && (std::tolower(c) != std::tolower(dest.exp))) {
-    in.setstate(std::ios::failbit);
-  }
-  return in;
-}
+using namespace anikanov;
 
 std::istream &anikanov::operator>>(std::istream &in, UllLitIO &&dest)
 {
@@ -142,19 +129,4 @@ std::ostream &anikanov::operator<<(std::ostream &out, const DataStruct &src)
   out << ":key2 0b" << bin;
   out << ":key3 \"" << src.key3 << "\":)";
   return out;
-}
-
-anikanov::iofmtguard::iofmtguard(std::basic_ios< char > &s) :
-    s_(s),
-    fill_(s.fill()),
-    precision_(s.precision()),
-    fmt_(s.flags())
-{
-}
-
-anikanov::iofmtguard::~iofmtguard()
-{
-  s_.fill(fill_);
-  s_.precision(precision_);
-  s_.flags(fmt_);
 }
