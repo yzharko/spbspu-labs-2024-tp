@@ -2,6 +2,11 @@
 
 void anikanov::MainMenuScene::update()
 {
-  std::cout << "Main Menu\n";
+  manager->getOutputStream() << "Main Menu\n";
   manager->stopRunning();
+}
+
+void anikanov::MainMenuScene::help()
+{
+
 }
