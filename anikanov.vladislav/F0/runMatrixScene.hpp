@@ -15,7 +15,6 @@ namespace anikanov {
     }
     void onCreate() override;
     void update() override;
-    void help(bool need_description = false);
   private:
     std::string sceneName = "Алгоритм Крускала для поиска минимального остовного дерева";
     std::vector< std::vector< int > > matrix;

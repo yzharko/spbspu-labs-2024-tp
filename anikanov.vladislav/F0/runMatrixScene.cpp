@@ -1,6 +1,7 @@
 #include "runMatrixScene.hpp"
 
 #include <iostream>
+#include <sstream>
 
 #include "settings.hpp"
 
@@ -35,31 +36,19 @@ void anikanov::RunMatrixScene::update()
         return;
       } else {
         *out << "Unexpected answer.\nAre you sure? [Y/N]: ";
+      }
     } while (command != "Y" && command != "N");
-    }
-    return;
   }
-}
 
-void anikanov::RunMatrixScene::help(bool need_description)
-{
-  std::ostream *out = &manager->getOutputStream();
-  for (const auto &command: commands) {
-    *out << command.first;
-    if (need_description) {
-      *out << " - " << command.second;
-    }
-    *out << "\n";
+  std::vector<int> row;
+  std::istringstream iss(command);
+  std::string word;
+
+  while (iss >> word) {
+    row.push_back(std::stoi(word));
   }
-  *out << "\n";
-}
 
-std::vector< std::string > anikanov::RunMatrixScene::getOnlyCommands() const
-{
-  std::vector< std::string > onlyCommands;
-  for (const auto &command: commands) {
-    onlyCommands.push_back(command.first);
-  }
-  return onlyCommands;
-}
+  matrix.push_back(row);
 
+  return;
+}
