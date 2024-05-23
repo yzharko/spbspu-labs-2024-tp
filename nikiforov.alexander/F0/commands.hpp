@@ -33,13 +33,18 @@ namespace nikiforov
 
   void writingDictionaries(const mapDictionaries_t& mapDictionaries, std::string nameMkdir,std::ofstream& fout);
 
+  void printWordAndFrequency(std::map< std::string, size_t >::iterator iterPair, std::ostream& out);
+  void printWordAndFrequency(std::reverse_iterator < std::map< size_t, std::string >::iterator> iterPair, std::ostream& out);
+  void printWordAndFrequency(std::pair< std::string, size_t > pair, std::ostream& out);
+
   class ActionsOnTheDictionary
   {
   public:
-    ActionsOnTheDictionary() : nameSelectedDictionary("") {};
+    ActionsOnTheDictionary() : nameSelectedDictionary("") {}
 
     void select(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
     void print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+    void printMost(std::multimap< size_t, std::string > & invertedDictionary, std::istream& in, std::ostream& out);
     void find(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
     void erase(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 

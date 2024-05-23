@@ -8,7 +8,7 @@ int main()
   using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
 
   mapDictionaries_t mapDictionaries;
-  nikiforov::ActionsOnTheDictionary A;
+  nikiforov::ActionsOnTheDictionary SelectedDictionary;
 
   using namespace std::placeholders;
   std::map< std::string, std::function < void(mapDictionaries_t&, std::istream&, std::ostream&) > > command;
@@ -23,12 +23,10 @@ int main()
     command["rename"] = nikiforov::rename;
     command["clear"] = nikiforov::clear;
     command["save"] = nikiforov::save;
-
-    using namespace nikiforov;
-    command["select"] = std::bind(&ActionsOnTheDictionary::select, &A, _1, _2, _3);
-    command["print"] = std::bind(&ActionsOnTheDictionary::print, &A, _1, _2, _3);
-    command["find"] = std::bind(&ActionsOnTheDictionary::find, &A, _1, _2, _3);
-    command["erase"] = std::bind(&ActionsOnTheDictionary::erase, &A, _1, _2, _3);
+    command["select"] = std::bind(&nikiforov::ActionsOnTheDictionary::select, &SelectedDictionary, _1, _2, _3);
+    command["print"] = std::bind(&nikiforov::ActionsOnTheDictionary::print, &SelectedDictionary, _1, _2, _3);
+    command["find"] = std::bind(&nikiforov::ActionsOnTheDictionary::find, &SelectedDictionary, _1, _2, _3);
+    command["erase"] = std::bind(&nikiforov::ActionsOnTheDictionary::erase, &SelectedDictionary, _1, _2, _3);
   }
 
   std::string cmd = "";
