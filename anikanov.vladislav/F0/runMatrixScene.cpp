@@ -10,14 +10,18 @@ void anikanov::RunMatrixScene::onCreate()
   std::ostream *out = &manager->getOutputStream();
   *out << sceneName << "\n";
   *out << "Введите матрицу:" << "\n";
-  help(true);
 }
 
 void anikanov::RunMatrixScene::update()
 {
   if (matrix.size() != 0 && matrix.size() == matrix[0].size()) {
     std::ostream *out = &manager->getOutputStream();
-    *out << "Матрица квадратная.\n";
+    for (const auto &row: matrix) {
+      for (const auto &elem: row) {
+        *out << elem << " ";
+      }
+      *out << "\n";
+    }
     manager->stopRunning();
   }
   std::istream *in = &manager->getInputStream();
@@ -25,7 +29,7 @@ void anikanov::RunMatrixScene::update()
 
   std::string command = "";
 
-  *in >> command;
+  std::getline(*in, command);
   if (exist(commands, command)) {
     *out << "Are you sure? [Y/N]: ";
     do {
@@ -45,9 +49,18 @@ void anikanov::RunMatrixScene::update()
   std::string word;
 
   while (iss >> word) {
-    row.push_back(std::stoi(word));
+    try {
+      row.push_back(std::stoi(word));
+    } catch (const std::exception &e) {
+      *out << "Неверный формат ввода.\n";
+      return;
+    }
   }
 
+  if (row.size() != matrix.size() && matrix.size() != 0) {
+    *out << "Неверное количество элементов в строке.\n";
+    return;
+  }
   matrix.push_back(row);
 
   return;
