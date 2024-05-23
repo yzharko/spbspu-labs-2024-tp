@@ -1,12 +1,17 @@
 #include "mainMenuScene.hpp"
 
+#include <iostream>
+
 void anikanov::MainMenuScene::update()
 {
-  manager->getOutputStream() << "Main Menu\n";
+  std::ostream *out = &manager->getOutputStream();
+  *out << sceneName << ":\n";
+  help();
   manager->stopRunning();
 }
 
 void anikanov::MainMenuScene::help()
 {
-
+  std::ostream *out = &manager->getOutputStream();
+  
 }

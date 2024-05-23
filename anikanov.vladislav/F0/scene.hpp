@@ -2,6 +2,7 @@
 #define SCENE_HPP
 
 #include <memory>
+#include <string>
 
 namespace anikanov {
   class SceneManager;
