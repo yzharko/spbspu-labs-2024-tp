@@ -26,7 +26,7 @@ namespace anikanov {
     }
 
   protected:
-    std::shared_ptr< SceneManager > manager;
+    std::weak_ptr< SceneManager > manager;
     std::shared_ptr< Settings > settings;
   };
 }

@@ -7,6 +7,7 @@
 
 void anikanov::RunMatrixScene::onCreate()
 {
+  auto manager = this->manager.lock();
   std::ostream *out = &manager->getOutputStream();
   *out << sceneName << "\n";
   *out << "Enter the matrix:" << "\n";
@@ -14,6 +15,7 @@ void anikanov::RunMatrixScene::onCreate()
 
 void anikanov::RunMatrixScene::update()
 {
+  auto manager = this->manager.lock();
   if (matrix.size() != 0 && matrix.size() == matrix[0].size()) {
     std::ostream *out = &manager->getOutputStream();
     if (!checkMatrix(matrix)) {

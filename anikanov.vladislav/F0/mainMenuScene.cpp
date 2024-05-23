@@ -6,6 +6,7 @@
 
 void anikanov::MainMenuScene::onCreate()
 {
+  auto manager = this->manager.lock();
   std::ostream *out = &manager->getOutputStream();
   *out << sceneName << ":\n";
   help(true);
@@ -13,6 +14,7 @@ void anikanov::MainMenuScene::onCreate()
 
 void anikanov::MainMenuScene::update()
 {
+  auto manager = this->manager.lock();
   std::istream *in = &manager->getInputStream();
   std::ostream *out = &manager->getOutputStream();
 
@@ -53,6 +55,7 @@ void anikanov::MainMenuScene::update()
 
 void anikanov::MainMenuScene::help(bool need_description)
 {
+  auto manager = this->manager.lock();
   std::ostream *out = &manager->getOutputStream();
   for (const auto &command: commands) {
     *out << command.first;

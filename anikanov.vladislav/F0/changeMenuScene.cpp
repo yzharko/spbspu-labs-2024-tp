@@ -10,6 +10,7 @@ void anikanov::ChangeMenuScene::onCreate()
 
 void anikanov::ChangeMenuScene::update()
 {
+  auto manager = this->manager.lock();
   std::istream *in = &manager->getInputStream();
   std::ostream *out = &manager->getOutputStream();
 
@@ -32,6 +33,7 @@ void anikanov::ChangeMenuScene::update()
 
 void anikanov::ChangeMenuScene::help()
 {
+  auto manager = this->manager.lock();
   std::ostream *out = &manager->getOutputStream();
   *out << "Unexpected using of command \"/change\".\n"
           "Command signature: /change {input/output}\n"
