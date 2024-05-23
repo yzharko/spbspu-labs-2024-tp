@@ -53,7 +53,7 @@ void anikanov::RunMatrixScene::help(bool need_description)
   *out << "\n";
 }
 
-std::vector< std::string > anikanov::MainMenuScene::getOnlyCommands() const
+std::vector< std::string > anikanov::RunMatrixScene::getOnlyCommands() const
 {
   std::vector< std::string > onlyCommands;
   for (const auto &command: commands) {
