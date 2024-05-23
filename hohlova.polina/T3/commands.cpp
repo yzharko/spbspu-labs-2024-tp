@@ -122,7 +122,7 @@ void hohlova::AREACommandNumVertices(const std::vector< Polygon >& polygons, int
   }
 }
 
-void hohlova::MAXCommandMenu(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void hohlova::MAXCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   using CommandFunction = std::function< void(const std::vector< Polygon >&, std::ostream&) >;
   std::map< std::string, CommandFunction > subcommand;
@@ -176,9 +176,13 @@ void hohlova::MAXCommandVertices(const std::vector< Polygon >& polygons, std::os
     }
   }
   if (count == 0)
+  {
     Error();
+  }
   else
+  {
     out << maxVertices << "\n";
+  }
 }
 
 void hohlova::MINCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
@@ -217,7 +221,7 @@ void hohlova::MINCommandArea(const std::vector< Polygon >& polygons, std::ostrea
   out << std::fixed << std::setprecision(1) << minValue << "\n";
 }
 
-void hohlova::MINCommandVertices(const std::vector<Polygon>& polygons, std::ostream& out)
+void hohlova::MINCommandVertices(const std::vector< Polygon >& polygons, std::ostream& out)
 {
   int minVertices = std::numeric_limits< int >::max();
   for (const auto& polygon : polygons)
@@ -231,10 +235,10 @@ void hohlova::MINCommandVertices(const std::vector<Polygon>& polygons, std::ostr
   out << minVertices << "\n";
 }
 
-void hohlova::COUNTCommandMenu(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void hohlova::COUNTCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
-  using CommandFunction = std::function<void(const std::vector<Polygon>&, std::ostream&)>;
-  std::map<std::string, CommandFunction> subcommand;
+  using CommandFunction = std::function< void(const std::vector< Polygon >&, std::ostream&)>;
+  std::map< std::string, CommandFunction > subcommand;
   {
     using namespace std::placeholders;
     subcommand["EVEN"] = std::bind(COUNTCommandEven, _1, _2);
@@ -254,11 +258,13 @@ void hohlova::COUNTCommandMenu(const std::vector<Polygon>& polygons, std::istrea
       COUNTCommandNumVertices(polygons, numVertices, out);
     }
     else
+    {
       Error();
+    }
   }
 }
 
-void hohlova::COUNTCommandOdd(const std::vector<Polygon>& polygons, std::ostream& out)
+void hohlova::COUNTCommandOdd(const std::vector< Polygon >& polygons, std::ostream& out)
 {
   int count = 0;
   for (const auto& polygon : polygons)
@@ -271,7 +277,7 @@ void hohlova::COUNTCommandOdd(const std::vector<Polygon>& polygons, std::ostream
   out << count << "\n";
 }
 
-void hohlova::COUNTCommandEven(const std::vector<Polygon>& polygons, std::ostream& out)
+void hohlova::COUNTCommandEven(const std::vector< Polygon >& polygons, std::ostream& out)
 {
   int count = 0;
   for (const auto& polygon : polygons)
@@ -284,7 +290,7 @@ void hohlova::COUNTCommandEven(const std::vector<Polygon>& polygons, std::ostrea
   out << count << "\n";
 }
 
-void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons, int numVertices, std::ostream& out)
+void hohlova::COUNTCommandNumVertices(const std::vector< Polygon >& polygons, int numVertices, std::ostream& out)
 {
   int count = 0;
   if (numVertices < 3)
@@ -302,7 +308,7 @@ void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons, int 
   out << count << "\n";
 }
 
-void hohlova::PERMSCommandMenu(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void hohlova::PERMSCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   Polygon polyg;
   in >> polyg;
@@ -318,7 +324,7 @@ void hohlova::PERMSCommandMenu(const std::vector<Polygon>& polygons, std::istrea
   }
 }
 
-int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygons)
+int hohlova::PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons)
 {
   int count = 0;
   for (const auto& polygon : polygons)
@@ -354,7 +360,7 @@ int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygo
   }
   return count;
 }
-void hohlova::MAXSEQCommandMenu(const std::vector<Polygon>& polygons, std::istream& in, std::ostream& out)
+void hohlova::MAXSEQCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
 {
   Polygon polygon;
   in >> polygon;
@@ -362,7 +368,7 @@ void hohlova::MAXSEQCommandMenu(const std::vector<Polygon>& polygons, std::istre
   {
     Error();
     in.clear();
-    in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     return;
   }
   int max_seq = 0;
@@ -382,13 +388,13 @@ void hohlova::MAXSEQCommandMenu(const std::vector<Polygon>& polygons, std::istre
   out << max_seq << "\n";
 }
 
-void hohlova::RIGHTSHAPESCommandMenu(const std::vector<Polygon>& polygons, std::ostream& out)
+void hohlova::RIGHTSHAPESCommandMenu(const std::vector< Polygon >& polygons, std::ostream& out)
 {
   int count = countRightShapes(polygons);
   out << count << "\n";
 }
 
-int hohlova::countRightShapes(const std::vector<Polygon>& polygons)
+int hohlova::countRightShapes(const std::vector< Polygon >& polygons)
 {
   int count = 0;
   for (const auto& polygon : polygons)
