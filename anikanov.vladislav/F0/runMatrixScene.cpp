@@ -1,17 +1,18 @@
-#include "mainMenuScene.hpp"
+#include "runMatrixScene.hpp"
 
 #include <iostream>
 
 #include "settings.hpp"
 
-void anikanov::MainMenuScene::onCreate()
+void anikanov::RunMatrixScene::onCreate()
 {
   std::ostream *out = &manager->getOutputStream();
-  *out << sceneName << ":\n";
+  *out << sceneName << "\n";
+  *out << "Введите матрицу:" << "\n";
   help(true);
 }
 
-void anikanov::MainMenuScene::update()
+void anikanov::RunMatrixScene::update()
 {
   std::istream *in = &manager->getInputStream();
   std::ostream *out = &manager->getOutputStream();
@@ -21,8 +22,7 @@ void anikanov::MainMenuScene::update()
 
   *in >> command;
   if (!exist(onlyCommands, command)) {
-//    *out << "This command doesn't exist. For a commands list type /help.\n";
-    *out << "This command doesn't exist.\n";
+    *out << "This command doesn't exist. For a commands list type /help.\n";
     return;
   }
   if (command == "/help") {
@@ -40,7 +40,7 @@ void anikanov::MainMenuScene::update()
   }
 }
 
-void anikanov::MainMenuScene::help(bool need_description)
+void anikanov::RunMatrixScene::help(bool need_description)
 {
   std::ostream *out = &manager->getOutputStream();
   for (const auto &command: commands) {
@@ -61,3 +61,4 @@ std::vector< std::string > anikanov::MainMenuScene::getOnlyCommands() const
   }
   return onlyCommands;
 }
+
