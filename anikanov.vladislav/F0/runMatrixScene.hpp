@@ -20,6 +20,8 @@ namespace anikanov {
     std::vector< std::vector< int > > matrix;
     std::vector< std::string > commands{
         std::string{"/back"},
+        std::string{"/end"},
+        std::string{"/rewrite"},
     };
   };
 }

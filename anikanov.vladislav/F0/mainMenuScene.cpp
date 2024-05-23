@@ -20,6 +20,10 @@ void anikanov::MainMenuScene::update()
   std::vector< std::string > onlyCommands = getOnlyCommands();
 
   *in >> command;
+  if (command.empty()) {
+    return;
+  }
+
   if (!exist(onlyCommands, command)) {
 //    *out << "This command doesn't exist. For a commands list type /help.\n";
     return;
