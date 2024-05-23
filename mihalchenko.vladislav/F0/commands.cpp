@@ -53,8 +53,7 @@ void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.close();
 }
 
-void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::istream &,
-                       std::ostream &out)
+void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   for (auto iterOfDicts : mapOfDictionaries)
   {
@@ -86,8 +85,7 @@ void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   out << getSize(mapOfDictionaries, nameOfDictionary);
 }
 
-void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                       std::ostream &out)
+void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   size_t num = 1;
   for (auto iter = mapOfDictionaries.cbegin();
@@ -105,15 +103,15 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   std::string name = "";
   is >> name;
   std::string word = "";
-  int freq = 0;
+  size_t freq = 0;
   auto iterOfDict = mapOfDictionaries.find(name);
   if (is >> word)
   {
-    /*if (iterOfDict->first.find(word) == *iterOfDict->first.end())
+    if (iterOfDict->second.find(word) == iterOfDict->second.end())
     {
       printErrorMessage(out);
-    }*/
-    out << iterOfDict->first.find(word);
+    }
+    out << iterOfDict->second.find(word)->first;
   }
   else if (is >> freq)
   {
@@ -178,16 +176,15 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
                        std::ostream &out)
 {
   std::string nameOfDict = "";
-  std::string param = "";
   std::string word = "";
-  int newFreq;
+  size_t newFreq;
 
   is >> nameOfDict >> word;
 
   auto iterOfDict = mapOfDictionaries.find(nameOfDict);
-  /*if (is >> newFreq)
+  if (is >> newFreq)
   {
-    if (iterOfDict->first.find(word) == *iterOfDict->first.end())
+    if (iterOfDict->second.find(word) == iterOfDict->second.end())
     {
       printErrorMessage(out);
     }
@@ -199,7 +196,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   else
   {
     printErrorMessage(out);
-  }*/
+  }
 }
 
 void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is,
