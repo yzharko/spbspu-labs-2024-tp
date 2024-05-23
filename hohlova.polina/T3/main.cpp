@@ -10,11 +10,16 @@
 using namespace hohlova;
 int main(int argc, char* argv[])
 {
-    std::ifstream in(argv[1]);
     if (argc != 2)
     {
         std::cerr << "wrong input\n";
         return 1;
+    }
+    std::ifstream in(argv[1]);
+    if (!in.is_open())
+    {
+      std::cerr << "cannot open file\n";
+      return 1;
     }
     std::vector< Polygon > polygons;
     while (!in.eof())
