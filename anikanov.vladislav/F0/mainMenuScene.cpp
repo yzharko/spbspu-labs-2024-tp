@@ -1,8 +1,6 @@
 #include "mainMenuScene.hpp"
 
-#include <algorithm>
 #include <iostream>
-#include <limits>
 
 #include "settings.hpp"
 
@@ -23,8 +21,7 @@ void anikanov::MainMenuScene::update()
 
   *in >> command;
   if (!exist(onlyCommands, command)) {
-    *out << "This command doesn't exist. There is a command list:\n";
-    help();
+    *out << "This command doesn't exist. For a commands list type /help.\n";
     return;
   }
   if (command == "/help") {
@@ -33,6 +30,7 @@ void anikanov::MainMenuScene::update()
   } else if (command == "/info") {
     *out << manager->getSettings();
   } else if (command == "/change") {
+    manager->switchToScene("MainMenu");
   } else if (command == "/save") {
     manager->getSettings().saveOutput = !manager->getSettings().saveOutput;
     *out << "New " << manager->getSettings();

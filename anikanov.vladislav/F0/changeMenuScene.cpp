@@ -1,1 +1,42 @@
 #include "changeMenuScene.hpp"
+
+#include <iostream>
+
+#include "settings.hpp"
+
+void anikanov::ChangeMenuScene::onCreate()
+{
+}
+
+void anikanov::ChangeMenuScene::update()
+{
+  std::istream *in = &manager->getInputStream();
+  std::ostream *out = &manager->getOutputStream();
+
+  std::string command = "";
+  *in >> command;
+
+  if (!exist(commands, command)) {
+    *out << "This command doesn't exist. There is a command list:\n";
+    help();
+  } else {
+    if (command == "input") {
+      manager->getSettings().inputMatrix = !manager->getSettings().inputMatrix;
+      *out << "New " << manager->getSettings();
+    } else  {
+      manager->getSettings().outputMatrix = !manager->getSettings().outputMatrix;
+      *out << "New " << manager->getSettings();
+    }
+  }
+  manager->switchToScene("MainMenu");
+}
+
+void anikanov::ChangeMenuScene::help()
+{
+  std::ostream *out = &manager->getOutputStream();
+  *out << "Unexpected using of command \"/change\".\n"
+          "Command signature: /change {input/output}\n"
+          "\n"
+          "Example of right usage:\n"
+          "/change input\n\n";
+}

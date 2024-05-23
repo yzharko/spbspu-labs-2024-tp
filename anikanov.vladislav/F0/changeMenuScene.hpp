@@ -15,8 +15,9 @@ namespace anikanov {
     ChangeMenuScene(std::shared_ptr< SceneManager > manager) : Scene(manager)
     {
     }
+    void onCreate() override;
     void update() override;
-    void help(bool need_description = false);
+    void help();
   private:
     std::vector< std::string > commands{
         "input",
