@@ -16,7 +16,7 @@ namespace anikanov {
     ~SceneManager() = default;
 
     void addScene(const std::string &name, std::unique_ptr< Scene > scene);
-    void switchToScene(const std::string &name);
+    void switchToScene(const std::string &name, bool needCreate = true);
     void update();
     void stopRunning();
     bool isRunning() const;
@@ -27,8 +27,8 @@ namespace anikanov {
     Settings &getSettings();
 
   private:
-    std::vector< std::pair< std::string, std::unique_ptr< Scene>> > scenes;
-    std::unique_ptr< Scene > currentScene;
+    std::vector< std::pair< std::string, std::shared_ptr< Scene > > > scenes;
+    std::shared_ptr< Scene > currentScene;
     bool running;
     std::istream &inputStream;
     std::ostream *outputStream;

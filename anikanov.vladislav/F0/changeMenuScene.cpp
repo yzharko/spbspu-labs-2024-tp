@@ -17,7 +17,6 @@ void anikanov::ChangeMenuScene::update()
   *in >> command;
 
   if (!exist(commands, command)) {
-    *out << "This command doesn't exist. There is a command list:\n";
     help();
   } else {
     if (command == "input") {
@@ -28,7 +27,7 @@ void anikanov::ChangeMenuScene::update()
       *out << "New " << manager->getSettings();
     }
   }
-  manager->switchToScene("MainMenu");
+  manager->switchToScene("MainMenu", false);
 }
 
 void anikanov::ChangeMenuScene::help()

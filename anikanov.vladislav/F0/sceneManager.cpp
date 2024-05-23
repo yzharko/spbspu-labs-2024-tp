@@ -15,15 +15,17 @@ void anikanov::SceneManager::addScene(const std::string &name, std::unique_ptr< 
   scenes.push_back({name, std::move(scene)});
 }
 
-void anikanov::SceneManager::switchToScene(const std::string &name)
+void anikanov::SceneManager::switchToScene(const std::string &name, bool needCreate)
 {
   for (auto &pair: scenes) {
     if (pair.first == name) {
-      currentScene = std::move(pair.second);
+      currentScene = pair.second;
       break;
     }
   }
-  currentScene->onCreate();
+  if (needCreate) {
+    currentScene->onCreate();
+  }
 }
 
 void anikanov::SceneManager::update()

@@ -30,7 +30,7 @@ void anikanov::MainMenuScene::update()
   } else if (command == "/info") {
     *out << manager->getSettings();
   } else if (command == "/change") {
-    manager->switchToScene("MainMenu");
+    manager->switchToScene("ChangeMenu");
   } else if (command == "/save") {
     manager->getSettings().saveOutput = !manager->getSettings().saveOutput;
     *out << "New " << manager->getSettings();
