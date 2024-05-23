@@ -25,7 +25,7 @@ void anikanov::MainMenuScene::update()
   }
 
   if (!exist(onlyCommands, command)) {
-//    *out << "This command doesn't exist. For a commands list type /help.\n";
+    *out << "This command doesn't exist. For a commands list type /help.\n";
     return;
   }
   if (command == "/help") {

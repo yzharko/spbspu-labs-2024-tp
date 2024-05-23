@@ -20,14 +20,14 @@ namespace anikanov {
     void help(bool need_description = false);
     std::vector< std::string > getOnlyCommands() const;
   private:
-    std::string sceneName = "Главное меню";
+    std::string sceneName = "Main menu";
     std::vector< std::pair< std::string, std::string >> commands{
-        command{"/help", "помощь по командам"},
-        command{"/info", "вывод текущих настроек ввода/вывода"},
-        command{"/change", "смена типа ввода/вывода"},
-        command{"/save", "сохранить последний вывод если он существует"},
-        command{"/run", "запуск ввода графа и алгоритма Крускала"},
-        command{"/exit", "завершить программу"},
+        command{"/help", "command help"},
+        command{"/info", "display current input/output settings"},
+        command{"/change", "change input/output type"},
+        command{"/save", "save last output if it exists"},
+        command{"/run", "start graph input and Kruskal's algorithm"},
+        command{"/exit", "exit program"},
     };
   };
 }

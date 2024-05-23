@@ -16,12 +16,12 @@ namespace anikanov {
     void onCreate() override;
     void update() override;
   private:
-    std::string sceneName = "Алгоритм Крускала для поиска минимального остовного дерева";
+    std::string sceneName = "Kruskal's Algorithm for Finding Minimum Spanning Tree";
     std::vector< std::vector< int > > matrix;
     std::vector< std::string > commands{
-        std::string{"/back"},
-        std::string{"/end"},
         std::string{"/rewrite"},
+        std::string{"/end"},
+        std::string{"/back"},
     };
   };
 }

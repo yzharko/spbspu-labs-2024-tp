@@ -9,7 +9,7 @@ void anikanov::RunMatrixScene::onCreate()
 {
   std::ostream *out = &manager->getOutputStream();
   *out << sceneName << "\n";
-  *out << "Введите матрицу:" << "\n";
+  *out << "Enter the matrix:" << "\n";
 }
 
 void anikanov::RunMatrixScene::update()
@@ -17,11 +17,11 @@ void anikanov::RunMatrixScene::update()
   if (matrix.size() != 0 && matrix.size() == matrix[0].size()) {
     std::ostream *out = &manager->getOutputStream();
     if (!checkMatrix(matrix)) {
-      *out << "Матрица не правильно введена. Введите снова:\n";
+      *out << "The matrix is entered incorrectly. Enter again:\n";
       matrix.clear();
       return;
     }
-    *out << "Введенная матрица:\n";
+    *out << "Entered matrix:\n";
     for (const auto &row: matrix) {
       for (const auto &elem: row) {
         *out << elem << " ";
@@ -49,7 +49,7 @@ void anikanov::RunMatrixScene::update()
         }
       } while (command != "Y" && command != "N");
     } else if (command == "/rewrite") {
-      *out << "Введите матрицу:" << "\n";
+      *out << "Enter the matrix:" << "\n";
       return matrix.clear();
     } else if (command == "/end") {
       *out << "/end\n";
@@ -69,13 +69,13 @@ void anikanov::RunMatrixScene::update()
     try {
       row.push_back(std::stoi(word));
     } catch (const std::exception &e) {
-      *out << "Неверный формат ввода.\n";
+      *out << "Invalid input format.\n";
       return;
     }
   }
 
   if (matrix.size() != 0 && row.size() != matrix[0].size()) {
-    *out << "Неверное количество элементов в строке.\n";
+    *out << "Incorrect number of elements in the line.\n";
     return;
   }
 
