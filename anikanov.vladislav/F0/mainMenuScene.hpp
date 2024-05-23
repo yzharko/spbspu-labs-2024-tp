@@ -16,7 +16,7 @@ namespace anikanov {
     {
     }
     void update() override;
-    void help();
+    void help(bool need_description = false);
   private:
     std::string sceneName = "Главное меню";
     std::vector< std::pair< std::string, std::string >> commands{
@@ -25,6 +25,7 @@ namespace anikanov {
         command{"/change", "смена типа ввода/вывода"},
         command{"/save", "сохранить последний вывод если он существует"},
         command{"/run", "запуск ввода графа и алгоритма Крускала"},
+        command{"/exit", "завершить программу"},
     };
   };
 }
