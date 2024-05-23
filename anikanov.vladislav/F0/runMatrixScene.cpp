@@ -14,29 +14,30 @@ void anikanov::RunMatrixScene::onCreate()
 
 void anikanov::RunMatrixScene::update()
 {
+  if (matrix.size() != 0 && matrix.size() == matrix[0].size()) {
+    std::ostream *out = &manager->getOutputStream();
+    *out << "Матрица квадратная.\n";
+    manager->stopRunning();
+  }
   std::istream *in = &manager->getInputStream();
   std::ostream *out = &manager->getOutputStream();
 
   std::string command = "";
-  std::vector< std::string > onlyCommands = getOnlyCommands();
 
   *in >> command;
-  if (!exist(onlyCommands, command)) {
-    *out << "This command doesn't exist. For a commands list type /help.\n";
+  if (exist(commands, command)) {
+    *out << "Are you sure? [Y/N]: ";
+    do {
+      *in >> command;
+      if (command == "Y") {
+        manager->switchToScene("MainMenu");
+      } else if (command == "N") {
+        return;
+      } else {
+        *out << "Unexpected answer.\nAre you sure? [Y/N]: ";
+    } while (command != "Y" && command != "N");
+    }
     return;
-  }
-  if (command == "/help") {
-    *out << "Command list:\n";
-    help(true);
-  } else if (command == "/info") {
-    *out << manager->getSettings();
-  } else if (command == "/change") {
-    manager->switchToScene("ChangeMenu");
-  } else if (command == "/save") {
-    manager->getSettings().saveOutput = !manager->getSettings().saveOutput;
-    *out << "New " << manager->getSettings();
-  } else if (command == "/run") {
-    manager->stopRunning();
   }
 }
 
