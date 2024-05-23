@@ -32,7 +32,7 @@ void psarev::cmdCreate(std::istream& in, std::ostream& out, std::map< std::strin
     {
       file = dest + "\\" + file;
     }
-    std::fstream fileIn;
+    std::ifstream fileIn;
     fileIn.open(file);
     if (fileIn.is_open())
     {
@@ -94,7 +94,7 @@ void psarev::cmdList(std::ostream& out, std::map< std::string, storage_t >& depo
 {
   for (auto iter = depot.begin(); iter != depot.end(); ++iter)
   {
-    out << "Storage <" << (*iter).first <<"> \n";
+    out << "Storage <" << (*iter).first << "> \n";
   }
 }
 
@@ -193,5 +193,35 @@ void psarev::cmdPrint(std::istream& in, std::ostream& out, std::map<std::string,
       }
       out << "\n";
     }
+  }
+}
+
+void psarev::cmdMakeSent(std::istream& in, std::ostream& out, std::map<std::string, storage_t>& depot, std::string& storage)
+{
+  size_t usNum = 0;
+  in >> usNum;
+  if (!in)
+  {
+    return;
+  }
+
+  auto chStorage = depot.find(storage);
+  storage_t curStorage = (*chStorage).second;
+  for (auto iter = curStorage.begin(); iter != curStorage.end(); iter++)
+  {
+    size_t curNum = 0;
+    for (size_t i = 0; i < (*iter).second.size(); i++)
+    {
+      if (curNum <= usNum)
+      {
+        out << (*iter).second[i] << " ";
+        curNum++;
+      }
+      else
+      {
+        break;
+      }
+    }
+    out << "\n";
   }
 }

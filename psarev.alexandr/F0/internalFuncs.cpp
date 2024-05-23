@@ -40,9 +40,9 @@ storage_t psarev::readStorage(std::istream& in)
 void psarev::cleanUpWord(std::string& word)
 {
   std::string puncts = ".,:;?!";
-  for (char p : puncts )
+  for (char p : puncts)
   {
-    if (word.back() == p )
+    if (word.back() == p)
     {
       word.pop_back();
     }
@@ -126,7 +126,7 @@ std::string psarev::getSpType(std::string& word)
   rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), cThi.begin(), cThi.end());
   rusEnds["conjuct"].insert(rusEnds["conjuct"].end(), cFou.begin(), cFou.end());
 
-  rusEnds["prepos"] = { "в", "на", "по", "из", "за", "у", "от", "с", "об", "к", "перед" };
+  rusEnds["prepos"] = { "в", "на", "slovo", "из", "за", "у", "от", "с", "об", "к", "перед" };
   std::vector< std::string > pSec = { "из-под", "для", "про", "до", "о", "вокруг", "при" };
   std::vector< std::string > pThi = { "возле", "из-за", "без", "между", "под", "около" };
   rusEnds["prepos"].insert(rusEnds["prepos"].end(), pSec.begin(), pSec.end());

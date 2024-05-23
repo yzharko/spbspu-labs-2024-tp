@@ -9,7 +9,7 @@ int main()
   using storage_t = std::map< std::string, std::vector< std::string > >;
   std::map< std::string, storage_t > depot;
   std::string defaultSt = "";
-  std::map< std::string, std::function < void (std::istream&, std::ostream&, std::map< std::string, storage_t >&) > > userCmds;
+  std::map< std::string, std::function < void(std::istream&, std::ostream&, std::map< std::string, storage_t >&) > > userCmds;
   {
     using namespace std::placeholders;
     userCmds["help"] = std::bind(psarev::cmdHelp, _1, _2);
@@ -23,7 +23,7 @@ int main()
 
     userCmds["print"] = std::bind(psarev::cmdPrint, _1, _2, _3, defaultSt);
     //userCmds["fono"] = psarev::cmdFono;
-    //userCmds["makeSent"] = psarev::cmdMakeSent;
+    userCmds["makeSent"] = std::bind(psarev::cmdMakeSent, _1, _2, _3, defaultSt);
   }
 
   std::string userCmd = "";
