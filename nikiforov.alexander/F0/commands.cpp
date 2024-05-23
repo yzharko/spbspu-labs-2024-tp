@@ -332,10 +332,11 @@ void nikiforov::ActionsOnTheDictionary::select(mapDictionaries_t& mapDictionarie
 
 void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
 {
+  
   if (isSelectedDictionary())
   {
     auto SelectedDictionary = mapDictionaries.find(nameSelectedDictionary);
-    std::multimap< size_t, std::string > invertedDictionary = nikiforov::invertedMap(SelectedDictionary->second);
+    invertedMap_t invertedDictionary = nikiforov::invertedMap(SelectedDictionary->second);
 
     std::string option;
     if (in.get() != '\n' && in >> option)
@@ -368,14 +369,14 @@ void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries
   }
 }
 
-void nikiforov::ActionsOnTheDictionary::printMost(std::multimap< size_t, std::string >& invertedDictionary, std::istream& in, std::ostream& out)
+void nikiforov::ActionsOnTheDictionary::printMost(invertedMap_t& invertDictionary, std::istream& in, std::ostream& out)
 {
   size_t numOfTheMostFrequent = 0;
   in >> numOfTheMostFrequent;
   out << " The " << numOfTheMostFrequent << " most common words\n";
 
   size_t count = 0;
-  for (auto iterPair = invertedDictionary.rbegin(); iterPair != invertedDictionary.rend(); ++iterPair) {
+  for (auto iterPair = invertDictionary.rbegin(); iterPair != invertDictionary.rend(); ++iterPair) {
     if (numOfTheMostFrequent != count++)
     {
       out << count << ". ";

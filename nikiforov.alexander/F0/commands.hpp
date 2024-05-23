@@ -5,6 +5,7 @@
 #include <algorithm>
 
 using mapDictionaries_t = std::map< std::string, std::map< std::string, size_t > >;
+using invertedMap_t = std::multimap< size_t, std::string >;
 
 namespace nikiforov
 {
