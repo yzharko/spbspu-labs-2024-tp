@@ -17,7 +17,6 @@ int main()
   sceneManager->addScene("ChangeMenu", std::make_unique< ChangeMenuScene >(sceneManager));
 
   sceneManager->switchToScene("MainMenu");
-  sceneManager
 
   while (sceneManager->isRunning()) {
     sceneManager->update();
