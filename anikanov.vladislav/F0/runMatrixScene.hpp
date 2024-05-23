@@ -21,6 +21,7 @@ namespace anikanov {
     std::vector< std::string > getOnlyCommands() const;
   private:
     std::string sceneName = "Алгоритм Крускала для поиска минимального остовного дерева";
+    std::vector< std::vector< int > > matrix;
     std::vector< std::pair< std::string, std::string >> commands{
         command{"/rewrite", "написать новую матрицу"},
     };

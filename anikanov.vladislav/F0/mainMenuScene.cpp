@@ -22,7 +22,7 @@ void anikanov::MainMenuScene::update()
   *in >> command;
   if (!exist(onlyCommands, command)) {
 //    *out << "This command doesn't exist. For a commands list type /help.\n";
-    *out << "This command doesn't exist.\n";
+    *out << "Wrong command.\n";
     return;
   }
   if (command == "/help") {
@@ -36,6 +36,8 @@ void anikanov::MainMenuScene::update()
     manager->getSettings().saveOutput = !manager->getSettings().saveOutput;
     *out << "New " << manager->getSettings();
   } else if (command == "/run") {
+    manager->stopRunning();
+  } else if (command == "/exit") {
     manager->stopRunning();
   }
 }
