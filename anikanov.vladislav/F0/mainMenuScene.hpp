@@ -15,8 +15,10 @@ namespace anikanov {
     MainMenuScene(std::shared_ptr< SceneManager > manager) : Scene(manager)
     {
     }
+    void onCreate() override;
     void update() override;
     void help(bool need_description = false);
+    std::vector< std::string > getOnlyCommands() const;
   private:
     std::string sceneName = "Главное меню";
     std::vector< std::pair< std::string, std::string >> commands{

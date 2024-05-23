@@ -2,7 +2,9 @@
 
 #include <iostream>
 
-anikanov::SceneManager::SceneManager(std::istream &in, std::ostream &out) : inputStream(in), outputStream(&out)
+anikanov::SceneManager::SceneManager(Settings &setting, std::istream &in, std::ostream &out) : inputStream(in),
+                                                                                               outputStream(&out),
+                                                                                               settings(setting)
 {
   this->currentScene = nullptr;
   this->running = true;
@@ -21,6 +23,7 @@ void anikanov::SceneManager::switchToScene(const std::string &name)
       break;
     }
   }
+  currentScene->onCreate();
 }
 
 void anikanov::SceneManager::update()
@@ -42,14 +45,22 @@ bool anikanov::SceneManager::isRunning() const
   return running;
 }
 
-std::istream& anikanov::SceneManager::getInputStream() {
+std::istream &anikanov::SceneManager::getInputStream()
+{
   return inputStream;
 }
 
-std::ostream& anikanov::SceneManager::getOutputStream() {
+std::ostream &anikanov::SceneManager::getOutputStream()
+{
   return *outputStream;
 }
 
-void anikanov::SceneManager::setOutputStream(std::ostream& out) {
+void anikanov::SceneManager::setOutputStream(std::ostream &out)
+{
   outputStream = &out;
+}
+
+anikanov::Settings &anikanov::SceneManager::getSettings()
+{
+  return settings;
 }

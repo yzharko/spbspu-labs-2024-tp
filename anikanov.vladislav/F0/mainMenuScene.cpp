@@ -1,26 +1,43 @@
 #include "mainMenuScene.hpp"
 
+#include <algorithm>
 #include <iostream>
 #include <limits>
 
-#include "inputHelper.hpp"
+#include "settings.hpp"
+
+void anikanov::MainMenuScene::onCreate()
+{
+  std::ostream *out = &manager->getOutputStream();
+  *out << sceneName << ":\n";
+  help(true);
+}
 
 void anikanov::MainMenuScene::update()
 {
   std::istream *in = &manager->getInputStream();
   std::ostream *out = &manager->getOutputStream();
-  *out << sceneName << ":\n";
-  help(true);
+
   std::string command = "";
-  while (command != "/exit") {
-    if (readCommand(*in, command)) {
-      *out << "Вы ввели: " << command << "\n";
-    } else {
-      in->clear();
-      in->ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      *out << "This command doesn't exist. There is a command list:\n";
-      help();
-    }
+  std::vector< std::string > onlyCommands = getOnlyCommands();
+
+  *in >> command;
+  if (!exist(onlyCommands, command)) {
+    *out << "This command doesn't exist. There is a command list:\n";
+    help();
+    return;
+  }
+  if (command == "/help") {
+    *out << "Command list:\n";
+    help(true);
+  } else if (command == "/info") {
+    *out << manager->getSettings();
+  } else if (command == "/change") {
+  } else if (command == "/save") {
+    manager->getSettings().saveOutput = !manager->getSettings().saveOutput;
+    *out << "New " << manager->getSettings();
+  } else if (command == "/run") {
+    manager->stopRunning();
   }
 }
 
@@ -35,4 +52,13 @@ void anikanov::MainMenuScene::help(bool need_description)
     *out << "\n";
   }
   *out << "\n";
+}
+
+std::vector< std::string > anikanov::MainMenuScene::getOnlyCommands() const
+{
+  std::vector< std::string > onlyCommands;
+  for (const auto &command: commands) {
+    onlyCommands.push_back(command.first);
+  }
+  return onlyCommands;
 }

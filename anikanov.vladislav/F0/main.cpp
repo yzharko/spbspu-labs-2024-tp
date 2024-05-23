@@ -2,14 +2,17 @@
 
 #include <memory>
 
+#include "settings.hpp"
 #include "sceneManager.hpp"
 #include "mainMenuScene.hpp"
 
 using namespace anikanov;
 
-int main() {
-  auto sceneManager = std::make_shared<SceneManager>(std::cin, std::cout);
-  sceneManager->addScene("MainMenu", std::make_unique<MainMenuScene>(sceneManager));
+int main()
+{
+  Settings settings;
+  auto sceneManager = std::make_shared< SceneManager >(settings, std::cin, std::cout);
+  sceneManager->addScene("MainMenu", std::make_unique< MainMenuScene >(sceneManager));
 
   sceneManager->switchToScene("MainMenu");
 

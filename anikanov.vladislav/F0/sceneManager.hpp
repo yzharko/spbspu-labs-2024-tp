@@ -6,12 +6,13 @@
 #include <memory>
 #include <iosfwd>
 #include "scene.hpp"
+#include "settings.hpp"
 
 namespace anikanov {
 
   class SceneManager : public std::enable_shared_from_this< SceneManager > {
   public:
-    SceneManager(std::istream &in, std::ostream &out);
+    SceneManager(Settings &settings, std::istream &in, std::ostream &out);
     ~SceneManager() = default;
 
     void addScene(const std::string &name, std::unique_ptr< Scene > scene);
@@ -23,6 +24,7 @@ namespace anikanov {
     std::istream &getInputStream();
     std::ostream &getOutputStream();
     void setOutputStream(std::ostream &out);
+    Settings &getSettings();
 
   private:
     std::vector< std::pair< std::string, std::unique_ptr< Scene>> > scenes;
@@ -30,6 +32,7 @@ namespace anikanov {
     bool running;
     std::istream &inputStream;
     std::ostream *outputStream;
+    Settings &settings;
   };
 }
 
