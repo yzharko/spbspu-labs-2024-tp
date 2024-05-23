@@ -19,7 +19,9 @@ void anikanov::MainMenuScene::update()
   std::string command = "";
   std::vector< std::string > onlyCommands = getOnlyCommands();
 
-  *in >> command;
+  if (!(*in >> command)){
+    return manager->stopRunning();
+  }
   if (command.empty()) {
     return;
   }
