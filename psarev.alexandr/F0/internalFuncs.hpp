@@ -20,6 +20,9 @@ namespace psarev
   bool checkType(std::string& word, size_t& endSize, std::vector< std::string >& ends);
 
   void outDepot(std::string dest, std::ofstream& out, std::map< std::string, storage_t >& depot);
+
+  char letToSound(char let, char letType, bool& softFact);
+  bool printSound(std::ostream& out, char sound, bool softFact);
 }
 
 #endif

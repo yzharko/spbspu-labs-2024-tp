@@ -22,7 +22,7 @@ int main()
     userCmds["save"] = psarev::cmdSave;
 
     userCmds["print"] = std::bind(psarev::cmdPrint, _1, _2, _3, defaultSt);
-    //userCmds["fono"] = psarev::cmdFono;
+    userCmds["fono"] = std::bind(psarev::cmdFono, _1, _2);
     userCmds["makeSent"] = std::bind(psarev::cmdMakeSent, _1, _2, _3, defaultSt);
   }
 

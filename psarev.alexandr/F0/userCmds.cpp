@@ -196,6 +196,64 @@ void psarev::cmdPrint(std::istream& in, std::ostream& out, std::map<std::string,
   }
 }
 
+void psarev::cmdFono(std::istream& in, std::ostream& out)
+{
+  std::string word = "";
+  in >> word;
+  if (!in)
+  {
+    return;
+  }
+
+  std::vector< std::string > soundsVec;
+  bool softFact = false;
+  std::string vowels = "ёуеыаоэяию";
+  std::string cons = "йцкнгшщзхфвпрлджчсмтб";
+  std::string other = "ъь";
+  std::string transc = "[]";
+  for (char let : word)
+  {
+    for (char l : vowels)
+    {
+      if (let == l)
+      {
+        transc += letToSound(let, 'c', softFact);
+      }
+    }
+    for (char l : cons)
+    {
+      if (let == l)
+      {
+        transc += letToSound(let, 'v', softFact);
+      }
+      if (l == 'ё' || l == 'е' || l == 'я' || l == 'и' || l == 'ю')
+      {
+        softFact = true;
+      }
+      else
+      {
+        softFact = false;
+      }
+    }
+    for (char l : other)
+    {
+      if (l == 'ь')
+      {
+        softFact = true;
+      }
+    }
+  }
+
+  softFact = false;
+  for (char s : transc)
+  {
+    if (s != '[' && s != ']')
+    {
+      softFact = printSound(out, s, softFact);
+    }
+  }
+}
+
 void psarev::cmdMakeSent(std::istream& in, std::ostream& out, std::map<std::string, storage_t>& depot, std::string& storage)
 {
   size_t usNum = 0;

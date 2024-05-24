@@ -16,7 +16,7 @@ namespace psarev
   void cmdSave(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot);
 
   void cmdPrint(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot, std::string& storage);
-  //void cmdFono(std::istream& in, std::string& storage);
+  void cmdFono(std::istream& in, std::ostream& out);
   void cmdMakeSent(std::istream& in, std::ostream& out, std::map< std::string, storage_t >& depot, std::string& storage);
 }
 

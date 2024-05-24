@@ -201,3 +201,273 @@ void psarev::outDepot(std::string dest, std::ofstream& out, std::map< std::strin
     out.close();
   }
 }
+
+char psarev::letToSound(char let, char letType, bool& softFact)
+{
+  std::string softMakers = "ёйеячищюь";
+  std::string notSoftMakers = "цукнгшзхъфывапролджэсмтб";
+  for (char l : softMakers)
+  {
+    if (l == let)
+    {
+      softFact = true;
+      if (l == 'ё')
+      {
+        return 'о';
+      }
+      else if (l == 'й')
+      {
+        return 'i';
+      }
+      else if (l == 'я')
+      {
+        return 'а';
+      }
+      else if (l == 'ч')
+      {
+        return 'ч';
+      }
+      else if (l == 'и')
+      {
+        return 'и';
+      }
+      else if (l == 'щ')
+      {
+        return 'щ';
+      }
+      else if (l == 'ю')
+      {
+        return 'у';
+      }
+      else
+      {
+        return ' ';
+      }
+    }
+  }
+
+  for (char l : notSoftMakers)
+  {
+    if (l == let)
+    {
+      softFact = false;
+      if (l == 'ц')
+      {
+        return 'ц';
+      }
+      else if (l == 'у')
+      {
+        return 'у';
+      }
+      else if (l == 'к')
+      {
+        return 'к';
+      }
+      else if (l == 'н')
+      {
+        return 'н';
+      }
+      else if (l == 'г')
+      {
+        return 'к';
+      }
+      else if (l == 'ш')
+      {
+        return 'ш';
+      }
+      else if (l == 'з')
+      {
+        return 'с';
+      }
+      else if (l == 'х')
+      {
+        return 'х';
+      }
+      else if (l == 'ф')
+      {
+        return 'ф';
+      }
+      else if (l == 'ы')
+      {
+        return 'ы';
+      }
+      else if (l == 'в')
+      {
+        return 'ф';
+      }
+      else if (l == 'а')
+      {
+        return 'а';
+      }
+      else if (l == 'п')
+      {
+        return 'п';
+      }
+      else if (l == 'р')
+      {
+        return 'р';
+      }
+      else if (l == 'о')
+      {
+        return 'о';
+      }
+      else if (l == 'л')
+      {
+        return 'л';
+      }
+      else if (l == 'д')
+      {
+        return 'т';
+      }
+      else if (l == 'ж')
+      {
+        return 'ш';
+      }
+      else if (l == 'э')
+      {
+        return 'э';
+      }
+      else if (l == 'с')
+      {
+        return 'с';
+      }
+      else if (l == 'м')
+      {
+        return 'м';
+      }
+      else if (l == 'т')
+      {
+        return 'т';
+      }
+      else if (l == 'б')
+      {
+        return 'п';
+      }
+      else
+      {
+        return ' ';
+      }
+    }
+  }
+}
+
+bool psarev::printSound(std::ostream& out, char sound, bool softFact)
+{
+  std::string vowel = "уыаоэи";
+  for (char l : vowel)
+  {
+    if (l == sound)
+    {
+      out << "[ " << sound << " ] - гласный";
+      if (l == 'o' && softFact)
+      {
+        out << " ,ударный";
+      }
+      out << '\n';
+      return true;
+    }
+  }
+
+  std::string deafNPair = "хцчщ";
+  std::string deafPair = "кшфпст";
+  std::string voicedNPair = "iнрмл";
+  std::string voicedPair = "гзвдж";
+  for (char l : deafNPair)
+  {
+    if (l == sound)
+    {
+      out << "[ " << sound << " ] - согласный, глухой непарный";
+      if ((softFact && l == 'х') || (l != 'х'))
+      {
+        out << " ,мягкий";
+        if (l == 'х')
+        {
+          out << " парный";
+        }
+        else
+        {
+          out << " непарный";
+        }
+      }
+      else if (!softFact && l == 'х')
+      {
+        out << " ,твердый парный";
+      }
+      out << '\n';
+      return false;
+    }
+  }
+
+  for (char l : deafPair)
+  {
+    if (l == sound)
+    {
+      out << "[ " << sound << " ] - согласный, глухой парный";
+      if (softFact && l != 'ш')
+      {
+        out << " ,мягкий";
+        if (l == 'ш')
+        {
+          out << " непарный";
+        }
+        else
+        {
+          out << " парный";
+        }
+      }
+      else
+      {
+        if (l == 'ш')
+        {
+          out << " ,твердый непарный";
+        }
+        else
+        {
+          out << " ,твердый парный";
+        }
+      }
+      out << '\n';
+      return false;
+    }
+  }
+
+  for (char l : voicedNPair)
+  {
+    if (l == sound)
+    {
+      out << "[ " << sound << " ] - согласный, звонкий непарный";
+      if (l == 'i')
+      {
+        out << " ,мягкий непарный";
+      }
+      else if (softFact)
+      {
+        out << " ,мягкий парный";
+      }
+      else
+      {
+        out << " ,твердый парный";
+      }
+      out << '\n';
+      return false;
+    }
+  }
+
+  for (char l : voicedPair)
+  {
+    if (l == sound)
+    {
+      out << "[ " << sound << " ] - согласный, звонкий парный";
+      if (softFact)
+      {
+        out << " ,мягкий парный";
+      }
+      else
+      {
+        out << " ,твердый парный";
+      }
+      out << '\n';
+      return false;
+    }
+  }
+}
