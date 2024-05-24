@@ -211,11 +211,11 @@ int psarev::letToSound(int let, char letType, bool& softFact)
     if (l == let)
     {
       softFact = true;
-      if (l == 'ё')
+      if (l == -11887)
       {
         return 'о';
       }
-      else if (l == 'й')
+      else if (l == -12103)
       {
         return 'й';
       }
