@@ -226,7 +226,7 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
       {
         transc += letToSound(let, 'v', softFact);
       }
-      if (l == 'ё' || l == 'е' || l == 'я' || l == 'и' || l == 'ю')
+      if (l == -11887 || l == -12107 || l == -11889 || l == -12104 || l == -11890)
       {
         softFact = true;
       }
@@ -237,7 +237,7 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
     }
     for (int l : other)
     {
-      if (l == 'ь')
+      if (l == -11892)
       {
         softFact = true;
       }

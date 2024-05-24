@@ -213,31 +213,31 @@ int psarev::letToSound(int let, char letType, bool& softFact)
       softFact = true;
       if (l == -11887)
       {
-        return 'о';
+        return -12098;
       }
       else if (l == -12103)
       {
-        return 'й';
+        return -12103;
       }
-      else if (l == 'я')
+      else if (l == -11889)
       {
-        return 'а';
+        return -12112;
       }
-      else if (l == 'ч')
+      else if (l == -11897)
       {
-        return 'ч';
+        return -11897;
       }
-      else if (l == 'и')
+      else if (l == -12104)
       {
-        return 'и';
+        return -12104;
       }
-      else if (l == 'щ')
+      else if (l == -11895)
       {
-        return 'щ';
+        return -11895;
       }
-      else if (l == 'ю')
+      else if (l == -11890)
       {
-        return 'у';
+        return -11901;
       }
     }
   }
@@ -247,97 +247,97 @@ int psarev::letToSound(int let, char letType, bool& softFact)
     if (l == let)
     {
       softFact = false;
-      if (l == 'ц')
+      if (l == -11898)
       {
-        return 'ц';
+        return -11898;
       }
-      else if (l == 'у')
+      else if (l == -11901)
       {
-        return 'у';
+        return -11901;
       }
-      else if (l == 'к')
+      else if (l == -12102)
       {
-        return 'к';
+        return -12102;
       }
-      else if (l == 'н')
+      else if (l == -12099)
       {
-        return 'н';
+        return -12099;
       }
-      else if (l == 'г')
+      else if (l == -12109)
       {
-        return 'к';
+        return -12102;
       }
-      else if (l == 'ш')
+      else if (l == -11896)
       {
-        return 'ш';
+        return -11896;
       }
-      else if (l == 'з')
+      else if (l == -12105)
       {
-        return 'с';
+        return -11903;
       }
-      else if (l == 'х')
+      else if (l == -11899)
       {
-        return 'х';
+        return -11899;
       }
-      else if (l == 'ф')
+      else if (l == -11900)
       {
-        return 'ф';
+        return -11900;
       }
-      else if (l == 'ы')
+      else if (l == -11893)
       {
-        return 'ы';
+        return -11893;
       }
-      else if (l == 'в')
+      else if (l == -12110)
       {
-        return 'ф';
+        return -12110;
       }
-      else if (l == 'а')
+      else if (l == -12112)
       {
-        return 'а';
+        return -12112;
       }
-      else if (l == 'п')
+      else if (l == -12097)
       {
-        return 'п';
+        return -12097;
       }
-      else if (l == 'р')
+      else if (l == -11904)
       {
-        return 'р';
+        return -11904;
       }
-      else if (l == 'о')
+      else if (l == -12098)
       {
-        return 'о';
+        return -12098;
       }
-      else if (l == 'л')
+      else if (l == -12101)
       {
-        return 'л';
+        return -12101;
       }
-      else if (l == 'д')
+      else if (l == -12108)
       {
-        return 'т';
+        return -11902;
       }
-      else if (l == 'ж')
+      else if (l == -12106)
       {
-        return 'ш';
+        return -11896;
       }
-      else if (l == 'э')
+      else if (l == -11891)
       {
-        return 'э';
+        return -11891;
       }
-      else if (l == 'с')
+      else if (l == -11903)
       {
-        return 'с';
+        return -11903;
       }
-      else if (l == 'м')
+      else if (l == -12100)
       {
-        return 'м';
+        return -12100;
       }
-      else if (l == 'т')
+      else if (l == -11902)
       {
-        return 'т';
+        return -11902;
       }
-      else if (l == 'б')
+      else if (l == -12111)
       {
-        return 'п';
+        return -12097;
       }
     }
   }
@@ -352,7 +352,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
     if (l == sound)
     {
       out << "[ " << sound << " ] - гласный";
-      if (l == 'o' && softFact)
+      if (l == -12098 && softFact)
       {
         out << " ,ударный";
       }
@@ -370,10 +370,10 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
     if (l == sound)
     {
       out << "[ " << sound << " ] - согласный, глухой непарный";
-      if ((softFact && l == 'х') || (l != 'х'))
+      if ((softFact && l == -11899) || (l != -11899))
       {
         out << " ,мягкий";
-        if (l == 'х')
+        if (l == -11899)
         {
           out << " парный";
         }
@@ -382,7 +382,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
           out << " непарный";
         }
       }
-      else if (!softFact && l == 'х')
+      else if (!softFact && l == -11899)
       {
         out << " ,твердый парный";
       }
@@ -396,10 +396,10 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
     if (l == sound)
     {
       out << "[ " << sound << " ] - согласный, глухой парный";
-      if (softFact && l != 'ш')
+      if (softFact && l != -11896)
       {
         out << " ,мягкий";
-        if (l == 'ш')
+        if (l == -11896)
         {
           out << " непарный";
         }
@@ -410,7 +410,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
       }
       else
       {
-        if (l == 'ш')
+        if (l == -11896)
         {
           out << " ,твердый непарный";
         }
@@ -429,7 +429,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
     if (l == sound)
     {
       out << "[ " << sound << " ] - согласный, звонкий непарный";
-      if (l == 'й')
+      if (l == -12103)
       {
         out << " ,мягкий непарный";
       }
