@@ -21,7 +21,7 @@ namespace psarev
 
   void outDepot(std::string dest, std::ofstream& out, std::map< std::string, storage_t >& depot);
 
-  int letToSound(int let, char letType, bool& softFact);
+  int letToSound(int let, bool& softFact);
   bool printSound(std::ostream& out, int sound, bool softFact);
 }
 

@@ -217,14 +217,14 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
     {
       if (let == l)
       {
-        transc += letToSound(let, 'c', softFact);
+        transc += letToSound(let, softFact);
       }
     }
     for (int l : cons)
     {
       if (let == l)
       {
-        transc += letToSound(let, 'v', softFact);
+        transc += letToSound(let, softFact);
       }
       if (l == -11887 || l == -12107 || l == -11889 || l == -12104 || l == -11890)
       {

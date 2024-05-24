@@ -202,7 +202,7 @@ void psarev::outDepot(std::string dest, std::ofstream& out, std::map< std::strin
   }
 }
 
-int psarev::letToSound(int let, char letType, bool& softFact)
+int psarev::letToSound(int let, bool& softFact)
 {
   std::string softMakers = "ёйеячищюь";
   std::string notSoftMakers = "цукнгшзхъфывапролджэсмтб";
