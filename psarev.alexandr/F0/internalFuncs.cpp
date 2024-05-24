@@ -217,7 +217,7 @@ int psarev::letToSound(int let, char letType, bool& softFact)
       }
       else if (l == 'й')
       {
-        return 'i';
+        return 'й';
       }
       else if (l == 'я')
       {
@@ -363,7 +363,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
 
   std::string deafNPair = "хцчщ";
   std::string deafPair = "кшфпст";
-  std::string voicedNPair = "iнрмл";
+  std::string voicedNPair = "йнрмл";
   std::string voicedPair = "гзвдж";
   for (int l : deafNPair)
   {
@@ -429,7 +429,7 @@ bool psarev::printSound(std::ostream& out, int sound, bool softFact)
     if (l == sound)
     {
       out << "[ " << sound << " ] - согласный, звонкий непарный";
-      if (l == 'i')
+      if (l == 'й')
       {
         out << " ,мягкий непарный";
       }

@@ -211,16 +211,16 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
   std::string cons = "йцкнгшщзхфвпрлджчсмтб";
   std::string other = "ъь";
   std::string transc = "[]";
-  for (char let : word)
+  for (int let : word)
   {
-    for (char l : vowels)
+    for (int l : vowels)
     {
       if (let == l)
       {
         transc += letToSound(let, 'c', softFact);
       }
     }
-    for (char l : cons)
+    for (int l : cons)
     {
       if (let == l)
       {
@@ -235,7 +235,7 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
         softFact = false;
       }
     }
-    for (char l : other)
+    for (int l : other)
     {
       if (l == 'ь')
       {
@@ -245,7 +245,7 @@ void psarev::cmdFono(std::istream& in, std::ostream& out)
   }
 
   softFact = false;
-  for (char s : transc)
+  for (int s : transc)
   {
     if (s != '[' && s != ']')
     {
