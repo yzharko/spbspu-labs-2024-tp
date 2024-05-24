@@ -202,11 +202,11 @@ void psarev::outDepot(std::string dest, std::ofstream& out, std::map< std::strin
   }
 }
 
-char psarev::letToSound(char let, char letType, bool& softFact)
+int psarev::letToSound(int let, char letType, bool& softFact)
 {
   std::string softMakers = "ёйеячищюь";
   std::string notSoftMakers = "цукнгшзхъфывапролджэсмтб";
-  for (char l : softMakers)
+  for (int l : softMakers)
   {
     if (l == let)
     {
@@ -239,14 +239,10 @@ char psarev::letToSound(char let, char letType, bool& softFact)
       {
         return 'у';
       }
-      else
-      {
-        return ' ';
-      }
     }
   }
 
-  for (char l : notSoftMakers)
+  for (int l : notSoftMakers)
   {
     if (l == let)
     {
@@ -343,18 +339,15 @@ char psarev::letToSound(char let, char letType, bool& softFact)
       {
         return 'п';
       }
-      else
-      {
-        return ' ';
-      }
     }
   }
+  return ' ';
 }
 
-bool psarev::printSound(std::ostream& out, char sound, bool softFact)
+bool psarev::printSound(std::ostream& out, int sound, bool softFact)
 {
   std::string vowel = "уыаоэи";
-  for (char l : vowel)
+  for (int l : vowel)
   {
     if (l == sound)
     {
@@ -372,7 +365,7 @@ bool psarev::printSound(std::ostream& out, char sound, bool softFact)
   std::string deafPair = "кшфпст";
   std::string voicedNPair = "iнрмл";
   std::string voicedPair = "гзвдж";
-  for (char l : deafNPair)
+  for (int l : deafNPair)
   {
     if (l == sound)
     {
@@ -398,7 +391,7 @@ bool psarev::printSound(std::ostream& out, char sound, bool softFact)
     }
   }
 
-  for (char l : deafPair)
+  for (int l : deafPair)
   {
     if (l == sound)
     {
@@ -431,7 +424,7 @@ bool psarev::printSound(std::ostream& out, char sound, bool softFact)
     }
   }
 
-  for (char l : voicedNPair)
+  for (int l : voicedNPair)
   {
     if (l == sound)
     {
@@ -453,7 +446,7 @@ bool psarev::printSound(std::ostream& out, char sound, bool softFact)
     }
   }
 
-  for (char l : voicedPair)
+  for (int l : voicedPair)
   {
     if (l == sound)
     {
@@ -470,4 +463,6 @@ bool psarev::printSound(std::ostream& out, char sound, bool softFact)
       return false;
     }
   }
+
+  return false;
 }
