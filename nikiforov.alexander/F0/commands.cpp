@@ -332,7 +332,7 @@ void nikiforov::ActionsOnTheDictionary::select(mapDictionaries_t& mapDictionarie
 
 void nikiforov::ActionsOnTheDictionary::print(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
 {
-  
+
   if (isSelectedDictionary())
   {
     auto SelectedDictionary = mapDictionaries.find(nameSelectedDictionary);
