@@ -31,6 +31,10 @@ void anikanov::ChangeMenuScene::update()
   manager->switchToScene("MainMenu", false);
 }
 
+void anikanov::ChangeMenuScene::onClose()
+{
+}
+
 void anikanov::ChangeMenuScene::help()
 {
   auto manager = this->manager.lock();

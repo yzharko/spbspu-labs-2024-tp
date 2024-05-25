@@ -17,6 +17,7 @@ namespace anikanov {
     }
     void onCreate() override;
     void update() override;
+    void onClose() override;
     void help();
   private:
     std::vector< std::string > commands{

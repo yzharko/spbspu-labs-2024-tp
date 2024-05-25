@@ -19,6 +19,9 @@ void anikanov::SceneManager::addScene(const std::string &name, std::unique_ptr< 
 void anikanov::SceneManager::switchToScene(const std::string &name, bool needCreate)
 {
   auto tmp = std::move(currentScene);
+  if (tmp) {
+    tmp->onClose();
+  }
   for (auto &pair: scenes) {
     if (!pair.second) {
       pair.second = std::move(tmp);
@@ -44,6 +47,9 @@ void anikanov::SceneManager::update()
 void anikanov::SceneManager::stopRunning()
 {
   running = false;
+  if (currentScene) {
+    currentScene->onClose();
+  }
 }
 
 bool anikanov::SceneManager::isRunning() const

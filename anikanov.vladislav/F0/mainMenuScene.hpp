@@ -17,6 +17,7 @@ namespace anikanov {
     }
     void onCreate() override;
     void update() override;
+    void onClose() override;
     void help(bool need_description = false);
     std::vector< std::string > getOnlyCommands() const;
   private:

@@ -53,6 +53,13 @@ void anikanov::MainMenuScene::update()
   }
 }
 
+void anikanov::MainMenuScene::onClose()
+{
+  auto manager = this->manager.lock();
+  std::ostream *out = &manager->getOutputStream();
+  *out << "Goodbye!\n";
+}
+
 void anikanov::MainMenuScene::help(bool need_description)
 {
   auto manager = this->manager.lock();

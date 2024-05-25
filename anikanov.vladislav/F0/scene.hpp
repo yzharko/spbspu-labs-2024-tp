@@ -13,17 +13,12 @@ namespace anikanov {
 
   class Scene {
   public:
-    Scene(std::shared_ptr< SceneManager > &manager)
-    {
-      this->manager = manager;
-    }
+    Scene(std::shared_ptr< SceneManager > &manager);
     virtual ~Scene() = default;
     virtual void onCreate() = 0;
     virtual void update() = 0;
-    bool exist(std::vector< std::string > &list, std::string &command)
-    {
-      return std::find(list.begin(), list.end(), command) != list.end();
-    }
+    virtual void onClose() = 0;
+    bool exist(std::vector< std::string > &list, std::string &command);
 
   protected:
     std::weak_ptr< SceneManager > manager;
