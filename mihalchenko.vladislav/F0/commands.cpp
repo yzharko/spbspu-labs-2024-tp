@@ -89,8 +89,7 @@ void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
 void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   size_t num = 1;
-  for (auto iter = mapOfDictionaries.cbegin();
-       iter != mapOfDictionaries.cend(); ++iter)
+  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
   {
     num++;
     out << num << ". " << iter->first << ", size = ";
@@ -200,7 +199,6 @@ void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
 {
   std::string nameOfDict = "";
   std::string word;
-  size_t freq;
   is >> nameOfDict;
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
   if (iterOfDicts != mapOfDictionaries.end())
