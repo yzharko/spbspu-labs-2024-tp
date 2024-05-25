@@ -428,4 +428,5 @@ void mihalchenko::unique(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   dict_t newDict;
   findUnique(mapOfDictionaries, newDict, nameOfDict1, nameOfDict2, out);
   findUnique(mapOfDictionaries, newDict, nameOfDict2, nameOfDict1, out);
+  mapOfDictionaries.emplace(newname, newDict);
 }
