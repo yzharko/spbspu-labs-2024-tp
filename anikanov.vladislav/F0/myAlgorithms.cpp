@@ -12,6 +12,9 @@ bool anikanov::checkMatrix(const std::vector< std::vector< int > > &matrix)
       return false;
     }
     for (int j = 0; j < i; ++j) {
+      if (matrix[i][j] < 0 || matrix[j][i] < 0) {
+        return false;
+      }
       if (matrix[i][j] != matrix[j][i]) {
         return false;
       }
