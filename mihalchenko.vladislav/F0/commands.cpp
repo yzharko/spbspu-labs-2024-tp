@@ -1,6 +1,8 @@
 #include "commands.hpp"
 #include <fstream>
 #include <ios>
+#include <vector>
+#include <iterator>
 #include "helpDelimiters.hpp"
 
 void mihalchenko::help(std::ostream &out)
@@ -43,17 +45,35 @@ void mihalchenko::create(mapOfDicts_t &mapOfDictionaries, std::istream &is)
     std::cout << "ERROR" << "\n";
     return;
   }
+  if (fileName.empty())
+  {
+    std::cout << "ERROR" << "\n";
+    return;
+  }
+  if (fileName.find(".txt") != fileName.size() - 4)
+  {
+    std::cout << "ERROR" << "\n";
+    return;
+  }
   std::ifstream inputFile;
   inputFile.open(fileName);
   if (inputFile.is_open())
   {
+    std::cout << "eeeee" << "\n";
     dict_t dict;
-    std::string nameOfDict = mihalchenko::getDictName(fileName);
-    while (!is.eof())
+    std::string nameOfDict = getDictName(fileName);
+    std::cout << nameOfDict << "\n";
+    while (!inputFile.eof())
     {
-      mihalchenko::dict_t dict;
-      is >> dict;
+      dictElement_t elem;
+      inputFile >> elem;
+      dict.emplace(elem.first, elem.second);
     }
+    /*for (auto iter : dict)
+    {
+      std::cout << iter.first << " : " << iter.second << "\n";
+    }
+    std::cout << dict.size();*/
     mapOfDictionaries.emplace(nameOfDict, dict);
   }
   inputFile.close();
@@ -71,7 +91,7 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
     outputFile.open(iterOfDicts.first + "txt");
     if (outputFile.is_open())
     {
-      for (auto it : iterOfDicts.second)
+      for (const auto &it : iterOfDicts.second)
       {
         outputFile << it.first << " " << it.second << "\n";
       }
@@ -91,17 +111,19 @@ void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     printErrorMessage(out);
     return;
   }
-  out << getSize(mapOfDictionaries, nameOfDictionary);
+  // out << getSize(mapOfDictionaries, nameOfDictionary) << "\n";
+  out << mapOfDictionaries.find(nameOfDictionary)->second.size() << "\n";
 }
 
 void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
-  size_t num = 1;
-  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); ++iter)
+  size_t num = 0;
+  for (auto iter = mapOfDictionaries.cbegin(); iter != mapOfDictionaries.cend(); iter++)
   {
     num++;
     out << num << ". " << iter->first << ", size = ";
-    out << getSize(mapOfDictionaries, iter->first) << "\n";
+    out << iter->first.size() - 1 << "\n";
+    // out << getSize(mapOfDictionaries, iter->first) << "\n";
   }
 }
 
@@ -116,33 +138,28 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   std::string word = "";
   size_t freq = 0;
   auto iterOfDict = mapOfDictionaries.find(name)->second;
-  if (is >> word)
+  if (is >> word && !isdigit(word[0]))
   {
     if (iterOfDict.find(word) == iterOfDict.end())
     {
       printErrorMessage(out);
       return;
     }
-    out << iterOfDict.find(word)->first;
+    out << iterOfDict.find(word)->second << "\n";
   }
-  else if (is >> freq)
+  else if (is >> freq && isdigit(freq))
   {
-    for (auto it : iterOfDict)
+    std::vector<std::string> freqVec;
+    for (dict_t::const_iterator it = iterOfDict.begin(); it != iterOfDict.end(); it++)
     {
-      if (it.second == freq)
+      if (it->second == freq)
       {
-        out << it.first << "\n";
-      }
-      else
-      {
-        printErrorMessage(out);
-        return;
+        const std::string temp = it->first;
+        freqVec.push_back(temp);
+        // out << it.first << "\n";
       }
     }
-  }
-  else
-  {
-    printErrorMessage(out);
+    std::copy(freqVec.begin(), freqVec.end(), std::ostream_iterator<std::string>(out, "\n"));
   }
 }
 

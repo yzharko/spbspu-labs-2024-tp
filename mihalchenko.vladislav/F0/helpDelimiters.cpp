@@ -1,12 +1,18 @@
 #include "helpDelimiters.hpp"
 #include <algorithm>
 
-std::istream &mihalchenko::operator>>(std::istream &is, mihalchenko::dict_t &dict)
+std::istream &mihalchenko::operator>>(std::istream &is, dict_t &dict)
 {
-  mihalchenko::dictElement_t pair("", 0);
   // if (is >> pair.first >> pair.second)
-  if (is >> pair)
+  std::istream::sentry sentry(is);
+  if (!sentry)
   {
+    return is;
+  }
+  else
+  {
+    dictElement_t pair;
+    is >> pair;
     auto pointer = dict.find(pair.first);
     if (pointer == dict.end())
     {
@@ -16,9 +22,14 @@ std::istream &mihalchenko::operator>>(std::istream &is, mihalchenko::dict_t &dic
   return is;
 }
 
-std::istream &mihalchenko::operator>>(std::istream &is, mihalchenko::dictElement_t &dictElem)
+std::istream &mihalchenko::operator>>(std::istream &is, dictElement_t &dictElem)
 {
-  mihalchenko::dictElement_t pair("", 0);
+  std::istream::sentry sentry(is);
+  if (!sentry)
+  {
+    return is;
+  }
+  dictElement_t pair;
   is >> pair.first >> pair.second;
   if (is)
   {

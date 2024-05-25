@@ -6,7 +6,7 @@
 
 std::string mihalchenko::getDictName(std::string &str)
 {
-  return str.substr(0, str.find(".txt"));
+  return std::string(str.substr(0, str.find(".txt")));
 }
 
 size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict)
