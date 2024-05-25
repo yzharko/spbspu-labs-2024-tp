@@ -46,6 +46,7 @@ std::ostream &mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std
   {
     out << iterOfElem.first << " : " << iterOfElem.second << "\n";
   }
+  return out;
 }
 
 bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
@@ -72,6 +73,7 @@ std::ostream &mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std
   {
     out << iterOfElem.first << " : " << iterOfElem.second << "\n";
   }
+  return out;
 }
 
 bool mihalchenko::compareElemByAlph(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
