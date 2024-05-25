@@ -378,3 +378,39 @@ void mihalchenko::count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   }
   out << count << "\n";
 }
+
+void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict1 = "";
+  std::string nameOfDict2 = "";
+  std::string newname = "";
+  if (!(is >> nameOfDict1 >> nameOfDict2 >> newname))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1);
+  auto iterOfDict2 = mapOfDictionaries.find(nameOfDict2);
+  /*if (iterOfDict1->second.size() != iterOfDict2->second.size())
+  {
+    printErrorMessage(out);
+    return;
+  }*/
+  if (iterOfDict1 != mapOfDictionaries.end() && iterOfDict1 != mapOfDictionaries.end())
+  {
+    dict_t newDict = iterOfDict1->second;
+    for (auto iterOfElem : iterOfDict1->second)
+    {
+      newDict.emplace(iterOfDict1->first, iterOfDict1->second);
+    }
+    for (auto iterOfElem : iterOfDict2->second)
+    {
+      newDict.emplace(iterOfDict2->first, iterOfDict2->second);
+    }
+    mapOfDictionaries.emplace(newname, newDict);
+  }
+  else
+  {
+    printErrorMessage(out);
+  }
+}
