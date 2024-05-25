@@ -115,19 +115,19 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   }
   std::string word = "";
   size_t freq = 0;
-  auto iterOfDict = mapOfDictionaries.find(name);
+  auto iterOfDict = mapOfDictionaries.find(name)->second;
   if (is >> word)
   {
-    if (iterOfDict->second.find(word) == iterOfDict->second.end())
+    if (iterOfDict.find(word) == iterOfDict.end())
     {
       printErrorMessage(out);
       return;
     }
-    out << iterOfDict->second.find(word)->first;
+    out << iterOfDict.find(word)->first;
   }
   else if (is >> freq)
   {
-    for (auto it : iterOfDict->second)
+    for (auto it : iterOfDict)
     {
       if (it.second == freq)
       {
@@ -346,4 +346,35 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
       printErrorMessage(out);
     }
   }
+}
+
+void mihalchenko::count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  if (!(is >> nameOfDict))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  size_t freq = 0;
+  if (!(is >> freq))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+  size_t count = 0;
+  for (auto it : iterOfDicts)
+  {
+    if (it.second == freq)
+    {
+      count++;
+    }
+    else
+    {
+      printErrorMessage(out);
+      return;
+    }
+  }
+  out << count << "\n";
 }
