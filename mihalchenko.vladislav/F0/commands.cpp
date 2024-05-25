@@ -262,3 +262,49 @@ void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     }
   }
 }
+
+void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  is >> nameOfDict;
+  std::string param1 = "";
+  if (is >> param1)
+  {
+    if (param1 == "-all")
+    {
+      auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+      for (auto iterOfElem : iterOfDicts)
+      {
+        iterOfDicts.erase(iterOfElem.first);
+      }
+    }
+    else
+    {
+      std::string param2 = "";
+      if (is >> param2)
+      {
+        auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+        auto startIterOfElem = iterOfDicts.find(param1);
+        auto stopIterOfElem = iterOfDicts.find(param2);
+        if (startIterOfElem != iterOfDicts.end() && stopIterOfElem != iterOfDicts.end())
+        {
+          for (auto iterOfElem : iterOfDicts)
+          {
+            iterOfDicts.erase(iterOfElem.first);
+          }
+        }
+        else
+        {
+          printErrorMessage(out);
+        }
+      }
+      else
+      {
+        printErrorMessage(out);
+      }
+    }
+  }
+  else
+  {
+  }
+}
