@@ -120,3 +120,10 @@ void mihalchenko::findUnique(mapOfDicts_t &mapOfDictionaries, dict_t &newDict,
     printErrorMessage(out);
   }
 }
+
+void mihalchenko::helpSwap(dict_t &dict1, dict_t &dict2)
+{
+  dict_t tempDict = dict1;
+  dict1 = dict2;
+  dict2 = tempDict;
+}

@@ -27,6 +27,7 @@ int main()
     cmds["print"] = std::bind(mihalchenko::print, _1, _2, _3);
     cmds["clear"] = std::bind(mihalchenko::clear, _1, _2, _3);
     cmds["count"] = std::bind(mihalchenko::count, _1, _2, _3);
+    cmds["swap"] = std::bind(mihalchenko::swap, _1, _2, _3);
     cmds["merge"] = std::bind(mihalchenko::merge, _1, _2, _3);
     cmds["unique"] = std::bind(mihalchenko::unique, _1, _2, _3);
   }

@@ -430,3 +430,17 @@ void mihalchenko::unique(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   findUnique(mapOfDictionaries, newDict, nameOfDict2, nameOfDict1, out);
   mapOfDictionaries.emplace(newname, newDict);
 }
+
+void mihalchenko::swap(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict1 = "";
+  std::string nameOfDict2 = "";
+  if (!(is >> nameOfDict1 >> nameOfDict2))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1)->second;
+  auto iterOfDict2 = mapOfDictionaries.find(nameOfDict2)->second;
+  helpSwap(iterOfDict1, iterOfDict2);
+}

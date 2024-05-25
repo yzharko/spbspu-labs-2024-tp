@@ -22,6 +22,7 @@ namespace mihalchenko
   void count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
   void merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
   void unique(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
+  void swap(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out);
 }
 
 #endif
