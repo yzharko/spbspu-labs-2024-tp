@@ -26,6 +26,7 @@ int main()
     cmds["edit"] = std::bind(mihalchenko::edit, _1, _2, _3);
     cmds["insert"] = std::bind(mihalchenko::insert, _1, _2, _3);
     cmds["remove"] = std::bind(mihalchenko::remove, _1, _2, _3);
+    cmds["print"] = std::bind(mihalchenko::print, _1, _2, _3);
   }
   std::string command = "";
   while (std::cin >> command)

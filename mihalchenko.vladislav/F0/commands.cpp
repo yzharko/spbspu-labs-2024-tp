@@ -18,7 +18,7 @@ void mihalchenko::help(std::ostream &out)
   out << "7. rename < oldname > < newname > - renaming the dictionary from oldname to newname\n";
   out << "8. delete < name > - deleting a frequency dictionary\n";
   out << "9. find < name > < word / frequency > - output of element(s) by word\n";
-  out << "10. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output\n";
+  out << "10. print < name > < sort:no / sort:alph / sort:freq > < reverse:true/false > - output\n";
   out << "dictionary elements according to the specified sorting conditions\n";
   out << "11. view - the output of the names of existing dictionaries\n";
   out << "12. clear < name > < start > < stop > - clear the entire dictionary or\n";
@@ -234,6 +234,31 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     else
     {
       printErrorMessage(out);
+    }
+  }
+}
+
+void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  std::string sortParam = "";
+  is >> nameOfDict >> sortParam;
+  if (mapOfDictionaries.find(nameOfDict) != mapOfDictionaries.end())
+  {
+    if (sortParam == "no")
+    {
+      for (const auto &iterOfElem : mapOfDictionaries.find(nameOfDict)->second)
+      {
+        out << iterOfElem.first << " : " << iterOfElem.second << "\n";
+      }
+    }
+    else if (sortParam == "freq")
+    {
+      sortByFreq(mapOfDictionaries, nameOfDict, is, out);
+    }
+    else if (sortParam == "alph")
+    {
+      sortByAlph(mapOfDictionaries, nameOfDict, is, out);
     }
   }
 }
