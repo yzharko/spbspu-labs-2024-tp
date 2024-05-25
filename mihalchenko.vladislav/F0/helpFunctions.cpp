@@ -28,7 +28,7 @@ size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries, const std::string &
 }
 
 void mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
-                                      std::istream &is, std::ostream &out)
+                             std::istream &is, std::ostream &out)
 {
   std::vector<std::pair<std::string, size_t>> vecToSort;
   for (const auto &iterOfElem : mapOfDictionaries.find(nameOfDict)->second)
@@ -54,7 +54,7 @@ bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &ite
 }
 
 void mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
-                                      std::istream &is, std::ostream &out)
+                             std::istream &is, std::ostream &out)
 {
   std::vector<std::pair<std::string, size_t>> vecToSort;
   for (const auto &iterOfElem : mapOfDictionaries.find(nameOfDict)->second)
@@ -89,4 +89,34 @@ std::ostream &mihalchenko::printErrorMessage(std::ostream &out)
 {
   out << "ERROR" << '\n';
   return out;
+}
+
+void mihalchenko::findUnique(mapOfDicts_t &mapOfDictionaries, dict_t &newDict,
+                             const std::string &nameOfDict1, const std::string &nameOfDict2, std::ostream &out)
+{
+  auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1);
+  auto iterOfDict2 = mapOfDictionaries.find(nameOfDict2);
+  if (iterOfDict1 != mapOfDictionaries.end() && iterOfDict2 != mapOfDictionaries.end())
+  {
+    for (auto iterOfElem1 : iterOfDict1->second)
+    {
+      bool flag = false;
+      for (auto iterOfElem2 : iterOfDict2->second)
+      {
+        if (iterOfDict1 == iterOfDict2)
+        {
+          flag = false;
+          break;
+        }
+      }
+      if (flag == false)
+      {
+        newDict.emplace(iterOfElem1.first, iterOfElem1.second);
+      }
+    }
+  }
+  else
+  {
+    printErrorMessage(out);
+  }
 }

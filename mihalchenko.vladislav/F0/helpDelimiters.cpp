@@ -26,3 +26,8 @@ std::istream &mihalchenko::operator>>(std::istream &is, mihalchenko::dictElement
   }
   return is;
 }
+
+bool mihalchenko::operator==(const dictElement_t &dictElem1, const dictElement_t &dictElem2)
+{
+  return ((dictElem1.first == dictElem2.first) && (dictElem1.second == dictElem2.second));
+}

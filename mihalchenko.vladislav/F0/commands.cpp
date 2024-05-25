@@ -414,3 +414,18 @@ void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     printErrorMessage(out);
   }
 }
+
+void mihalchenko::unique(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict1 = "";
+  std::string nameOfDict2 = "";
+  std::string newname = "";
+  if (!(is >> nameOfDict1 >> nameOfDict2 >> newname))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  dict_t newDict;
+  findUnique(mapOfDictionaries, newDict, nameOfDict1, nameOfDict2, out);
+  findUnique(mapOfDictionaries, newDict, nameOfDict2, nameOfDict1, out);
+}
