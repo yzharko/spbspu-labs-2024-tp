@@ -396,16 +396,16 @@ void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     printErrorMessage(out);
     return;
   }*/
-  if (iterOfDict1 != mapOfDictionaries.end() && iterOfDict1 != mapOfDictionaries.end())
+  if (iterOfDict1 != mapOfDictionaries.end() && iterOfDict2 != mapOfDictionaries.end())
   {
-    dict_t newDict = iterOfDict1->second;
+    dict_t newDict;
     for (auto iterOfElem : iterOfDict1->second)
     {
-      newDict.emplace(iterOfDict1->first, iterOfDict1->second);
+      newDict.emplace(iterOfElem.first, iterOfElem.second);
     }
     for (auto iterOfElem : iterOfDict2->second)
     {
-      newDict.emplace(iterOfDict2->first, iterOfDict2->second);
+      newDict.emplace(iterOfElem.first, iterOfElem.second);
     }
     mapOfDictionaries.emplace(newname, newDict);
   }
