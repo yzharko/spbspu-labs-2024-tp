@@ -27,7 +27,7 @@ size_t mihalchenko::getSize(mapOfDicts_t &mapOfDictionaries, const std::string &
   return size;
 }
 
-std::ostream &mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
+void mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
                                       std::istream &is, std::ostream &out)
 {
   std::vector<std::pair<std::string, size_t>> vecToSort;
@@ -46,7 +46,6 @@ std::ostream &mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std
   {
     out << iterOfElem.first << " : " << iterOfElem.second << "\n";
   }
-  return out;
 }
 
 bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
@@ -54,7 +53,7 @@ bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &ite
   return iterOfElem1.second > iterOfElem2.second;
 }
 
-std::ostream &mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
+void mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
                                       std::istream &is, std::ostream &out)
 {
   std::vector<std::pair<std::string, size_t>> vecToSort;
@@ -73,7 +72,6 @@ std::ostream &mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std
   {
     out << iterOfElem.first << " : " << iterOfElem.second << "\n";
   }
-  return out;
 }
 
 bool mihalchenko::compareElemByAlph(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
