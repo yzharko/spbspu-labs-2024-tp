@@ -5,7 +5,7 @@
 
 void mihalchenko::help(std::ostream &out)
 {
-  out << "List of available commands:";
+  out << "List of available commands:\n";
   out << "1. help - displays information about available commands(active now)\n";
   out << "2. create < filename > - opening the filename file, if it does not exist,\n";
   out << "then creating it and forming a dictionary with the same name from its data\n";
@@ -210,10 +210,32 @@ void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   if (iterOfDicts != mapOfDictionaries.end())
   {
     auto iterOfElem = iterOfDicts->second;
-    is >> word >> freq;
+    dictElement_t dictElem;
+    is >> dictElem;
+    if (iterOfElem.find(word) != iterOfElem.end())
+    {
+      iterOfDicts->second.insert(iterOfElem.end(), dictElem);
+    }
+    else
+    {
+      printErrorMessage(out);
+    }
+  }
+}
+
+void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
+{
+  std::string nameOfDict = "";
+  std::string word;
+  is >> nameOfDict;
+  auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
+  if (iterOfDicts != mapOfDictionaries.end())
+  {
+    auto iterOfElem = iterOfDicts->second;
+    is >> word;
     if (iterOfElem.find(nameOfDict) != iterOfElem.end())
     {
-      iterOfDicts->second.insert({word, freq});
+      iterOfDicts->second.erase(word);
     }
     else
     {
