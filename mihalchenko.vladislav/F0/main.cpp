@@ -16,7 +16,7 @@ int main()
   {
     using namespace std::placeholders;
     cmds["help"] = std::bind(mihalchenko::help, _3);
-    cmds["open"] = std::bind(mihalchenko::open, _1, _2);
+    cmds["create"] = std::bind(mihalchenko::create, _1, _2);
     cmds["save"] = std::bind(mihalchenko::save, _1, _3);
     cmds["size"] = std::bind(mihalchenko::size, _1, _2, _3);
     cmds["view"] = std::bind(mihalchenko::view, _1, _3);
@@ -25,6 +25,7 @@ int main()
     cmds["delete"] = std::bind(mihalchenko::deleteDict, _1, _2, _3);
     cmds["edit"] = std::bind(mihalchenko::edit, _1, _2, _3);
     cmds["insert"] = std::bind(mihalchenko::insert, _1, _2, _3);
+    cmds["remove"] = std::bind(mihalchenko::remove, _1, _2, _3);
   }
   std::string command = "";
   while (std::cin >> command)

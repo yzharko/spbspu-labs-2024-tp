@@ -15,25 +15,27 @@ void mihalchenko::help(std::ostream &out)
   out << "5. insert < name > < word > < frequency > - inserting a word-frequency pair\n";
   out << "6. remove < name > < word > - deleting an item(s) from the dictionary\n";
   out << "by word / frequency / word and frequency\n";
-  out << "7. find < name > < word / frequency > - output of element(s) by word\n";
-  out << "8. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output\n";
+  out << "7. rename < oldname > < newname > - renaming the dictionary from oldname to newname\n";
+  out << "8. delete < name > - deleting a frequency dictionary\n";
+  out << "9. find < name > < word / frequency > - output of element(s) by word\n";
+  out << "10. sort < name > < sort:alph / sort:freq > < reverse:true/false > - output\n";
   out << "dictionary elements according to the specified sorting conditions\n";
-  out << "9. view - the output of the names of existing dictionaries\n";
-  out << "10. clear < name > < start > < stop > - clear the entire dictionary or\n";
+  out << "11. view - the output of the names of existing dictionaries\n";
+  out << "12. clear < name > < start > < stop > - clear the entire dictionary or\n";
   out << "in the selected range\n";
-  out << "11. swap < name1 > < name2 > - the exchange of dictionary contents,\n";
+  out << "13. swap < name1 > < name2 > - the exchange of dictionary contents,\n";
   out << "if there is a problem, the program displays the corresponding message\n";
-  out << "12. merge < name1 > < name2 > < newname > - combines the contents of\n";
+  out << "14. merge < name1 > < name2 > < newname > - combines the contents of\n";
   out << "the first two dictionaries in the third\n";
-  out << "13. unique < name1 > < name2 > < newName > - saves unique elements\n";
+  out << "15. unique < name1 > < name2 > < newName > - saves unique elements\n";
   out << "from dictionaries in a new file, if any of the files are missing or\n";
   out << "any other problem occurs, the corresponding message is also displayed\n";
-  out << "14. count < name > < word / frequency > - counting elements with \n";
+  out << "16. count < name > < word / frequency > - counting elements with \n";
   out << "the same name or frequency\n";
-  out << "15. size < name > - print the size of the dictionary\n";
+  out << "17. size < name > - print the size of the dictionary\n";
 }
 
-void mihalchenko::open(mapOfDicts_t &mapOfDictionaries, std::istream &is)
+void mihalchenko::create(mapOfDicts_t &mapOfDictionaries, std::istream &is)
 {
   std::string fileName = "";
   is >> fileName;
@@ -77,8 +79,7 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
   out << " The data was successfully written to all files" << '\n';
 }
 
-void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                       std::ostream &out)
+void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDictionary = "";
   is >> nameOfDictionary;
@@ -97,8 +98,7 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
   }
 }
 
-void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                       std::ostream &out)
+void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string name = "";
   is >> name;
@@ -129,8 +129,7 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   }
 }
 
-void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                         std::ostream &out)
+void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string newnameOfDict = "";
@@ -157,8 +156,7 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   }
 }
 
-void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                             std::ostream &out)
+void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDelDict = "";
   is >> nameOfDelDict;
@@ -172,8 +170,7 @@ void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   }
 }
 
-void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                       std::ostream &out)
+void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string word = "";
@@ -199,8 +196,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is,
   }
 }
 
-void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is,
-                         std::ostream &out)
+void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDict = "";
   std::string word;
