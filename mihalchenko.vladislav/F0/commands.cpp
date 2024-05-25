@@ -38,7 +38,11 @@ void mihalchenko::help(std::ostream &out)
 void mihalchenko::create(mapOfDicts_t &mapOfDictionaries, std::istream &is)
 {
   std::string fileName = "";
-  is >> fileName;
+  if (!(is >> fileName))
+  {
+    std::cout << "ERROR" << "\n";
+    return;
+  }
   std::ifstream inputFile;
   inputFile.open(fileName);
   if (inputFile.is_open())
@@ -82,7 +86,11 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDictionary = "";
-  is >> nameOfDictionary;
+  if (!(is >> nameOfDictionary))
+  {
+    printErrorMessage(out);
+    return;
+  }
   out << getSize(mapOfDictionaries, nameOfDictionary);
 }
 
@@ -100,7 +108,11 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string name = "";
-  is >> name;
+  if (!(is >> name))
+  {
+    printErrorMessage(out);
+    return;
+  }
   std::string word = "";
   size_t freq = 0;
   auto iterOfDict = mapOfDictionaries.find(name);
@@ -109,6 +121,7 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     if (iterOfDict->second.find(word) == iterOfDict->second.end())
     {
       printErrorMessage(out);
+      return;
     }
     out << iterOfDict->second.find(word)->first;
   }
@@ -123,8 +136,13 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
       else
       {
         printErrorMessage(out);
+        return;
       }
     }
+  }
+  else
+  {
+    printErrorMessage(out);
   }
 }
 
@@ -132,9 +150,11 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
 {
   std::string nameOfDict = "";
   std::string newnameOfDict = "";
-
-  is >> nameOfDict >> newnameOfDict;
-
+  if (!(is >> nameOfDict >> newnameOfDict))
+  {
+    printErrorMessage(out);
+    return;
+  }
   auto iterOfDictName = mapOfDictionaries.find(nameOfDict);
   if (iterOfDictName != mapOfDictionaries.end())
   {
@@ -147,6 +167,7 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     else
     {
       printErrorMessage(out);
+      return;
     }
   }
   else
@@ -158,10 +179,15 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
 void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDelDict = "";
-  is >> nameOfDelDict;
+  if (!(is >> nameOfDelDict))
+  {
+    printErrorMessage(out);
+    return;
+  }
   if (!mapOfDictionaries.erase(nameOfDelDict))
   {
     printErrorMessage(out);
+    return;
   }
   else
   {
@@ -173,25 +199,26 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
 {
   std::string nameOfDict = "";
   std::string word = "";
-  size_t newFreq;
-
-  is >> nameOfDict >> word;
-
-  auto iterOfDict = mapOfDictionaries.find(nameOfDict);
-  if (is >> newFreq)
+  if (!(is >> nameOfDict >> word))
   {
-    if (iterOfDict->second.find(word) == iterOfDict->second.end())
-    {
-      printErrorMessage(out);
-    }
-    else
-    {
-      iterOfDict->second.find(word)->second = newFreq;
-    }
+    printErrorMessage(out);
+    return;
+  }
+  auto iterOfDict = mapOfDictionaries.find(nameOfDict);
+  size_t newFreq;
+  if (!(is >> newFreq))
+  {
+    printErrorMessage(out);
+    return;
+  }
+  if (iterOfDict->second.find(word) == iterOfDict->second.end())
+  {
+    printErrorMessage(out);
+    return;
   }
   else
   {
-    printErrorMessage(out);
+    iterOfDict->second.find(word)->second = newFreq;
   }
 }
 
@@ -199,7 +226,11 @@ void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
 {
   std::string nameOfDict = "";
   std::string word;
-  is >> nameOfDict;
+  if (!(is >> nameOfDict))
+  {
+    printErrorMessage(out);
+    return;
+  }
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
   if (iterOfDicts != mapOfDictionaries.end())
   {
@@ -221,19 +252,23 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
 {
   std::string nameOfDict = "";
   std::string word;
-  is >> nameOfDict;
+  if (!(is >> nameOfDict))
+  {
+    printErrorMessage(out);
+    return;
+  }
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
   if (iterOfDicts != mapOfDictionaries.end())
   {
     auto iterOfElem = iterOfDicts->second;
-    is >> word;
+    if (!(is >> word))
+    {
+      printErrorMessage(out);
+      return;
+    }
     if (iterOfElem.find(nameOfDict) != iterOfElem.end())
     {
       iterOfDicts->second.erase(word);
-    }
-    else
-    {
-      printErrorMessage(out);
     }
   }
 }
@@ -242,7 +277,11 @@ void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
 {
   std::string nameOfDict = "";
   std::string sortParam = "";
-  is >> nameOfDict >> sortParam;
+  if (!(is >> nameOfDict >> sortParam))
+  {
+    printErrorMessage(out);
+    return;
+  }
   if (mapOfDictionaries.find(nameOfDict) != mapOfDictionaries.end())
   {
     if (sortParam == "no")
@@ -260,19 +299,43 @@ void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     {
       sortByAlph(mapOfDictionaries, nameOfDict, is, out);
     }
+    else
+    {
+      printErrorMessage(out);
+    }
   }
 }
 
 void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
 {
   std::string nameOfDict = "";
-  is >> nameOfDict;
   std::string param1 = "";
-  if (is >> param1)
+  if (!(is >> nameOfDict >> param1))
   {
-    if (param1 == "-all")
+    printErrorMessage(out);
+    return;
+  }
+  if (param1 == "-all")
+  {
+    auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+    for (auto iterOfElem : iterOfDicts)
     {
-      auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+      iterOfDicts.erase(iterOfElem.first);
+    }
+  }
+  else
+  {
+    std::string param2 = "";
+    if (!(is >> param2))
+    {
+      printErrorMessage(out);
+      return;
+    }
+    auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
+    auto startIterOfElem = iterOfDicts.find(param1);
+    auto stopIterOfElem = iterOfDicts.find(param2);
+    if (startIterOfElem != iterOfDicts.end() && stopIterOfElem != iterOfDicts.end())
+    {
       for (auto iterOfElem : iterOfDicts)
       {
         iterOfDicts.erase(iterOfElem.first);
@@ -280,31 +343,7 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     }
     else
     {
-      std::string param2 = "";
-      if (is >> param2)
-      {
-        auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
-        auto startIterOfElem = iterOfDicts.find(param1);
-        auto stopIterOfElem = iterOfDicts.find(param2);
-        if (startIterOfElem != iterOfDicts.end() && stopIterOfElem != iterOfDicts.end())
-        {
-          for (auto iterOfElem : iterOfDicts)
-          {
-            iterOfDicts.erase(iterOfElem.first);
-          }
-        }
-        else
-        {
-          printErrorMessage(out);
-        }
-      }
-      else
-      {
-        printErrorMessage(out);
-      }
+      printErrorMessage(out);
     }
-  }
-  else
-  {
   }
 }
