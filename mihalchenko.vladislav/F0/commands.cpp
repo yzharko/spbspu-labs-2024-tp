@@ -59,10 +59,8 @@ void mihalchenko::create(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   inputFile.open(fileName);
   if (inputFile.is_open())
   {
-    std::cout << "eeeee" << "\n";
     dict_t dict;
     std::string nameOfDict = getDictName(fileName);
-    std::cout << nameOfDict << "\n";
     while (!inputFile.eof())
     {
       dictElement_t elem;
