@@ -50,7 +50,7 @@ void mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std::string 
 
 bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
 {
-  return iterOfElem1.second > iterOfElem2.second;
+  return iterOfElem1.second < iterOfElem2.second;
 }
 
 void mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
@@ -76,7 +76,7 @@ void mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string 
 
 bool mihalchenko::compareElemByAlph(const pair_t &iterOfElem1, const pair_t &iterOfElem2)
 {
-  return iterOfElem1.first > iterOfElem2.first;
+  return iterOfElem1.first < iterOfElem2.first;
 }
 
 std::ostream &mihalchenko::printInvalidCommand(std::ostream &out)

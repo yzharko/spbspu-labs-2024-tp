@@ -81,12 +81,12 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   for (auto iterOfDicts : mapOfDictionaries)
   {
-    std::ofstream outputFile(iterOfDicts.first);
+    std::ofstream outputFile;
     if (!outputFile)
     {
       throw std::invalid_argument("ERROR with file\n");
     }
-    outputFile.open(iterOfDicts.first + "txt");
+    outputFile.open(iterOfDicts.first + ".txt");
     if (outputFile.is_open())
     {
       for (const auto &it : iterOfDicts.second)
@@ -94,7 +94,7 @@ void mihalchenko::save(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
         outputFile << it.first << " " << it.second << "\n";
       }
     }
-    out << " The data was successfully written to the file";
+    out << " The data was successfully written to the file: ";
     out << iterOfDicts.first << '\n';
     outputFile.close();
   }
