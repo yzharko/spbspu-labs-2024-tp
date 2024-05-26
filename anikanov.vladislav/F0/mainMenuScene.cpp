@@ -46,7 +46,7 @@ void anikanov::MainMenuScene::update()
     if (manager->getSettings().inputMatrix) {
       manager->switchToScene("MatrixMenu");
     } else {
-      manager->stopRunning();
+      manager->switchToScene("GraphMenu");
     }
   } else if (command == "/exit") {
     manager->stopRunning();

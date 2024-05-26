@@ -105,7 +105,9 @@ void anikanov::RunMatrixScene::onClose()
   printAns(answer, sum, manager);
 
   std::ostream *out = &manager->getOutputStream();
-  *out << "Goodbye!\n";
+  if (!manager->isRunning()) {
+    *out << "Goodbye!\n";
+  }
 }
 
 void anikanov::RunMatrixScene::help(bool need_description)

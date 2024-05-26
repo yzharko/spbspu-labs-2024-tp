@@ -7,6 +7,7 @@
 #include "mainMenuScene.hpp"
 #include "changeMenuScene.hpp"
 #include "runMatrixScene.hpp"
+#include "graphMenuScene.hpp"
 
 using namespace anikanov;
 
@@ -17,6 +18,7 @@ int main()
   sceneManager->addScene("MainMenu", std::make_unique< MainMenuScene >(sceneManager));
   sceneManager->addScene("ChangeMenu", std::make_unique< ChangeMenuScene >(sceneManager));
   sceneManager->addScene("MatrixMenu", std::make_unique< RunMatrixScene >(sceneManager));
+  sceneManager->addScene("GraphMenu", std::make_unique< GraphMenuScene >(sceneManager));
 
   sceneManager->switchToScene("MainMenu");
 
