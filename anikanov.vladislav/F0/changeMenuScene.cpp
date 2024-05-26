@@ -23,7 +23,7 @@ void anikanov::ChangeMenuScene::update()
     if (command == "input") {
       manager->getSettings().inputMatrix = !manager->getSettings().inputMatrix;
       *out << "New " << manager->getSettings();
-    } else  {
+    } else {
       manager->getSettings().outputMatrix = !manager->getSettings().outputMatrix;
       *out << "New " << manager->getSettings();
     }

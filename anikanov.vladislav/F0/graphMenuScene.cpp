@@ -3,7 +3,6 @@
 #include <limits>
 #include <numeric>
 #include <iostream>
-#include <sstream>
 
 #include "myAlgorithms.hpp"
 
@@ -96,16 +95,15 @@ void anikanov::GraphMenuScene::update()
 void anikanov::GraphMenuScene::onClose()
 {
   auto manager = this->manager.lock();
-
-  auto answer = runKruskalMST(edges, edges.size());
-
-  int sum = std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
-    return sum + edge[2];
-  });
-  printAns(answer, sum, manager);
-
-  std::ostream *out = &manager->getOutputStream();
   if (!manager->isRunning()) {
+    auto answer = runKruskalMST(edges, edges.size());
+
+    int sum = std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
+      return sum + edge[2];
+    });
+    printAns(answer, sum, manager);
+
+    std::ostream *out = &manager->getOutputStream();
     *out << "Goodbye!\n";
   }
 }
@@ -132,4 +130,3 @@ std::vector< std::string > anikanov::GraphMenuScene::getOnlyCommands() const
   }
   return onlyCommands;
 }
-

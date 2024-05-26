@@ -96,16 +96,16 @@ void anikanov::RunMatrixScene::onClose()
 {
   auto manager = this->manager.lock();
 
-  std::vector< std::vector< int > > edges = getEdges(matrix);
-  auto answer = runKruskalMST(edges, matrix.size());
-
-  int sum = std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
-    return sum + edge[2];
-  });
-  printAns(answer, sum, manager);
-
-  std::ostream *out = &manager->getOutputStream();
   if (!manager->isRunning()) {
+    std::vector< std::vector< int > > edges = getEdges(matrix);
+    auto answer = runKruskalMST(edges, matrix.size());
+
+    int sum = std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
+      return sum + edge[2];
+    });
+    printAns(answer, sum, manager);
+
+    std::ostream *out = &manager->getOutputStream();
     *out << "Goodbye!\n";
   }
 }

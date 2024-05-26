@@ -1,7 +1,6 @@
 #include "sceneManager.hpp"
 
 #include <iostream>
-#include <limits>
 
 anikanov::SceneManager::SceneManager(Settings &setting, std::istream &in, std::ostream &out) : inputStream(in),
                                                                                                outputStream(&out),
