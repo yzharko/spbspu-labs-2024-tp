@@ -3,7 +3,6 @@
 
 std::istream &mihalchenko::operator>>(std::istream &is, dict_t &dict)
 {
-  // if (is >> pair.first >> pair.second)
   std::istream::sentry sentry(is);
   if (!sentry)
   {
