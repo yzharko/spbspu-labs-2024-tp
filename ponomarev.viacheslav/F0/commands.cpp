@@ -31,6 +31,7 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomare
     std::cout << "------------------------------------------------------------------------\n";
     std::cout << "14) 'table' - output of the character encoding table for the encoding result\n";
     std::cout << "15) 'save <filename>' - saving the result of the work to a new txt file filename\n";
+    std::cout << "------------------------------------------------------------------------\n";
   }
   else
   {
@@ -40,11 +41,13 @@ void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomare
 
 void ponomarev::makeInput(std::string & parameters, ponomarev::HuffmanCode & data)
 {
-  if (parameters.empty())
+  if (!(parameters.empty()))
   {
-    ponomarev::getText(std::cin, data);
-    ponomarev::printSuccessfullyInputMessage(std::cout);
+    throw std::logic_error("error: wrong parameters");
   }
+
+  ponomarev::getText(std::cin, data);
+  ponomarev::printSuccessfullyInputMessage(std::cout);
 }
 
 void ponomarev::chooseEncode(std::string & parameters, HuffmanCode & data)
@@ -76,6 +79,7 @@ void ponomarev::chooseEncode(std::string & parameters, HuffmanCode & data)
       long long n = std::stoll(parameter);
       long long k = 0;
       parameter = cutType(parameters);
+
       if (!isNum(parameter))
       {
         throw std::logic_error("error: wrong parameters");
@@ -110,6 +114,8 @@ void ponomarev::writeTextIntoFile(std::string & parameters, HuffmanCode & data)
   {
     throw std::logic_error("can't open the file");
   }
+
+  data.fileNames.push_back(parameter);
   fout << data.text;
   ponomarev::printSuccessfullyWriteMessage(std::cout);
 }
@@ -138,6 +144,7 @@ void ponomarev::combineFiles(std::string & parameters, HuffmanCode &)
   std::string file1 = cutType(parameters);
   std::string file2 = cutType(parameters);
   std::string file3 = cutType(parameters);
+
   if (!parameters.empty())
   {
     throw std::logic_error("error: wrong parameters");
@@ -146,10 +153,12 @@ void ponomarev::combineFiles(std::string & parameters, HuffmanCode &)
   std::ifstream if_a(file1, std::ios_base::binary);
   std::ifstream if_b(file2, std::ios_base::binary);
   std::ofstream of_c(file3, std::ios_base::binary);
+
   if (!if_a || !if_b || !of_c)
   {
     throw std::logic_error("can't open the file");
   }
+
   of_c << if_a.rdbuf() << if_b.rdbuf();
 }
 
@@ -160,23 +169,20 @@ void ponomarev::showTable(std::string & parameters, HuffmanCode & data)
     throw std::logic_error("error: wrong parameters");
   }
 
-  for (auto v = data.codes.begin(); v != data.codes.end(); v++)
-  {
-    std::cout << v->first << ' ' << v->second << "\n";
-  }
+  printCodes(data.minHeap.top(), "");
 }
 
 void ponomarev::makeDecode(std::string & parameters, HuffmanCode & data)
 {
   std::string fileDecode = cutType(parameters);
   std::string fileFreqs = cutType(parameters);
+
   if (!parameters.empty())
   {
     throw std::logic_error("error: wrong parameters");
   }
 
   std::ifstream input(fileDecode);
-
   std::string str = "";
   std::string text = "";
   std::getline(input, str);
@@ -194,11 +200,24 @@ void ponomarev::makeDecode(std::string & parameters, HuffmanCode & data)
   ponomarev::decodeFile(data);
 }
 
-void ponomarev::makeClean(std::string & parameters, HuffmanCode &)
+void ponomarev::makeClean(std::string & parameters, HuffmanCode & data)
 {
-  std::string fileClean = cutType(parameters);
   if (parameters.empty())
   {
+    for (size_t i; i < data.fileNames.size(); i++)
+    {
+      makeDelete(data.fileNames[i], data);
+    }
+  }
+  else
+  {
+    std::string fileClean = cutType(parameters);
+
+    if (!(parameters.empty()))
+    {
+      throw std::logic_error("error: wrong parameters");
+    }
+
     std::ofstream ofs;
     ofs.open(fileClean, std::ofstream::out | std::ofstream::trunc);
     ofs.close();
@@ -207,7 +226,6 @@ void ponomarev::makeClean(std::string & parameters, HuffmanCode &)
 
 void ponomarev::makeDelete(std::string & parameters, HuffmanCode &)
 {
-
   if (parameters.empty())
   {
     throw std::logic_error("error: wrong parameters");
@@ -223,30 +241,34 @@ void ponomarev::makeDelete(std::string & parameters, HuffmanCode &)
     long long n = std::stoll(parameter);
     long long k = 0;
     parameter = ponomarev::cutType(parameters);
+
     if (!ponomarev::isNum(parameter))
     {
       throw std::logic_error("error: wrong parameters");
     }
+
     k = std::stoll(parameter);
     parameter = ponomarev::cutType(parameters);
-    if (parameters.empty())
-    {
-      ponomarev::deleteTextInFile(n, k, parameter);
-    }
-    else
+
+    if (!(parameters.empty()))
     {
       throw std::logic_error("error: wrong parameters");
     }
+
+    ponomarev::deleteTextInFile(n, k, parameter);
   }
 }
 
 void ponomarev::makeSave(std::string & parameters, HuffmanCode & data)
 {
   std::string parameter = ponomarev::cutType(parameters);
+
   if (parameters.empty())
   {
     throw std::logic_error("error: wrong parameters");
   }
+
   std::ofstream out(parameter);
+  data.fileNames.push_back(parameter);
   out << data.text << "\n" << data.decodingText;
 }

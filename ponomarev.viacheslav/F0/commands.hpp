@@ -14,7 +14,7 @@ namespace ponomarev
   void combineFiles(std::string & parameters, HuffmanCode &);
   void showTable(std::string & parameters, HuffmanCode & data);
   void makeDecode(std::string & parameters, HuffmanCode & data);
-  void makeClean(std::string & parameters, HuffmanCode &);
+  void makeClean(std::string & parameters, HuffmanCode & data);
   void makeDelete(std::string & parameters, HuffmanCode &);
   void makeSave(std::string & parameters, HuffmanCode & data);
 }
