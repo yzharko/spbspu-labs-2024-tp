@@ -58,7 +58,6 @@ void anikanov::RunMatrixScene::update()
       *out << "Enter the matrix:" << "\n";
       return matrix.clear();
     } else if (command == "/end") {
-
       return manager->stopRunning();
     }
   }
@@ -96,15 +95,17 @@ void anikanov::RunMatrixScene::update()
 void anikanov::RunMatrixScene::onClose()
 {
   auto manager = this->manager.lock();
-  std::ostream *out = &manager->getOutputStream();
 
   std::vector< std::vector< int > > edges = getEdges(matrix);
   auto answer = runKruskalMST(edges, matrix.size());
 
-  *out << "Min sum: ";
-  *out << std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
+  int sum = std::accumulate(answer.begin(), answer.end(), 0, [](int sum, const std::vector< int > &edge) {
     return sum + edge[2];
-  }) << "\n";
+  });
+  printAns(answer, sum, manager);
+
+  std::ostream *out = &manager->getOutputStream();
+  *out << "Goodbye!\n";
 }
 
 void anikanov::RunMatrixScene::help(bool need_description)

@@ -21,7 +21,7 @@ void anikanov::MainMenuScene::update()
   std::string command = "";
   std::vector< std::string > onlyCommands = getOnlyCommands();
 
-  if (!(*in >> command)){
+  if (!(*in >> command)) {
     return manager->stopRunning();
   }
   if (command.empty()) {
@@ -56,8 +56,10 @@ void anikanov::MainMenuScene::update()
 void anikanov::MainMenuScene::onClose()
 {
   auto manager = this->manager.lock();
-  std::ostream *out = &manager->getOutputStream();
-  *out << "Goodbye!\n";
+  if (!manager->isRunning()) {
+    std::ostream *out = &manager->getOutputStream();
+    *out << "Goodbye!\n";
+  }
 }
 
 void anikanov::MainMenuScene::help(bool need_description)

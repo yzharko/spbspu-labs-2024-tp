@@ -1,6 +1,8 @@
 #include "myAlgorithms.hpp"
 
 #include <algorithm>
+#include <iostream>
+#include <fstream>
 #include <vector>
 
 bool anikanov::checkMatrix(const std::vector< std::vector< int > > &matrix)
@@ -89,4 +91,68 @@ std::vector< std::vector< int > > anikanov::runKruskalMST(std::vector< std::vect
   }
 
   return result;
+}
+
+int anikanov::findNumberOfVertices(const std::vector< std::vector< int > > &edges)
+{
+  std::vector< int > vertices;
+
+  for (const auto &edge: edges) {
+    vertices.push_back(edge[0]);
+    vertices.push_back(edge[1]);
+  }
+
+  sort(vertices.begin(), vertices.end());
+  vertices.erase(unique(vertices.begin(), vertices.end()), vertices.end());
+
+  return vertices.size();
+}
+
+std::vector< std::vector< int > > anikanov::toMatrix(const std::vector< std::vector< int > > &edges)
+{
+  int n = findNumberOfVertices(edges);
+  std::vector< std::vector< int > > matrix(n, std::vector< int >(n, 0));
+
+  for (const auto &edge: edges) {
+    matrix[edge[0]][edge[1]] = edge[2];
+    matrix[edge[1]][edge[0]] = edge[2];
+  }
+
+  return matrix;
+}
+
+void anikanov::printAns(const matrix_t &edges, const int sum, const std::shared_ptr< SceneManager > &manager)
+{
+  std::ostream *out = &manager->getOutputStream();
+  std::ofstream fileOut;
+
+  if (manager->getSettings().saveOutput) {
+    fileOut = std::ofstream("out.txt");
+    if (!fileOut.is_open()) {
+      *out << "Error on opening file.\n";
+      return;
+    }
+  }
+
+  std::vector< std::vector< int > > toPrint = manager->getSettings().outputMatrix ? toMatrix(edges) : edges;
+
+  for (const auto &row: toPrint) {
+    for (const auto &elem: row) {
+      *out << elem << " ";
+      if (manager->getSettings().saveOutput) {
+        fileOut << elem << " ";
+      }
+    }
+    *out << "\n";
+    if (manager->getSettings().saveOutput) {
+      fileOut << "\n";
+    }
+  }
+
+  *out << "\nMin sum:  " << sum << "\n";
+  if (manager->getSettings().saveOutput) {
+    fileOut << "\nMin sum:  " << sum;
+  }
+
+  fileOut.close();
 }
