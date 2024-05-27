@@ -42,7 +42,7 @@ void mihalchenko::create(mapOfDicts_t &mapOfDictionaries, std::istream &is)
   std::string fileName = "";
   if (!(is >> fileName))
   {
-    printErrorMessage(std::cout);
+    printWrongInput(std::cout);
     return;
   }
   if (fileName.empty())
