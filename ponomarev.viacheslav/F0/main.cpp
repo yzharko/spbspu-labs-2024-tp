@@ -1,10 +1,8 @@
-#include <iostream>
 #include <map>
 #include <limits>
 #include <functional>
 #include "commands.hpp"
 #include "accessoryFunctions.hpp"
-#include "codingHuffman.hpp"
 
 int main()
 {

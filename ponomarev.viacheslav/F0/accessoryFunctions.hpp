@@ -1,7 +1,6 @@
 #ifndef ACCESSORY_FUNCTIONS_HPP
 #define ACCESSORY_FUNCTIONS_HPP
 
-#include <string>
 #include <iostream>
 #include "codingHuffman.hpp"
 
