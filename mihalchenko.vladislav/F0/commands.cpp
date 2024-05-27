@@ -381,10 +381,8 @@ void mihalchenko::count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   size_t count = 0;
   for (auto it : iterOfDicts)
   {
-    out << it.second << "\n";
     if (it.second == freq)
     {
-      out << it.second << "\n";
       count++;
     }
   }
@@ -449,8 +447,6 @@ void mihalchenko::swap(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     printErrorMessage(out);
     return;
   }
-  auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1)->second;
-  auto iterOfDict2 = mapOfDictionaries.find(nameOfDict2)->second;
-  helpSwap(iterOfDict1, iterOfDict2);
+  std::swap(mapOfDictionaries.find(nameOfDict1)->second, mapOfDictionaries.find(nameOfDict2)->second);
   out << "These dictionaries have successfully exchanged elements\n";
 }

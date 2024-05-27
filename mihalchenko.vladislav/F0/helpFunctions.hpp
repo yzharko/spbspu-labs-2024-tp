@@ -14,7 +14,6 @@ namespace mihalchenko
   std::ostream &printErrorMessage(std::ostream &out);
   void findUnique(mapOfDicts_t &mapOfDictionaries, dict_t &newDict,
                   const std::string &nameOfDict1, const std::string &nameOfDict2, std::ostream &out);
-  void helpSwap(dict_t &dict1, dict_t &dict2);
 }
 
 #endif
