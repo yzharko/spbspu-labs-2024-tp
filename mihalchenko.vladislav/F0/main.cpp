@@ -10,7 +10,7 @@ int main()
 {
   std::cout << "To see all available commands, enter 'help'\n";
   mihalchenko::mapOfDicts_t mapOfDictionaries;
-  std::map<std::string, std::function<void(mihalchenko::mapOfDicts_t &, std::istream &, std::ostream &)>> cmds;
+  std::map< std::string, std::function< void(mihalchenko::mapOfDicts_t &, std::istream &, std::ostream &) > > cmds;
   {
     using namespace std::placeholders;
     cmds["help"] = std::bind(mihalchenko::help, _3);
@@ -42,7 +42,7 @@ int main()
     {
       mihalchenko::printInvalidCommand(std::cout);
       std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
   return 0;

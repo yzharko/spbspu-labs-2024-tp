@@ -11,9 +11,9 @@ std::string mihalchenko::getDictName(std::string &str)
 }
 
 void mihalchenko::sortByFreq(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
-                             std::istream &is, std::ostream &out)
+                              std::istream &is, std::ostream &out)
 {
-  std::vector<std::pair<std::string, size_t>> vecToSort;
+  std::vector< std::pair< std::string, size_t > > vecToSort;
   for (const auto &iterOfElem : mapOfDictionaries.find(nameOfDict)->second)
   {
     vecToSort.push_back({iterOfElem.first, iterOfElem.second});
@@ -37,9 +37,9 @@ bool mihalchenko::compareElemByFreq(const pair_t &iterOfElem1, const pair_t &ite
 }
 
 void mihalchenko::sortByAlph(mapOfDicts_t &mapOfDictionaries, const std::string &nameOfDict,
-                             std::istream &is, std::ostream &out)
+                              std::istream &is, std::ostream &out)
 {
-  std::vector<std::pair<std::string, size_t>> vecToSort;
+  std::vector< std::pair< std::string, size_t > > vecToSort;
   for (const auto &iterOfElem : mapOfDictionaries.find(nameOfDict)->second)
   {
     vecToSort.push_back({iterOfElem.first, iterOfElem.second});
@@ -75,7 +75,7 @@ std::ostream &mihalchenko::printErrorMessage(std::ostream &out)
 }
 
 void mihalchenko::findUnique(mapOfDicts_t &mapOfDictionaries, dict_t &newDict,
-                             const std::string &nameOfDict1, const std::string &nameOfDict2, std::ostream &out)
+                              const std::string &nameOfDict1, const std::string &nameOfDict2, std::ostream &out)
 {
   auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1);
   auto iterOfDict2 = mapOfDictionaries.find(nameOfDict2);
