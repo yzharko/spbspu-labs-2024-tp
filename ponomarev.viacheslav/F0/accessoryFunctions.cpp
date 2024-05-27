@@ -59,6 +59,40 @@ void ponomarev::cutTextInFile(long long n, long long k, HuffmanCode & data, std:
   }
 }
 
+void ponomarev::deleteFile(const std::string parameter)
+{
+  if (std::remove(parameter.c_str()) == 0)
+  {
+    std::cout << "File delete successfully\n";
+  }
+}
+
+void ponomarev::deleteTextInFile(long long n, long long k, const std::string parameter)
+{
+  std::string str = "";
+  std::string text = "";
+  std::ifstream input(parameter);
+
+  while (std::getline(input, str))
+  {
+    text += str;
+    text += '\n';
+  }
+
+  if (n > k)
+  {
+    throw std::logic_error("error: wrong parameters");
+  }
+
+  std::string firstPart = text.substr(0, n);
+  std::string secondPart = text.substr(k);
+  std::string res = firstPart + secondPart;
+
+  deleteFile(parameter);
+  std::ofstream out(parameter);
+  out << res << "\n";
+}
+
 std::ostream & ponomarev::printInvalidCommandMessage(std::ostream & out)
 {
   out << "<INVALID COMMAND>" << "\n";
@@ -96,36 +130,8 @@ std::ostream & ponomarev::printSuccessfullyWriteMessage(std::ostream & out)
   return out;
 }
 
-void ponomarev::deleteFile(const std::string parameter)
+std::ostream & ponomarev::printSuccessfullyFrequenceInput(std::ostream & out)
 {
-  if (std::remove(parameter.c_str()) == 0)
-  {
-    std::cout << "File delete successfully\n";
-  }
-}
-
-void ponomarev::deleteTextInFile(long long n, long long k, const std::string parameter)
-{
-  std::string str = "";
-  std::string text = "";
-  std::ifstream input(parameter);
-
-  while (std::getline(input, str))
-  {
-    text += str;
-    text += '\n';
-  }
-
-  if (n > k)
-  {
-    throw std::logic_error("error: wrong parameters");
-  }
-
-  std::string firstPart = text.substr(0, n);
-  std::string secondPart = text.substr(k);
-  std::string res = firstPart + secondPart;
-
-  deleteFile(parameter);
-  std::ofstream out(parameter);
-  out << res << "\n";
+  out << "Frequence successfully completed\n";
+  return out;
 }

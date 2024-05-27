@@ -167,7 +167,7 @@ void ponomarev::fillFreq(std::string parameter, HuffmanCode & data)
     data.freq[symbol] = freq;
   }
 
-  std::cout << "Frequence successfully completed\n";
+  ponomarev::printSuccessfullyFrequenceInput(std::cout);
 }
 
 

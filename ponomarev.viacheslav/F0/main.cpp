@@ -24,10 +24,10 @@ int main()
   }
 
   ponomarev::printWelcomeMessage(std::cout);
-
   std::string command = "";
   std::string type = "";
   ponomarev::HuffmanCode data;
+
   while (std::cin >> command)
   {
     type = ponomarev::cutType(command);

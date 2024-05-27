@@ -22,6 +22,7 @@ namespace ponomarev
   std::ostream & printSuccessfullyEncodeMessage(std::ostream & out);
   std::ostream & printSuccessfullyInputMessage(std::ostream & out);
   std::ostream & printSuccessfullyWriteMessage(std::ostream & out);
+  std::ostream & printSuccessfullyFrequenceInput(std::ostream & out);
 }
 
 #endif
