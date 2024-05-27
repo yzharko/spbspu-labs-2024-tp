@@ -112,11 +112,12 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   size_t num = 0;
   out << "List of created dictionaries and their sizes:\n";
+
   for (auto iter : mapOfDictionaries)
   {
     num++;
     out << num << ". " << iter.first << ", size = ";
-    out << iter.first.size() - 1 << "\n";
+    out << iter.second.size() << "\n";
   }
 }
 
@@ -280,7 +281,7 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     }
     if (iterOfElem.find(word) != iterOfElem.end())
     {
-      iterOfElem.erase(iterOfElem.find(word)->first);
+      iterOfDicts->second.erase(word);
       out << "The item was successfully deleted from the dictionary\n";
     }
     else
@@ -332,13 +333,10 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     printErrorMessage(out);
     return;
   }
+  auto &iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
   if (param1 == "-all")
   {
-    auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
-    for (auto iterOfElem : iterOfDicts)
-    {
-      iterOfDicts.erase(iterOfElem.first);
-    }
+    mapOfDictionaries.find(nameOfDict)->second.clear();
     out << "The dictionary has been successfully cleared\n";
   }
   else
@@ -349,12 +347,11 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
       printErrorMessage(out);
       return;
     }
-    auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
     auto startIterOfElem = iterOfDicts.find(param1);
     auto stopIterOfElem = iterOfDicts.find(param2);
     if (startIterOfElem != iterOfDicts.end() && stopIterOfElem != iterOfDicts.end())
     {
-      for (auto iterOfElem = startIterOfElem; iterOfElem != stopIterOfElem; iterOfElem++)
+      for (auto iterOfElem = iterOfDicts.find(param1); iterOfElem != iterOfDicts.find(param2); iterOfElem++)
       {
         iterOfDicts.erase(iterOfElem->first);
       }
@@ -386,7 +383,7 @@ void mihalchenko::count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
       count++;
     }
   }
-  out << "Words with frequency " << freq << ":" << count << "\n";
+  out << "Words with frequency " << freq << " : " << count << "\n";
 }
 
 void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::ostream &out)
