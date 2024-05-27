@@ -113,7 +113,7 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
   size_t num = 0;
   out << "List of created dictionaries and their sizes:\n";
 
-  for (auto iter : mapOfDictionaries)
+  for (const auto &iter : mapOfDictionaries)
   {
     num++;
     out << num << ". " << iter.first << ", size = ";
@@ -129,30 +129,28 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     printErrorMessage(out);
     return;
   }
-  std::string word = "";
   size_t freq = 0;
-  auto iterOfDict = mapOfDictionaries.find(name)->second;
-  if (is >> word && !isdigit(word[0]))
+  const auto &iterOfDict = mapOfDictionaries.find(name)->second;
+  if (is >> freq)
   {
+    for (auto iterOfElem = iterOfDict.begin(); iterOfElem != iterOfDict.end(); iterOfElem++)
+    {
+      if (iterOfElem->second == freq)
+      {
+        out << iterOfElem->first << "\n";
+      }
+    }
+  }
+  else
+  {
+    std::string word = "";
+    is >> word;
     if (iterOfDict.find(word) == iterOfDict.end())
     {
       printErrorMessage(out);
       return;
     }
     out << "The frequency of this word is: " << iterOfDict.find(word)->second << "\n";
-  }
-  else if (is >> freq && isdigit(freq))
-  {
-    std::vector<std::string> freqVec;
-    for (dict_t::const_iterator it = iterOfDict.begin(); it != iterOfDict.end(); it++)
-    {
-      if (it->second == freq)
-      {
-        const std::string temp = it->first;
-        freqVec.push_back(temp);
-      }
-    }
-    std::copy(freqVec.begin(), freqVec.end(), std::ostream_iterator<std::string>(out << "Words with this frequency:\n", "\n"));
   }
 }
 
