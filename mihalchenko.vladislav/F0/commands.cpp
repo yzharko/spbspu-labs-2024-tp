@@ -112,12 +112,18 @@ void mihalchenko::view(mapOfDicts_t &mapOfDictionaries, std::ostream &out)
 {
   size_t num = 0;
   out << "List of created dictionaries and their sizes:\n";
-
   for (const auto &iter : mapOfDictionaries)
   {
     num++;
     out << num << ". " << iter.first << ", size = ";
-    out << iter.second.size() << "\n";
+    if (iter.second.begin() == iter.second.end())
+    {
+      out << 0 << "\n";
+    }
+    else
+    {
+      out << iter.second.size() << "\n";
+    }
   }
 }
 
