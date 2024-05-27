@@ -64,13 +64,19 @@ bool mihalchenko::compareElemByAlph(const pair_t &iterOfElem1, const pair_t &ite
 
 std::ostream &mihalchenko::printInvalidCommand(std::ostream &out)
 {
-  out << "<INVALID COMMAND>" << '\n';
+  out << "<INVALID COMMAND>\n";
   return out;
 }
 
 std::ostream &mihalchenko::printErrorMessage(std::ostream &out)
 {
-  out << "ERROR" << '\n';
+  out << "ERROR\n";
+  return out;
+}
+
+std::ostream &mihalchenko::printWrongInput(std::ostream &out)
+{
+  out << "Wrong input!\n";
   return out;
 }
 

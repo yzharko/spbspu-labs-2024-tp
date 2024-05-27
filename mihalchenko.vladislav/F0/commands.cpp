@@ -102,7 +102,7 @@ void mihalchenko::size(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   std::string nameOfDictionary = "";
   if (!(is >> nameOfDictionary))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   out << mapOfDictionaries.find(nameOfDictionary)->second.size() << "\n";
@@ -132,7 +132,7 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   std::string name = "";
   if (!(is >> name))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   size_t freq = 0;
@@ -166,7 +166,7 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   std::string newnameOfDict = "";
   if (!(is >> nameOfDict >> newnameOfDict))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDictName = mapOfDictionaries.find(nameOfDict);
@@ -196,7 +196,7 @@ void mihalchenko::deleteDict(mapOfDicts_t &mapOfDictionaries, std::istream &is, 
   std::string nameOfDelDict = "";
   if (!(is >> nameOfDelDict))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   if (!mapOfDictionaries.erase(nameOfDelDict))
@@ -216,14 +216,14 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   std::string word = "";
   if (!(is >> nameOfDict >> word))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDict = mapOfDictionaries.find(nameOfDict);
   size_t newFreq;
   if (!(is >> newFreq))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   if (iterOfDict->second.find(word) == iterOfDict->second.end())
@@ -244,7 +244,7 @@ void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   std::string word;
   if (!(is >> nameOfDict))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
@@ -271,7 +271,7 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   std::string word;
   if (!(is >> nameOfDict))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict);
@@ -280,7 +280,7 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     auto iterOfElem = iterOfDicts->second;
     if (!(is >> word))
     {
-      printErrorMessage(out);
+      printWrongInput(out);
       return;
     }
     if (iterOfElem.find(word) != iterOfElem.end())
@@ -301,7 +301,7 @@ void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   std::string sortParam = "";
   if (!(is >> nameOfDict >> sortParam))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   if (mapOfDictionaries.find(nameOfDict) != mapOfDictionaries.end())
@@ -334,7 +334,7 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   std::string param1 = "";
   if (!(is >> nameOfDict >> param1))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto &iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
@@ -348,7 +348,7 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     std::string param2 = "";
     if (!(is >> param2))
     {
-      printErrorMessage(out);
+      printWrongInput(out);
       return;
     }
     auto startIterOfElem = iterOfDicts.find(param1);
@@ -375,7 +375,7 @@ void mihalchenko::count(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   size_t freq = 0;
   if (!(is >> nameOfDict >> freq))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDicts = mapOfDictionaries.find(nameOfDict)->second;
@@ -397,7 +397,7 @@ void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   std::string newname = "";
   if (!(is >> nameOfDict1 >> nameOfDict2 >> newname))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   auto iterOfDict1 = mapOfDictionaries.find(nameOfDict1);
@@ -429,7 +429,7 @@ void mihalchenko::unique(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
   std::string newname = "";
   if (!(is >> nameOfDict1 >> nameOfDict2 >> newname))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   dict_t newDict;
@@ -445,7 +445,7 @@ void mihalchenko::swap(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   std::string nameOfDict2 = "";
   if (!(is >> nameOfDict1 >> nameOfDict2))
   {
-    printErrorMessage(out);
+    printWrongInput(out);
     return;
   }
   std::swap(mapOfDictionaries.find(nameOfDict1)->second, mapOfDictionaries.find(nameOfDict2)->second);

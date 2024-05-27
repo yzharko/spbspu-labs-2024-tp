@@ -12,6 +12,7 @@ namespace mihalchenko
   bool compareElemByAlph(const pair_t &iterOfElem1, const pair_t &iterOfElem2);
   std::ostream &printInvalidCommand(std::ostream &out);
   std::ostream &printErrorMessage(std::ostream &out);
+  std::ostream &printWrongInput(std::ostream &out);
   void findUnique(mapOfDicts_t &mapOfDictionaries, dict_t &newDict,
                     const std::string &nameOfDict1, const std::string &nameOfDict2, std::ostream &out);
 }
