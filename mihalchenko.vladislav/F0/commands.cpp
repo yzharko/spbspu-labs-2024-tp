@@ -153,7 +153,7 @@ void mihalchenko::find(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
     is >> word;
     if (iterOfDict.find(word) == iterOfDict.end())
     {
-      throw std::invalid_argument("Error: This elem doesn't exist\n");
+      throw std::out_of_range("Error: This elem doesn't exist\n");
     }
     out << "The frequency of this word is: " << iterOfDict.find(word)->second << "\n";
   }
@@ -180,12 +180,12 @@ void mihalchenko::rename(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     }
     else
     {
-      throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+      throw std::out_of_range("Error: This dictionary doesn't exist\n");
     }
   }
   else
   {
-    throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+    throw std::out_of_range("Error: This dictionary doesn't exist\n");
   }
 }
 
@@ -226,7 +226,7 @@ void mihalchenko::edit(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::o
   }
   if (iterOfDict->second.find(word) == iterOfDict->second.end())
   {
-    throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+    throw std::out_of_range("Error: This dictionary doesn't exist\n");
   }
   else
   {
@@ -257,12 +257,12 @@ void mihalchenko::insert(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     }
     else
     {
-      throw std::invalid_argument("Error: This element doesn't exist\n");
+      throw std::out_of_range("Error: This element doesn't exist\n");
     }
   }
   else
   {
-    throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+    throw std::out_of_range("Error: This dictionary doesn't exist\n");
   }
 }
 
@@ -291,7 +291,7 @@ void mihalchenko::remove(mapOfDicts_t &mapOfDictionaries, std::istream &is, std:
     }
     else
     {
-      throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+      throw std::out_of_range("Error: This dictionary doesn't exist\n");
     }
   }
 }
@@ -329,7 +329,7 @@ void mihalchenko::print(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   }
   else
   {
-    throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+    throw std::out_of_range("Error: This dictionary doesn't exist\n");
   }
 }
 
@@ -369,7 +369,7 @@ void mihalchenko::clear(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
     }
     else
     {
-      throw std::invalid_argument("Error: One of these elements doesn't exist\n");
+      throw std::out_of_range("Error: One of these elements doesn't exist\n");
     }
   }
 }
@@ -423,7 +423,7 @@ void mihalchenko::merge(mapOfDicts_t &mapOfDictionaries, std::istream &is, std::
   }
   else
   {
-    throw std::invalid_argument("Error: This dictionary doesn't exist\n");
+    throw std::out_of_range("Error: This dictionary doesn't exist\n");
   }
 }
 
