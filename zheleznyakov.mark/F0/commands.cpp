@@ -161,24 +161,45 @@ std::ostream & zheleznyakov::commands::diff(strings_t & strings, std::istream & 
   }
   wordpairs_t s1 = strings.at(l1).second;
   wordpairs_t s2 = strings.at(l2).second;
-  std::vector < std::string > matches;
+  std::vector<std::string> onlyInL1;
+  std::transform(
+    s1.begin(),
+    s1.end(),
+    std::back_inserter(onlyInL1),
+    extractKeyFromWordpair
+  );
+  std::sort(onlyInL1.begin(), onlyInL1.end());
+  auto last1 = std::unique(onlyInL1.begin(), onlyInL1.end());
   out << "Only in '" << l1 << "':\n";
-  for (auto i = s1.begin(); i != s1.end(); i++)
-  {
-    if (s2.find(i->first) == s2.end())
-    {
-      out << i->first << '\n';
-    }
-  }
+  std::copy_if(
+    onlyInL1.begin(),
+    last1,
+    std::ostream_iterator<std::string>(out, "\n"),
+    std::bind(hasNoWord, s2, std::placeholders::_1)
+  );
   out << "\nOnly in '" << l2 << "':\n";
-  for (auto i = s2.begin(); i != s2.end(); i++)
-  {
-    if (s1.find(i->first) == s1.end())
-    {
-      out << i->first << '\n';
-    }
-  }
+  std::vector<std::string> onlyInL2;
+  std::transform(
+    s2.begin(),
+    s2.end(),
+    std::back_inserter(onlyInL2),
+    extractKeyFromWordpair
+  );
+  std::sort(onlyInL2.begin(), onlyInL2.end());
+  auto last2 = std::unique(onlyInL2.begin(), onlyInL2.end());
+  std::copy_if(
+    onlyInL2.begin(),
+    last2,
+    std::ostream_iterator<std::string>(out, "\n"),
+    std::bind(hasNoWord, s1, std::placeholders::_1)
+  );
+
   return out;
+}
+
+bool zheleznyakov::hasNoWord(const wordpairs_t & ref, const std::string word)
+{
+  return ref.find(word) == ref.end();
 }
 
 std::ostream & zheleznyakov::commands::enter(strings_t & strings, std::string & active, std::istream & in, std::ostream & out)

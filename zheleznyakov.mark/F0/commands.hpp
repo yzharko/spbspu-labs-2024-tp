@@ -32,5 +32,6 @@ namespace zheleznyakov
   std::string coordsToPairs(const wordcoord_t & wordCoord);
   std::string wordEntryToString(const std::pair< std::string, wordpair_t >& pair);
   bool hasWord(const wordpairs_t & ref, const std::string word);
+  bool hasNoWord(const wordpairs_t & ref, const std::string word);
 }
 #endif
