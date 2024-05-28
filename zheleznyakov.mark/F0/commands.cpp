@@ -55,7 +55,7 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
       strings.begin(),
       strings.end(),
       std::ostream_iterator<std::string>(out, "\n"),
-      extractKeyFromString
+      extractKeyFromStringsPair
     );
   }
   return out;
@@ -305,6 +305,7 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
   return out;
 }
 
-const std::string& zheleznyakov::extractKeyFromString(const std::pair< std::string, string_t >& pair) {
+std::string zheleznyakov::extractKeyFromStringsPair(const std::pair< std::string, string_t > & pair)
+{
   return pair.first;
 }
