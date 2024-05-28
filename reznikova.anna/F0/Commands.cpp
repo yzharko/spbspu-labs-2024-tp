@@ -5,14 +5,14 @@
 #include <limits>
 
 using namespace reznikova;
-void helpCommand(std::ostream & out)
+void reznikova::helpCommand(std::ostream & out)
 {
-  out << "create < graph > < graphname > - создание пустого графа с"
-  << " названием  graphname\n";
-  out << "add < vertex > < index > – создание вершины графа с индексом index\n";
+  out << "create < graph > < graphname > - создание пустого графа"
+  << " с названием  graphname\n";
+  out << "add < vertice > < index > – создание вершины графа с индексом index\n";
   out << "add < edge > < first_vertice, second_vertice > - создание ребра между"
   << "вершинами first_vertice и second_vertice\n";
-  out << "delete < vertex > < name > - удаление вершины name\n";
+  out << "delete < vertice > < name > - удаление вершины name\n";
   out << "delete < edge > < first_vertice, second_vertice > - удаление ребра между"
   << "вершинами first_vertice и second_vertice\n";
   out << "capacity <  graphname > - вывод количества вершин в графе graphname\n";
@@ -26,11 +26,12 @@ void helpCommand(std::ostream & out)
   out << "clean < filename > — очищает содержимое файла\n";
   out << "open < read >< filename > — открытие файла с заданным названием и чтение"
   << "его содержимого\n";
-  out << "open < write >< filename > — открытие файла с заданным"
-  << " названием для записи данных\n";
+  out << "open < write >< filename > — открытие файла с заданным "
+  << "названием для записи данных\n";
 }
 
-void createCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::createCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   std::string graphName;
@@ -56,7 +57,8 @@ void createCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void switchCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::switchCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
@@ -87,7 +89,7 @@ void switchCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void addVertex(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -113,7 +115,7 @@ void addVertex(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void addEdge(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -140,7 +142,7 @@ void addEdge(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void addCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -151,11 +153,11 @@ void addCommand(std::istream & is, std::ostream & out, GraphList & list)
   {
     if (second_parameter == "vertex")
     {
-      reznikova::addVertex(is, out, list);
+      addVertex(is, out, list);
     }
     else if (second_parameter == "edge")
     {
-      reznikova::addEdge(is, out, list);
+      addEdge(is, out, list);
     }
     else
     {
@@ -164,7 +166,7 @@ void addCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void deleteVertex(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -190,7 +192,7 @@ void deleteVertex(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void deleteEdge(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -217,7 +219,8 @@ void deleteEdge(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void deleteCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::deleteCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -228,11 +231,11 @@ void deleteCommand(std::istream & is, std::ostream & out, GraphList & list)
   {
     if (second_parameter == "vertex")
     {
-      reznikova::deleteVertex(is, out, list);
+      deleteVertex(is, out, list);
     }
     else if (second_parameter == "edge")
     {
-      reznikova::deleteEdge(is, out, list);
+      deleteEdge(is, out, list);
     }
     else
     {
@@ -241,7 +244,8 @@ void deleteCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void capacityCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::capacityCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
@@ -268,7 +272,8 @@ void capacityCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void adjacentCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::adjacentCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -304,7 +309,7 @@ void adjacentCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void listCommand(std::ostream & out, GraphList & list)
+void reznikova::listCommand(std::ostream & out, reznikova::GraphList & list)
 {
   if (list.graphList_.empty())
   {
@@ -319,7 +324,7 @@ void listCommand(std::ostream & out, GraphList & list)
   }
 }
 
-void graphNameCommand(std::ostream & out, GraphList & list)
+void reznikova::graphNameCommand(std::ostream & out, reznikova::GraphList & list)
 {
   if (list.graphList_.empty())
   {
@@ -331,7 +336,7 @@ void graphNameCommand(std::ostream & out, GraphList & list)
   }
 }
 
-void bfsCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -356,7 +361,7 @@ void bfsCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void readMatrix(const std::string & filename, std::string & graphname, size_t & num,
+void reznikova::readMatrix(const std::string & filename, std::string & graphname, size_t & num,
   std::vector< size_t > & indices, std::vector< std::vector< size_t > > & matrix)
 {
   std::ifstream ifs(filename);
@@ -397,7 +402,7 @@ void readMatrix(const std::string & filename, std::string & graphname, size_t & 
   }
 }
 
-void clearCommand(std::istream & is, std::ostream & out)
+void reznikova::clearCommand(std::istream & is, std::ostream & out)
 {
   std::string filename;
   if (!(is >> filename))
@@ -423,7 +428,8 @@ void clearCommand(std::istream & is, std::ostream & out)
   }
 }
 
-void openFileToRead(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::openFileToRead(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -440,14 +446,15 @@ void openFileToRead(std::istream & is, std::ostream & out, GraphList & list)
     size_t num;
     std::vector< std::vector< size_t > > matrix;
     std::vector< size_t > indices;
-    reznikova::readMatrix(filename, graphName, num, indices, matrix);
+    readMatrix(filename, graphName, num, indices, matrix);
     Graph graph = createGraphFromAdjacencyMatrix(indices, matrix, graphName);
     list.addToList(graph);
     out << "Graph " << graphName << " were read from file " << filename << "\n";
   }
 }
 
-void openFileToWrite(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -476,7 +483,7 @@ void openFileToWrite(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void openCommand(std::istream & is, std::ostream & out, GraphList & list)
+void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
@@ -485,11 +492,11 @@ void openCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
   else if (second_parameter == "read")
   {
-    reznikova::openFileToRead(is, out, list);
+    openFileToRead(is, out, list);
   }
   else if (second_parameter == "write")
   {
-    reznikova::openFileToWrite(is, out, list);
+    openFileToWrite(is, out, list);
   }
   else
   {
@@ -497,12 +504,12 @@ void openCommand(std::istream & is, std::ostream & out, GraphList & list)
   }
 }
 
-void getOutputMessage(std::ostream & out)
+void reznikova::getOutputMessage(std::ostream & out)
 {
   out << "<INVALID COMMAND>\n";
 }
 
-bool checkExtraSymbols(std::istream & is)
+bool reznikova::checkExtraSymbols(std::istream & is)
 {
   std::string extra;
   if (std::getline(is, extra) and !extra.empty())
