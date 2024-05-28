@@ -1,7 +1,7 @@
 #ifndef ACCESSORY_FUNCTIONS_HPP
 #define ACCESSORY_FUNCTIONS_HPP
 
-#include <iostream>
+#include <iosfwd>
 #include "codingHuffman.hpp"
 
 namespace ponomarev

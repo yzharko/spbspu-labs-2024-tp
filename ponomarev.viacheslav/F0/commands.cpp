@@ -1,5 +1,6 @@
 #include "commands.hpp"
 #include <fstream>
+#include <iostream>
 #include "accessoryFunctions.hpp"
 
 void ponomarev::outputInfoAboutCommands(const std::string & parameters, ponomarev::HuffmanCode &)

@@ -1,6 +1,7 @@
 #include "accessoryFunctions.hpp"
 #include <cstdio>
 #include <fstream>
+#include <iostream>
 
 std::string ponomarev::cutType(std::string & line)
 {
