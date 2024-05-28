@@ -22,105 +22,93 @@ void reznikova::helpCommand(std::ostream & out)
   out << "BFS < first_vertice > - возвращает список вершин в порядке обхода в ширину из"
   << "исходной вершины first_vertice\n";
   out << "clean < filename > — очищает содержимое файла\n";
-  out << "open < read >< filename > — открытие файла с заданным названием и чтение его"
-  << "содержимого\n";
-  out << "open < write >< filename > — открытие файла с заданным названием для записи"
-  << "данных\n";
+  out << "open < read >< filename > — открытие файла с заданным названием и чтение"
+  << "его содержимого\n";
+  out << "open < write >< filename > — открытие файла с заданным названием для записи данных\n";
 }
 
-bool reznikova::checkWrongNumParameters(std::istream & is)
-{
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
-  {
-    return false;
-  }
-  return true;
-}
-
-void reznikova::createCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::createCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
-  if (!(is >> second_parameter))
-  {
-    throw std::logic_error("wrong parameters\n");
-  }
-  else if (second_parameter != "graph")
-  {
-    throw std::logic_error("wrong parameters\n");
-  }
   std::string graphName;
-  if (!(is >> graphName))
+  if (!(is >> second_parameter) or (second_parameter != "graph") or !(is >> graphName))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
+    
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    list.addToList(Graph(graphName));
+    try
+    {
+      list.addToList(Graph(graphName));
+      out << "Graph " << graphName << " created. This graph is active\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Graph " << graphName << " created. This graph is active\n";
 }
 
-void reznikova::switchCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::switchCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
-  if (!checkWrongNumParameters(is))
-  {
-    throw std::logic_error("too much parameters\n");
-  }
   if (!list.isGraphInList(graphName))
   {
-    throw std::logic_error("can't switch to graph which does not exist\n");
+    out << "can't switch to graph which does not exist\n";
+  }
+  else if (checkExtraSymbols(is))
+  {
+    out << "wrong num of parameters\n";
   }
   else if (list.findGraphByName(graphName)->isActive_ == true)
   {
-    throw std::logic_error("this graph is active already\n");
+    out << "this graph is active already\n";
   }
-  list.resetActiveFlags();
-  try
+  else
   {
-    list.findGraphByName(graphName)->isActive_ = true;
+    list.resetActiveFlags();
+    try
+    {
+      list.findGraphByName(graphName)->isActive_ = true;
+      out << "Switched to graph " << graphName << "\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Switched to graph " << graphName << "\n";
 }
 
-void reznikova::addVertex(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    WorkObject * graph = list.getActiveGraph();
-    graph->graph_.addVertex(index);
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.addVertex(index);
+      out << "Vertex with index " << index << " were added\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Vertex with index " << index << " were added\n";
 }
 
 void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
@@ -129,175 +117,188 @@ void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphL
   size_t second_index;
   if (!(is >> first_index >> second_index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    WorkObject * graph = list.getActiveGraph();
-    graph->graph_.addEdge(first_index, second_index);
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.addEdge(first_index, second_index);
+      out << "Edge between " << first_index << " and " << second_index << " indexes were added\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Edge between " << first_index << " and " << second_index;
-  out << " indexes were added\n";
 }
 
-void reznikova::addCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
   {
-    throw std::logic_error("wrong parameters\n");
-  }
-  if (second_parameter == "vertex")
-  {
-    addVertex(is, out, list);
-  }
-  else if (second_parameter == "edge")
-  {
-    addEdge(is, out, list);
+    out << "wrong parameters\n";
   }
   else
   {
-    throw std::logic_error("wrong parameters\n");
+    if (second_parameter == "vertex")
+    {
+      addVertex(is, out, list);
+    }
+    else if (second_parameter == "edge")
+    {
+      addEdge(is, out, list);
+    }
+    else
+    {
+      out << "wrong parameters\n";
+    }
   }
 }
 
-void reznikova::deleteVertex(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    WorkObject * graph = list.getActiveGraph();
-    graph->graph_.removeVertex(index);
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.removeVertex(index);
+      out << "Vertex with index " << index << " were deleted\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Vertex with index " << index << " were deleted\n";
 }
 
-void reznikova::deleteEdge(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
   if (!(is >> first_index >> second_index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    WorkObject * graph = list.getActiveGraph();
-    graph->graph_.removeEdge(first_index, second_index);
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.removeEdge(first_index, second_index);
+      out << "Edge between " << first_index << " and " << second_index << " indexes were deleted\n";
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Edge between " << first_index << " and " << second_index;
-  out << " indexes were deleted\n";
 }
 
-void reznikova::deleteCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
   {
-    throw std::logic_error("wrong parameters\n");
-  }
-  if (second_parameter == "vertex")
-  {
-    deleteVertex(is, out, list);
-  }
-  else if (second_parameter == "edge")
-  {
-    deleteEdge(is, out, list);
+    out << "wrong parameters\n";
   }
   else
   {
-    throw std::logic_error("wrong parameters\n");
+    if (second_parameter == "vertex")
+    {
+      deleteVertex(is, out, list);
+    }
+    else if (second_parameter == "edge")
+    {
+      deleteEdge(is, out, list);
+    }
+    else
+    {
+      out << "wrong parameters\n";
+    }
   }
 }
 
-void reznikova::capacityCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
-  if (!checkWrongNumParameters(is))
+  if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  if (!list.isGraphInList(graphName))
+  else if (!list.isGraphInList(graphName))
   {
-    throw std::logic_error("can't get capacity of a graph which does not exist\n");
+    out << "can't get capacity of a graph which does not exist\n";
   }
-  size_t capacity;
-  try
+  else
   {
-    capacity = list.findGraphByName(graphName)->graph_.getCapacity();
+    size_t capacity;
+    try
+    {
+      capacity = list.findGraphByName(graphName)->graph_.getCapacity();
+      out << "Capacity of graph " << graphName << " is " << capacity << "\n";
+    }
+    catch (const std::exception & e)
+    {
+      throw std::logic_error(e.what());
+    }
   }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Capacity of graph " << graphName << " is " << capacity << "\n";
 }
 
-void reznikova::adjacentCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::adjacentCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
   if (!(is >> first_index >> second_index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
-  }
-  bool isEdge;
-  try
-  {
-    WorkObject * graph = list.getActiveGraph();
-    isEdge = graph->graph_.isEdge(first_index, second_index);
-  }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
-  }
-  out << "Edge between " << first_index << " and " << second_index;
-  if (isEdge == true)
-  {
-    out << " is exist\n";
+    out << "wrong num of parameters\n";
   }
   else
   {
-    out << " is not exist\n";
+    bool isEdge;
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      isEdge = graph->graph_.isEdge(first_index, second_index);
+      out << "Edge between " << first_index << " and " << second_index;
+      if (isEdge == true)
+      {
+        out << " is exist\n";
+      }
+      else
+      {
+        out << " is not exist\n";
+      }
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
 }
 
@@ -328,26 +329,28 @@ void reznikova::graphNameCommand(std::ostream & out, reznikova::GraphList & list
   }
 }
 
-void reznikova::bfsCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  try
+  else
   {
-    WorkObject * graph = list.getActiveGraph();
-    graph->graph_.BFS(index, out);
-  }
-  catch (const std::exception & e)
-  {
-    throw std::logic_error(e.what());
+    try
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.BFS(index, out);
+    }
+    catch (const std::exception & e)
+    {
+      out << e.what();
+    }
   }
 }
 
@@ -397,76 +400,87 @@ void reznikova::clearCommand(std::istream & is, std::ostream & out)
   std::string filename;
   if (!(is >> filename))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  std::ofstream ofs(filename, std::ios::trunc);
-  if (!ofs.is_open())
+  else
   {
-    throw std::logic_error("no such file\n");
+    std::ofstream ofs(filename, std::ios::trunc);
+    if (!ofs.is_open())
+    {
+      out << "no such file\n";
+    }
+    else
+    {
+      ofs.close();
+      out << "File " << filename << " were cleared\n";
+    }
   }
-  ofs.close();
-  out << "File " << filename << " were cleared\n";
 }
 
-void reznikova::openFileToRead(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  std::string graphName;
-  size_t num;
-  std::vector< std::vector< size_t > > matrix;
-  std::vector< size_t > indices;
-  readMatrix(filename, graphName, num, indices, matrix);
-  Graph graph = createGraphFromAdjacencyMatrix(indices, matrix, graphName);
-  list.addToList(graph);
-  out << "Graph " << graphName << " were read from file " << filename << "\n";
+  else
+  {
+    std::string graphName;
+    size_t num;
+    std::vector< std::vector< size_t > > matrix;
+    std::vector< size_t > indices;
+    readMatrix(filename, graphName, num, indices, matrix);
+    Graph graph = createGraphFromAdjacencyMatrix(indices, matrix, graphName);
+    list.addToList(graph);
+    out << "Graph " << graphName << " were read from file " << filename << "\n";
+  }
 }
 
-void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (!checkWrongNumParameters(is))
+  else if (checkExtraSymbols(is))
   {
-    throw std::logic_error("too much parameters\n");
+    out << "wrong num of parameters\n";
   }
-  std::ofstream ofs(filename);
-  if (!ofs.is_open())
+  else
   {
-    throw std::logic_error("no such file\n");
+    std::ofstream ofs(filename);
+    if (!ofs.is_open())
+    {
+      out << "no such file\n";
+    }
+    else
+    {
+      WorkObject * graph = list.getActiveGraph();
+      graph->graph_.printAdjacencyMatrix(ofs);
+      ofs.close();
+      out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file " << filename;
+    }
   }
-  WorkObject * graph = list.getActiveGraph();
-  graph->graph_.printAdjacencyMatrix(ofs);
-  ofs.close();
-  out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file "
-  << filename;
 }
 
-void reznikova::openCommand(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string second_parameter;
   if (!(is >> second_parameter))
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
-  if (second_parameter == "read")
+  else if (second_parameter == "read")
   {
     openFileToRead(is, out, list);
   }
@@ -476,6 +490,21 @@ void reznikova::openCommand(std::istream & is, std::ostream & out,
   }
   else
   {
-    throw std::logic_error("wrong parameters\n");
+    out << "wrong parameters\n";
   }
+}
+
+void reznikova::getOutputMessage(std::ostream & out)
+{
+  out << "<INVALID COMMAND>\n";
+}
+
+bool reznikova::checkExtraSymbols(std::istream & is)
+{
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    return 1;
+  }
+  return 0;
 }

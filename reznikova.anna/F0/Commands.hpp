@@ -1,6 +1,7 @@
 #ifndef Commands_hpp
 #define Commands_hpp
 #include <iosfwd>
+#include <functional>
 #include "Graph.hpp"
 #include "WorkSpace.hpp"
 
@@ -27,6 +28,9 @@ namespace reznikova
   void openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list);
   void openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list);
   void openCommand(std::istream & is, std::ostream & out, GraphList & list);
+  void getOutputMessage(std::ostream & out);
+  bool checkExtraSymbols(std::istream & is);
 }
 
 #endif
+
