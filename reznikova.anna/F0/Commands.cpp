@@ -34,7 +34,6 @@ void reznikova::createCommand(std::istream & is, std::ostream & out, reznikova::
   if (!(is >> second_parameter) or (second_parameter != "graph") or !(is >> graphName))
   {
     out << "wrong parameters\n";
-    
   }
   else if (checkExtraSymbols(is))
   {
@@ -239,7 +238,8 @@ void reznikova::deleteCommand(std::istream & is, std::ostream & out, reznikova::
   }
 }
 
-void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::capacityCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string graphName;
   is >> graphName;
@@ -266,7 +266,8 @@ void reznikova::capacityCommand(std::istream & is, std::ostream & out, reznikova
   }
 }
 
-void reznikova::adjacentCommand(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::adjacentCommand(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -421,7 +422,8 @@ void reznikova::clearCommand(std::istream & is, std::ostream & out)
   }
 }
 
-void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::openFileToRead(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -445,7 +447,8 @@ void reznikova::openFileToRead(std::istream & is, std::ostream & out, reznikova:
   }
 }
 
-void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
+  reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -468,7 +471,8 @@ void reznikova::openFileToWrite(std::istream & is, std::ostream & out, reznikova
       WorkObject * graph = list.getActiveGraph();
       graph->graph_.printAdjacencyMatrix(ofs);
       ofs.close();
-      out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file " << filename;
+      out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file ";
+      out << filename;
     }
   }
 }
