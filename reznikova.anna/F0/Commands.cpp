@@ -4,7 +4,21 @@
 #include <sstream>
 #include <limits>
 
-using namespace reznikova;
+void reznikova::getOutputMessage(std::ostream & out)
+{
+  out << "<INVALID COMMAND>\n";
+}
+
+bool checkExtraSymbols(std::istream & is)
+{
+  std::string extra;
+  if (std::getline(is, extra) and !extra.empty())
+  {
+    return 1;
+  }
+  return 0;
+}
+
 void reznikova::helpCommand(std::ostream & out)
 {
   out << "create < graph > < graphname > - создание пустого графа"
@@ -89,7 +103,7 @@ void reznikova::switchCommand(std::istream & is, std::ostream & out,
   }
 }
 
-void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void addVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -104,7 +118,7 @@ void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::Grap
   {
     try
     {
-      WorkObject * graph = list.getActiveGraph();
+      reznikova::WorkObject * graph = list.getActiveGraph();
       graph->graph_.addVertex(index);
       out << "Vertex with index " << index << " were added\n";
     }
@@ -115,7 +129,7 @@ void reznikova::addVertex(std::istream & is, std::ostream & out, reznikova::Grap
   }
 }
 
-void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void addEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -131,7 +145,7 @@ void reznikova::addEdge(std::istream & is, std::ostream & out, reznikova::GraphL
   {
     try
     {
-      WorkObject * graph = list.getActiveGraph();
+      reznikova::WorkObject * graph = list.getActiveGraph();
       graph->graph_.addEdge(first_index, second_index);
       out << "Edge between " << first_index << " and " << second_index << " indexes were added\n";
     }
@@ -166,7 +180,7 @@ void reznikova::addCommand(std::istream & is, std::ostream & out, reznikova::Gra
   }
 }
 
-void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void deleteVertex(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t index;
   if (!(is >> index))
@@ -181,7 +195,7 @@ void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::G
   {
     try
     {
-      WorkObject * graph = list.getActiveGraph();
+      reznikova::WorkObject * graph = list.getActiveGraph();
       graph->graph_.removeVertex(index);
       out << "Vertex with index " << index << " were deleted\n";
     }
@@ -192,7 +206,7 @@ void reznikova::deleteVertex(std::istream & is, std::ostream & out, reznikova::G
   }
 }
 
-void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
+void deleteEdge(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   size_t first_index;
   size_t second_index;
@@ -208,7 +222,7 @@ void reznikova::deleteEdge(std::istream & is, std::ostream & out, reznikova::Gra
   {
     try
     {
-      WorkObject * graph = list.getActiveGraph();
+      reznikova::WorkObject * graph = list.getActiveGraph();
       graph->graph_.removeEdge(first_index, second_index);
       out << "Edge between " << first_index << " and " << second_index << " indexes were deleted\n";
     }
@@ -361,7 +375,7 @@ void reznikova::bfsCommand(std::istream & is, std::ostream & out, reznikova::Gra
   }
 }
 
-void reznikova::readMatrix(const std::string & filename, std::string & graphname, size_t & num,
+void readMatrix(const std::string & filename, std::string & graphname, size_t & num,
   std::vector< size_t > & indices, std::vector< std::vector< size_t > > & matrix)
 {
   std::ifstream ifs(filename);
@@ -428,8 +442,7 @@ void reznikova::clearCommand(std::istream & is, std::ostream & out)
   }
 }
 
-void reznikova::openFileToRead(std::istream & is, std::ostream & out,
-  reznikova::GraphList & list)
+void openFileToRead(std::istream & is, std::ostream & out, reznikova::GraphList & list)
 {
   std::string filename;
   if (!(is >> filename))
@@ -447,13 +460,13 @@ void reznikova::openFileToRead(std::istream & is, std::ostream & out,
     std::vector< std::vector< size_t > > matrix;
     std::vector< size_t > indices;
     readMatrix(filename, graphName, num, indices, matrix);
-    Graph graph = createGraphFromAdjacencyMatrix(indices, matrix, graphName);
+    reznikova::Graph graph = reznikova::createGraphFromAdjacencyMatrix(indices, matrix, graphName);
     list.addToList(graph);
     out << "Graph " << graphName << " were read from file " << filename << "\n";
   }
 }
 
-void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
+void openFileToWrite(std::istream & is, std::ostream & out,
   reznikova::GraphList & list)
 {
   std::string filename;
@@ -474,7 +487,7 @@ void reznikova::openFileToWrite(std::istream & is, std::ostream & out,
     }
     else
     {
-      WorkObject * graph = list.getActiveGraph();
+      reznikova::WorkObject * graph = list.getActiveGraph();
       graph->graph_.printAdjacencyMatrix(ofs);
       ofs.close();
       out << "Matrix of graph " << graph->graph_.getGraphName() << " were written in file ";
@@ -502,19 +515,4 @@ void reznikova::openCommand(std::istream & is, std::ostream & out, reznikova::Gr
   {
     out << "wrong parameters\n";
   }
-}
-
-void reznikova::getOutputMessage(std::ostream & out)
-{
-  out << "<INVALID COMMAND>\n";
-}
-
-bool reznikova::checkExtraSymbols(std::istream & is)
-{
-  std::string extra;
-  if (std::getline(is, extra) and !extra.empty())
-  {
-    return 1;
-  }
-  return 0;
 }
