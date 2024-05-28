@@ -110,7 +110,6 @@ std::ostream & zheleznyakov::commands::cmp(strings_t & strings, std::istream & i
   }
   wordpairs_t s1 = strings.at(l1).second;
   wordpairs_t s2 = strings.at(l2).second;
-  
   std::vector<std::string> matches;
   std::transform(
     s1.begin(),
@@ -118,17 +117,14 @@ std::ostream & zheleznyakov::commands::cmp(strings_t & strings, std::istream & i
     std::back_inserter(matches),
     extractKeyFromWordpair
   );
-  
   std::sort(matches.begin(), matches.end());
   auto last = std::unique(matches.begin(), matches.end());
-  
   std::copy_if(
     matches.begin(),
     last,
     std::ostream_iterator < std::string > (out, "\n"),
     std::bind(hasWord, s2, std::placeholders::_1)
   );
-  
   return out;
 }
 
