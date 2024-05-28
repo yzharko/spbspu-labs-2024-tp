@@ -1,5 +1,5 @@
 #include "commands.hpp"
-#include <iostream>
+#include <algorithm>
 #include <iterator>
 #include <fstream>
 #include <limits>
