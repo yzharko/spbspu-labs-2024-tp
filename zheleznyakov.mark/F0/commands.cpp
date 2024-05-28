@@ -244,7 +244,7 @@ std::ostream & zheleznyakov::commands::read(strings_t & strings, std::string & a
   {
     std::string contents;
     std::string line;
-    while (std::getline(std::cin, line)) {
+    while (std::getline(in, line)) {
       if (line == "end")
       {
         break;
