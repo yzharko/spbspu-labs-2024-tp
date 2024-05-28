@@ -110,15 +110,31 @@ std::ostream & zheleznyakov::commands::cmp(strings_t & strings, std::istream & i
   }
   wordpairs_t s1 = strings.at(l1).second;
   wordpairs_t s2 = strings.at(l2).second;
-  std::vector < std::string > matches;
-  for (auto i = s1.begin(); i != s1.end(); i++)
-  {
-    if (s2.find(i->first) != s2.end())
-    {
-      out << i->first << '\n';
-    }
-  }
+  
+  std::vector<std::string> matches;
+  std::transform(
+    s1.begin(),
+    s1.end(),
+    std::back_inserter(matches),
+    extractKeyFromWordpair
+  );
+  
+  std::sort(matches.begin(), matches.end());
+  auto last = std::unique(matches.begin(), matches.end());
+  
+  std::copy_if(
+    matches.begin(),
+    last,
+    std::ostream_iterator < std::string > (out, "\n"),
+    std::bind(hasWord, s2, std::placeholders::_1)
+  );
+  
   return out;
+}
+
+bool zheleznyakov::hasWord(const wordpairs_t & ref, const std::string word)
+{
+  return ref.find(word) != ref.end();
 }
 
 std::ostream & zheleznyakov::commands::diff(strings_t & strings, std::istream & in, std::ostream & out)
@@ -313,6 +329,11 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
 }
 
 std::string zheleznyakov::extractKeyFromStringsPair(const std::pair< std::string, string_t > & pair)
+{
+  return pair.first;
+}
+
+std::string zheleznyakov::extractKeyFromWordpair(const std::pair< std::string, wordpair_t > & pair)
 {
   return pair.first;
 }
