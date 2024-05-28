@@ -263,19 +263,22 @@ std::ostream & zheleznyakov::commands::info(strings_t & strings, std::string & a
 {
   std::string word = "";
   in >> word;
-  auto currentString = strings.at(active);
+  string_t currentString = strings.at(active);
   if (currentString.second.find(word) == currentString.second.end())
   {
     throw std::logic_error(statusString("Word is not found\n", "error"));
   }
-  auto currentWord = currentString.second[word];
+  wordpair_t currentWord = currentString.second[word];
   out << word << '\n'
   << "Repeats: " << currentWord.size() << '\n'
   << "Coords:\n";
-  for (auto i = currentWord.begin(); i != currentWord.end(); i++)
-  {
-    out << i->first << ';' << i->second << '\n';
-  }
+  std::ostream_iterator<std::string> out_iter(out, "\n");
+  std::transform(
+    currentWord.begin(),
+    currentWord.end(),
+    out_iter,
+    coordsToPairs
+  );
   return out;
 }
 
@@ -308,4 +311,9 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
 std::string zheleznyakov::extractKeyFromStringsPair(const std::pair< std::string, string_t > & pair)
 {
   return pair.first;
+}
+
+std::string zheleznyakov::coordsToPairs(const wordcoord_t & wordCoord)
+{
+  return std::to_string(wordCoord.first) + ';' + std::to_string(wordCoord.second);
 }

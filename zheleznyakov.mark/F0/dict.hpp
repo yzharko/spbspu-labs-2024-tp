@@ -6,7 +6,9 @@
 
 namespace zheleznyakov
 {
-  using wordpairs_t = std::map< std::string, std::vector < std::pair < size_t, size_t > > >;
+  using wordcoord_t = std::pair < size_t, size_t >;
+  using wordpair_t = std::vector < wordcoord_t >;
+  using wordpairs_t = std::map< std::string, wordpair_t >;
   using string_t = std::pair< std::string, wordpairs_t >;
   using strings_t = std::map< std::string, string_t >;
 

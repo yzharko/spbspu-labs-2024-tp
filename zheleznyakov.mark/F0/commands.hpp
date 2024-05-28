@@ -28,5 +28,6 @@ namespace zheleznyakov
   std::string prompt(std::string);
 
   std::string extractKeyFromStringsPair(const std::pair< std::string, string_t > & pair);
+  std::string coordsToPairs(const wordcoord_t & wordCoord);
 }
 #endif
