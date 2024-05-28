@@ -1,5 +1,6 @@
 #include "commands.hpp"
 #include <iostream>
+#include <iterator>
 #include <fstream>
 #include <limits>
 
@@ -50,10 +51,12 @@ std::ostream & zheleznyakov::commands::list(strings_t & strings, std::istream & 
   if (!strings.empty())
   {
     out << "\nNames:\n";
-    for (auto i = strings.begin(); i != strings.end(); i++)
-    {
-      out << i->first << '\n';
-    }
+    std::transform(
+      strings.begin(),
+      strings.end(),
+      std::ostream_iterator<std::string>(out, "\n"),
+      extractKeyFromString
+    );
   }
   return out;
 }
@@ -300,4 +303,8 @@ std::ostream & zheleznyakov::commands::quit(std::string & active, std::istream &
   }
   active = "";
   return out;
+}
+
+const std::string& zheleznyakov::extractKeyFromString(const std::pair< std::string, string_t >& pair) {
+  return pair.first;
 }

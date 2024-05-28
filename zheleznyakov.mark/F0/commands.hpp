@@ -26,5 +26,7 @@ namespace zheleznyakov
 
   std::string statusString(std::string, std::string);
   std::string prompt(std::string);
+
+  const std::string & extractKeyFromString(const std::pair< std::string, string_t > & pair);
 }
 #endif
