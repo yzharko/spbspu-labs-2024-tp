@@ -27,7 +27,9 @@ void deleteVertex(Graph &graph, const std::string &vertex) {
     throw std::logic_error("Vertex does not exist\n");
   }
   graph.adjList.erase(vertex);
-  for (auto &[key, edges]: graph.adjList) {
+  for (auto &keyEdgesPair: graph.adjList) {
+    auto &key = keyEdgesPair.first;
+    auto &edges = keyEdgesPair.second;
     edges.erase(vertex);
   }
 }
@@ -44,9 +46,13 @@ void deleteEdge(Graph &graph, const std::string &vertex1, const std::string &ver
 }
 
 void showGraph(const Graph &graph) {
-  for (const auto &[vertex, edges]: graph.adjList) {
+  for (const auto &vertexEdgesPair: graph.adjList) {
+    const auto &vertex = vertexEdgesPair.first;
+    const auto &edges = vertexEdgesPair.second;
     std::cout << vertex << ": ";
-    for (const auto &[neighbor, weight]: edges) {
+    for (const auto &neighborWeightPair: edges) {
+      const auto &neighbor = neighborWeightPair.first;
+      const auto &weight = neighborWeightPair.second;
       std::cout << "(" << neighbor << ", " << weight << ") ";
     }
     std::cout << "\n";
@@ -68,8 +74,11 @@ void neighbors(const Graph &graph, const std::string &vertex) {
   if (graph.adjList.find(vertex) == graph.adjList.end()) {
     throw std::logic_error("Vertex does not exist\n");
   }
-  for (const auto &[neighbor, weight]: graph.adjList.at(vertex)) {
-    std::cout << neighbor << " ";
+  const auto &edges = graph.adjList.at(vertex);
+  for (const auto &neighborWeightPair: edges) {
+    const auto &neighbor = neighborWeightPair.first;
+    const auto &weight = neighborWeightPair.second;
+    std::cout << "(" << neighbor << ", " << weight << ") ";
   }
   std::cout << "\n";
 }
@@ -91,7 +100,8 @@ void isConnected(const Graph &graph, const std::string &vertex1, const std::stri
     }
     if (std::find(visited.begin(), visited.end(), current) == visited.end()) {
       visited.push_back(current);
-      for (const auto &[neighbor, _]: graph.adjList.at(current)) {
+      for (const auto &neighborWeightPair: graph.adjList.at(current)) {
+        const auto &neighbor = neighborWeightPair.first;
         stack.push_back(neighbor);
       }
     }
