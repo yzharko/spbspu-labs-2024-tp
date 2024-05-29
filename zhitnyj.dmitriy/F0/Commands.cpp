@@ -3,9 +3,9 @@
 #include <limits>
 #include <queue>
 #include <algorithm>
+#include <iofmtguard.hpp>
 #include "Commands.hpp"
 #include "GraphUtils.hpp"
-#include "iofmtguard.hpp"
 
 void resetDijkstra(Graph &graph) {
   graph.distances.clear();
