@@ -82,16 +82,17 @@ void isConnected(const Graph &graph, const std::string &vertex1, const std::stri
     std::string current = stack.back();
     stack.pop_back();
     if (current == vertex2) {
-      std::cout << "Connected\n";
-      return;
+      output << "Connected\n";
     }
-    if (std::find(visited.begin(), visited.end(), current) == visited.end()) {
-      visited.push_back(current);
-      for (const auto &neighborWeightPair: graph.adjList.at(current)) {
-        const auto &neighbor = neighborWeightPair.first;
-        stack.push_back(neighbor);
+    else {
+      if (std::find(visited.begin(), visited.end(), current) == visited.end()) {
+        visited.push_back(current);
+        for (const auto &neighborWeightPair: graph.adjList.at(current)) {
+          const auto &neighbor = neighborWeightPair.first;
+          stack.push_back(neighbor);
+        }
       }
     }
   }
-  std::cout << "Not connected\n";
+  output << "Not connected\n";
 }
