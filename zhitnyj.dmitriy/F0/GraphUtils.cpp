@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <vector>
 #include "GraphUtils.hpp"
 
@@ -28,7 +29,6 @@ void deleteVertex(Graph &graph, const std::string &vertex) {
   }
   graph.adjList.erase(vertex);
   for (auto &keyEdgesPair: graph.adjList) {
-    auto &key = keyEdgesPair.first;
     auto &edges = keyEdgesPair.second;
     edges.erase(vertex);
   }
