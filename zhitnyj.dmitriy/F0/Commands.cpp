@@ -37,7 +37,9 @@ void dijkstraCommand(std::istream &input, std::ostream &output, Graph &graph) {
       if (currentDistance > graph.distances[currentVertex]) {
         continue;
       }
-      for (const auto &[neighbor, weight]: graph.adjList[currentVertex]) {
+      for (const auto& neighborWeightPair : graph.adjList[currentVertex]) {
+        const auto& neighbor = neighborWeightPair.first;
+        const auto& weight = neighborWeightPair.second;
         int distance = currentDistance + weight;
         if (distance < graph.distances[neighbor]) {
           graph.distances[neighbor] = distance;
@@ -90,9 +92,13 @@ void saveGraphCommand(std::istream &input, std::ostream &output, const Graph &gr
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
 
-  for (const auto &[vertex, edges]: graph.adjList) {
+  for (const auto& vertexEdgesPair : graph.adjList) {
+    const auto& vertex = vertexEdgesPair.first;
+    const auto& edges = vertexEdgesPair.second;
     file << vertex;
-    for (const auto &[neighbor, weight]: edges) {
+    for (const auto& neighborWeightPair : edges) {
+      const auto& neighbor = neighborWeightPair.first;
+      const auto& weight = neighborWeightPair.second;
       file << " " << neighbor << " " << weight;
     }
     file << "\n";
@@ -102,7 +108,9 @@ void saveGraphCommand(std::istream &input, std::ostream &output, const Graph &gr
 std::vector< std::string > split(const std::string &str) {
   std::vector< std::string > tokens;
   std::string token;
-  size_t start = 0, end = 0;
+  size_t start = 0;
+  size_t end = 0;
+
   while ((end = str.find(' ', start)) != std::string::npos) {
     token = str.substr(start, end - start);
     tokens.push_back(token);
