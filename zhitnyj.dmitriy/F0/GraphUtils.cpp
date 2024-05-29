@@ -58,6 +58,9 @@ void updateEdge(Graph &graph, const std::string &vertex1, const std::string &ver
 }
 
 void neighbors(const Graph &graph, const std::string &vertex, std::ostream &output) {
+  iofmtguard guard(output);
+  output << std::fixed << std::setprecision(1);
+  
   if (graph.adjList.find(vertex) == graph.adjList.end()) {
     throw std::logic_error("Vertex does not exist\n");
   }
@@ -75,9 +78,11 @@ void isConnected(const Graph &graph, const std::string &vertex1, const std::stri
     throw std::logic_error("One or both vertices do not exist\n");
   }
 
+  iofmtguard guard(output);
+  output << std::fixed << std::setprecision(1);
+
   std::vector< std::string > visited;
   std::vector< std::string > stack = {vertex1};
-
   while (!stack.empty()) {
     std::string current = stack.back();
     stack.pop_back();
