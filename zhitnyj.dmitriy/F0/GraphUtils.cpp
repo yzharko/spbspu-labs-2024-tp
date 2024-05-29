@@ -1,3 +1,4 @@
+#include <iostream>
 #include <algorithm>
 #include <vector>
 #include "GraphUtils.hpp"
@@ -45,20 +46,6 @@ void deleteEdge(Graph &graph, const std::string &vertex1, const std::string &ver
   graph.adjList[vertex2].erase(vertex1);
 }
 
-void showGraph(const Graph &graph) {
-  for (const auto &vertexEdgesPair: graph.adjList) {
-    const auto &vertex = vertexEdgesPair.first;
-    const auto &edges = vertexEdgesPair.second;
-    std::cout << vertex << ": ";
-    for (const auto &neighborWeightPair: edges) {
-      const auto &neighbor = neighborWeightPair.first;
-      const auto &weight = neighborWeightPair.second;
-      std::cout << "(" << neighbor << ", " << weight << ") ";
-    }
-    std::cout << "\n";
-  }
-}
-
 void updateEdge(Graph &graph, const std::string &vertex1, const std::string &vertex2, int newWeight) {
   if (newWeight <= 0) {
     throw std::logic_error("Invalid edge weight\n");
@@ -70,7 +57,7 @@ void updateEdge(Graph &graph, const std::string &vertex1, const std::string &ver
   graph.adjList[vertex2][vertex1] = newWeight;
 }
 
-void neighbors(const Graph &graph, const std::string &vertex) {
+void neighbors(const Graph &graph, const std::string &vertex, std::ostream &output) {
   if (graph.adjList.find(vertex) == graph.adjList.end()) {
     throw std::logic_error("Vertex does not exist\n");
   }
@@ -78,12 +65,12 @@ void neighbors(const Graph &graph, const std::string &vertex) {
   for (const auto &neighborWeightPair: edges) {
     const auto &neighbor = neighborWeightPair.first;
     const auto &weight = neighborWeightPair.second;
-    std::cout << "(" << neighbor << ", " << weight << ") ";
+    output << "(" << neighbor << ", " << weight << ") ";
   }
-  std::cout << "\n";
+  output << "\n";
 }
 
-void isConnected(const Graph &graph, const std::string &vertex1, const std::string &vertex2) {
+void isConnected(const Graph &graph, const std::string &vertex1, const std::string &vertex2, std::ostream &output) {
   if (graph.adjList.find(vertex1) == graph.adjList.end() || graph.adjList.find(vertex2) == graph.adjList.end()) {
     throw std::logic_error("One or both vertices do not exist\n");
   }
