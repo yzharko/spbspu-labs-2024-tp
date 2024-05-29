@@ -2,6 +2,7 @@
 #include <fstream>
 #include <limits>
 #include <queue>
+#include <functional>
 #include <algorithm>
 #include "Commands.hpp"
 #include "GraphUtils.hpp"
