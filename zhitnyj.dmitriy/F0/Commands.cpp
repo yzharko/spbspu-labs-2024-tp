@@ -19,10 +19,10 @@ void resetDijkstra(Graph &graph) {
 void dijkstraCommand(std::istream &input, std::ostream &output, Graph &graph) {
   std::string startVertex;
   input >> startVertex;
-  
+
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   if (graph.adjList.find(startVertex) == graph.adjList.end()) {
     output << "Vertex does not exist\n";
   }
@@ -64,7 +64,7 @@ void shortestPathCommand(std::istream &input, std::ostream &output, const Graph 
 
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   if (graph.distances.find(endVertex) == graph.distances.end()) {
     output << "One of the vertices doesn't exists\n";
   }
@@ -99,7 +99,7 @@ void saveGraphCommand(std::istream &input, std::ostream &output, const Graph &gr
 
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   for (const auto &vertexEdgesPair: graph.adjList) {
     const auto &vertex = vertexEdgesPair.first;
     const auto &edges = vertexEdgesPair.second;
@@ -138,7 +138,7 @@ void loadGraphCommand(std::istream &input, std::ostream &output, Graph &graph) {
 
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   graph.adjList.clear();
   std::string line;
   while (std::getline(file, line)) {
@@ -270,7 +270,7 @@ void isConnectedCommand(std::istream &input, std::ostream &output, const Graph &
 void helpCommand(std::ostream &output) {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   output << "Available commands:\n";
   output << "help - Display this help message.\n";
   output << "add v <vertex> - Add a vertex to the graph.\n";
@@ -290,6 +290,6 @@ void helpCommand(std::ostream &output) {
 void printInvalidCommand(std::ostream &output) {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   output << "<INVALID COMMAND>\n";
 }
