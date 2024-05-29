@@ -1,4 +1,5 @@
 #include <iostream>
+#include <functional>
 #include <map>
 #include "Graph.hpp"
 #include "Commands.hpp"
