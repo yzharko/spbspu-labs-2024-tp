@@ -3,9 +3,9 @@
 #include <limits>
 #include <queue>
 #include <algorithm>
-#include <iofmtguard.hpp>
 #include "Commands.hpp"
 #include "GraphUtils.hpp"
+#include "iofmtguard.hpp"
 
 void resetDijkstra(Graph &graph) {
   graph.distances.clear();
@@ -52,7 +52,12 @@ void shortestPathCommand(std::istream &input, std::ostream &output, const Graph 
   std::string startVertex, endVertex;
   input >> startVertex >> endVertex;
 
-  if (graph.distances.find(endVertex) == graph.distances.end() || graph.distances.at(endVertex) == std::numeric_limits< int >::max()) {
+
+  if (graph.distances.find(endVertex) == graph.distances.end())
+  {
+    output << "One of the vertices doesn't exists\n";
+  }
+  else if (graph.distances.at(endVertex) == std::numeric_limits< int >::max()) {
     output << "No path between vertices\n";
   }
   else {
