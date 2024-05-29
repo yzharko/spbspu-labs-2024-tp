@@ -60,7 +60,7 @@ void updateEdge(Graph &graph, const std::string &vertex1, const std::string &ver
 void neighbors(const Graph &graph, const std::string &vertex, std::ostream &output) {
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
-  
+
   if (graph.adjList.find(vertex) == graph.adjList.end()) {
     throw std::logic_error("Vertex does not exist\n");
   }
