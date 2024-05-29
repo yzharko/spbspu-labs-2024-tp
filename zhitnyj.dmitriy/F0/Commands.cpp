@@ -27,11 +27,14 @@ void dijkstraCommand(std::istream &input, std::ostream &output, Graph &graph) {
     resetDijkstra(graph);
 
     graph.distances[startVertex] = 0;
+    using QueueElement = std::pair< int, std::string >;
     std::priority_queue< std::pair< int, std::string >, std::vector< std::pair< int, std::string > >, std::greater<> > priorityQueue;
     priorityQueue.emplace(0, startVertex);
 
     while (!priorityQueue.empty()) {
-      auto [currentDistance, currentVertex] = priorityQueue.top();
+      QueueElement current = priorityQueue.top();
+      int currentDistance = current.first;
+      std::string currentVertex = current.second;
       priorityQueue.pop();
 
       if (currentDistance > graph.distances[currentVertex]) {
