@@ -1,13 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <limits>
-#include <queue>
-#include <functional>
-#include <algorithm>
-#include "Commands.hpp"
-#include "GraphUtils.hpp"
-#include "iofmtguard.hpp"
-
 void resetDijkstra(Graph &graph) {
   graph.distances.clear();
   graph.predecessors.clear();
@@ -37,9 +27,10 @@ void dijkstraCommand(std::istream &input, std::ostream &output, Graph &graph) {
       if (currentDistance > graph.distances[currentVertex]) {
         continue;
       }
-      for (const auto& neighborWeightPair : graph.adjList[currentVertex]) {
-        const auto& neighbor = neighborWeightPair.first;
-        const auto& weight = neighborWeightPair.second;
+      for (const auto &neighborWeightPair: graph.adjList[currentVertex]) {
+        const std::string &neighbor = neighborWeightPair.first;
+        int weight = neighborWeightPair.second;
+
         int distance = currentDistance + weight;
         if (distance < graph.distances[neighbor]) {
           graph.distances[neighbor] = distance;
@@ -56,8 +47,7 @@ void shortestPathCommand(std::istream &input, std::ostream &output, const Graph 
   input >> startVertex >> endVertex;
 
 
-  if (graph.distances.find(endVertex) == graph.distances.end())
-  {
+  if (graph.distances.find(endVertex) == graph.distances.end()) {
     output << "One of the vertices doesn't exists\n";
   }
   else if (graph.distances.at(endVertex) == std::numeric_limits< int >::max()) {
@@ -92,13 +82,13 @@ void saveGraphCommand(std::istream &input, std::ostream &output, const Graph &gr
   iofmtguard guard(output);
   output << std::fixed << std::setprecision(1);
 
-  for (const auto& vertexEdgesPair : graph.adjList) {
-    const auto& vertex = vertexEdgesPair.first;
-    const auto& edges = vertexEdgesPair.second;
+  for (const auto &vertexEdgesPair: graph.adjList) {
+    const auto &vertex = vertexEdgesPair.first;
+    const auto &edges = vertexEdgesPair.second;
     file << vertex;
-    for (const auto& neighborWeightPair : edges) {
-      const auto& neighbor = neighborWeightPair.first;
-      const auto& weight = neighborWeightPair.second;
+    for (const auto &neighborWeightPair: edges) {
+      const auto &neighbor = neighborWeightPair.first;
+      const auto &weight = neighborWeightPair.second;
       file << " " << neighbor << " " << weight;
     }
     file << "\n";
@@ -214,7 +204,17 @@ void delCommand(std::istream &input, std::ostream &output, Graph &graph) {
 }
 
 void showGraphCommand(std::ostream &output, const Graph &graph) {
-  showGraph(graph);
+  for (const auto &vertexEdgesPair: graph.adjList) {
+    const auto &vertex = vertexEdgesPair.first;
+    const auto &edges = vertexEdgesPair.second;
+    output << vertex << ": ";
+    for (const auto &neighborWeightPair: edges) {
+      const auto &neighbor = neighborWeightPair.first;
+      const auto &weight = neighborWeightPair.second;
+      output << "(" << neighbor << ", " << weight << ") ";
+    }
+    output << "\n";
+  }
 }
 
 void updateEdgeCommand(std::istream &input, std::ostream &output, Graph &graph) {
@@ -238,13 +238,13 @@ void updateEdgeCommand(std::istream &input, std::ostream &output, Graph &graph) 
 void neighborsCommand(std::istream &input, std::ostream &output, const Graph &graph) {
   std::string vertex;
   input >> vertex;
-  neighbors(graph, vertex);
+  neighbors(graph, vertex, output);
 }
 
 void isConnectedCommand(std::istream &input, std::ostream &output, const Graph &graph) {
   std::string vertex1, vertex2;
   input >> vertex1 >> vertex2;
-  isConnected(graph, vertex1, vertex2);
+  isConnected(graph, vertex1, vertex2, output);
 }
 
 void helpCommand(std::ostream &output) {
