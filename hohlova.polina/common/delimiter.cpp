@@ -3,6 +3,9 @@
 
 namespace hohlova
 {
+  using sep = DelimiterIO;
+  using label = LabelIO;
+
   std::istream& operator>>(std::istream& in, DelimiterIO&& dest)
   {
     std::istream::sentry sentry(in);
@@ -28,6 +31,10 @@ namespace hohlova
     }
     std::string data = "";
     if ((in >> data) && (data != dest.exp))
+    {
+      in.setstate(std::ios::failbit);
+    }
+    if (in.peek() == '\n')
     {
       in.setstate(std::ios::failbit);
     }
