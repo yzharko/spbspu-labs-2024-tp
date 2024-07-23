@@ -1,56 +1,103 @@
-#include "DataStruct.hpp"
+#include "DataStruct.h"
 #include <sstream>
-#include <algorithm>
+#include <iomanip>
 
-bool is_number(const std::string& s) {
-  return !s.empty() && std::all_of(s.begin(), s.end(), ::isdigit);
-}
-DataStruct readDataStruct(const std::string& line) {
-  DataStruct data;
-  std::istringstream iss(line);
-  char delimiter;
-  std::string key, value;
-  iss >> delimiter;
-  while (iss >> key) {
-    if (key.back() == ':')
-      key.pop_back();
-    std::getline(iss, value, ':');
-    if (!value.empty() && value.front() == ' ')
-      value = value.substr(2, value.size() - 3);
-    if (key == "key1" || key == ":key1") {
-      data.key1 = std::stoull(value, nullptr, 2);
+namespace panov {
 
-      if (value.size() > 2 && (value[0] == '0' && (value[1] == 'b' || value[1] == 'B'))) {
-        value = value.substr(2);
-        if (is_number(value))
-          data.key1 = std::stoull(value, nullptr, 2);
-      }
-      else { data.key1 = std::stoull(value); }
+  std::istream& operator>>(std::istream& in, std::complex<double>& c) {
+    char ch;
+    double real, imag;
+    in >> ch;
+    if (ch != '#') {
+      in.setstate(std::ios::failbit);
+      return in;
     }
-    else if (key == "key2" || key == ":key2") {
-      data.key2 = value.front();
+    in >> ch;
+    if (ch != 'c') {
+      in.setstate(std::ios::failbit);
+      return in;
     }
-    else if (key == "key3" || key == ":key3") {
-      data.key3 = value;
+    in >> ch;
+    if (ch != '(') {
+      in.setstate(std::ios::failbit);
+      return in;
     }
+    in >> real >> ch >> imag >> ch;
+    if (ch != ')') {
+      in.setstate(std::ios::failbit);
+    }
+    c = std::complex<double>(real, imag);
+    return in;
   }
-  return data;
-}
-void customSort(std::vector<DataStruct>& data) {
-  for (size_t i = 0; i < data.size(); ++i) {
-    for (size_t j = i + 1; j < data.size(); ++j) {
-      if (data[i].key1 > data[j].key1) {
-        std::swap(data[i], data[j]);
-        continue;
+
+  std::ostream& operator<<(std::ostream& out, const std::complex<double>& c) {
+    out << "#c(" << std::fixed << std::setprecision(1) << c.real() << " " << c.imag() << ")";
+    return out;
+  }
+
+  std::istream& operator>>(std::istream& is, DataStruct& data) {
+    std::string line;
+    std::getline(is, line);
+    std::istringstream input(line);
+
+    char ch;
+    std::string key;
+
+    input >> ch;
+    if (ch != '(') {
+      is.setstate(std::ios::failbit);
+      return is;
+    }
+
+    while (input >> ch) {
+      if (ch == ':') {
+        input >> key;
+        if (key == "key1") {
+          std::cout << "Reading key1...\n";
+          input >> data.key1;
+          std::cout << "Key1: " << data.key1 << std::endl;
+        }
+        else if (key == "key2") {
+          std::cout << "Reading key2...\n";
+          char innerCh;
+          long long n;
+          unsigned long long d;
+          input >> innerCh;
+          if (innerCh != '(') {
+            is.setstate(std::ios::failbit);
+            return is;
+          }
+          input >> key >> n >> innerCh >> key >> d >> innerCh;
+          if (key != "N" || innerCh != ':') {
+            is.setstate(std::ios::failbit);
+            return is;
+          }
+          data.key2 = { n, d };
+          std::cout << "Key2: N=" << data.key2.first << " D=" << data.key2.second << std::endl;
+        }
+        else if (key == "key3") {
+          std::cout << "Reading key3...\n";
+          std::getline(input, data.key3, '"');
+          std::getline(input, data.key3, '"');
+          std::cout << "Key3: " << data.key3 << std::endl;
+        }
       }
-      if (data[i].key1 == data[j].key1 && data[i].key2 > data[j].key2) {
-        std::swap(data[i], data[j]);
-        continue;
-      }
-      if (data[i].key1 == data[j].key1 && data[i].key2 == data[j].key2 && data[i].key3.size() > data[j].key3.size()) {
-        std::swap(data[i], data[j]);
-        continue;
+      else if (ch == ')') {
+        break;
       }
     }
+
+    if (input.fail()) {
+      is.setstate(std::ios::failbit);
+    }
+    return is;
+  }
+
+  std::ostream& operator<<(std::ostream& out, const DataStruct& data) {
+    out << "(:";
+    out << "key1 " << data.key1;
+    out << ":key2 (:N " << data.key2.first << ":D " << data.key2.second << ":)";
+    out << ":key3 \"" << data.key3 << "\":)";
+    return out;
   }
 }
