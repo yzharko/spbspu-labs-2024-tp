@@ -2,11 +2,11 @@
 #include <sstream>
 #include <iomanip>
 
-namespace panov {
+namespace Panov {
 
   std::istream& operator>>(std::istream& in, std::complex<double>& c) {
     char ch;
-    double real, imag;
+    double real = 0.0, imag = 0.0;
     in >> ch;
     if (ch != '#') {
       in.setstate(std::ios::failbit);
@@ -49,15 +49,22 @@ namespace panov {
       return is;
     }
 
+    bool key1Read = false, key2Read = false, key3Read = false;
+    data.key1 = { 0.0, 0.0 };
+    data.key2 = { 0, 0 };
+    data.key3 = "";
+
     while (input >> ch) {
       if (ch == ':') {
         input >> key;
         if (key == "key1") {
+          key1Read = true;
           std::cout << "Reading key1...\n";
           input >> data.key1;
           std::cout << "Key1: " << data.key1 << std::endl;
         }
         else if (key == "key2") {
+          key2Read = true;
           std::cout << "Reading key2...\n";
           char innerCh;
           long long n;
@@ -76,6 +83,7 @@ namespace panov {
           std::cout << "Key2: N=" << data.key2.first << " D=" << data.key2.second << std::endl;
         }
         else if (key == "key3") {
+          key3Read = true;
           std::cout << "Reading key3...\n";
           std::getline(input, data.key3, '"');
           std::getline(input, data.key3, '"');
@@ -87,7 +95,7 @@ namespace panov {
       }
     }
 
-    if (input.fail()) {
+    if (!key1Read || !key2Read || !key3Read || input.fail()) {
       is.setstate(std::ios::failbit);
     }
     return is;

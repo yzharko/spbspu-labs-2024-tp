@@ -7,7 +7,7 @@
 #include <utility>
 #include <cmath>
 
-namespace panov {
+namespace Panov {
 
   struct DataStruct {
     std::complex<double> key1;
@@ -28,4 +28,5 @@ namespace panov {
   std::ostream& operator<<(std::ostream& out, const DataStruct& data);
 
 }
+
 #endif
