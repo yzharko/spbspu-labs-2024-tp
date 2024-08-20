@@ -9,11 +9,11 @@ int main(int argc, char *argv[])
     return 1;
   }
   std::string filename = argv[1];
-  std::vector<Polygon> polygons = readPolygonsFromFile(filename);
+  std::vector< gorbunova::Polygon > polygons = readPolygonsFromFile(filename);
   std::string command;
   while (std::getline(std::cin, command))
   {
-    processCommand(command, polygons);
+    gorbunova::processCommand(command, polygons);
   }
   return 0;
 }
