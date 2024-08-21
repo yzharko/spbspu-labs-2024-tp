@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     return 1;
   }
   std::string filename = argv[1];
-  std::vector< gorbunova::Polygon > polygons = readPolygonsFromFile(filename);
+  std::vector< gorbunova::Polygon > polygons = gorbunova::readPolygonsFromFile(filename);
   std::string command;
   while (std::getline(std::cin, command))
   {

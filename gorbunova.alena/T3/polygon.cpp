@@ -19,7 +19,6 @@ namespace gorbunova
 
   std::istream &operator>>(std::istream &is, Point &point)
   {
-    char ignore_char;
     is >> Delimiter{'('} >> point.x >> Delimiter{','} >> point.y >> Delimiter{')'};
     return is;
   }
@@ -123,7 +122,8 @@ namespace gorbunova
     return std::accumulate(polygons.begin(), polygons.end(), 0.0,
       [filter](double sum, const Polygon &p)
       {
-        return filter(p) ? sum + p.calculateArea() : sum;
+        double area = p.calculateArea();
+        return filter(p) ? sum + area : sum;
       });
   }
 
