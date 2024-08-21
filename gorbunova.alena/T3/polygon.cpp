@@ -120,7 +120,7 @@ namespace gorbunova
   double calculateAreaSum(const std::vector< Polygon > &polygons, std::function< bool(const Polygon &) > filter)
   {
     return std::accumulate(polygons.begin(), polygons.end(), 0.0,
-      [filter](double sum, const Polygon &p)
+      [&filter](double sum, const Polygon &p)
       {
         double area = p.calculateArea();
         return filter(p) ? sum + area : sum;
