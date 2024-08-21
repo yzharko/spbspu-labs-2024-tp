@@ -28,7 +28,7 @@ namespace gorbunova
         output << "0.0" << std::endl;
         return output;
       }
-      double totalArea = calculateAreaSum(polygons, [](const Polygon &p)
+      double totalArea = calculateAreaSum(polygons, [](const Polygon &)
       { return true; });
       double meanArea = totalArea / polygons.size();
       output << std::fixed << std::setprecision(1) << meanArea << std::endl;
