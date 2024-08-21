@@ -11,6 +11,11 @@
 
 namespace gorbunova
 {
+  bool Polygon::isValid() const
+  {
+    return points.size() > 2;
+  }
+
   std::ostream &operator<<(std::ostream &os, const Point &point)
   {
     os << "(" << point.x << ", " << point.y << ")";
@@ -143,7 +148,7 @@ namespace gorbunova
       iss >> Delimiter{'('} >> p.x >> Delimiter{';'} >> p.y >> Delimiter{')'};
       return p; });
       return polygon;
-    }
+  }
 
   void processCommand(const std::string &command, std::vector< Polygon > &polygons)
   {

@@ -21,6 +21,7 @@ namespace gorbunova
     std::vector< Point > points;
     bool operator==(const Polygon &other) const;
     double calculateArea() const;
+    bool isValid() const;
   };
   std::ostream &operator<<(std::ostream &os, const Point &point);
   std::istream &operator>>(std::istream &is, Point &point);

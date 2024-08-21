@@ -25,7 +25,7 @@ namespace gorbunova
     {
       if (polygons.empty())
       {
-        output << "0.0" << std::endl;
+        output << "<INVALID COMMAND>" << std::endl;
         return output;
       }
       double totalArea = calculateAreaSum(polygons, [](const Polygon &)
@@ -36,6 +36,11 @@ namespace gorbunova
     else
     {
       size_t num_vertices = std::stoi(arg);
+      if (num_vertices <= 2)
+      {
+        std::cout << "<INVALID COMMAND>" << std::endl;
+        return output;
+      }
       double areaSum = calculateAreaSum(polygons, [num_vertices](const Polygon &p)
       { return p.points.size() == num_vertices; });
       output << std::fixed << std::setprecision(1) << areaSum << std::endl;
@@ -47,6 +52,11 @@ namespace gorbunova
   {
     std::string arg;
     input >> arg;
+    if (polygons.empty())
+    {
+      output << "<INVALID COMMAND>" << std::endl;
+      return output;
+    }
     if (arg == "AREA")
     {
       auto max_it = std::max_element(polygons.begin(), polygons.end(),
@@ -111,10 +121,18 @@ namespace gorbunova
     }
     else
     {
-      size_t num_vertices = std::stoi(arg);
-      size_t count = countPolygons(polygons, [num_vertices](const Polygon &p)
-      { return p.points.size() == num_vertices; });
-      output << count << std::endl;
+      try
+      {
+        size_t num_vertices = std::stoi(arg);
+        if (num_vertices <= 2)
+        {
+          output << "<INVALID COMMAND>" << std::endl;
+          return output;
+        }
+        size_t count = countPolygons(polygons, [num_vertices](const Polygon &p)
+        { return p.points.size() == num_vertices; });
+        output << count << std::endl;
+      }
     }
     return output;
   }
@@ -122,6 +140,11 @@ namespace gorbunova
   std::ostream &maxseqCommand(std::istream &input, std::ostream &output, const std::vector< Polygon > &polygons)
   {
     Polygon target = parsePolygonFromCommand(input);
+    if (polygons.empty())
+    {
+      output << "<INVALID COMMAND>" << std::endl;
+      return output;
+    }
     size_t max_seq = std::accumulate(polygons.begin(), polygons.end(), 0,
       [&target](size_t maxSeq, const Polygon &p)
       {
@@ -137,22 +160,29 @@ namespace gorbunova
         }
         return maxSeq;
       });
-      output << max_seq << std::endl;
-      return output;
+    output << max_seq << std::endl;
+    return output;
   }
 
   std::ostream &echoCommand(std::istream &input, std::ostream &output, std::vector< Polygon > &polygons)
   {
     Polygon target = parsePolygonFromCommand(input);
-    size_t added_count = 0;
-    auto it = polygons.begin();
-    while ((it = std::find(it, polygons.end(), target)) != polygons.end())
+    if (target.isValid())
     {
-      it = polygons.insert(it + 1, target);
-      ++added_count;
-      ++it;
+      size_t added_count = 0;
+      auto it = polygons.begin();
+      while ((it = std::find(it, polygons.end(), target)) != polygons.end())
+      {
+        it = polygons.insert(it + 1, target);
+        ++added_count;
+        ++it;
+      }
+      output << added_count << std::endl;
     }
-    output << added_count << std::endl;
+    else
+    {
+      output << "<INVALID COMMAND>" << std::endl;
+    }
     return output;
   }
 }
