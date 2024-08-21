@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc < 2)
+  if (argc != 2)
   {
     std::cerr << "Error: No input file provided." << std::endl;
     return 1;
