@@ -133,6 +133,10 @@ namespace gorbunova
         { return p.points.size() == num_vertices; });
         output << count << std::endl;
       }
+      catch (const std::invalid_argument &)
+      {
+        output << "<INVALID COMMAND>" << std::endl;
+      }
     }
     return output;
   }
