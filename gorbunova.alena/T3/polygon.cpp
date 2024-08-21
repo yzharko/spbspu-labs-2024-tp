@@ -109,7 +109,6 @@ namespace gorbunova
       std::generate_n(std::back_inserter(polygon.points), num_points, [&iss]()
       {
         Point p;
-        char ignore_char;
         iss >> Delimiter{'('} >> p.x >> Delimiter{';'} >> p.y >> Delimiter{')'};
         return p; });
       polygons.push_back(polygon);
@@ -141,7 +140,6 @@ namespace gorbunova
     std::generate_n(std::back_inserter(polygon.points), num_points, [&iss]()
     {
       Point p;
-      char ignore_char;
       iss >> Delimiter{'('} >> p.x >> Delimiter{';'} >> p.y >> Delimiter{')'};
       return p; });
       return polygon;
