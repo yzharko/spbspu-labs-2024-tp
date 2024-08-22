@@ -11,11 +11,6 @@
 
 namespace gorbunova
 {
-  bool Polygon::isValid() const
-  {
-    return points.size() > 2;
-  }
-
   std::ostream &operator<<(std::ostream &os, const Point &point)
   {
     os << "(" << point.x << ", " << point.y << ")";
@@ -109,14 +104,26 @@ namespace gorbunova
       {
         continue;
       }
+      if (num_points < 3)
+      {
+        continue;
+      }
       Polygon polygon;
       polygon.points.reserve(num_points);
-      std::generate_n(std::back_inserter(polygon.points), num_points, [&iss]()
+      bool valid = true;
+      std::generate_n(std::back_inserter(polygon.points), num_points, [&iss, &valid]() -> Point
       {
         Point p;
-        iss >> Delimiter{'('} >> p.x >> Delimiter{';'} >> p.y >> Delimiter{')'};
+        if(!(iss >> gorbunova::Delimiter{'('} >> p.x >> gorbunova::Delimiter{';'} >> p.y >> gorbunova::Delimiter{')'};
+        {
+          valid = false;
+        }
         return p; });
-      polygons.push_back(polygon);
+      std::string remaining;
+      if (valid && polygon.points.size() == num_points && !(iss >> remaining))
+      {
+        polygons.push_back(polygon);
+      }
     }
     return polygons;
   }
@@ -140,14 +147,27 @@ namespace gorbunova
   {
     Polygon polygon;
     int num_points;
-    iss >> num_points;
+    if (!(iss >> num_points) || num_points <= 2)
+    {
+      throw std::runtime_error("insufficient number of points");
+    }
     polygon.points.reserve(num_points);
-    std::generate_n(std::back_inserter(polygon.points), num_points, [&iss]()
+    std::generate_n(std::back_inserter(polygon.points), num_points, [&iss]() -> Point
     {
       Point p;
-      iss >> Delimiter{'('} >> p.x >> Delimiter{';'} >> p.y >> Delimiter{')'};
+      char delimiter;
+      if (!(iss >> delimiter) || delimiter != '(' ||
+        !(iss >> p.x) || !(iss >> delimiter) || delimiter != ';' ||
+        !(iss >> p.y) || !(iss >> delimiter) || delimiter != ')') {
+        throw std::runtime_error("Invalid point format");
+      }
       return p; });
-      return polygon;
+    char extra_char;
+    if (iss >> extra_char)
+    {
+      throw std::runtime_error("extra data after points");
+    }
+    return polygon;
   }
 
   void processCommand(const std::string &command, std::vector< Polygon > &polygons)

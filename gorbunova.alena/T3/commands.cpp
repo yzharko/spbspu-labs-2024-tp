@@ -1,6 +1,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <numeric>
+#include <cmath>
 #include "commands.hpp"
 
 namespace gorbunova
@@ -82,6 +83,11 @@ namespace gorbunova
   {
     std::string arg;
     input >> arg;
+    if (polygons.empty())
+    {
+      output << "<INVALID COMMAND>" << std::endl;
+      return output;
+    }
     if (arg == "AREA")
     {
       auto min_it = std::min_element(polygons.begin(), polygons.end(),
@@ -143,36 +149,43 @@ namespace gorbunova
 
   std::ostream &maxseqCommand(std::istream &input, std::ostream &output, const std::vector< Polygon > &polygons)
   {
-    Polygon target = parsePolygonFromCommand(input);
-    if (polygons.empty())
+    try
+    {
+      Polygon target = parsePolygonFromCommand(input);
+      if (polygons.empty())
+      {
+        output << "<INVALID COMMAND>" << std::endl;
+        return output;
+      }
+      size_t max_seq = std::accumulate(polygons.begin(), polygons.end(), 0,
+        [&target](size_t maxSeq, const Polygon &p)
+        {
+          static size_t currentSeq = 0;
+          if (p == target)
+          {
+            ++currentSeq;
+            maxSeq = std::max(maxSeq, currentSeq);
+          }
+          else
+          {
+            currentSeq = 0;
+          }
+          return maxSeq;
+        });
+      output << max_seq << std::endl;
+    }
+    catch (const std::exception &e)
     {
       output << "<INVALID COMMAND>" << std::endl;
-      return output;
     }
-    size_t max_seq = std::accumulate(polygons.begin(), polygons.end(), 0,
-      [&target](size_t maxSeq, const Polygon &p)
-      {
-        static size_t currentSeq = 0;
-        if (p == target)
-        {
-          ++currentSeq;
-          maxSeq = std::max(maxSeq, currentSeq);
-        }
-        else
-        {
-          currentSeq = 0;
-        }
-        return maxSeq;
-      });
-    output << max_seq << std::endl;
     return output;
   }
 
   std::ostream &echoCommand(std::istream &input, std::ostream &output, std::vector< Polygon > &polygons)
   {
-    Polygon target = parsePolygonFromCommand(input);
-    if (target.isValid())
+    try
     {
+      Polygon target = parsePolygonFromCommand(input);
       size_t added_count = 0;
       auto it = polygons.begin();
       while ((it = std::find(it, polygons.end(), target)) != polygons.end())
@@ -183,7 +196,7 @@ namespace gorbunova
       }
       output << added_count << std::endl;
     }
-    else
+    catch (const std::exception &e)
     {
       output << "<INVALID COMMAND>" << std::endl;
     }
