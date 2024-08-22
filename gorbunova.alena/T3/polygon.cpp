@@ -114,7 +114,7 @@ namespace gorbunova
       std::generate_n(std::back_inserter(polygon.points), num_points, [&iss, &valid]() -> Point
       {
         Point p;
-        if(!(iss >> gorbunova::Delimiter{'('} >> p.x >> gorbunova::Delimiter{';'} >> p.y >> gorbunova::Delimiter{')'};
+        if(!(iss >> gorbunova::Delimiter{'('} >> p.x >> gorbunova::Delimiter{';'} >> p.y >> gorbunova::Delimiter{')'}))
         {
           valid = false;
         }
