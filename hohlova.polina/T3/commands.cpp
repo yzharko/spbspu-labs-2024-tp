@@ -13,13 +13,25 @@ void hohlova::Error()
 
 double hohlova::CalcArea(const Polygon& polygons)
 {
-  double area = 0.0;
-  int j = polygons.points.size() - 1;
-  for (size_t i = 0; i < polygons.points.size(); ++i)
+  if (polygons.points.size() < 3)
   {
-    area += (polygons.points[j].x + polygons.points[i].x) * (polygons.points[j].y - polygons.points[i].y);
-    j = i;
+    return 0.0;
   }
+  auto calculateArea = [&](size_t i, int j, double& area) {
+    area += (polygons.points[j].x + polygons.points[i].x) * (polygons.points[j].y - polygons.points[i].y);
+  };
+
+  double area = 0.0;
+  size_t i = 0;
+  int j = polygons.points.size() - 1;
+
+  calculateArea(i, j, area);
+
+  i++;
+  j = 0;
+
+  calculateArea(i, j, area);
+
   return std::abs(area) / 2.0;
 }
 
