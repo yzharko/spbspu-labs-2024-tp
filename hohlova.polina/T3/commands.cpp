@@ -15,7 +15,7 @@ double hohlova::CalcArea(const Polygon& polygons)
 {
   double area = 0.0;
   int j = polygons.points.size() - 1;
-  for (size_t i = 0; i < polygon.points.size(); ++i)
+  for (size_t i = 0; i < polygons.points.size(); ++i)
   {
     area += (polygons.points[j].x + polygons.points[i].x) * (polygons.points[j].y - polygons.points[i].y);
     j = i;
