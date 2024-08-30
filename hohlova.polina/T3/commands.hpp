@@ -7,7 +7,7 @@ namespace hohlova
 {
   void Error(std::ostream& out);
   double CalcArea(const Polygon& polygons);
-  int countVertices(const Polygon& polygon);
+  unsigned long long int countVertices(const Polygon& polygon);
 
   void AREACommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
   void AREACommandEven(const std::vector< Polygon >& polygons, std::ostream& out);

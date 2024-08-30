@@ -32,7 +32,7 @@ double hohlova::CalcArea(const Polygon& polygons)
 
 
 
-int hohlova::countVertices(const Polygon& polygon)
+unsigned long long int hohlova::countVertices(const Polygon& polygon)
 {
     return polygon.points.size();
 }
