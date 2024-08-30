@@ -128,8 +128,7 @@ void hohlova::AREACommandMean(const std::vector<Polygon>& polygons, std::ostream
     }
 }
 
-void hohlova::AREACommandNumVertices(const std::vector<Polygon>& polygons,
-  unsigned long long numVertices, std::ostream& out)
+void hohlova::AREACommandNumVertices(const std::vector<Polygon>& polygons, unsigned long long numVertices, std::ostream& out)
 {
     if (numVertices < 3) {
         Error(out);
@@ -337,8 +336,7 @@ void hohlova::COUNTCommandEven(const std::vector<Polygon>& polygons, std::ostrea
     out << count << std::endl;
 }
 
-void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons,
-  unsigned long long numVertices, std::ostream& out)
+void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons, unsigned long long numVertices, std::ostream& out)
 {
     if (numVertices < 3) {
         Error(out);
