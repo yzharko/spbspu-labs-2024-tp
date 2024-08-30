@@ -68,7 +68,8 @@ void hohlova::AREACommandMenu(const std::vector< Polygon >& polygons, std::istre
 
 void hohlova::AREACommandEven(const std::vector<Polygon>& polygons, std::ostream& out)
 {
-    std::function<double(const std::vector<Polygon>&, size_t)> calcTotalAreaRecursive = [&](const std::vector<Polygon>& polygons, size_t index) -> double {
+    std::function<double(const std::vector<Polygon>&, size_t)>
+      calcTotalAreaRecursive = [&](const std::vector<Polygon>& polygons, size_t index) -> double {
         if (index == polygons.size()) {
             return 0.0;
         }
@@ -85,7 +86,8 @@ void hohlova::AREACommandEven(const std::vector<Polygon>& polygons, std::ostream
 
 void hohlova::AREACommandOdd(const std::vector<Polygon>& polygons, std::ostream& out)
 {
-    std::function<double(const std::vector<Polygon>&, size_t)> calcTotalAreaRecursive = [&](const std::vector<Polygon>& polygons, size_t index) -> double {
+    std::function<double(const std::vector<Polygon>&, size_t)>
+      calcTotalAreaRecursive = [&](const std::vector<Polygon>& polygons, size_t index) -> double {
         if (index == polygons.size()) {
             return 0.0;
         }
@@ -125,7 +127,8 @@ void hohlova::AREACommandMean(const std::vector<Polygon>& polygons, std::ostream
     }
 }
 
-void hohlova::AREACommandNumVertices(const std::vector<Polygon>& polygons, unsigned long long numVertices, std::ostream& out)
+void hohlova::AREACommandNumVertices(const std::vector<Polygon>& polygons,
+  unsigned long long numVertices, std::ostream& out)
 {
     if (numVertices < 3) {
         Error(out);
@@ -333,7 +336,8 @@ void hohlova::COUNTCommandEven(const std::vector<Polygon>& polygons, std::ostrea
     out << count << std::endl;
 }
 
-void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons, unsigned long long numVertices, std::ostream& out)
+void hohlova::COUNTCommandNumVertices(const std::vector<Polygon>& polygons,
+  unsigned long long numVertices, std::ostream& out)
 {
     if (numVertices < 3) {
         Error(out);
@@ -383,7 +387,8 @@ int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygo
             return false;
         }
         const auto& point = polygon.points[polygonIndex];
-        if (!used[polygIndex] && ((point.x == polyg.points[polygIndex].x && point.y == polyg.points[polygIndex].y) || (point.x == polyg.points[polygIndex].y && point.y == polyg.points[polygIndex].x))) {
+        if (!used[polygIndex] && ((point.x == polyg.points[polygIndex].x && point.y == polyg.points[polygIndex].y) ||
+          (point.x == polyg.points[polygIndex].y && point.y == polyg.points[polygIndex].x))) {
             used[polygIndex] = true;
             if (isPermutationRecursive(polyg, polygon, used, polygonIndex + 1, 0)) {
                 return true;
