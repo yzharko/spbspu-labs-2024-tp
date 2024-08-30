@@ -4,6 +4,7 @@
 #include <fstream>
 #include <map>
 #include <functional>
+#include <limits>
 
 void hohlova::Error(std::ostream& out)
 {

@@ -61,7 +61,7 @@ int main(int argc, char* argv[])
     }
     catch (const std::out_of_range& e)
     {
-      Error();
+      Error(std::cout);
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
