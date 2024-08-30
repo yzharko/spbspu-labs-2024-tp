@@ -375,7 +375,7 @@ void hohlova::PERMSCommandMenu(const std::vector<Polygon>& polygons, std::istrea
     }
 }
 
-int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygons, std::ostream& out)
+int hohlova::PERMScount(const Polygon& polyg, const std::vector<Polygon>& polygons)
 {
     std::function<bool(const Polygon&, const Polygon&, std::vector<bool>&, size_t, size_t)> isPermutationRecursive =
         [&](const Polygon& polyg, const Polygon& polygon, std::vector<bool>& used, size_t polygonIndex, size_t polygIndex) -> bool {

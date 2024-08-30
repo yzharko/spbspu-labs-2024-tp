@@ -29,7 +29,7 @@ namespace hohlova
   void COUNTCommandNumVertices(const std::vector< Polygon >& polygons, unsigned long long numVertices, std::ostream& out);
 
   void PERMSCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
-  int PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons, std::ostream& out);
+  int PERMScount(const Polygon& polyg, const std::vector< Polygon >& polygons);
 
   void MAXSEQCommandMenu(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out);
 
