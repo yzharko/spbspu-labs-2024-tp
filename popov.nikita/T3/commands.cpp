@@ -122,7 +122,7 @@ double popov::calculateArea(const Point& p1, const Point& p2) {
   return (p1.x * p2.y - p2.x * p1.y);
 }
 
-double popov::accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon) 
+double popov::accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon)
 {
   auto prevIt = std::prev(std::find(polygon.begin(), polygon.end(), p));
   if (prevIt == polygon.begin()) {
