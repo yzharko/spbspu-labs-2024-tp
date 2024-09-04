@@ -168,7 +168,7 @@ void Commands::getRects()
 
 void Commands::areaSum(int param)
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     std::cout << std::setprecision(1) << 0.0 << "\n";
     return;
@@ -200,7 +200,7 @@ void Commands::areaSum(int param)
 
 void Commands::areaMean()
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     messageInvalidCommand(std::cout);
     return;
@@ -213,7 +213,7 @@ void Commands::areaMean()
 
 void Commands::areaSumN(size_t param)
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     std::cout << std::setprecision(1) << 0.0 << "\n";
     return;
@@ -231,7 +231,7 @@ void Commands::areaSumN(size_t param)
 
 void Commands::minArea()
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     messageInvalidCommand(std::cout);
     return;
@@ -244,7 +244,7 @@ void Commands::minArea()
 
 void Commands::minVertexes()
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     messageInvalidCommand(std::cout);
     return;
@@ -257,7 +257,7 @@ void Commands::minVertexes()
 
 void Commands::maxArea()
 {
-  if (data.size() == 0) 
+  if (data.size() == 0)
   {
     messageInvalidCommand(std::cout);
     return;
@@ -335,15 +335,15 @@ bool Commands::inFrame(const Polygon& figure, const std::vector< Polygon >& figu
   Polygon rectMinY = *std::min_element(figures.begin(), figures.end(), yComparator);
 
   std::pair< int, int > downLeftCorner
-  { 
+  {
     std::min_element(rectMinX.points.begin(), rectMinX.points.end(), xPointComparator)->x,
-    std::min_element(rectMinY.points.begin(), rectMinY.points.end(), yPointComparator)->y 
+    std::min_element(rectMinY.points.begin(), rectMinY.points.end(), yPointComparator)->y
   };
 
   std::pair< int, int > upRightCorner
   {
     std::max_element(rectMaxX.points.begin(), rectMaxX.points.end(), xPointComparator)->x,
-    std::max_element(rectMaxY.points.begin(), rectMaxY.points.end(), yPointComparator)->y 
+    std::max_element(rectMaxY.points.begin(), rectMaxY.points.end(), yPointComparator)->y
   };
 
   int maxX = std::max_element(figure.points.begin(), figure.points.end(), xPointComparator)->x;
