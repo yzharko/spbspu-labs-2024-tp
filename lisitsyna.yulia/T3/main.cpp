@@ -6,8 +6,8 @@
 #include <map>
 #include <limits>
 #include <functional>
-#include "ScopeGuard.h"
-#include "commands.h"
+#include "ScopeGuard.hpp"
+#include "commands.hpp"
 
 int main(int argc, char* argv[])
 {
