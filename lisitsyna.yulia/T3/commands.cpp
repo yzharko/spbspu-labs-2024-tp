@@ -168,7 +168,7 @@ void Commands::getRects()
 
 void Commands::areaSum(int param)
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     std::cout << std::setprecision(1) << 0.0 << "\n";
     return;
@@ -183,7 +183,7 @@ void Commands::areaSum(int param)
     std::vector< double > tmpS(amount);
     std::vector< Polygon >::iterator fin = tmp.begin() + amount;
     std::transform(tmp.begin(), fin, tmpS.begin(), lisitsyna::getArea);
-    std::cout << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
+    std::cout << std::fixed << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
   }
   else
   {
@@ -194,13 +194,13 @@ void Commands::areaSum(int param)
     std::vector< double > tmpS(amount);
     std::vector< Polygon >::iterator fin = tmp.begin() + amount;
     std::transform(tmp.begin(), fin, tmpS.begin(), lisitsyna::getArea);
-    std::cout << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
+    std::cout << std::fixed << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
   }
 }
 
 void Commands::areaMean()
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     messageInvalidCommand(std::cout);
     return;
@@ -208,12 +208,12 @@ void Commands::areaMean()
   std::vector< double > tmp(data.size());
   std::transform(data.begin(), data.end(), tmp.begin(),
   lisitsyna::getArea);
-  std::cout << std::setprecision(1) << std::accumulate(tmp.begin(), tmp.end(), 0.0) / data.size() << "\n";
+  std::cout << std::fixed << std::setprecision(1) << std::accumulate(tmp.begin(), tmp.end(), 0.0) / data.size() << "\n";
 }
 
 void Commands::areaSumN(size_t param)
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     std::cout << std::setprecision(1) << 0.0 << "\n";
     return;
@@ -226,12 +226,12 @@ void Commands::areaSumN(size_t param)
   std::vector< double > tmpS(amount);
   std::vector< Polygon >::iterator fin = tmp.begin() + amount;
   std::transform(tmp.begin(), fin, tmpS.begin(), ::getArea);
-  std::cout << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
+  std::cout << std::fixed << std::setprecision(1) << std::accumulate(tmpS.begin(), tmpS.end(), 0.0) << "\n";
 }
 
 void Commands::minArea()
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     messageInvalidCommand(std::cout);
     return;
@@ -244,7 +244,7 @@ void Commands::minArea()
 
 void Commands::minVertexes()
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     messageInvalidCommand(std::cout);
     return;
@@ -257,7 +257,7 @@ void Commands::minVertexes()
 
 void Commands::maxArea()
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
     messageInvalidCommand(std::cout);
     return;
@@ -265,7 +265,7 @@ void Commands::maxArea()
   std::vector< Polygon > tmp(data.size());
   std::copy(data.begin(), data.end(), tmp.begin());
   std::sort(tmp.begin(), tmp.end(), comparatorArea);
-  std::cout << std::setprecision(1) << lisitsyna::getArea(tmp[0]) << "\n";
+  std::cout << std::fixed << std::setprecision(1) << lisitsyna::getArea(tmp[0]) << "\n";
 }
 
 void Commands::maxVertexes()
@@ -278,7 +278,7 @@ void Commands::maxVertexes()
   std::vector< Polygon > tmp(data.size());
   std::copy(data.begin(), data.end(), tmp.begin());
   std::sort(tmp.begin(), tmp.end(), comparatorVertexes);
-  std::cout << std::setprecision(1) << tmp[0].points.size() << "\n";
+  std::cout << tmp[0].points.size() << "\n";
 }
 
 void Commands::countEven()
@@ -325,10 +325,6 @@ void Commands::printInFrame()
     iofmtguard guardian(std::cout);
     std::cout << ((inFrame(parameter, data)) ? "<TRUE>" : "<FALSE>") << '\n';
   }
-  else
-  {
-    std::cout << "<INVALID COMMAND>\n";
-  }
 }
 
 bool Commands::inFrame(const Polygon& figure, const std::vector< Polygon >& figures)
@@ -339,15 +335,15 @@ bool Commands::inFrame(const Polygon& figure, const std::vector< Polygon >& figu
   Polygon rectMinY = *std::min_element(figures.begin(), figures.end(), yComparator);
 
   std::pair< int, int > downLeftCorner
-  {
+  { 
     std::min_element(rectMinX.points.begin(), rectMinX.points.end(), xPointComparator)->x,
-    std::min_element(rectMinY.points.begin(), rectMinY.points.end(), yPointComparator)->y
+    std::min_element(rectMinY.points.begin(), rectMinY.points.end(), yPointComparator)->y 
   };
 
   std::pair< int, int > upRightCorner
   {
     std::max_element(rectMaxX.points.begin(), rectMaxX.points.end(), xPointComparator)->x,
-    std::max_element(rectMaxY.points.begin(), rectMaxY.points.end(), yPointComparator)->y
+    std::max_element(rectMaxY.points.begin(), rectMaxY.points.end(), yPointComparator)->y 
   };
 
   int maxX = std::max_element(figure.points.begin(), figure.points.end(), xPointComparator)->x;

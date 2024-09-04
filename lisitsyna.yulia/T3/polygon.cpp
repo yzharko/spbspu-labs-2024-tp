@@ -68,22 +68,12 @@ namespace lisitsyna
     std::size_t amount = 0;
     in >> amount;
     Polygon inPolygon;
-    std::copy_if(
+    std::copy_n(
       std::istream_iterator< Point >(in),
-      std::istream_iterator< Point >(),
-      std::back_inserter(inPolygon.points),
-      [&in](const Point&)
-      {
-        if (in.peek() == '\n')
-        {
-          in.setstate(std::ios_base::eofbit);
-        }
-        return true;
-      }
+      amount,
+      std::back_inserter(inPolygon.points)
     );
-    in.clear();
-    in.ignore(256, '\n');
-    if (amount != inPolygon.points.size() || inPolygon.points.size() < 3)
+    if (amount != inPolygon.points.size() || amount < 3)
     {
       in.setstate(std::ios_base::failbit);
     }

@@ -50,19 +50,31 @@ int main(int argc, char* argv[])
   while (!std::cin.eof())
   {
     iofmtguard globalGuardian(std::cout);
+
     std::cin.clear();
+
     std::string command = "";
+
     std::cin >> command;
+
     auto temp = commandMap.find(command);
+
     if (!std::cin.eof())
     {
       if (temp != commandMap.cend())
       {
         temp->second();
+        if (!std::cin)
+        {
+          commands.messageInvalidCommand(std::cout);
+          std::cin.clear();
+          std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+        }
       }
       else
       {
         commands.messageInvalidCommand(std::cout);
+        std::cin.clear();
         std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
       }
     }
