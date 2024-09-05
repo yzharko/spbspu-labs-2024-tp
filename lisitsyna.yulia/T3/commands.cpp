@@ -168,9 +168,9 @@ void Commands::getRects()
 
 void Commands::areaSum(int param)
 {
-  if (data.size() == 0)
+  if (data.size() == 0) 
   {
-    std::cout << std::setprecision(1) << 0.0 << "\n";
+    std::cout << std::fixed << std::setprecision(1) << 0.0 << "\n";
     return;
   }
   std::vector< Polygon > tmp(data.size());
