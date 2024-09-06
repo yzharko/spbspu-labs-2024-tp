@@ -329,6 +329,11 @@ void Commands::printInFrame()
 
 bool Commands::inFrame(const Polygon& figure, const std::vector< Polygon >& figures)
 {
+  if (figures.empty() || figure.points.empty()) 
+  {
+    return false;
+  }
+
   Polygon rectMaxX = *std::max_element(figures.begin(), figures.end(), xComparator);
   Polygon rectMinX = *std::min_element(figures.begin(), figures.end(), xComparator);
   Polygon rectMaxY = *std::max_element(figures.begin(), figures.end(), yComparator);
