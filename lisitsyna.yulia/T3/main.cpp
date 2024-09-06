@@ -30,11 +30,16 @@ int main(int argc, char* argv[])
   /*using lisitsyna::Iofmtguard;*/
   Commands commands;
 
-  while (!in.eof())
+while (!in.eof())
+{
+  in.clear();
+  std::copy(std::istream_iterator< Polygon >(in), std::istream_iterator< Polygon >(), std::back_inserter(commands.data));
+  if (!in)
   {
     in.clear();
-    std::copy(std::istream_iterator< Polygon >(in), std::istream_iterator< Polygon >(), std::back_inserter(commands.data));
+    in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   }
+}
 
   in.close();
 

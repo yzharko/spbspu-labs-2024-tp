@@ -68,11 +68,16 @@ namespace lisitsyna
     std::size_t amount = 0;
     in >> amount;
     Polygon inPolygon;
-    std::copy_n(
-      std::istream_iterator< Point >(in),
-      amount,
-      std::back_inserter(inPolygon.points)
-    );
+
+    for (std::size_t i = 0; i < amount && in; i++)
+    {
+      in >> std::noskipws >> DelimeterIO{ ' ' } >> std::skipws;
+      Point p;
+      in >> p;
+      inPolygon.points.push_back(p);
+    }
+    in >> std::noskipws >> DelimeterIO{ '\n' } >> std::skipws;
+
     if (amount != inPolygon.points.size() || amount < 3)
     {
       in.setstate(std::ios_base::failbit);
