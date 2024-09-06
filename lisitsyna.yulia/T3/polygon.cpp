@@ -67,21 +67,30 @@ namespace lisitsyna
 
     std::size_t amount = 0;
     in >> amount;
-    Polygon inPolygon;
 
-    for (std::size_t i = 0; i < amount && in; i++)
-    {
-      in >> std::noskipws >> DelimeterIO{ ' ' } >> std::skipws;
-      Point p;
-      in >> p;
-      inPolygon.points.push_back(p);
-    }
-    in >> std::noskipws >> DelimeterIO{ '\n' } >> std::skipws;
-
-    if (amount != inPolygon.points.size() || amount < 3)
+    if (amount < 3)
     {
       in.setstate(std::ios_base::failbit);
+      return in;
     }
+
+    Polygon inPolygon;
+
+    iofmtguard guardian(in);
+    in >> std::noskipws;
+    for (std::size_t i = 0; i < amount && in; i++)
+    {
+      Point p;
+      if (in.peek() != ' ')
+      {
+        in.setstate(std::ios_base::failbit);
+        break;
+      }
+      in >> DelimeterIO{' '} >> p;
+      inPolygon.points.push_back(p);
+    }
+    in >> DelimeterIO{'\n'};
+
     if (in)
     {
       dest = inPolygon;

@@ -320,7 +320,7 @@ void Commands::printInFrame()
 
   std::cin >> parameter;
 
-  if (std::cin && ((std::cin.peek() == '\n') || std::cin.eof()))
+  if (std::cin)
   {
     iofmtguard guardian(std::cout);
     std::cout << ((inFrame(parameter, data)) ? "<TRUE>" : "<FALSE>") << '\n';
