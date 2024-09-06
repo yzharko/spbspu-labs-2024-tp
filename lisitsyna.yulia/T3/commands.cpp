@@ -329,7 +329,7 @@ void Commands::printInFrame()
 
 bool Commands::inFrame(const Polygon& figure, const std::vector< Polygon >& figures)
 {
-  if (figures.empty() || figure.points.empty()) 
+  if (figures.empty() || figure.points.empty())
   {
     return false;
   }
