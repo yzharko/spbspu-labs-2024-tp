@@ -150,7 +150,7 @@ double popov::getAreaVertexes(const std::vector< Polygon > & polygons, int num)
 }
 
 bool popov::hasNumVertexes(const Polygon& polygon, int num) {
-  return polygon.points.size() == num;
+  return polygon.points.size() == static_cast<size_t>(num);
 }
 
 std::ostream& popov::maxCount(const std::vector< Polygon >& polygons, std::istream& in, std::ostream& out)
@@ -308,7 +308,7 @@ std::pair<popov::Point, popov::Point> popov::findMinMaxXY(const std::vector< Pol
   std::vector< int > maxYV(polygons.size());
   std::transform(polygons.begin(), polygons.end(), maxYV.begin(), maxPolygonY);
   int maxY = *std::max_element(maxYV.begin(), maxYV.end());
-  return std::make_pair(Point{(minX, minY)}, Point{maxX, maxY});
+  return std::make_pair(Point{minX, minY}, Point{maxX, maxY});
 }
 
 int popov::minPolygonX(const Polygon& polygon)
