@@ -102,10 +102,10 @@ std::vector< double > popov::getAreas(const std::vector< Polygon > & polygons)
 }
 
 void popov::calculateAreaAndPushBack(const Polygon& polygon, std::vector<double>& areas) {
-  areas.push_back(getArea(polygon));
+  areas.push_back(getsArea(polygon));
 }
 
-double popov::getArea(const Polygon & polygon)
+double popov::getsArea(const Polygon & polygon)
 {
   if (polygon.points.size() < 3) {
     return 0.0;
@@ -185,7 +185,7 @@ std::vector< double > popov::maxArea(const std::vector< Polygon >& polygons)
 }
 
 double popov::calculatingArea(const Polygon& polygon) {
-  return getArea(polygon);
+  return getsArea(polygon);
 }
 
 std::vector< int > popov::maxVertexes(const std::vector< Polygon >& polygons)

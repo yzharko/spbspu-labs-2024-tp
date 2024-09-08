@@ -15,7 +15,7 @@ namespace popov
   double getAreaVertexes(const std::vector< Polygon > & polygons, int num);
   std::vector< double > getAreas(const std::vector< Polygon > & polygons);
   void calculateAreaAndPushBack(const Polygon& polygon, std::vector< double >& areas);
-  double getArea(const Polygon & polygon);
+  double getsArea(const Polygon & polygon);
   double calculateArea(const Point& p1, const Point& p2);
   double accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon);
   bool hasNumVertexes(const Polygon& polygon, int num);
