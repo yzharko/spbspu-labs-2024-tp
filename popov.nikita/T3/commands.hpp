@@ -14,7 +14,7 @@ namespace popov
   double getAreaMean(const std::vector< Polygon > & polygons);
   double getAreaVertexes(const std::vector< Polygon > & polygons, int num);
   std::vector< double > getAreas(const std::vector< Polygon > & polygons);
-  void calculateAreaAndPushBack(const Polygon& polygon, std::vector< double >& areas);
+  double calculateAreaAndPushBack(const Polygon& polygon);
   double getsArea(const Polygon & polygon);
   double calculateArea(const Point& p1, const Point& p2);
   double accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon);

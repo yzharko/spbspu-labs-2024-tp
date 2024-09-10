@@ -96,13 +96,14 @@ std::vector< double > popov::getAreas(const std::vector< Polygon > & polygons)
     polygons.begin(),
     polygons.end(),
     std::back_inserter(areas),
-    std::bind(calculateAreaAndPushBack, std::placeholders::_1, std::ref(areas))
+    std::bind(calculateAreaAndPushBack, std::placeholders::_1)
   );
   return areas;
 }
 
-void popov::calculateAreaAndPushBack(const Polygon& polygon, std::vector<double>& areas) {
-  areas.push_back(getsArea(polygon));
+double popov::calculateAreaAndPushBack(const Polygon& polygon) {
+  double area = getsArea(polygon);
+  return area;
 }
 
 double popov::getsArea(const Polygon & polygon)
