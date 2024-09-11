@@ -1,5 +1,9 @@
+#include <iomanip>
+#include <string>
 #include "helpers.hpp"
 
+namespace khomichenko
+{
 std::istream &operator>>(std::istream &in, DelimiterIO && dest)
 {
   std::istream::sentry sentry(in);
@@ -25,9 +29,9 @@ std::istream &operator>>(std::istream &in, DoubleIO && dest)
   }
   if(!(in >> dest.ref) || dest.ref == 0)
   {
-    input.setstate(std::ios::failbit);
+    in.setstate(std::ios::failbit);
   }
-  return input;
+  return in;
 }
 
 
@@ -41,7 +45,7 @@ std::istream &operator>>(std::istream &in, StringIO && dest)
   return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
 }
 
-std::istream &operator>>(std::istream &in, CharIO && dest);
+std::istream &operator>>(std::istream &in, CharIO && dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
@@ -54,4 +58,4 @@ std::istream &operator>>(std::istream &in, CharIO && dest);
   }
   return in;
 }
-
+}

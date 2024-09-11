@@ -1,6 +1,8 @@
 #ifndef SCOPE_GUARD_HPP
 #define SCOPE_GUARD_HPP
 
+#include <ios>
+
 namespace khomichenko
 {
   class Guard
@@ -13,7 +15,7 @@ namespace khomichenko
     char fill_;
     std::streamsize precision_;
     std::basic_ios< char >::fmtflags fmt_;
-  }
+  };
 }
 
-#ifndef
+#endif
