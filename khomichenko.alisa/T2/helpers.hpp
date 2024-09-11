@@ -1,3 +1,6 @@
+#ifndef HELPERS_HPP
+#define HELPERS_HPP
+
 #iclude <string>
 
 namespace khomichenko
@@ -30,3 +33,5 @@ namespace khomichenko
   std::istream &operator>>(std::istream &in, CharIO && dest);
 
 }
+
+#endif
