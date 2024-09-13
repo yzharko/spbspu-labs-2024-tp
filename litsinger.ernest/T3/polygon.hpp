@@ -11,7 +11,7 @@ class Polygon {
 public:
     Polygon();
     Polygon(Point* points, int size);
-    Polygon(const Polygon& other); 
+    Polygon(const Polygon& other);
     Polygon& operator=(const Polygon& other);
     ~Polygon();
 
@@ -27,4 +27,4 @@ private:
     void copyFrom(const Polygon& other);
 };
 
-#endif 
+#endif

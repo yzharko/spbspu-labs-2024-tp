@@ -26,4 +26,4 @@ private:
     void resize();
 };
 
-#endif 
+#endif
