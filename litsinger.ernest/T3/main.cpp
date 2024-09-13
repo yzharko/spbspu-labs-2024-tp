@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 
     Point targetPoints[] = { {0, 0}, {2, 2}, {2, 0}, {0, 2} };
     Polygon targetPolygon(targetPoints, 4);
-    
+
     int permsCount = collection.countPermutations(targetPolygon);
     std::cout << "PERMS: " << permsCount << std::endl;
 
