@@ -5,17 +5,18 @@
 namespace kaseev {
   using delimimitr = kaseev::Delimiter;
 
-  std::istream &operator>>(std::istream &input, DataStruct &data)
+  std::istream &operator>>(std::istream &in, DataStruct &data)
   {
-    std::istream::sentry sentry(input);
+    std::istream::sentry sentry(in);
     if (!sentry)
     {
-      return input;
+      return in;
     }
-    std::string string;
+    /*std::string string;
     std::getline(input, string);
     ChangeD(string);
-    std::istringstream in(string);
+    std::cout << string;
+    std::istringstream in(string);*/
     DataStruct keeper;
     {
       in >> delimimitr{'('};
@@ -40,7 +41,8 @@ namespace kaseev {
     {
       data = keeper;
     }
-    return input;
+    std::cout << keeper;
+    return in;
   }
 
   std::ostream &operator<<(std::ostream &out, const DataStruct &data)
@@ -53,7 +55,7 @@ namespace kaseev {
     iofmtguard fmtguard(out);
     out << "(:";
     out << "key1 " << std::fixed << std::setprecision(1) << data.key1 << "d";
-    out << ":key2 " << std::oct << std::uppercase << data.key2;
+    out << ":key2 0" << std::oct << std::uppercase << data.key2;
     out << ":key3 " << std::quoted(data.key3) << ":)";
     return out;
   }
@@ -92,7 +94,7 @@ namespace kaseev {
     {
       return in;
     }
-    return in >> data.ref;
+    return in >> std::oct >> data.ref;
   }
 
   std::istream &operator>>(std::istream &in, String &&dest)
