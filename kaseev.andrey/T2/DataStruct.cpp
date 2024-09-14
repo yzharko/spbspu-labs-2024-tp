@@ -1,7 +1,6 @@
 #include "DataStruct.hpp"
 #include <iomanip>
-#include "AddictionalMoment.hpp"
-#include <string>
+
 namespace kaseev {
   using delimimitr = kaseev::Delimiter;
 
@@ -12,11 +11,6 @@ namespace kaseev {
     {
       return in;
     }
-    /*std::string string;
-    std::getline(input, string);
-    ChangeD(string);
-    std::cout << string;
-    std::istringstream in(string);*/
     DataStruct keeper;
     {
       in >> delimimitr{'('};
@@ -41,7 +35,6 @@ namespace kaseev {
     {
       data = keeper;
     }
-    std::cout << keeper;
     return in;
   }
 
