@@ -1,16 +1,21 @@
 #include "DataStruct.hpp"
 #include <iomanip>
-
+#include "AddictionalMoment.hpp"
+#include <string>
 namespace kaseev {
   using delimimitr = kaseev::Delimiter;
 
-  std::istream &kaseev::operator>>(std::istream &in, DataStruct &data)
+  std::istream &operator>>(std::istream &input, DataStruct &data)
   {
-    std::istream::sentry sentry(in);
+    std::istream::sentry sentry(input);
     if (!sentry)
     {
-      return in;
+      return input;
     }
+    std::string string;
+    std::getline(input, string);
+    ChangeD(string);
+    std::istringstream in(string);
     DataStruct keeper;
     {
       in >> delimimitr{'('};
@@ -35,10 +40,10 @@ namespace kaseev {
     {
       data = keeper;
     }
-    return in;
+    return input;
   }
 
-  std::ostream &kaseev::operator<<(std::ostream &out, const DataStruct &data)
+  std::ostream &operator<<(std::ostream &out, const DataStruct &data)
   {
     std::ostream::sentry sentry(out);
     if (!sentry)
@@ -53,7 +58,7 @@ namespace kaseev {
     return out;
   }
 
-  bool kaseev::operator<(const DataStruct &first, const DataStruct &second)
+  bool operator<(const DataStruct &first, const DataStruct &second)
   {
     if (first.key1 != second.key1)
     {
@@ -69,7 +74,7 @@ namespace kaseev {
     }
   }
 
-  std::istream &kaseev::operator>>(std::istream &in, DblLit &&data)
+  std::istream &operator>>(std::istream &in, DblLit &&data)
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -80,7 +85,7 @@ namespace kaseev {
     return in >> data.ref;
   }
 
-  std::istream &kaseev::operator>>(std::istream &in, UllOct &&data)
+  std::istream &operator>>(std::istream &in, UllOct &&data)
   {
     std::istream::sentry sentry(in);
     if (!sentry)
@@ -90,7 +95,7 @@ namespace kaseev {
     return in >> data.ref;
   }
 
-  std::istream &kaseev::operator>>(std::istream &in, String &&dest)
+  std::istream &operator>>(std::istream &in, String &&dest)
   {
     std::istream::sentry sentry(in);
     if (!sentry)
