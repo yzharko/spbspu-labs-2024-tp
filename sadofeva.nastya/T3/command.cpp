@@ -370,7 +370,7 @@ void sadofeva::comandMin(const std::vector< Polygon > & polygons, std::istream& 
   using namespace std::placeholders;
   std::map<std::string, std::function < void(const std::vector< Polygon >&, ostream&) > > comMin;
   comMin["AREA"] = std::bind(sadofeva::getMinArea, _1, _2);
-  comMin["VERTEXES"] = std::bind(sadofeva:;getMinVertex, _1, _2);
+  comMin["VERTEXES"] = std::bind(sadofeva::getMinVertex, _1, _2);
   std::string Min;
   input >> Min;
   try

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <iterator>
+#include <map>
 #include <functional>
 #include "Point.hpp"
 #include "command.hpp"
@@ -33,17 +34,17 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function< void(std::istream&, std::ostream& , const std::vector< Polygon>&) > > commands;
   commands["AREA"] = std::bind(commandArea, _1, _2, polygons);
   commands["MAX"] = std::bind(commandMax, _1, _2, polygons);
-  command["MIN"] = std::bind(commandMin, _1, _2, polygons);
-  command["COUNT"] = std::bind(commandCount, _1, _2, polygons);
-  command["SAME"] = std::bind(commandSame, _1, _2, polygons);
-  command["INFRAME"] = std::bind(commandFrame, _1, _2, polygons);
+  commands["MIN"] = std::bind(commandMin, _1, _2, polygons);
+  commands["COUNT"] = std::bind(commandCount, _1, _2, polygons);
+  commands["SAME"] = std::bind(commandSame, _1, _2, polygons);
+  commands["INFRAME"] = std::bind(commandFrame, _1, _2, polygons);
 
   std::string command = "";
   while ( std::cin >> command)
   {
     try
     {
-       command.at(command)(std::cin,std::cout, polygons);
+       commands.at(command)(std::cin,std::cout, polygons);
        std::cout << "\n";
     }
     catch (const std::exception& e)
