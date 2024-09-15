@@ -127,23 +127,6 @@ double popov::calculateArea(const Point& p1, const Point& p2)
 
 double popov::accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon)
 {
-  /*auto nextIt = polygon.begin();
-  if (std::find(polygon.begin(), polygon.end(), p) != polygon.end())
-  {
-    nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
-  }
-  else
-  {
-    nextIt = polygon.begin();
-  }
-  if (nextIt != polygon.end())
-  {
-    return sum + calculateArea(p, *nextIt);
-  }
-  else
-  {
-    return sum;
-  }*/
   auto nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
   if (nextIt == polygon.end()) {
     nextIt = polygon.begin();
@@ -177,6 +160,10 @@ std::ostream& popov::maxCount(const std::vector< Polygon >& polygons, std::istre
 {
   std::string parametr = "";
   in >> parametr;
+  if (polygons.empty())
+  {
+    throw std::runtime_error("not enough data");
+  }
   if (parametr == "AREA")
   {
     std::vector< double > areaV = maxArea(polygons);
