@@ -351,6 +351,10 @@ void sadofeva::commandMax(const std::vector< Polygon >& polygons, std::istream& 
       cmdMax.at(Max)(polygons, out);
     }
   }
+  catch (const std::out_of_range& e)
+  {
+    throw std::logic_error("<INVALID COMMAND>\n");
+  }
 }
 
 void sadofeva::commandMin(const std::vector< Polygon > & polygons, std::istream& input, std::ostream& out)
