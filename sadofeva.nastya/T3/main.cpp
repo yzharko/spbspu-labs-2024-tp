@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <iterator>
 #include "Point.hpp"
 #include "command.hpp"
 
