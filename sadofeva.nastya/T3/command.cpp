@@ -8,7 +8,7 @@
 #include "command.hpp"
 #include "Point.hpp"
 
-void sadofeva::getAreaAll(const Polygon& polygon)
+double sadofeva::getAreaAll(const Polygon& polygon)
 {
   if (polygon.point.size() <3)
   {
@@ -35,7 +35,7 @@ void sadofeva::getAreaEven(const std::vector< Polygon >& polygons, std::ostream 
     }
     return sum;
   });
-  out << std::fixed << std::setprecision(1) << totalrea << "\n";
+  out << std::fixed << std::setprecision(1) << totalАrea << "\n";
 }
 
 void sadofeva::getAreaOdd(const std::vector< Polygon >& polygons, std::ostream& out)
