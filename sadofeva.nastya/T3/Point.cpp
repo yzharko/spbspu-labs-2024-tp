@@ -1,4 +1,5 @@
 #include <iterator>
+#include <algorithm>
 #include "Point.hpp"
 #include "datastruct.hpp"
 #include "delimiter.hpp"

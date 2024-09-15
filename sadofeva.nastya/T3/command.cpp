@@ -16,7 +16,7 @@ double sadofeva::getAreaAll(const Polygon& polygon)
   }
   double area = 0.0;
   size_t sz = polygon.point.size();
-  for (int i = 0; i < sz; i++)
+  for (size_t i = 0; i < sz; i++)
   {
     int j = (i + 1 ) & sz;
     area += polygon.point[i].x * polygon.point[j].y;
@@ -35,7 +35,7 @@ void sadofeva::getAreaEven(const std::vector< Polygon >& polygons, std::ostream 
     }
     return sum;
   });
-  out << std::fixed << std::setprecision(1) << totalАrea << "\n";
+  out << std::fixed << std::setprecision(1) << totalArea << "\n";
 }
 
 void sadofeva::getAreaOdd(const std::vector< Polygon >& polygons, std::ostream& out)
@@ -46,7 +46,7 @@ void sadofeva::getAreaOdd(const std::vector< Polygon >& polygons, std::ostream& 
     {
       return sum + getAreaAll(polygon);
     }
-    return sum
+    return sum;
   });
   out << std::fixed << std::setprecision(1) << totalArea << "\n";
 }
@@ -84,7 +84,7 @@ void sadofeva::getAreaNum(const std::vector< Polygon > & polygons, std::ostream&
       return sum;
     }
   });
-  totalArea = std::fixed << std::setprecision(1) << totalArea << "\n";
+  out << std::fixed << std::setprecision(1) << totalArea << "\n";
 }
 
 void sadofeva::getMaxArea(const std::vector< Polygon >& polygons, std::ostream& out)
