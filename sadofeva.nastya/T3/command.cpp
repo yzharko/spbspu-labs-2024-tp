@@ -244,7 +244,7 @@ void sadofeva::commandSame(const std::vector< Polygon >& polygons, std::istream&
      (
        polygons.begin(),
        polygons.end(),
-       [&tg](Polygon & polygon) {return CompatiblePolygons(polygon, tg); }
+       [&tg](Polygon & polygon) -> bool {return CompatiblePolygons(polygon, tg); }
      );
      out << CompatiblePolygons << "\n";
    }
@@ -268,8 +268,8 @@ sadofeva::pr sadofeva::extendFrameRect(pr frameRect, const Polygon& polygon)
   int bx = std::max_element(polygon.point.cbegin(), polygon.point.cend(), xComparator)->x;
   int by = std::max_element(polygon.point.cbegin(), polygon.point.cend(), yComparator)->y;
 
-  frameRect.first.x = std::min(ax, frameRect.first.x)
-  frameRect.first.y = std::min(ay, frameRect.first.y)
+  frameRect.first.x = std::min(ax, frameRect.first.x);
+  frameRect.first.y = std::min(ay, frameRect.first.y);
 
   frameRect.second.x = std::max(bx, frameRect.second.x);
   frameRect.second.y = std::max(by, frameRect.second.y);
@@ -368,7 +368,7 @@ void sadofeva::commandMax(const std::vector< Polygon >& polygons, std::istream& 
 void sadofeva::comandMin(const std::vector< Polygon > & polygons, std::istream& input, std::ostream& out)
 {
   using namespace std::placeholders;
-  std::map<std::string, std::function < void(const std::vector< Polygon >&, ostream&) > > comMin;
+  std::map<std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > comMin;
   comMin["AREA"] = std::bind(sadofeva::getMinArea, _1, _2);
   comMin["VERTEXES"] = std::bind(sadofeva::getMinVertex, _1, _2);
   std::string Min;
