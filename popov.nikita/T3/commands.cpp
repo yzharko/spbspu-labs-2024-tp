@@ -419,7 +419,7 @@ std::ostream& popov::maxSeq(const std::vector< Polygon >& polygons, std::istream
   };
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(maxSeq), multiplyFunction);
   int max = *std::max_element(maxSeq.begin(), maxSeq.end());
-  if (max = 0)
+  if (max == 0)
   {
     throw std::logic_error("<INVALID COMMAND>");
   }
