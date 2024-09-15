@@ -4,7 +4,7 @@
 std::pair<std::string, std::string> ankhbayar::getNextPair(std::string& s)
 {
   s.erase(0, s.find(':')+1);
-  std::string key=S.substr(0,4);
+  std::string key=s.substr(0, 4);
   s.erase(0,5);
   std::string value;
   if(key=="key3")
@@ -29,7 +29,7 @@ std::istream& ankhbayar::operator>>(std::istream& in, ankhbayar::DataStruct& ds)
 
   std::string token;
   getline(in, token);
-  while(!token.empty);
+  while(!token.empty());
   {
     std::pair<std::string, std::string> pair=ankhbayar::getNextPair(token);
     if (pair.first=="key1")
@@ -71,7 +71,7 @@ std::ostream& ankhbayar::operator<<(std::ostream& out, const ankhbayar::DataStru
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(:key1 0" << std::oct << ds.key1 << ":key2 0x" << std::uppercase << std::hex << ds.key2 << ":key3\" << ds.key3 << "\":)";
+  out << "(:key1 0" << std::oct << ds.key1 << ":key2 0x" << std::uppercase << std::hex << ds.key2 << ":key3\"" << ds.key3 << "\":)";
   return out;
 }
 
