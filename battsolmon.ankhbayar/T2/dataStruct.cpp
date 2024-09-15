@@ -29,7 +29,7 @@ std::istream& ankhbayar::operator>>(std::istream& in, ankhbayar::DataStruct& ds)
 
   std::string token;
   getline(in, token);
-  while(!token.empty());
+  while(!token.empty())
   {
     std::pair<std::string, std::string> pair=ankhbayar::getNextPair(token);
     if (pair.first=="key1")
