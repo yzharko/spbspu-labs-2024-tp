@@ -101,7 +101,8 @@ std::vector< double > popov::getAreas(const std::vector< Polygon > & polygons)
   return areas;
 }
 
-double popov::calculateAreaAndPushBack(const Polygon& polygon) {
+double popov::calculateAreaAndPushBack(const Polygon& polygon)
+{
   double area = getsArea(polygon);
   return area;
 }
@@ -119,13 +120,14 @@ double popov::getsArea(const Polygon & polygon)
   return std::abs(area) / 2.0;
 }
 
-double popov::calculateArea(const Point& p1, const Point& p2) {
+double popov::calculateArea(const Point& p1, const Point& p2)
+{
   return (p1.x * p2.y - p2.x * p1.y);
 }
 
 double popov::accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon)
 {
-  auto nextIt = polygon.begin();
+  /*auto nextIt = polygon.begin();
   if (std::find(polygon.begin(), polygon.end(), p) != polygon.end())
   {
     nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
@@ -141,7 +143,12 @@ double popov::accumulateArea(double sum, const Point& p, const std::vector<Point
   else
   {
     return sum;
+  }*/
+  auto nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
+  if (nextIt == polygon.end()) {
+    nextIt = polygon.begin();
   }
+  return sum + calculateArea(p, *nextIt);
 }
 
 double popov::getAreaVertexes(const std::vector< Polygon > & polygons, int num)
