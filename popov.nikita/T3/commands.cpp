@@ -27,6 +27,10 @@ std::ostream& popov::getArea(const std::vector< Polygon >& polygons, std::istrea
   else
   {
     int numOfVertexes = std::stoi(parametr);
+    if (numOfVertexes < 3)
+    {
+      throw std::runtime_error("not enough data");
+    }
     out << std::fixed << std::setprecision(1) << getAreaVertexes(polygons, numOfVertexes) << '\n';
   }
   return out;
