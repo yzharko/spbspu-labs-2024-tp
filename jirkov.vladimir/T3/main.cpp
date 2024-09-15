@@ -1,9 +1,10 @@
 #include <iostream>
+#include <iterator>
 #include <map>
 #include "fstream"
 #include <functional>
 #include <limits>
-#include "polygon.hpp"
+#include "geoStructures.hpp"
 
 int main(int argc, char* argv[])
 {
