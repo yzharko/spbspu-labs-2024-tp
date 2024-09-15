@@ -13,8 +13,8 @@ namespace khomichenko
     std::string key3;
   };
 
-  std::istream & operator>>(std::istream & input, DataStruct & value);
-  std::ostream & operator<<(std::ostream & out, const DataStruct & value);
+  std::istream & operator>>(std::istream & in, DataStruct & dataStr);
+  std::ostream & operator<<(std::ostream & out, const DataStruct & dataStr);
 }
 
 

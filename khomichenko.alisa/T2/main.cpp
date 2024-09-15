@@ -1,13 +1,24 @@
 #include <iostream>
+#include <limits>
+#include <iterator>
+#include <vector>
+#include "dataStruct.hpp"
+
 int main()
 {
-  int a = 0, b = 0;
-  std::cin >> a >> b;
-  if (std::cin.fail())
+  using namespace khomichenko;
+  std::vector < DataStruct > vector;
+  using input_t = std::istream_iterator< DataStruct >;
+  using output_t = std::ostream_iterator< DataStruct >;
+  while(!std::cin.eof())
   {
-    std::cerr << "error\n";
-    return 1;
+    std::copy (input_t{std::cin}, input_t{}, std::back_inserter(vector));
+    if (std::cin.fail())
+    {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
   }
-  std::cout << a << " " << b << "\n";
+  std::copy(vector.begin(), vector.end(), output_t{std::cout, "\n"});
   return 0;
 }
