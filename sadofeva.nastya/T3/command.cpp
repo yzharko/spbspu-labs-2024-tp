@@ -219,23 +219,23 @@ bool sadofeva::CompatiblePolygons(Polygon& a, Polygon& b)
 
 void sadofeva::commandSame(const std::vector< Polygon >& polygons, std::istream& input , std::ostream & out)
 {
-   Polygon tg;
-   input >> tg;
-   char c = input.peek();
-   if (c != '\n' || input.fail())
-   {
-     std::cerr << "<INVALID COMMAND>\n";
-   }
-   else
-   {
-     size_t compatibleCout = std::count_if
-     (
-       polygons.begin(),
-       polygons.end(),
-       [&tg](Polygon & polygon) -> bool {return CompatiblePolygons(polygon, tg); }
-     );
-     out << CompatiblePolygons << "\n";
-   }
+  Polygon tg;
+  input >> tg;
+  char c = input.peek();
+  if (c != '\n' || input.fail())
+  {
+    std::cerr << "<INVALID COMMAND>\n";
+  }
+  else
+  {
+    size_t compatibleCout = std::count_if
+    (
+      polygons.begin(),
+      polygons.end(),
+      [&tg](Polygon & polygon) -> bool {return CompatiblePolygons(polygon, tg); }
+    );
+    out << CompatiblePolygons << "\n";
+  }
 }
 
 bool sadofeva::xComparator(const Point& lhs, const Point& rhs)
@@ -394,12 +394,12 @@ void sadofeva::comandCount(const std::vector< Polygon >& polygons, std::istream&
   {
     if (!std::isalpha(Count[0]))
     {
-       size_t vertix = std::stoull(Count);
-       if (vertix < 3)
-       {
-         throw std::logic_error("<INVALID COMMAND>\n");
-       }
-       CountVertex(polygons,out, vertix);
+      size_t vertix = std::stoull(Count);
+      if (vertix < 3)
+      {
+        throw std::logic_error("<INVALID COMMAND>\n");
+      }
+      CountVertex(polygons,out, vertix);
     }
     else
     {
