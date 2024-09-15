@@ -63,7 +63,7 @@ std::istream& ankhbayar::operator>>(std::istream& in, ankhbayar::DataStruct& ds)
 }
 
 
-std::ostream& ankhbayar::operator<<(std::ostream& out, const ankhbayar::DataSrtuct& ds)
+std::ostream& ankhbayar::operator<<(std::ostream& out, const ankhbayar::DataStruct& ds)
 {
   std::ostream::sentry sentry(out);
   if(!sentry)
@@ -71,7 +71,7 @@ std::ostream& ankhbayar::operator<<(std::ostream& out, const ankhbayar::DataSrtu
     return out;
   }
   iofmtguard fmtguard(out);
-  out << "(:key1 0" << std::oct << ds.key1 << ":key2 0x" << std::uppercase << std::hex << ds.key << ":key3\" << ds.key3 << "\":)";
+  out << "(:key1 0" << std::oct << ds.key1 << ":key2 0x" << std::uppercase << std::hex << ds.key2 << ":key3\" << ds.key3 << "\":)";
   return out;
 }
 

@@ -23,7 +23,7 @@ namespace ankhbayar
   std::istream& operator>>(std::istream& in, DataStruct& ds);
   std::ostream& operator<<(std::ostream& out, const DataStruct& ds);
 
-  std::pair<std::string, std::string> getNextPair(std::strings& s);
+  std::pair<std::string, std::string> getNextPair(std::string& s);
 
   class iofmtguard
   {
