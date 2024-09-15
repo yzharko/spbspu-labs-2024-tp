@@ -19,10 +19,11 @@ namespace sadofeva
   struct Polygon
   {
     std::vector< Point > point;
-  }
+  };
   std::istream& operator>>(std::istream& is, Point& value);
   std::ostream& operator<<(std::ostream& out, const Point& value);
   std::istream& operator>>(std::istream& is, Polygon& value);
   std::ostream& operator<<(std::ostream& out, const Polygon& value);
 }
 #endif
+
