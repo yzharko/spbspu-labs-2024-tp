@@ -290,6 +290,10 @@ std::ostream& popov::inframe(const std::vector< Polygon >& polygons, std::istrea
 {
   Polygon specPolyg;
   in >> specPolyg;
+  if (specPolyg.points.size() < 4)
+  {
+    throw std::invalid_argument("<INVALID COMMAND>\n");
+  }
   std::pair<Point, Point> frame = findMinMaxXY(polygons);
   int specMinX = getMinX(specPolyg);
   int specMinY = getMinY(specPolyg);
