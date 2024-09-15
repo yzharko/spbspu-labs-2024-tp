@@ -40,7 +40,7 @@ void sadofeva::getAreaEven(const std::vector< Polygon >& polygons, std::ostream 
 
 void sadofeva::getAreaOdd(const std::vector< Polygon >& polygons, std::ostream& out)
 {
-  double totalArea = std::acumulate(polygons.begin(), polygons.end(), 0.0 , [](double sum, const Polygon& polygon)
+  double totalArea = std::accumulate(polygons.begin(), polygons.end(), 0.0 , [](double sum, const Polygon& polygon)
   {
     if (polygon.point.size() % 2 !=0 )
     {
@@ -92,19 +92,6 @@ void sadofeva::getMaxArea(const std::vector< Polygon >& polygons, std::ostream& 
   auto maxAreaPolygon = std::max_element(polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b)
   {
     return getAreaAll(a) < getAreaAll(b);
-  });
-  if (maxAreaPolygon != polygons.end())
-  {
-    double maxArea = getAreaAll(*maxAreaPolygon);
-    out << std::fixed << std::setprecision(1) << maxArea << "\n";
-  }
-}
-
-void sadofeva::getMaxVertex(const std::vector< Polygon >& polygons, std::ostream & out)
-{
-  auto MaxVertex = std::max_element(polygons.begin(), polygons.end(), [](const Polygon& a, const Polygon& b)
-  {
-    return a.point.size(0 < b.point.size();
   });
   if (maxAreaPolygon != polygons.end())
   {
@@ -178,6 +165,7 @@ void sadofeva::CountVertex(const std::vector< Polygon >& polygons, std::ostream&
   {
     return polygon.point.size() == count;
   });
+  output << countVert << "\n";
 }
 
 bool sadofeva::CompatiblePolygons(Polygon& a, Polygon& b)
@@ -187,7 +175,7 @@ bool sadofeva::CompatiblePolygons(Polygon& a, Polygon& b)
     return false;
   }
   Polygon sortA = a;
-  std::transform(sortA.point.begin(), sotrA.point.end(), a.point.begin(), [](Point& p)
+  std::transform(sortA.point.begin(), sortA.point.end(), a.point.begin(), [](Point& p)
   {
     Point points;
     points.x = std::abs(p.x);
@@ -277,7 +265,7 @@ sadofeva::pr sadofeva::extendFrameRect(pr frameRect, const Polygon& polygon)
   return frameRect;
 }
 
-bool sadofeva::isPointInRect(const Point& point, const pr& rect)
+bool sadofeva::isPointInrect(const Point& point, const pr& rect)
 {
   bool tmp1 = rect.first.x <= point.x && rect.second.x >= point.x;
   bool tmp2 = tmp1 && rect.first.y <= point.y;
@@ -292,7 +280,7 @@ void sadofeva::commandFrame(const std::vector< Polygon >& polygons, std::istream
   {
     throw std::logic_error("Invalid polygon to compare");
   }
-  auto frameRect = std::accumulate(polygons.cbegin(), polygons.cend(), pr{ { 0.0 } , { 0, 0 } }, extendFrameRect);
+  auto frameRect = std::accumulate(polygons.cbegin(), polygons.cend(), std::make_pair< Point, Point >{ Point{ 0.0 } , Point{ 0, 0 } }, extendFrameRect);
   using namespace std::placeholders;
   auto isInFrameRect = std::bind(isPointInRect, _1, std::ref(frameRect));
   size_t count = std::count_if(polygon.point.cbegin(), polygon.point.cend(), isInFrameRect);
