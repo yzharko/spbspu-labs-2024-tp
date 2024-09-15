@@ -265,6 +265,10 @@ int popov::oddCount(const std::vector< Polygon >& polygons)
 
 int popov::vertCount(const std::vector< Polygon >& polygons, int n)
 {
+  if (n < 3)
+  {
+    throw std::invalid_argument("<INVALID COMMAND>\n");
+  }
   return std::count_if(
     polygons.begin(),
     polygons.end(),
