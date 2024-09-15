@@ -125,8 +125,12 @@ double popov::calculateArea(const Point& p1, const Point& p2) {
 
 double popov::accumulateArea(double sum, const Point& p, const std::vector<Point>& polygon)
 {
-  auto nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
-  if (p == polygon.end()) {
+  if (std::find(polygon.begin(), polygon.end(), p) != polygon.end())
+  {
+    auto nextIt = std::next(std::find(polygon.begin(), polygon.end(), p));
+  }
+  else
+  {
     nextIt = polygon.begin();
   }
   return sum + calculateArea(p, *nextIt);
