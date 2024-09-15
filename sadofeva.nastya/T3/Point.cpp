@@ -49,7 +49,7 @@ std::istream& sadofeva::operator>>(std::istream& is, Polygon& value)
   }
   using inpIter = std::istream_iterator< sadofeva::Point >;
   polygon.point.reserve(numOfpoints);
-  std::copy_n(inpIter(is, numOfpoints, std::back_inserter(polygon.point));
+  std::copy_n(inpIter(is), numOfpoints, std::back_inserter(polygon.point));
   if (is)
   {
     value.point.swap(polygon.point);
@@ -71,3 +71,4 @@ std::ostream& sadofeva::operator<<(std::ostream& out, const Polygon& value)
   std::copy_n(value.point.begin(), coutOfpoints - 1, osIt(out << ' ', " "));
   return out;
 }
+
