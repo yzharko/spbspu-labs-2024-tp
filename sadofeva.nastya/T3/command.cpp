@@ -234,7 +234,7 @@ void sadofeva::commandSame(std::vector< Polygon >& polygons, std::istream& input
        polygons.end(),
        [&tg](Polygon & polygon) -> bool {return CompatiblePolygons(polygon, tg); }
      );
-     out << CompatiblePolygons << "\n";
+     out << compatibleCout << "\n";
    }
 }
 
