@@ -5,7 +5,7 @@
 
 using namespace ankhbayar;
 
-int main(void) //(:key1 01001:key2 0xFFFA:key3 "Data":)
+int main(void) //(:key1 01001:key2 0xFFFA:key3 "":)
 {
   std::vector<DataStruct> vec;
   while (!std::cin.eof())

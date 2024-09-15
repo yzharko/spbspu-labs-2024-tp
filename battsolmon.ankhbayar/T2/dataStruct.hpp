@@ -15,8 +15,8 @@ namespace ankhbayar
 
   struct DataStruct
   {
-    unsigned long long key1; //ULL OCT 01001; 076
-    unsigned long long key2; //ULL HEX 0xFFFA; 0x0100f
+    unsigned long long key1;
+    unsigned long long key2;
     std::string key3;
   };
 

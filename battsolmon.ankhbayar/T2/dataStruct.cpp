@@ -3,7 +3,7 @@
 
 std::pair<std::string, std::string> ankhbayar::getNextPair(std::string& s)
 {
-  s.erase(0, s.find(':')+1); //remove ':' from the beginning of string
+  s.erase(0, s.find(':')+1);
   std::string key=S.substr(0,4);
   s.erase(0,5);
   std::string value;
@@ -17,7 +17,7 @@ std::pair<std::string, std::string> ankhbayar::getNextPair(std::string& s)
     value=s.substr(0, s.find(':'));
     s.erase(0, value.size());
   }
-  return std::make_pair(key, value); //key, value
+  return std::make_pair(key, value);
 }
 std::istream& ankhbayar::operator>>(std::istream& in, ankhbayar::DataStruct& ds)
 {
@@ -102,4 +102,3 @@ ankhbayar::iofmtguard::~iofmtguard()
   s_.precision(precision_);
   s_.flags(fmt_);
 }
-
