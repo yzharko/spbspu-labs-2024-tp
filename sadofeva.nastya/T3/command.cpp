@@ -280,7 +280,11 @@ void sadofeva::commandFrame(const std::vector< Polygon >& polygons, std::istream
   {
     throw std::logic_error("Invalid polygon to compare");
   }
-  auto frameRect = std::accumulate(polygons.cbegin(), polygons.cend(), std::make_pair< Point, Point >( Point{ 0, 0 } , Point{ 0, 0 } ), extendFrameRect);
+  auto frameRect = std::accumulate(
+    polygons.cbegin(), polygons.cend(),
+    std::make_pair< Point, Point >( Point{ 0, 0 } , Point{ 0, 0 } ),
+    extendFrameRect
+  );
   using namespace std::placeholders;
   auto isInFrameRect = std::bind(isPointInrect, _1, std::ref(frameRect));
   size_t count = std::count_if(polygon.point.cbegin(), polygon.point.cend(), isInFrameRect);
