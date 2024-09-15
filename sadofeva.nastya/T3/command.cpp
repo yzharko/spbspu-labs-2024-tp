@@ -6,7 +6,7 @@
 #include <iterator>
 #include <map>
 #include "command.hpp"
-#include "Pount.hpp"
+#include "Point.hpp"
 
 void sadofeva::getAreaAll(const Polygon& polygon)
 {
