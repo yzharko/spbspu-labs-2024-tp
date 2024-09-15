@@ -415,10 +415,14 @@ std::ostream& popov::maxSeq(const std::vector< Polygon >& polygons, std::istream
   std::vector< int > maxSeq;
   int counter = 0;
   auto multiplyFunction = [&counter, &polyg](const Polygon& polygon) {
-        return countSeq(polygon, polyg, counter);
+    return countSeq(polygon, polyg, counter);
   };
   std::transform(polygons.begin(), polygons.end(), std::back_inserter(maxSeq), multiplyFunction);
   int max = *std::max_element(maxSeq.begin(), maxSeq.end());
+  if (max = 0)
+  {
+    throw std::logic_error("<INVALID COMMAND>");
+  }
   out << max << "\n";
   return out;
 }
