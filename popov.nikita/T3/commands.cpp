@@ -134,7 +134,10 @@ double popov::accumulateArea(double sum, const Point& p, const std::vector<Point
   {
     nextIt = polygon.begin();
   }
-  return sum + calculateArea(p, *nextIt);
+  if (nextIt != polygon.end())
+  {
+    return sum + calculateArea(p, *nextIt);
+  }
 }
 
 double popov::getAreaVertexes(const std::vector< Polygon > & polygons, int num)
