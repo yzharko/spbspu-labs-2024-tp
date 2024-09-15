@@ -27,7 +27,7 @@ namespace sadofeva
   void CountOdd(const std::vector< Polygon >& polygons, std::ostream& output);
   void CountVertex(const std::vector< Polygon >& polygons, std::ostream& output, size_t count);
 
-  void commandSame(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& out);
+  void commandSame(std::vector< Polygon >& polygons, std::istream& input, std::ostream& out);
 
   bool yComparator(const Point& lhs, const Point& rhs);
   bool xComparator(const Point& lhs, const Point& rhs);
