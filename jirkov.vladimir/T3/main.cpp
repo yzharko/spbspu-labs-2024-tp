@@ -4,6 +4,7 @@
 #include <functional>
 #include <limits>
 #include "polygon.hpp"
+
 int main(int argc, char* argv[])
 {
   using namespace jirkov;
@@ -15,7 +16,6 @@ int main(int argc, char* argv[])
   using input_iterator_t = std::istream_iterator< Polygon >;
   std::ifstream in(argv[1]);
   std::vector< Polygon > polygons;
-
   while (!in.eof())
   {
     std::copy(input_iterator_t{in}, input_iterator_t{}, std::back_inserter(polygons));
