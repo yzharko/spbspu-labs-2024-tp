@@ -47,7 +47,7 @@ std::istream& ankhbayar::operator>>(std::istream& in, ankhbayar::DataStruct& ds)
         in.setstate(std::ios::badbit);
         return in;
       }
-      ds.key2=std:;strtoull(pair.second.c_str(), nullptr, 16);
+      ds.key2=std::strtoull(pair.second.c_str(), nullptr, 16);
     }
     else if (pair.first=="key3")
     {
