@@ -1,6 +1,7 @@
 #include <iostream>
 #include <limits>
 #include <iterator>
+#include <functional>
 #include "Point.hpp"
 #include "command.hpp"
 
