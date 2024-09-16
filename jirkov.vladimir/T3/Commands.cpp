@@ -1,3 +1,4 @@
+#include <numeric>
 #include <cstring>
 #include <map>
 #include <functional>
@@ -9,26 +10,19 @@
 #include "geoStructures.hpp"
 #include "Commands.hpp"
 
-/*void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
-  out << "getArea" << "\n";
-}
-*/
-void jirkov::getArea(std::istream& is, std::ostream& out)
-{
-  std::map< std::string, std::function < void(std::ostream&) > > area;
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > area;
   {
     using namespace std::placeholders;
-    area["EVEN"] = std::bind(jirkov::getEven, _1);
-    area["ODD"] = std::bind(jirkov::getOdd, _1);
-    area["MEAN"] = std::bind(jirkov::getMean, _1);
+    area["EVEN"] = std::bind(jirkov::getAreaEven, _1, _2);
   }
   out << "getArea" << "\n";
   std::string command;
   is >> command;
   try
   {
-    area.at(command)(out);
+    area.at(command)(allData, out);
   }
   catch(const std::out_of_range& error)
   {
@@ -55,24 +49,39 @@ void jirkov::getArea(std::istream& is, std::ostream& out)
   }
 }
 
-
-void jirkov::getEven(std::ostream& out)
+int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
 {
-  out << "getEven" << "\n";
+  int currentX = currentPoint.x;
+  int currentY = currentPoint.y;
+  int prevX = prevPoint.x;
+  int prevY = prevPoint.y;
+  int area = (prevX + currentX) * (prevY - currentY);
+  return area;
 }
 
-
-void jirkov::getOdd(std::ostream& out)
+double jirkov::countArea(const Polygon polygon)
 {
-  out << "getOdd" << "\n";
+  int area = 0;
+  std::vector< int > areas(polygon.points.size());
+  std::vector< int >::iterator startAreas = areas.begin();
+  std::vector< int >::iterator finishAreas = areas.end();
+
+  std::vector< Point >::const_iterator finish = polygon.points.end();
+  std::vector< Point >::const_iterator prevPoint = polygon.points.begin();
+  std::vector< Point >::const_iterator currentPoint = polygon.points.begin() + 1;
+
+  std::transform(currentPoint, finish, prevPoint, startAreas, findCordinate);
+  *(finishAreas - 1) = findCordinate(*prevPoint, *(finish - 1));
+
+  area = std::accumulate(startAreas, finishAreas, 0);
+  return std::abs(area / 2.0);
 }
 
-
-void jirkov::getMean(std::ostream& out)
+void jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
 {
-  out << "getMean" << "\n";
+  double area = countArea(allData.front());
+  out << area << "\n";
 }
-
 void jirkov::getVertex(std::ostream& out)
 {
   out << "getVertex" << "\n";

@@ -28,11 +28,10 @@ int main(int argc, char ** argv)
       in.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
-  //std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
-  std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::istream&, std::ostream&) > > interaction;
   {
     using namespace std::placeholders;
-    interaction["AREA"] = std::bind(jirkov::getArea, _1, _2);
+    interaction["AREA"] = std::bind(jirkov::getArea, _1, _2, _3);
     //interaction["MAX"] = std::bind(jirkov::getMax, _1, _2, _3);
     //interaction["MIN"] = std::bind(jirkov::getMin, _1, _2, _3);
     //interaction["COUNT"] = std::bind(jirkov::count, _1, _2, _3);
@@ -44,8 +43,7 @@ int main(int argc, char ** argv)
   {
     try
     {
-      //interaction.at(command)(allData, std::cin, std::cout);
-      interaction.at(command)(std::cin, std::cout);
+      interaction.at(command)(allData, std::cin, std::cout);
     }
     catch(const std::out_of_range& error)
     {
