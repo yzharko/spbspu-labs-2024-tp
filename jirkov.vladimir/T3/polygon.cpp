@@ -33,3 +33,19 @@ std::istream& jirkov::operator>>(std::istream& in, Polygon& value)
   }
   return in;
 }
+std::ostream& jirkov::operator<<(std::ostream& out, const Polygon& value)
+{
+  std::ostream::sentry guard(out);
+  if(!guard)
+  {
+    return out;
+  }
+  std::vector< Point >::const_iterator start = value.points.begin();
+  std::vector< Point >::const_iterator finish = value.points.end();
+  while(start != finish)
+  {
+    out << *start << "|";
+    start++;
+  }
+  return out;
+}

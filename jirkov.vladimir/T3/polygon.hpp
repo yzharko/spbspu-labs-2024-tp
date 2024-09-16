@@ -12,6 +12,7 @@ namespace jirkov
   };
 
   std::istream& operator>>(std::istream& in, Polygon& value);
+  std::ostream& operator<<(std::ostream& out, const Polygon& value);
 }
 
 #endif

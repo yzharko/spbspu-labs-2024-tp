@@ -10,6 +10,7 @@ namespace jirkov
   {
     int x, y;
   };
+  std::ostream& operator<<(std::ostream& out, const Point& value);
   std::istream& operator>>(std::istream& in, Point& dest);
 }
 
