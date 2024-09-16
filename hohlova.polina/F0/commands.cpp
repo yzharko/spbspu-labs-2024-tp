@@ -16,13 +16,12 @@ namespace hohlova
     stream << "2. create < filename > - opening the filename file, if it does not exist,\n";
     stream << "then creating it and forming a dictionary with the same name from its data\n";
     stream << "3. edit < name > < word > < new frequency > - edit dictionary elements,\n";
-    stream << "their names and frequencies\n";
-    stream << "4. insert < name > < word > < frequency > - inserting a word-frequency pair\n";
+    stream << "their names and translations\n";
+    stream << "4. insert < name > < word > < frequency > - inserting a word-translation pair\n";
     stream << "5. remove < name > < word > - deleting an item(s) from the dictionary\n";
-    stream << "by word / frequency / word and frequency\n";
+    stream << "by word";
     stream << "6. rename < oldname > < newname > - renaming the dictionary from oldname to newname\n";
     stream << "7. find < name > < word > - output of element(s) by word\n";
-    stream << "dictionary elements according to the specified sorting conditions\n";
     stream << "8. view - the output of the names of existing dictionaries\n";
     stream << "9. size < name > - print the size of the dictionary\n";
   }
