@@ -1,53 +1,47 @@
 #include <iostream>
+#include <map>
+#include <iostream>
+#include <vector>
+#include <functional>
+#include <limits>
 #include <fstream>
-#include "polygon.hpp"
-#include "polygons_collection.hpp"
+#include "FigureStructs.hpp"
+#include "Commands.hpp"
+#include "InputProcessing.hpp"
 
-int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <filename>" << std::endl;
-        return 1;
+int main(int argc, const char * argv[])
+{
+  if (argc != 2)
+  {
+    std::cerr << "wrong number of args\n";
+    return 1;
+  }
+  std::vector< litsinger::Polygon > inputData;
+  std::ifstream input(argv[1]);
+  litsinger::readFromFile(input, inputData);
+  std::map< std::string, std::function< void(const std::vector< litsinger::Polygon >&, std::ostream&, std::istream&) > > commands;
+  {
+    using namespace std::placeholders;
+    commands["AREA"] = std::bind(litsinger::areaCommand, _1, _2, _3);
+    commands["MAX"] = std::bind(litsinger::maxCommand, _1, _2, _3);
+    commands["MIN"] = std::bind(litsinger::minCommand, _1, _2, _3);
+    commands["COUNT"] = std::bind(litsinger::countCommand, _1, _2, _3);
+    commands["PERMS"] = std::bind(litsinger::permsCommand, _1, _2, _3);
+    commands["RECTS"] = std::bind(litsinger::rectsCommand, _1, _2);
+  }
+  std::string command;
+  while (std::cin >> command)
+  {
+    try
+    {
+      commands.at(command)(inputData, std::cout, std::cin);
     }
-
-    std::ifstream file(argv[1]);
-    if (!file) {
-        std::cerr << "Error: Unable to open file " << argv[1] << std::endl;
-        return 1;
+    catch (const std::exception & e)
+    {
+      litsinger::getOutputMessage(std::cout);
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-
-    PolygonsCollection collection;
-
-    int numPoints;
-    while (file >> numPoints) {
-        Point* points = new Point[numPoints];
-        for (int i = 0; i < numPoints; ++i) {
-            file >> points[i].x >> points[i].y;
-        }
-        Polygon polygon(points, numPoints);
-        collection.addPolygon(polygon);
-        delete[] points;
-    }
-
-    Point targetPoints[] = { {0, 0}, {2, 2}, {2, 0}, {0, 2} };
-    Polygon targetPolygon(targetPoints, 4);
-
-    int permsCount = collection.countPermutations(targetPolygon);
-    std::cout << "PERMS: " << permsCount << std::endl;
-
-    int rectsCount = collection.countRectangles();
-    std::cout << "RECTS: " << rectsCount << std::endl;
-
-    double totalArea = collection.totalArea();
-    std::cout << "Total Area: " << totalArea << std::endl;
-
-    double maxArea = collection.maxArea();
-    std::cout << "Max Area: " << maxArea << std::endl;
-
-    double minArea = collection.minArea();
-    std::cout << "Min Area: " << minArea << std::endl;
-
-    int polygonsWith3Vertices = collection.countPolygonsWithVertexes(3);
-    std::cout << "Polygons with 3 vertices: " << polygonsWith3Vertices << std::endl;
-
-    return 0;
+  }
+  return 0;
 }
