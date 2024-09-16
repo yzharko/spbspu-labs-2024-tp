@@ -1,12 +1,14 @@
 #include <iostream>
 #include <iterator>
 #include <map>
-#include "fstream"
+#include <cstring>
+#include <algorithm>
+#include <fstream>
 #include <functional>
 #include <limits>
 #include "geoStructures.hpp"
-
-int main(int argc, char* argv[])
+#include "Commands.hpp"
+int main(int argc, char ** argv)
 {
   using namespace jirkov;
   if (argc != 2)
@@ -19,7 +21,7 @@ int main(int argc, char* argv[])
   std::vector< Polygon > allData;
   while (!in.eof())
   {
-    std::copy(input_iterator_t{in}, input_iterator_t{}, std::back_inserter(polygons));
+    std::copy(input_iterator_t{in}, input_iterator_t{}, std::back_inserter(allData));
     if (in.fail())
     {
       in.clear();
@@ -30,7 +32,7 @@ int main(int argc, char* argv[])
   std::map< std::string, std::function < void(std::istream&, std::ostream&) > > interaction;
   {
     using namespace std::placeholders;
-    interaction["AREA"] = std::bind(jirkov::getArea, _1, _2, _3);
+    interaction["AREA"] = std::bind(jirkov::getArea, _1, _2);
     //interaction["MAX"] = std::bind(jirkov::getMax, _1, _2, _3);
     //interaction["MIN"] = std::bind(jirkov::getMin, _1, _2, _3);
     //interaction["COUNT"] = std::bind(jirkov::count, _1, _2, _3);

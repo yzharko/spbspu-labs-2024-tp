@@ -4,7 +4,7 @@
 
 namespace jirkov
 {
-  void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+  //void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
   void getArea(std::istream&, std::ostream& out);
   void getEven(std::ostream& out);
   void getOdd(std::ostream& out);

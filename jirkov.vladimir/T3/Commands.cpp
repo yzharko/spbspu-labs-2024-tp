@@ -9,11 +9,11 @@
 #include "geoStructures.hpp"
 #include "Commands.hpp"
 
-void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+/*void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
   out << "getArea" << "\n";
 }
-
+*/
 void jirkov::getArea(std::istream& is, std::ostream& out)
 {
   std::map< std::string, std::function < void(std::ostream&) > > area;
@@ -21,7 +21,7 @@ void jirkov::getArea(std::istream& is, std::ostream& out)
     using namespace std::placeholders;
     area["EVEN"] = std::bind(jirkov::getEven, _1);
     area["ODD"] = std::bind(jirkov::getOdd, _1);
-    area["MEAN"] = std::bind(jirikov::getMean, _1);
+    area["MEAN"] = std::bind(jirkov::getMean, _1);
   }
   out << "getArea" << "\n";
   std::string command;
@@ -56,24 +56,24 @@ void jirkov::getArea(std::istream& is, std::ostream& out)
 }
 
 
-void kovshikov::getEven(std::ostream& out)
+void jirkov::getEven(std::ostream& out)
 {
   out << "getEven" << "\n";
 }
 
 
-void kovshikov::getOdd(std::ostream& out)
+void jirkov::getOdd(std::ostream& out)
 {
   out << "getOdd" << "\n";
 }
 
 
-void kovshikov::getMean(std::ostream& out)
+void jirkov::getMean(std::ostream& out)
 {
   out << "getMean" << "\n";
 }
 
-void kovshikov::getVertex(std::ostream& out)
+void jirkov::getVertex(std::ostream& out)
 {
   out << "getVertex" << "\n";
 }
