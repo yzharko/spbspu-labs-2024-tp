@@ -280,11 +280,11 @@ void sadofeva::commandFrame(const std::vector< Polygon >& polygons, std::istream
   size_t count = std::count_if(polygon.point.cbegin(), polygon.point.cend(), isInFrameRect);
   if (count == polygon.point.size())
   {
-    out << "<TRUE>";
+    out << "<TRUE>" << "\n";
   }
   else
   {
-    out << "<FALSE>";
+    out << "<FALSE>" << "\n";
   }
 }
 
