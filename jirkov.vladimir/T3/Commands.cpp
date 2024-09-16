@@ -38,14 +38,19 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
     }
     if(isDigit == true)
     {
-      std::cout << std::stoll(command);
-      getVertex(out);
+      unsigned long long num = std::stoll(command);
+      try
+      {
+        getAreaVertex(num, allData, out);
+      }
+      catch(const std::out_of_range& error)
+      {
+        throw;
+      }
     }
     else
     {
-      std::cerr << "INVALID COMMAND" << "\n";
-      is.clear();
-      is.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      throw;
     }
   }
 }
@@ -60,23 +65,39 @@ bool jirkov::findOdd(const Polygon& polygon)
   return !findEven(polygon);
 }
 
-double jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+bool jirkov::findVertex(unsigned long long num, Polygon polygon)
+{
+  return polygon.points.size() == num;
+}
+
+void jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > even;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), findEven);
   double area = std::accumulate(even.begin(), even.end(), 0, fullArea);
-  out << area;
-  return area;
+  out << area << "\n";
 }
 
-double jirkov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
+void jirkov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > odd;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), findOdd);
   double area = std::accumulate(odd.begin(), odd.end(), 0, fullArea);
-  out << area;
-  return area;
+  out << area << "\n";
 }
+
+void jirkov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
+{
+  using namespace std::placeholders;
+  std::vector< Polygon >::const_iterator det = std::find_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
+  if(det == allData.end())
+  {
+    throw std::out_of_range("");
+  }
+  double area = countArea(*det);
+  out << area << "\n";
+}
+
 int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
 {
   int currentX = currentPoint.x;
@@ -87,12 +108,11 @@ int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
   return area;
 }
 
-double jirkov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
+void jirkov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
   double area = std::accumulate(allData.begin(), allData.end(), 0, fullArea);
   double result = area / allData.size();
-  out << result;
-  return result;
+  out << result << "\n";
 }
 
 double jirkov::countArea(const Polygon polygon)
@@ -117,9 +137,4 @@ double jirkov::fullArea(double sum, const Polygon polygon)
 {
   sum += countArea(polygon);
   return sum;
-}
-
-void jirkov::getVertex(std::ostream& out)
-{
-  out << "\n";
 }
