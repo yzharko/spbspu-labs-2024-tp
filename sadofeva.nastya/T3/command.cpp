@@ -85,7 +85,7 @@ void sadofeva::getAreaMean(const std::vector< Polygon >& polygons,std::ostream& 
     }
   );
   double meanArea = totalArea / polygons.size();
-  out << std::fixed << std::setprecision(1) << meanArea;
+  out << std::fixed << std::setprecision(1) << meanArea << "\n";
 }
 
 void sadofeva::getAreaNum(const std::vector< Polygon > & polygons, std::ostream& out, size_t count)
