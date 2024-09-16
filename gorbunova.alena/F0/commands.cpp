@@ -19,9 +19,11 @@ namespace gorbunova
       << "print < name > - вывод словаря name\n"
       << "size < name > - подсчет слов в словаре с именем name\n"
       << "list - вывод списка всех словарей\n"
-      << "unite < newName > < name1 > < name2 > - объединение словарей name1 и name2 в новый словарь newName\n"
+      << "unite < newName > < name1 > < name2 > - объединение словарей name1 и name2"
+      << "в новый словарь newName\n"
       << "add < name1 > < name2 > - добавление словаря name1 в словарь name2\n"
-      << "intersection < newName > < name1 > < name2 > - пересечение словарей name1 и name2 в новый словарь newName\n"
+      << "intersection < newName > < name1 > < name2 > - пересечение словарей name1 и name2"
+      << "в новый словарь newName\n"
       << "insert < name > < key > < translation > - вставка элемента в словарь name\n"
       << "find < name > < key > - поиск перевода по ключу в словаре name\n"
       << "change < name > < key > < translation > - изменение перевода элемента в словаре name\n"
@@ -105,7 +107,8 @@ namespace gorbunova
       });
   }
 
-  void unite(const std::string &newName, const std::string &name1, const std::string &name2)
+  void unite(const std::string &newName,
+             const std::string &name1, const std::string &name2)
   {
     if (!dictionaries.count(name1) || !dictionaries.count(name2))
     {
@@ -129,12 +132,14 @@ namespace gorbunova
     }
     else
     {
-      dictionaries[name2].insert(dictionaries[name1].begin(), dictionaries[name1].end());
+      dictionaries[name2].insert(dictionaries[name1].begin(),
+        dictionaries[name1].end());
       std::cout << "словарь " << name1 << " добавлен в словарь " << name2 << '\n';
     }
   }
 
-  void intersection(const std::string &newName, const std::string &name1, const std::string &name2)
+  void intersection(const std::string &newName,
+                    const std::string &name1, const std::string &name2)
   {
     if (!dictionaries.count(name1) || !dictionaries.count(name2))
     {
@@ -155,7 +160,8 @@ namespace gorbunova
     }
   }
 
-  void insert(const std::string &name, const std::string &key, const std::string &translation)
+  void insert(const std::string &name, const std::string &key,
+              const std::string &translation)
   {
     if (!dictionaries.count(name))
     {
@@ -190,7 +196,8 @@ namespace gorbunova
     }
   }
 
-  void change(const std::string &name, const std::string &key, const std::string &translation)
+  void change(const std::string &name, const std::string &key,
+              const std::string &translation)
   {
     if (!dictionaries.count(name))
     {
@@ -237,12 +244,14 @@ namespace gorbunova
     else if (!dictionaries[name].count(key))
     {
       std::cout << "в словаре " << name
-        << " не существует элемента с введенным ключом " << key << '\n';
+        << " не существует элемента с введенным ключом "
+        << key << '\n';
     }
     else
     {
       dictionaries[name].erase(key);
-      std::cout << "элемент " << key << " удален из словаря " << name << '\n';
+      std::cout << "элемент " << key << " удален из словаря "
+        << name << '\n';
     }
   }
 
