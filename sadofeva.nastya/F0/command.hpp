@@ -3,22 +3,29 @@
 #include <iosfwd>
 #include <map>
 #include <string>
+#include "helpcommand.hpp"
 
 namespace sadofeva
 {
-	using dictionary = std::map<std::string, int>;
-	void menuCommand(std::istream& in, std::ostream& out);
-	void print(const std::map < std::string, dictionary >& dicts, std::istream& in, std::ostream& out);
-	void insert(std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void remove(std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void search(const std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void printMaxCountWorld(const std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void size(const std::map< std::string, dictionary>& dict, std::istream& in, std::ostream& out);
-	void save(const std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void clear(std::map < std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void union1(std::map<std::string, dictionary>& dicts, std::istream& in, std::ostream& out);
-	void countTo(const std::map < std::string, dictionary >& dicts, std::istream& in, std::ostream& out);
+  void createDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void deleteDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void readTextIntoDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void readFile(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+
+  void findWord(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void deleteWord(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void getWordCount(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void getFrequency(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void getMostUseWord(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+
+  void removeText(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void clearDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+
+  void complementDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void intersectDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+  void unionDictionary(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
+
+  void printHelp(dictionaryOfNames& dictionaries, std::istream& in, std::ostream& out);
 }
 
 #endif
-
