@@ -16,8 +16,9 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
   {
     using namespace std::placeholders;
     area["EVEN"] = std::bind(jirkov::getAreaEven, _1, _2);
+    area["ODD"] = std::bind(jirkov::getAreaOdd, _1, _2);
+    area["MEAN"] = std::bind(jirkov::getAreaMean, _1, _2);
   }
-  out << "getArea" << "\n";
   std::string command;
   is >> command;
   try
@@ -49,6 +50,33 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
   }
 }
 
+bool jirkov::findEven(const Polygon& polygon)
+{
+  return polygon.points.size() % 2 == 0;
+}
+
+bool jirkov::findOdd(const Polygon& polygon)
+{
+  return !findEven(polygon);
+}
+
+double jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > even;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), findEven);
+  double area = std::accumulate(even.begin(), even.end(), 0, fullArea);
+  out << area;
+  return area;
+}
+
+double jirkov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > odd;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), findOdd);
+  double area = std::accumulate(odd.begin(), odd.end(), 0, fullArea);
+  out << area;
+  return area;
+}
 int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
 {
   int currentX = currentPoint.x;
@@ -57,6 +85,14 @@ int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
   int prevY = prevPoint.y;
   int area = (prevX + currentX) * (prevY - currentY);
   return area;
+}
+
+double jirkov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  double area = std::accumulate(allData.begin(), allData.end(), 0, fullArea);
+  double result = area / allData.size();
+  out << result;
+  return result;
 }
 
 double jirkov::countArea(const Polygon polygon)
@@ -77,12 +113,13 @@ double jirkov::countArea(const Polygon polygon)
   return std::abs(area / 2.0);
 }
 
-void jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
+double jirkov::fullArea(double sum, const Polygon polygon)
 {
-  double area = countArea(allData.front());
-  out << area << "\n";
+  sum += countArea(polygon);
+  return sum;
 }
+
 void jirkov::getVertex(std::ostream& out)
 {
-  out << "getVertex" << "\n";
+  out << "\n";
 }
