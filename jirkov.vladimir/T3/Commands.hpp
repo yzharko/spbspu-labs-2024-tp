@@ -1,6 +1,6 @@
 #ifndef COMMANDS_HPP
 #define COMMANDS_HPP
-#include "geoStructures.hpp"
+#include "polygon.hpp"
 
 namespace jirkov
 {

@@ -6,7 +6,7 @@
 #include <fstream>
 #include <functional>
 #include <limits>
-#include "geoStructures.hpp"
+#include "polygon.hpp"
 #include "Commands.hpp"
 int main(int argc, char ** argv)
 {

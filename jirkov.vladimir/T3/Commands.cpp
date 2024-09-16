@@ -8,8 +8,8 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
-#include "geoStructures.hpp"
 #include "Commands.hpp"
+#include "polygon.hpp"
 
 void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
