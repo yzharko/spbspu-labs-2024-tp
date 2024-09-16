@@ -87,7 +87,8 @@ namespace gorbunova
   {
     if (dictionaries.count(name))
     {
-      std::cout << "размер словаря " << name << ": " << dictionaries[name].size() << '\n';
+      std::cout << "размер словаря " << name
+        << ": " << dictionaries[name].size() << '\n';
     }
     else
     {
@@ -115,7 +116,8 @@ namespace gorbunova
       Dictionary newDict = dictionaries[name1];
       newDict.insert(dictionaries[name2].begin(), dictionaries[name2].end());
       dictionaries[newName] = newDict;
-      std::cout << "словарь " << newName << " создан путем объединения " << name1 << " и " << name2 << '\n';
+      std::cout << "словарь " << newName
+        << " создан путем объединения " << name1 << " и " << name2 << '\n';
     }
   }
 
@@ -148,7 +150,8 @@ namespace gorbunova
           return dictionaries[name2].count(pair.first);
         });
         dictionaries[newName] = newDict;
-        std::cout << "словарь " << newName << " создан путем пересечения " << name1 << " и " << name2 << '\n';
+        std::cout << "словарь " << newName
+          << " создан путем пересечения " << name1 << " и " << name2 << '\n';
     }
   }
 
@@ -160,8 +163,8 @@ namespace gorbunova
     }
     else if (dictionaries[name].count(key))
     {
-      std::cout << "элемент с введенным ключом в словаре " << name;
-      std::cout << " уже существует, введите другой ключ для пополнения словаря\n";
+      std::cout << "элемент с введенным ключом в словаре " << name
+        << " уже существует, введите другой ключ для пополнения словаря\n";
     }
     else
     {
@@ -178,7 +181,8 @@ namespace gorbunova
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name << " не существует элемента с введенным ключом " << key << '\n';
+      std::cout << "в словаре " << name
+        << " не существует элемента с введенным ключом " << key << '\n';
     }
     else
     {
@@ -194,12 +198,14 @@ namespace gorbunova
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name << " не существует элемента с введенным ключом " << key << '\n';
+      std::cout << "в словаре " << name
+        << " не существует элемента с введенным ключом " << key << '\n';
     }
     else
     {
       dictionaries[name][key] = translation;
-      std::cout << "элемент " << key << " в словаре " << name << " изменен на " << translation << '\n';
+      std::cout << "элемент " << key << " в словаре "
+        << name << " изменен на " << translation << '\n';
     }
   }
 
@@ -230,7 +236,8 @@ namespace gorbunova
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name << " не существует элемента с введенным ключом " << key << '\n';
+      std::cout << "в словаре " << name
+        << " не существует элемента с введенным ключом " << key << '\n';
     }
     else
     {
