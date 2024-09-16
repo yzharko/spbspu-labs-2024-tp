@@ -15,9 +15,9 @@ namespace hohlova
     stream << "1. help - displays information about available commands(active now)\n";
     stream << "2. create < filename > - opening the filename file, if it does not exist,\n";
     stream << "then creating it and forming a dictionary with the same name from its data\n";
-    stream << "3. edit < name > < word > < new frequency > - edit dictionary elements,\n";
+    stream << "3. edit < name > < word > < new translation > - edit dictionary elements,\n";
     stream << "their names and translations\n";
-    stream << "4. insert < name > < word > < frequency > - inserting a word-translation pair\n";
+    stream << "4. insert < name > < word > < translation > - inserting a word-translation pair\n";
     stream << "5. remove < name > < word > - deleting an item(s) from the dictionary\n";
     stream << "by word";
     stream << "6. rename < oldname > < newname > - renaming the dictionary from oldname to newname\n";
