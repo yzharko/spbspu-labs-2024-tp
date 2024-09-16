@@ -32,9 +32,9 @@ int main(int argc, char ** argv)
   {
     using namespace std::placeholders;
     interaction["AREA"] = std::bind(jirkov::getArea, _1, _2, _3);
-    //interaction["MAX"] = std::bind(jirkov::getMax, _1, _2, _3);
-    //interaction["MIN"] = std::bind(jirkov::getMin, _1, _2, _3);
-    //interaction["COUNT"] = std::bind(jirkov::count, _1, _2, _3);
+    interaction["MAX"] = std::bind(jirkov::getMax, _1, _2, _3);
+    interaction["MIN"] = std::bind(jirkov::getMin, _1, _2, _3);
+    interaction["COUNT"] = std::bind(jirkov::count, _1, _2, _3);
     //interaction["LESSAREA"] = std::bind(jirkov::getLessArea, _1, _3);
     //interaction["PERMS"] = std::bind(jirkov::checkPerms, _1, _2, _3);
   }

@@ -1,4 +1,5 @@
 #include <numeric>
+#include <iomanip>
 #include <cstring>
 #include <map>
 #include <functional>
@@ -12,6 +13,7 @@
 
 void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
+  out << std::fixed << std::setprecision(1);
   std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > area;
   {
     using namespace std::placeholders;
@@ -27,16 +29,7 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
   }
   catch(const std::out_of_range& error)
   {
-    size_t size = command.length();
-    bool isDigit = true;
-    for(size_t i = 0; i < size; i++)
-    {
-      if(!std::isdigit(command[i]))
-      {
-        isDigit = false;
-      }
-    }
-    if(isDigit == true)
+    if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
       try
@@ -53,6 +46,11 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
       throw;
     }
   }
+}
+
+bool jirkov::isDigit(char ch)
+{
+  return std::isdigit(ch);
 }
 
 bool jirkov::findEven(const Polygon& polygon)
@@ -94,8 +92,83 @@ void jirkov::getAreaVertex(unsigned long long num, const std::vector< Polygon >&
   {
     throw std::out_of_range("");
   }
-  double area = countArea(*det);
-  out << area << "\n";
+  double res = countArea(*det);
+  out << res << "\n";
+}
+
+void jirkov::getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > max;
+  {
+    using namespace std::placeholders;
+    max["AREA"] = std::bind(jirkov::getMaxArea, _1, _2);
+    max["VERTEXES"] = std::bind(jirkov::getMaxVertexes, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    max.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error)
+  {
+    throw;
+  }
+}
+
+void jirkov::getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > min;
+  {
+    using namespace std::placeholders;
+    min["AREA"] = std::bind(jirkov::getMinArea, _1, _2);
+    min["VERTEXES"] = std::bind(jirkov::getMinVertexes, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    min.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error)
+  {
+    throw;
+  }
+}
+void jirkov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  double maxArea = 0;
+  if(allData.empty())
+  {
+    out << maxArea << "\n";
+  }
+  else
+  {
+    std::vector< double > allAreas;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+    std::sort(allAreas.begin(), allAreas.end());
+    maxArea = *(allAreas.end() - 1);
+    out << maxArea << "\n";
+  }
+}
+
+void jirkov::getMinArea(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  double minArea = 0;
+  if(allData.empty())
+  {
+    out << minArea << "\n";
+  }
+  else
+  {
+    std::vector< double > allAreas;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+    std::sort(allAreas.begin(), allAreas.end());
+    minArea = *(allAreas.begin());
+    out << minArea << "\n";
+  }
 }
 
 int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
@@ -137,4 +210,80 @@ double jirkov::fullArea(double sum, const Polygon polygon)
 {
   sum += countArea(polygon);
   return sum;
+}
+
+unsigned long long jirkov::getVertex(const Polygon& polygon)
+{
+  return polygon.points.size();
+}
+
+void jirkov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long maxVertexes = 0;
+  if(allData.empty())
+  {
+    out << maxVertexes << "\n";
+  }
+  else
+  {
+    std::vector< unsigned long long > allVertexes;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertex);
+    std::sort(allVertexes.begin(), allVertexes.end());
+    maxVertexes = *(allVertexes.end() - 1);
+    out << maxVertexes << "\n";
+ }
+}
+
+void jirkov::getMinVertexes(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long minVertexes = 0;
+  if(allData.empty())
+  {
+    out << minVertexes << "\n";
+  }
+  else
+  {
+    std::vector< unsigned long long > allVertexes;
+    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertex);
+    std::sort(allVertexes.begin(), allVertexes.end());
+    minVertexes = *(allVertexes.begin());
+    out << minVertexes << "\n";
+  }
+}
+
+void jirkov::count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
+{
+  out << std::fixed << std::setprecision(1);
+  std::map< std::string, std::function < void(const std::vector< Polygon >&, std::ostream&) > > count;
+  {
+    using namespace std::placeholders;
+    count["EVEN"] = std::bind(jirkov::countEven, _1, _2);
+    count["ODD"] = std::bind(jirkov::countOdd, _1, _2);
+  }
+  std::string command;
+  is >> command;
+  try
+  {
+    count.at(command)(allData, out);
+  }
+  catch(const std::out_of_range& error)
+  {
+    throw;
+  }
+}
+
+void jirkov::countEven(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > even;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(even), findEven);
+  unsigned long long count = even.size();
+  out << count << "\n";
+}
+
+void jirkov::countOdd(const std::vector< Polygon >& allData, std::ostream& out)
+{
+  std::vector< Polygon > odd;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), findOdd);
+  unsigned long long count = odd.size();
+  out << count << "\n";
 }
