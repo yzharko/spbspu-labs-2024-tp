@@ -203,3 +203,35 @@ void litsinger::getPrint(mapDictionaries_t& mapDictionaries, std::istream& in, s
     out << " Словаря с названием '" << name << "' не существует" << "\n";
   }
 }
+
+void litsinger::getIntersection(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string newname = "";
+  std::string name = "";
+
+  in >> newname >> name;
+
+  if (newname != name)
+  {
+    auto newDictionaryIter = mapDictionaries.find(newname);
+    auto existDictionaryIter = mapDictionaries.find(name);
+
+    if (newDictionaryIter == mapDictionaries.end() && existDictionaryIter != mapDictionaries.end())
+    {
+      std::map< std::string, std::vector< size_t > > newDict = existDictionaryIter->second;
+      for (auto it = existDictionaryIter->second.begin(); it != existDictionaryIter->second.end(); ++it) {
+        newDict.emplace(it->first, it->second);
+      }
+      mapDictionaries.emplace(newname, newDict);
+      out << " Словарь '" << name << "' успешно скопирован в словарь '" << newname << "'\n";
+    }
+    else
+    {
+      out << " Ошибка: либо словарь '" << name << "' не существует, либо словарь '" << newname << "'уже занят\n";
+    }
+  }
+  else
+  {
+    out << " Названия старого и нового словаря одинаковы, введите другое название нового словаря\n";
+  }
+}

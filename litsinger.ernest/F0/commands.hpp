@@ -16,5 +16,6 @@ namespace litsinger
   void printDict(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
   void addLine(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
   void getPrint(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
+  void getIntersection(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out);
 }
 #endif

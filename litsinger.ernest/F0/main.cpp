@@ -4,6 +4,7 @@
 
 int main()
 {
+  setlocale(LC_ALL, "Russian");
 
   using mapDictionaries_t = std::map< std::string, std::map< std::string, std::vector< size_t > > >;
 
@@ -20,6 +21,7 @@ int main()
     command["print"] = litsinger::printDict;
     command["add_line"] = litsinger::addLine;
     command["get_print"] = litsinger::getPrint;
+    command["get_intersection"] = litsinger::getIntersection;
   }
 
   std::string cmd = "";
