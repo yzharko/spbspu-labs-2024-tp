@@ -1,22 +1,23 @@
 #include "point.hpp"
 #include <iostream>
 
-std::istream& jirkov::operator>>(std::istream& in, Point& value)
+std::istream& jirkov::operator>>(std::istream& is, Point& value)
 {
-  std::istream::sentry guard(in);
-  if (!guard)
+  std::istream::sentry guard(is);
+  if(!guard)
   {
-    return in;
+    return is;
   }
-  StreamGuard StreamGuard(in);
+  StreamGuard StreamGuard(is);
   Point point;
-  in >> Del{'('} >> value.x >> Del{';'} >> value.y >> Del{')'};
-  if (in)
+  is >> Del{'('} >> point.x >> Del{';'} >> point.y >> Del{')'};
+  if(is)
   {
     value = point;
   }
-  return in;
+  return is;
 }
+
 std::ostream& jirkov::operator<<(std::ostream& out, const Point& value)
 {
   std::ostream::sentry guard(out);

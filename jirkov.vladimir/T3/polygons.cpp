@@ -1,41 +1,46 @@
-#include "polygon.hpp"
-#include <iostream>
+#include "polygons.hpp"
 #include <cstddef>
-#include <Delimeter.hpp>
-#include <IOstrucrures.hpp>
+#include <iostream>
 
-
-std::istream& jirkov::operator>>(std::istream& in, Polygon& value)
+std::istream& jirkov::operator>>(std::istream& is, Polygon& value)
 {
-  std::istream::sentry guard(in);
+  std::istream::sentry guard(is);
   if(!guard)
   {
-    return in;
+    return is;
   }
-  StreamGuard StreamGuard(in);
+  StreamGuard StreamGuard(is);
   size_t count = 0;
   Point point;
   Polygon temp;
-  in >> count;
-  if(!in || count < 3)
+  is >> count;
+  if(!is || count < 3)
   {
-    in.setstate(std::ios::failbit);
+    is.setstate(std::ios::failbit);
   }
   for(size_t i = 0; i < count; i++)
   {
-    in >> point;
-    temp.points.push_back(point);
+    if (is.get() == '\n')
+    {
+      is.setstate(std::ios::failbit);
+      return is;
+    }
+    if(is >> point)
+    {
+      temp.points.push_back(point);
+    }
   }
-  if(count != temp.points.size())
+  if(!is || count != temp.points.size() || is.get() != '\n')
   {
-    in.setstate(std::ios::failbit);
+    is.setstate(std::ios::failbit);
   }
-  if(in)
+  if(is)
   {
     value = temp;
   }
-  return in;
+  return is;
 }
+
 std::ostream& jirkov::operator<<(std::ostream& out, const Polygon& value)
 {
   std::ostream::sentry guard(out);
