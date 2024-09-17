@@ -235,3 +235,56 @@ void litsinger::getIntersection(mapDictionaries_t& mapDictionaries, std::istream
     out << " Названия старого и нового словаря одинаковы, введите другое название нового словаря\n";
   }
 }
+
+void litsinger::searchLetter(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  char letter;
+  std::string name = "";
+
+  in >> letter >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+
+  if (dictIter != mapDictionaries.end())
+  {
+    std::map< std::string, std::vector< size_t > > newDict;
+
+    for (auto it = dictIter->second.begin(); it != dictIter->second.end(); ++it) {
+      if (letter == it->first.at(0))
+      {
+        newDict.emplace(it->first, it->second);
+      }
+    }
+
+    if (!newDict.empty())
+    {
+      size_t count = 0;
+      bool firstLine = false;
+      for (auto it = newDict.begin(); it != newDict.end(); ++it) {
+        out << ++count << ". " << it->first << " {";
+        for (auto iter = it->second.begin(); iter != it->second.end(); ++iter)
+        {
+          if (firstLine)
+          {
+            out << ",";
+          }
+          else
+          {
+            firstLine = true;
+          }
+          out << *iter;
+        }
+        firstLine = false;
+        out << "}\n";
+      }
+    }
+    else
+    {
+      out << " Словарь '" << name << "' не имеет слов с первой буквой '" << letter << "'\n";
+    }
+  }
+  else
+  {
+    out << " Словарь '" << name << "' не найден\n";
+  }
+}

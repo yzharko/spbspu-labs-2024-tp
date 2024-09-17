@@ -22,6 +22,7 @@ int main()
     command["add_line"] = litsinger::addLine;
     command["get_print"] = litsinger::getPrint;
     command["get_intersection"] = litsinger::getIntersection;
+    command["search_letter"] = litsinger::searchLetter;
   }
 
   std::string cmd = "";
