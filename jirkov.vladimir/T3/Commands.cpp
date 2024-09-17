@@ -87,12 +87,13 @@ void jirkov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out
 void jirkov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
 {
   using namespace std::placeholders;
+  int count = std::count_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
   std::vector< Polygon >::const_iterator det = std::find_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
   if(det == allData.end())
   {
     throw std::out_of_range("");
   }
-  double res = countArea(*det);
+  double res = countArea(*det) * counter;
   out << res << "\n";
 }
 
@@ -216,6 +217,7 @@ int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
 
 void jirkov::getAreaMean(const std::vector< Polygon >& allData, std::ostream& out)
 {
+  fileIsEmpty(allData);
   double area = std::accumulate(allData.begin(), allData.end(), 0, fullArea);
   double result = area / allData.size();
   out << result << "\n";
