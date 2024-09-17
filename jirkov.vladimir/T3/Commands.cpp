@@ -10,6 +10,7 @@
 #include <iostream>
 #include "Commands.hpp"
 #include "polygon.hpp"
+#include "ScopeGuard.hpp"
 
 void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
 {
