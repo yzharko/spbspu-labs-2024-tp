@@ -24,7 +24,7 @@ namespace popov
   void getWordsWithFrequencyCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out);
   void printCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out);
   void createSameCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out);
-  
+
   void printDictNot(std::ostream& out, std::string name);
   void printWrongInput(std::ostream& out);
 }

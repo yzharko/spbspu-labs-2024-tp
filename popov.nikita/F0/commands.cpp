@@ -3,7 +3,7 @@
 #include <string>
 #include <limits>
 #include <vector>
-#include <algorithm> 
+#include <algorithm>
 #include "commands.hpp"
 
 using indictionary = std::map< std::string, size_t >;
@@ -35,7 +35,7 @@ void popov::createCmd(outdictionary& dictionaries, std::istream& in, std::ostrea
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) > 0) 
+  if (dictionaries.count(name) > 0)
   {
     out << "Error: Dictionary with name '" << name << "' already exists." << "\n";
     return;
@@ -47,19 +47,19 @@ void popov::createCmd(outdictionary& dictionaries, std::istream& in, std::ostrea
 void popov::addWordCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string word, name;
-  if (!(in >> word >> name)) 
+  if (!(in >> word >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
   if (dictionaries[name].count(word) > 0)
   {
-    if (dictionaries[name][word] == std::numeric_limits<size_t>::max()) 
+    if (dictionaries[name][word] == std::numeric_limits<size_t>::max())
     {
       out << "Error: Word count overflow for '" << word << "' in dictionary '" << name << "'." << '\n';
       return;
@@ -72,7 +72,7 @@ void popov::addWordCmd(outdictionary& dictionaries, std::istream& in, std::ostre
 void popov::removeWordCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string word, name;
-  if (!(in >> word >> name)) 
+  if (!(in >> word >> name))
   {
     printWrongInput(out);
     return;
@@ -82,11 +82,11 @@ void popov::removeWordCmd(outdictionary& dictionaries, std::istream& in, std::os
     printDictNot(out, name);
     return;
   }
-  if (dictionaries[name].erase(word) > 0) 
+  if (dictionaries[name].erase(word) > 0)
   {
     out << "Word '" << word << "' removed from dictionary '" << name << "'." << '\n';
   }
-  else 
+  else
   {
     out << "Word '" << word << "' not found in dictionary '" << name << "'." << '\n';
   }
@@ -95,22 +95,22 @@ void popov::removeWordCmd(outdictionary& dictionaries, std::istream& in, std::os
 void popov::getFrequencyCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string word, name;
-  if (!(in >> word >> name)) 
+  if (!(in >> word >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
   auto it = dictionaries[name].find(word);
-  if (it != dictionaries[name].end()) 
+  if (it != dictionaries[name].end())
   {
     out << "Frequency of word '" << word << "' in dictionary '" << name << "': " << it->second << "\n";
   }
-  else 
+  else
   {
     out << "Word '" << word << "' not found in dictionary '" << name << "'." << "\n";
   }
@@ -119,12 +119,12 @@ void popov::getFrequencyCmd(outdictionary& dictionaries, std::istream& in, std::
 void popov::topWordsCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string name;
-  if (!(in >> name)) 
+  if (!(in >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
@@ -143,12 +143,12 @@ void popov::topWordsCmd(outdictionary& dictionaries, std::istream& in, std::ostr
 void popov::resetCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string name;
-  if (!(in >> name)) 
+  if (!(in >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
@@ -160,12 +160,12 @@ void popov::resetCmd(outdictionary& dictionaries, std::istream& in, std::ostream
 void popov::deleteCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string name;
-  if (!(in >> name)) 
+  if (!(in >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
@@ -178,12 +178,12 @@ void popov::addWordFrequencyCmd(outdictionary& dictionaries, std::istream& in, s
 {
   std::string word, name;
   size_t amount;
-  if (!(in >> word >> amount >> name)) 
+  if (!(in >> word >> amount >> name))
   {
     printWrongInput(out);
     throw std::runtime_error("not enough data");
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
@@ -196,17 +196,17 @@ void popov::increaseFrequencyCmd(outdictionary& dictionaries, std::istream& in, 
 {
   std::string word, name;
   size_t amount;
-  if (!(in >> word >> amount >> name)) 
+  if (!(in >> word >> amount >> name))
   {
     printWrongInput(out);
     throw std::runtime_error("not enough data");
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
-  if (amount > std::numeric_limits<size_t>::max() - dictionaries[name][word]) 
+  if (amount > std::numeric_limits<size_t>::max() - dictionaries[name][word])
   {
     out << "Error: Invalid increase value. It exceeds the maximum allowed value." << "\n";
     return;
@@ -219,18 +219,18 @@ void popov::decreasFrequencyCmd(outdictionary& dictionaries, std::istream& in, s
 {
   std::string word, name;
   size_t amount;
-  if (!(in >> word >> amount >> name)) 
+  if (!(in >> word >> amount >> name))
   {
     printWrongInput(out);
     throw std::runtime_error("not enough data");
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
   auto it = dictionaries[name].find(word);
-  if (it == dictionaries[name].end()) 
+  if (it == dictionaries[name].end())
   {
     out << "Word '" << word << "' not found in dictionary '" << name << "'." << "\n";
     return;
@@ -240,7 +240,7 @@ void popov::decreasFrequencyCmd(outdictionary& dictionaries, std::istream& in, s
     it->second -= amount;
     out << "Frequency of word '" << word << "' in dictionary '" << name << "' decreased by " << amount << "." << "\n";
   }
-  else 
+  else
   {
     out << "Frequency of word '" << word << "' in dictionary '" << name << "' is less than " << amount << "." << "\n";
   }
@@ -250,32 +250,32 @@ void popov::getWordsWithFrequencyCmd(outdictionary& dictionaries, std::istream& 
 {
   std::string name;
   size_t frequency;
-  if (!(in >> frequency >> name)) 
+  if (!(in >> frequency >> name))
   {
     printWrongInput(out);
     throw std::runtime_error("not enough data");
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
   std::vector<std::string> wordsWithFrequency;
-  for (const auto& item : dictionaries[name]) 
+  for (const auto& item : dictionaries[name])
   {
-    if (item.second == frequency) 
+    if (item.second == frequency)
     {
       wordsWithFrequency.push_back(item.first);
     }
   }
-  if (wordsWithFrequency.empty()) 
+  if (wordsWithFrequency.empty())
   {
     out << "No words found with frequency " << frequency << " in dictionary '" << name << "'." << "\n";
   }
-  else 
+  else
   {
     out << "Words with frequency " << frequency << " in dictionary '" << name << "':" << "\n";
-    for (const auto& word : wordsWithFrequency) 
+    for (const auto& word : wordsWithFrequency)
     {
       out << word << "\n";
     }
@@ -285,22 +285,22 @@ void popov::getWordsWithFrequencyCmd(outdictionary& dictionaries, std::istream& 
 void popov::printCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string name;
-  if (!(in >> name)) 
+  if (!(in >> name))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name) == 0) 
+  if (dictionaries.count(name) == 0)
   {
     printDictNot(out, name);
     return;
   }
   out << "Dictionary '" << name << "':" << "\n";
-  if (dictionaries[name].empty()) 
+  if (dictionaries[name].empty())
   {
     out << " empty" << "\n";
   }
-  else 
+  else
   {
     std::for_each(dictionaries[name].begin(), dictionaries[name].end(),
       [&out](const auto& pair) {
@@ -312,12 +312,12 @@ void popov::printCmd(outdictionary& dictionaries, std::istream& in, std::ostream
 void popov::createSameCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
 {
   std::string name1, name2;
-  if (!(in >> name1 >> name2)) 
+  if (!(in >> name1 >> name2))
   {
     printWrongInput(out);
     return;
   }
-  if (dictionaries.count(name1) == 0) 
+  if (dictionaries.count(name1) == 0)
   {
     printDictNot(out, name1);
     return;
