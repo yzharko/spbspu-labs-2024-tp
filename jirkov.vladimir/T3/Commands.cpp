@@ -171,6 +171,45 @@ void jirkov::getMinArea(const std::vector< Polygon >& allData, std::ostream& out
   }
 }
 
+bool jirkov::findPerms(const Polygon & basePolygon, const Polygon & polygon)
+{
+  if (basePolygon.points.size() != polygon.points.size())
+  {
+    return false;
+  }
+    auto numOfPerms = std::count_if(
+    basePolygon.points.begin(),
+    basePolygon.points.end(),
+    [polygon](const Point & cmpPoint)
+    {
+      return findEqual(cmpPoint, polygon);
+    }
+  );
+  if (size_t(numOfPerms) == polygon.points.size())
+  {
+    return true;
+  }
+  return false;
+}
+
+void jirkov::checkPerms(const std::vector< Polygon > & allData, std::istream & is, std::ostream & out)
+{
+  Polygon basePolygon;
+  is >> basePolygon;
+  if (basePolygon.points.size() < 3)
+  {
+    throw std::exception();
+  }
+  out << std::fixed;
+  using namespace std::placeholders;
+  auto numPerms = std::count_if(
+    allData.begin(),
+    allData.end(),
+    std::bind(findPerms, basePolygon, _1)
+  );
+  out << numPerms << "\n";
+}
+
 int jirkov::findCordinate(const Point& currentPoint,const Point& prevPoint)
 {
   int currentX = currentPoint.x;
@@ -268,7 +307,7 @@ void jirkov::count(const std::vector< Polygon >& allData, std::istream& is, std:
   }
   catch(const std::out_of_range& error)
   {
-    if(std::all_of(command.begin(), command.end(), isDigit) == true) // заменить на функцию как здесь так и в AREA
+    if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
       countVertex(num, allData, out);
@@ -278,6 +317,19 @@ void jirkov::count(const std::vector< Polygon >& allData, std::istream& is, std:
       throw;
     }
   }
+}
+
+bool jirkov::findEqual(const Point & point, const Polygon & polygon)
+{
+  auto numOfPerms = std::count_if(
+    polygon.points.begin(),
+    polygon.points.end(),
+    [point](const Point & compPoint)
+    {
+      return (compPoint.x == point.x && compPoint.y == point.y) or (compPoint.y == point.x && compPoint.x == point.y);
+    }
+  );
+  return (numOfPerms >= 1);
 }
 
 void jirkov::countEven(const std::vector< Polygon >& allData, std::ostream& out)

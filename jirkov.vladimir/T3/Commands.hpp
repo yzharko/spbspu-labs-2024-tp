@@ -18,14 +18,15 @@ namespace jirkov
   void countEven(const std::vector< Polygon >& allData, std::ostream& out);
   void countOdd(const std::vector< Polygon >& allData, std::ostream& out);
   void count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
+  void checkPerms(const std::vector< Polygon > & allData, std::istream & is, std::ostream & out);
   void countVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
-
+  bool findEqual(const Point & firstPoint, const Polygon & allData);
   int findCordinate(const Point& currentPoint,const Point& prevPoint);
   unsigned long long getVertex(const Polygon& polygon);
 
   double countArea(const Polygon polygon);
   double fullArea(double sum, const Polygon polygon);
-
+  bool findPerms(const Polygon & basePolygon, const Polygon & polygon);
   bool findEven(const Polygon& polygon);
   bool findOdd(const Polygon& polygon);
   bool findVertex(unsigned long long num, Polygon polygon);
