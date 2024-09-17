@@ -2,6 +2,6 @@
 
 int main()
 {
-  std::cout << "maksimov.leonid/T0\n";
+  std::cout << "maksimov.leonid\n";
   return 0;
 }
