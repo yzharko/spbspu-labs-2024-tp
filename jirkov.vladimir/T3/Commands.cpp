@@ -70,6 +70,10 @@ void jirkov::getLessArea(const std::vector< Polygon > & allData, std::istream & 
   Polygon basePolygon;
   std::vector< Polygon > current;
   is >> basePolygon;
+  if(!is)
+  {
+    throw std::out_of_range("");
+  }
   if (basePolygon.points.size() < 3)
   {
     throw std::exception();
@@ -217,6 +221,10 @@ void jirkov::checkPerms(const std::vector< Polygon > & allData, std::istream & i
 {
   Polygon basePolygon;
   is >> basePolygon;
+  if(!is)
+  {
+    throw std::out_of_range("");
+  }
   if (basePolygon.points.size() < 3)
   {
     throw std::exception();
