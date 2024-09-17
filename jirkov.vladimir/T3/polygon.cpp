@@ -1,6 +1,9 @@
 #include "polygon.hpp"
 #include <iostream>
 #include <cstddef>
+#include <Delimeter.hpp>
+#include <IOstrucrures.hpp>
+
 
 std::istream& jirkov::operator>>(std::istream& in, Polygon& value)
 {
