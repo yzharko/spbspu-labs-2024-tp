@@ -109,6 +109,7 @@ void jirkov::getMax(const std::vector< Polygon >& allData, std::istream& is, std
   is >> command;
   try
   {
+    fileIsEmpty(allData);
     max.at(command)(allData, out);
   }
   catch(const std::out_of_range& error)
@@ -140,18 +141,11 @@ void jirkov::getMin(const std::vector< Polygon >& allData, std::istream& is, std
 void jirkov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& out)
 {
   double maxArea = 0;
-  if(allData.empty())
-  {
-    throw std::out_of_range("");
-  }
-  else
-  {
-    std::vector< double > allAreas;
-    std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
-    std::sort(allAreas.begin(), allAreas.end());
-    maxArea = *(allAreas.end() - 1);
-    out << maxArea << "\n";
-  }
+  std::vector< double > allAreas;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allAreas), countArea);
+  std::sort(allAreas.begin(), allAreas.end());
+  maxArea = *(allAreas.end() - 1);
+  out << maxArea << "\n";
 }
 
 void jirkov::getMinArea(const std::vector< Polygon >& allData, std::ostream& out)
@@ -259,18 +253,11 @@ unsigned long long jirkov::getVertex(const Polygon& polygon)
 void jirkov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out)
 {
   unsigned long long maxVertexes = 0;
-  if(allData.empty())
-  {
-    throw std::out_of_range("");
-  }
-  else
-  {
-    std::vector< unsigned long long > allVertexes;
-    std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertex);
-    std::sort(allVertexes.begin(), allVertexes.end());
-    maxVertexes = *(allVertexes.end() - 1);
-    out << maxVertexes << "\n";
- }
+  std::vector< unsigned long long > allVertexes;
+  std::transform(allData.begin(), allData.end(), std::back_inserter(allVertexes), getVertex);
+  std::sort(allVertexes.begin(), allVertexes.end());
+  maxVertexes = *(allVertexes.end() - 1);
+  out << maxVertexes << "\n";
 }
 
 void jirkov::getMinVertexes(const std::vector< Polygon >& allData, std::ostream& out)
@@ -360,3 +347,12 @@ void jirkov::countVertex(unsigned long long num, const std::vector< Polygon >& a
   count = withThisVertexes.size();
   out << count << "\n";
 }
+
+void jirkov::fileIsEmpty(const std::vector< Polygon >& allData)
+{
+  if(allData.empty())
+  {
+    throw std::out_of_range("");
+  }
+}
+
