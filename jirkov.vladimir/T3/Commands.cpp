@@ -32,14 +32,11 @@ void jirkov::getArea(const std::vector< Polygon >& allData, std::istream& is, st
     if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
-      try
-      {
-        getAreaVertex(num, allData, out);
-      }
-      catch(const std::out_of_range& error)
+      if(num < 3)
       {
         throw;
       }
+      getAreaVertex(num, allData, out);
     }
     else
     {
@@ -86,15 +83,23 @@ void jirkov::getAreaOdd(const std::vector< Polygon >& allData, std::ostream& out
 
 void jirkov::getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
 {
-  using namespace std::placeholders;
-  int counter = std::count_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
-  std::vector< Polygon >::const_iterator det = std::find_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
-  if(det == allData.end())
+  double result = 0;
+  if(allData.empty())
   {
-    throw std::out_of_range("");
+    out << result << "\n";
   }
-  double res = countArea(*det) * counter;
-  out << res << "\n";
+  else
+  {
+    using namespace std::placeholders;
+    std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+    int count = std::count_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+    if(detected == allData.end())
+    {
+      out << result << "\n";
+    }
+    result = countArea(*detected) * count;
+    out << result << "\n";
+  }
 }
 
 void jirkov::getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out)
