@@ -52,8 +52,9 @@ std::ostream & operator<<(std::ostream & out, const DataStruct & dataStr)
   {
     return out;
   }
-  out << "(:key1 " << dataStr.key1 << ":" << "key2 " << dataStr.key2;
-  out << "ll:key3 " << "\"" << dataStr.key3 << "\":)";
+  out << "(:key1 ";
+  sciDouble(out, dataStr.key1);
+  out << ":key2 " << dataStr.key2 << "ll:key3 " << "\"" << dataStr.key3 << "\":)";
   return out;
 }
 

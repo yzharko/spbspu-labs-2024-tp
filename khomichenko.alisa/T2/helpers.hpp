@@ -2,7 +2,7 @@
 #define HELPERS_HPP
 
 #include <iosfwd>
-
+#include <string>
 namespace khomichenko
 {
 
@@ -31,7 +31,7 @@ namespace khomichenko
   std::istream &operator>>(std::istream &in, DoubleIO && dest);
   std::istream &operator>>(std::istream &in, StringIO && dest);
   std::istream &operator>>(std::istream &in, SllIO && dest);
-
+  std::ostream &sciDouble (std::ostream& out, double num);
 }
 
 #endif

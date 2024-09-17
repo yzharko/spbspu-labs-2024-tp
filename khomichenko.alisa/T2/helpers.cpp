@@ -59,4 +59,32 @@ std::istream &operator>>(std::istream &in, SllIO && dest)
   }
   return in;
 }
+
+std::ostream& sciDouble (std::ostream& out, double num)
+{
+  int degree = 0;
+  std::string tail;
+  if (num >= 1.0)
+  {
+    while (num > 1.0)
+    {
+      num /= 10;
+      degree += 1;
+    }
+    tail += "+";
+  }
+  else
+  {
+    while (num < 1.0)
+    {
+      num *= 10;
+      degree += 1;
+    }
+    tail = "-";
+  }
+
+  out << num << "e" << tail << degree;
+  return out;
+}
+
 }
