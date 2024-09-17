@@ -3,12 +3,15 @@
 #include <vector>
 #include <functional>
 #include <unordered_map>
+#include <Windows.h>
 #include "commands.hpp"
 
 using namespace gorbunova;
 
 int main()
 {
+  SetConsoleCP(1251);
+  std::setlocale(LC_ALL, "Russian");
   std::unordered_map< std::string, std::function< void(const std::vector< std::string > &) > > commands;
 
   commands["help"] = [](const std::vector< std::string > &)
