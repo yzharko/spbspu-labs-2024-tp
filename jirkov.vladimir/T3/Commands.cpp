@@ -65,6 +65,27 @@ bool jirkov::findVertex(unsigned long long num, Polygon polygon)
   return polygon.points.size() == num;
 }
 
+void jirkov::getLessArea(const std::vector< Polygon > & allData, std::istream & is, std::ostream & out)
+{
+  Polygon basePolygon;
+  std::vector< Polygon > current;
+  is >> basePolygon;
+  if (basePolygon.points.size() < 3)
+  {
+    throw std::exception();
+  }
+  out << std::fixed;
+  using namespace std::placeholders;
+  auto numLess = std::bind(compareArea, _1, basePolygon);
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(current), numLess);
+  out << current.size() << "\n";
+}
+
+bool jirkov::compareArea(const Polygon & basePolygon, const Polygon & polygon)
+{
+  return countArea(basePolygon) < countArea(polygon);
+}
+
 void jirkov::getAreaEven(const std::vector< Polygon >& allData, std::ostream& out)
 {
   std::vector< Polygon > even;

@@ -35,7 +35,7 @@ int main(int argc, char ** argv)
     interaction["MAX"] = std::bind(jirkov::getMax, _1, _2, _3);
     interaction["MIN"] = std::bind(jirkov::getMin, _1, _2, _3);
     interaction["COUNT"] = std::bind(jirkov::count, _1, _2, _3);
-    //interaction["LESSAREA"] = std::bind(jirkov::getLessArea, _1, _3);
+    interaction["LESSAREA"] = std::bind(jirkov::getLessArea, _1, _2, _3);
     interaction["PERMS"] = std::bind(jirkov::checkPerms, _1, _2, _3);
   }
   std::string command;
