@@ -9,26 +9,12 @@ namespace jirkov
   void getAreaMean(const std::vector< Polygon >& allData, std::ostream& out);
   void getAreaVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out);
   void getArea(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
-  void getMaxArea(const std::vector< Polygon >& allData, std::ostream& out);
-  void getMaxVertexes(const std::vector< Polygon >& allData, std::ostream& out);
-  void getMinArea(const std::vector< Polygon >& allData, std::ostream& out);
-  void getMinVertexes(const std::vector< Polygon >& allData, std::ostream& out);
-  void getMax(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
-  void getMin(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
-  void countEven(const std::vector< Polygon >& allData, std::ostream& out);
-  void countOdd(const std::vector< Polygon >& allData, std::ostream& out);
-  void count(const std::vector< Polygon >& allData, std::istream& is, std::ostream& out);
-
   int findCordinate(const Point& currentPoint,const Point& prevPoint);
-  unsigned long long getVertex(const Polygon& polygon);
-
   double countArea(const Polygon polygon);
   double fullArea(double sum, const Polygon polygon);
-
   bool findEven(const Polygon& polygon);
   bool findOdd(const Polygon& polygon);
   bool findVertex(unsigned long long num, Polygon polygon);
-  bool isDigit(char ch);
 }
 
 #endif
