@@ -2,6 +2,7 @@
 #include <limits>
 #include <iterator>
 #include <vector>
+#include <algorithm>
 #include "dataStruct.hpp"
 
 int main()
@@ -19,6 +20,7 @@ int main()
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
   }
+  std::sort(vector.begin(), vector.end());
   std::copy(vector.begin(), vector.end(), output_t{std::cout, "\n"});
   return 0;
 }

@@ -46,14 +46,14 @@ std::istream &operator>>(std::istream &in, StringIO && dest)
   return std::getline(in >> DelimiterIO{ '"' }, dest.ref, '"');
 }
 
-std::istream &operator>>(std::istream &in, CharIO && dest)
+std::istream &operator>>(std::istream &in, SllIO && dest)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
   {
     return in;
   }
-  if (!(in >> DelimiterIO{ '\'' } >> dest.ref >> DelimiterIO{ '\'' }) || !std::isalpha(dest.ref))
+  if (!(in >> dest.ref >> DelimiterIO{ 'l' } >> DelimiterIO{ 'l' }))
   {
     in.setstate(std::ios::failbit);
   }

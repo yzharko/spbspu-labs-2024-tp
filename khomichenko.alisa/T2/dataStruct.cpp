@@ -26,7 +26,7 @@ std::istream & operator>>(std::istream & in, DataStruct & dataStr)
     }
     else if (key == "key2")
     {
-      in>> CharIO{data.key2};
+      in>> SllIO{data.key2};
     }
     else if (key == "key3")
     {
@@ -52,9 +52,35 @@ std::ostream & operator<<(std::ostream & out, const DataStruct & dataStr)
   {
     return out;
   }
-  out << "(:key1 " << dataStr.key1 << ":" << "key2 '" << dataStr.key2;
-  out << "':key3 " << "\"" << dataStr.key3 << "\":)";
+  out << "(:key1 " << dataStr.key1 << ":" << "key2 " << dataStr.key2;
+  out << "ll:key3 " << "\"" << dataStr.key3 << "\":)";
   return out;
 }
+
+bool operator>(const DataStruct& first, const  DataStruct& second)
+{
+  if (first.key1 != second.key1)
+  {
+    return first.key1 > second.key1;
+  }
+  else if (first.key2 != second.key2)
+  {
+    return first.key2 > second.key2;
+  }
+  else if (first.key3.length() != second.key3.length())
+  {
+    return first.key3.length() > second.key3.length();
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+bool operator<(const DataStruct& first, const  DataStruct& second)
+{
+  return !(first > second);
+}
+
 
 }

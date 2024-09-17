@@ -21,16 +21,16 @@ namespace khomichenko
     std::string &ref;
   };
 
-  struct CharIO
+  struct SllIO
   {
-    char& ref;
+    long long& ref;
   };
 
 
   std::istream &operator>>(std::istream &in, DelimiterIO && dest);
   std::istream &operator>>(std::istream &in, DoubleIO && dest);
   std::istream &operator>>(std::istream &in, StringIO && dest);
-  std::istream &operator>>(std::istream &in, CharIO && dest);
+  std::istream &operator>>(std::istream &in, SllIO && dest);
 
 }
 
