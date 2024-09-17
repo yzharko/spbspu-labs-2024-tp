@@ -24,7 +24,33 @@ namespace hohlova
     stream << "7. find < name > < word > - output of element by word\n";
     stream << "8. view - the output of the names of existing dictionaries\n";
     stream << "9. size < name > - print the size of the dictionary\n";
+    stream << "10. save < name > - saving changes to the 'filename' file\n";
   }
+
+  void save(DictOfDictionary& dictOfdict, std::ostream& out)
+  {
+    for (auto& iterOfDicts : dictOfdict)
+    {
+      std::ofstream outputFile;
+      if (!outputFile)
+      {
+        throw std::invalid_argument("ERROR with file\n");
+      }
+      outputFile.open(iterOfDicts.first + ".txt");
+      if (outputFile.is_open())
+      {
+        for (const auto& it : iterOfDicts.second)
+        {
+          outputFile << it.first << " " << it.second << "\n";
+        }
+      }
+      out << " The data was successfully written to the file: ";
+      out << iterOfDicts.first << '\n';
+      outputFile.close();
+    }
+    out << " The data was successfully written to all files" << '\n';
+  }
+
 
   void create(DictOfDictionary& dictOfdict, std::istream& is)
   {

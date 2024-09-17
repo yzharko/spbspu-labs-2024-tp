@@ -17,5 +17,7 @@ namespace hohlova
   void edit(DictOfDictionary& dictOfdict, std::istream& is, std::ostream& out);
   void insert(DictOfDictionary& dictOfdict, std::istream& is, std::ostream& out);
   void remove(DictOfDictionary& dictOfdict, std::istream& is, std::ostream& out);
-  void printError(const std::string& err);
+  void save(DictOfDictionary& dictOfdict, std::ostream& out);
+
+void printError(const std::string& err);
 }

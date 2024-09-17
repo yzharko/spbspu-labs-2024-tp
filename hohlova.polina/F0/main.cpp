@@ -21,6 +21,7 @@ int main()
   commands["edit"] = std::bind(hohlova::edit, _1, _2, _3);
   commands["insert"] = std::bind(hohlova::insert, _1, _2, _3);
   commands["remove"] = std::bind(hohlova::remove, _1, _2, _3);
+  commands["save"] = std::bind(hohlova::save, _1, _3);
 
   hohlova::DictOfDictionary distOfdist;
   std::string cmd;
