@@ -142,7 +142,7 @@ void jirkov::getMaxArea(const std::vector< Polygon >& allData, std::ostream& out
   double maxArea = 0;
   if(allData.empty())
   {
-    out << maxArea << "\n";
+    throw std::out_of_range("");
   }
   else
   {
@@ -261,7 +261,7 @@ void jirkov::getMaxVertexes(const std::vector< Polygon >& allData, std::ostream&
   unsigned long long maxVertexes = 0;
   if(allData.empty())
   {
-    out << maxVertexes << "\n";
+    throw std::out_of_range("");
   }
   else
   {
@@ -310,6 +310,10 @@ void jirkov::count(const std::vector< Polygon >& allData, std::istream& is, std:
     if(std::all_of(command.begin(), command.end(), isDigit) == true)
     {
       unsigned long long num = std::stoll(command);
+      if(num < 3)
+      {
+        throw;
+      }
       countVertex(num, allData, out);
     }
     else
