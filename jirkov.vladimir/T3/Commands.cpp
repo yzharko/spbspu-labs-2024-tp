@@ -91,8 +91,8 @@ void jirkov::getAreaVertex(unsigned long long num, const std::vector< Polygon >&
   else
   {
     using namespace std::placeholders;
-    std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
-    int count = std::count_if(allData.begin(), allData.end(), std::bind(isThisVertex, num, _1));
+    std::vector< Polygon >::const_iterator detected = std::find_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
+    int count = std::count_if(allData.begin(), allData.end(), std::bind(findVertex, num, _1));
     if(detected == allData.end())
     {
       out << result << "\n";
