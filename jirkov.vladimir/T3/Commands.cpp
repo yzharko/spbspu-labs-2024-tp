@@ -268,7 +268,15 @@ void jirkov::count(const std::vector< Polygon >& allData, std::istream& is, std:
   }
   catch(const std::out_of_range& error)
   {
-    throw;
+    if(std::all_of(command.begin(), command.end(), isDigit) == true) // заменить на функцию как здесь так и в AREA
+    {
+      unsigned long long num = std::stoll(command);
+      countVertex(num, allData, out);
+    }
+    else
+    {
+      throw;
+    }
   }
 }
 
@@ -285,5 +293,14 @@ void jirkov::countOdd(const std::vector< Polygon >& allData, std::ostream& out)
   std::vector< Polygon > odd;
   std::copy_if(allData.begin(), allData.end(), std::back_inserter(odd), findOdd);
   unsigned long long count = odd.size();
+  out << count << "\n";
+}
+void jirkov::countVertex(unsigned long long num, const std::vector< Polygon >& allData, std::ostream& out)
+{
+  unsigned long long count = 0;
+  std::vector< Polygon > withThisVertexes;
+  using namespace std::placeholders;
+  std::copy_if(allData.begin(), allData.end(), std::back_inserter(withThisVertexes), std::bind(findVertex, num, _1));
+  count = withThisVertexes.size();
   out << count << "\n";
 }
