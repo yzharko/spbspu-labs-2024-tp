@@ -7,16 +7,18 @@
 namespace jirkov
 {
   using dictionary = std::multimap< std::string, std::string >;
-  void help();
-  void create();
-  void remove();
-  void print();
-  void sort();
-  void sortByFrequency();
-  void sortByAlphabet();
-  void deleteKey();
-  void findKey();
-  void openFile();
+  void help(std::istream& input, std::ostream& output);
+  void createDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void removeDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void printDict(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void sortDict(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void sortByFrequency(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void sortByAlphabet(std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void deleteKey(dictionary& dict, std::istream& input, std::ostream& output);
+  void findKey(dictionary& dict, std::istream& input, std::ostream& output);
+  void openFile(dictionary& dict, std::istream& input, std::ostream& output);
+  void writeToFile(const std::map< std::string, dictionary >& dicts, std::istream& input, std::ostream& output);
+  void warning(std::ostream& output, const std::string& mes);
 }
 
 #endif
