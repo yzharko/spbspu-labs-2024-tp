@@ -2,7 +2,6 @@
 #include <limits>
 #include <iostream>
 #include "commands.hpp"
-//
 int main()
 {
   using dictionary = std::multimap< std::string, std::string >;
