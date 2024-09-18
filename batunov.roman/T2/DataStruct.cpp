@@ -127,7 +127,6 @@ namespace batunov
       return out;
     }
     iofmtguard fmtguard(out);
-    auto pres = out.precision();
     out << "(:key1 "  << std::fixed << std::setprecision(2) << src.key1 << "d";
     out << ":key2 "  << std::scientific << src.key2 ;
     out << ":key3 \"" << src.key3 << "\":)";
