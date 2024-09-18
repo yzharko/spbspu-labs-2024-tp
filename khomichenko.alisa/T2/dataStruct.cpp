@@ -1,7 +1,8 @@
 #include "dataStruct.hpp"
 #include "helpers.hpp"
 #include "scopeGuard.hpp"
-
+#include <iomanip>
+#include <iostream>
 namespace khomichenko
 {
   std::istream &operator>>(std::istream &in, DataStruct &dataStr)
@@ -52,7 +53,7 @@ namespace khomichenko
     {
       return out;
     }
-    out << "(:key1 ";
+    out << "(:key1 " << std::fixed << std::setprecision(1);
     sciDouble(out, dataStr.key1);
     out << ":key2 " << dataStr.key2 << "ll:key3 " << "\"" << dataStr.key3 << "\":)";
     return out;
