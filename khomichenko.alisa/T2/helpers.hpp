@@ -3,6 +3,7 @@
 
 #include <iosfwd>
 #include <string>
+
 namespace khomichenko
 {
 
@@ -23,15 +24,15 @@ namespace khomichenko
 
   struct SllIO
   {
-    long long& ref;
+    long long &ref;
   };
 
 
-  std::istream &operator>>(std::istream &in, DelimiterIO && dest);
-  std::istream &operator>>(std::istream &in, DoubleIO && dest);
-  std::istream &operator>>(std::istream &in, StringIO && dest);
-  std::istream &operator>>(std::istream &in, SllIO && dest);
-  std::ostream &sciDouble (std::ostream& out, double num);
+  std::istream &operator>>(std::istream &in, DelimiterIO &&dest);
+  std::istream &operator>>(std::istream &in, DoubleIO &&dest);
+  std::istream &operator>>(std::istream &in, StringIO &&dest);
+  std::istream &operator>>(std::istream &in, SllIO &&dest);
+  std::ostream &sciDouble (std::ostream &out, double num);
 }
 
 #endif

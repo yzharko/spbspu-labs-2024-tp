@@ -13,9 +13,9 @@ namespace khomichenko
     std::string key3;
   };
 
-  std::istream & operator>>(std::istream & in, DataStruct & dataStr);
-  std::ostream & operator<<(std::ostream & out, const DataStruct & dataStr);
-  bool operator<(const DataStruct& first, const  DataStruct& second);
+  std::istream &operator>>(std::istream &in, DataStruct &dataStr);
+  std::ostream &operator<<(std::ostream &out, const DataStruct &dataStr);
+  bool operator<(const DataStruct &first, const  DataStruct &second);
 }
 
 
