@@ -6,7 +6,7 @@ namespace sadofeva
 {
   using pr = std::pair< Point, Point >;
   double getAreaAll(const Polygon& polygon);
-  bool CompatiblePolygons(Polygon& a, Polygon& b);
+  bool isSamePolygons(Polygon& a, Polygon& b);
 
   void commandArea(const std::vector< Polygon >& polygons, std::istream& input, std::ostream& out);
   void getAreaEven(const std::vector< Polygon >& polygons, std::ostream& out);

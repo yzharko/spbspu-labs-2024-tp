@@ -71,4 +71,3 @@ std::ostream& sadofeva::operator<<(std::ostream& out, const Polygon& value)
   std::copy_n(value.point.begin(), coutOfpoints - 1, osIt(out << ' ', " "));
   return out;
 }
-

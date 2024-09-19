@@ -45,7 +45,6 @@ int main(int argc, char* argv[])
     try
     {
        commands.at(command)(std::cin,std::cout, polygons);
-       std::cout << "\n";
     }
     catch (const std::exception& e)
     {
