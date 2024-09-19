@@ -5,9 +5,9 @@
 #include <string>
 #include "polygon.hpp"
 
-namespace panov 
+namespace panov
 {
-	std::vector<Polygon> parsePolygonsFromFile(const std::string& filename);
+  std::vector<Polygon> parsePolygonsFromFile(const std::string& filename);
 }
 
 #endif
