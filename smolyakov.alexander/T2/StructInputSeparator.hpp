@@ -10,7 +10,7 @@ namespace smolyakov
     char separatorCharacter;
   };
 
-  std::istream& operator >> (std::istream& inputStream, StructInputSeparator& separator);
+  std::istream& operator >> (std::istream& inputStream, StructInputSeparator&& separator);
 }
 
 #endif
