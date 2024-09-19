@@ -6,7 +6,7 @@
 #include "RatLsp.hpp"
 #include "StringWrapper.hpp"
 
-std::istream& operator >> (std::istream& inputStream, smolyakov::DataStruct& data)
+std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::DataStruct& data)
 {
   std::istream::sentry guard(inputStream);
   if (!guard)

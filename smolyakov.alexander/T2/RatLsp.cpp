@@ -2,7 +2,7 @@
 #include <istream>
 #include "StructInputSeparator.hpp"
 
-std::istream& operator >> (std::istream& inputStream, smolyakov::RatLsp&& data)
+std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::RatLsp&& data)
 {
   std::istream::sentry guard(inputStream);
   if (!guard)

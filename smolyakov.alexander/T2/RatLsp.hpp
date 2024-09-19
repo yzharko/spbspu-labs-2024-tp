@@ -9,8 +9,7 @@ namespace smolyakov
   {
     std::pair<long long, unsigned long long>& value;
   };
+  std::istream& operator >> (std::istream& inputStream, smolyakov::RatLsp&& data);
 }
-
-std::istream& operator >> (std::istream& inputStream, smolyakov::RatLsp&& data);
 
 #endif

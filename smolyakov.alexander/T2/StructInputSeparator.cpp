@@ -1,7 +1,7 @@
 #include "StructInputSeparator.hpp"
 #include <iostream>
 
-std::istream& operator >> (std::istream& inputStream, smolyakov::StructInputSeparator&& separator)
+std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::StructInputSeparator&& separator)
 {
   std::istream::sentry guard(inputStream);
   if (!guard)

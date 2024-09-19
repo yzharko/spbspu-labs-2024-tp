@@ -8,8 +8,7 @@ namespace smolyakov
   {
     unsigned long long& value;
   };
+  std::istream& operator >> (std::istream& inputStream, smolyakov::UllOct&& data);
 }
-
-std::istream& operator >> (std::istream& inputStream, smolyakov::UllOct&& data);
 
 #endif

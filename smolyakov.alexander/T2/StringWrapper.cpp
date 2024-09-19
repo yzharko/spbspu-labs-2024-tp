@@ -3,7 +3,8 @@
 #include <string>
 #include "StructInputSeparator.hpp"
 
-std::istream& operator >> (std::istream& inputStream, smolyakov::StringWrapper&& data)
+
+std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::StringWrapper&& data)
 {
   std::istream::sentry guard(inputStream);
   if (!guard)

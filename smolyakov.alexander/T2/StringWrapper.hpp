@@ -9,8 +9,7 @@ namespace smolyakov
   {
     std::string& value;
   };
+  std::istream& operator >> (std::istream& inputStream, smolyakov::StringWrapper&& data);
 }
-
-std::istream& operator >> (std::istream& inputStream, smolyakov::StringWrapper&& data);
 
 #endif
