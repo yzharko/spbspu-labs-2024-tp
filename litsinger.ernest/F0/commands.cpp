@@ -9,10 +9,16 @@ void litsinger::printCommands(std::ostream& out)
   out << " 4. delete_word <word, name> - удаление слова из словаря с именем name\n";
   out << " 5. reset - очищает весь словарь name полностью\n";
   out << " 6. print - вывод всего словаря name в алфавитном порядке\n";
-  out << " 7. add_line <word, name, line> - в случае, если слово уже есть в словаре c названием name, добавить номера строк, в которых это слово присутствует, если она не равна последнему лежащему значению\n";
-  out << " 8. get_print <name, line> - вывод всех слов из словаря name, содержащихся на строке line\n";
-  out << " 9. get_intersection <new_name, name> - создание словаря new_name со словами из словаря name\n";
-  out << " 10. search_letter <letter, name> вывод слов, которые начинаются на букву letter в словаре name\n";
+  out << " 7. add_line <word, name, line> - в случае, если слово уже есть в "
+      "словаре c названием name, "
+ "добавить номера строк, в которых это слово присутствует, если она не равна последнему "
+      "лежащему значению\n";
+  out << " 8. get_print <name, line> - вывод всех слов из словаря name, "
+      "содержащихся на строке line\n";
+  out << " 9. get_intersection <new_name, name> - создание словаря new_name со"
+      "словами из словаря name\n";
+  out << " 10. search_letter <letter, name> вывод слов, которые начинаются "
+      "на букву letter в словаре name\n";
 }
 
 void litsinger::creatDict(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
@@ -227,12 +233,13 @@ void litsinger::getIntersection(mapDictionaries_t& mapDictionaries, std::istream
     }
     else
     {
-      out << " Ошибка: либо словарь '" << name << "' не существует, либо словарь '" << newname << "'уже занят\n";
+      out << " Ошибка: словарь '" << name << "' не существует, либо'" << newname << "'занят\n";
     }
   }
   else
   {
-    out << " Названия старого и нового словаря одинаковы, введите другое название нового словаря\n";
+    out << "Названия старого и нового словаря одинаковы, введите другое название"
+        "нового словаря\n";
   }
 }
 
