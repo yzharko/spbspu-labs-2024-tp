@@ -1,3 +1,4 @@
+#include "DataStruct.hpp"
 #include "value.hpp"
 
 std::istream& malanin::operator>>(std::istream& in, DataStruct& data)
