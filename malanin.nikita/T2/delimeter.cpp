@@ -1,6 +1,6 @@
 #include "delimeter.hpp"
 
-std::istream& marishin::operator>>(std::istream& in, Delimeterchar&& exp)
+std::istream& malanin::operator>>(std::istream& in, Delimeterchar&& exp)
 {
   std::istream::sentry guard(in);
   char c = 0;
@@ -12,7 +12,7 @@ std::istream& marishin::operator>>(std::istream& in, Delimeterchar&& exp)
   return in;
 }
 
-std::istream& marishin::operator>>(std::istream& in, Delimeterstring&& exp)
+std::istream& malanin::operator>>(std::istream& in, Delimeterstring&& exp)
 {
   size_t i = 0;
   while (exp.expected[i] != '\0')
@@ -29,7 +29,7 @@ std::istream& marishin::operator>>(std::istream& in, Delimeterstring&& exp)
   return in;
 }
 
-std::istream& marishin::operator>>(std::istream& in, Delimeterpair&& exp)
+std::istream& malanin::operator>>(std::istream& in, Delimeterpair&& exp)
 {
   std::istream::sentry guard(in);
   if (guard)
