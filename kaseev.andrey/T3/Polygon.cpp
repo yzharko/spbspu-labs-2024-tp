@@ -39,13 +39,14 @@ namespace kaseev
     dest.points.clear();
     size_t size = 0;
     in >> size;
+
     std::string str;
     std::getline(in, str , '\n');
     std::istringstream input(str);
     if (!input || size < 3)
     {
       in.setstate(std::ios::failbit);
-      return in;
+      throw std::invalid_argument("");
     }
 
     std::vector < Point > temp{};
@@ -58,6 +59,7 @@ namespace kaseev
     else
     {
       in.setstate(std::ios::failbit);
+      throw std::invalid_argument("");
     }
     return in;
   }
