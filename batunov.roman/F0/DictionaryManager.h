@@ -4,17 +4,14 @@
 
 class DictionaryManager {
 public:
-
   void help() const {
-
-    setlocale(LC_ALL, "Russian");
-    system("chcp 1251");
     std::cout << "Доступные команды:\n"
           << "help - вывод списка доступных команд.\n"
           << "list - вывод названий всех существующих словарей.\n"
           << "create <dictionary1> - создание нового словаря.\n"
           << "delete <dictionary1> - удаление существующего словаря.\n"
-          << "combine <dictionary1> <dictionary2> <dictionary3> - создать новый словарь, содержащий слова из существующих.\n"
+          << "combine <dictionary1> <dictionary2> <dictionary3> - "
+           "создать новый словарь, содержащий слова из существующих.\n"
           << "add <dictionary1> <word1> - добавить слово в словарь.\n"
           << "definition <dictionary1> <word1> <слово1> - добавить перевод слова.\n"
           << "remove <dictionary1> <word1> - удалить слово из словаря.\n"
@@ -23,7 +20,6 @@ public:
           << "show <dictionary1> - вывод всех слов в словаре.\n"
           << "random <dictionary1> - вывод случайного слова из словаря.\n";
   }
-
   void list() const {
     for (const auto& dict : dictionaries) {
       std::cout << dict.first << std::endl;
