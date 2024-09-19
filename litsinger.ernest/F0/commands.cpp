@@ -149,7 +149,7 @@ void litsinger::addLine(mapDictionaries_t& mapDictionaries, std::istream& in, st
     if (wordInDict != dictIter->second.end())
     {
       auto it = wordInDict->second.begin();
-      for (it; it != wordInDict->second.end(); ++it)
+      for (it = wordInDict->second.begin(); it != wordInDict->second.end(); ++it)
       {
         if (*it == line)
         {
