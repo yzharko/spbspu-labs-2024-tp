@@ -1,0 +1,298 @@
+#include "commands.hpp"
+#include <fstream>
+
+void litsinger::printCommands(std::ostream& out)
+{
+  out << " 1. help - выводит все доступные команды\n";
+  out << " 2. create - создание словар€ с именем name\n";
+  out << " 3. add_word <word, name> - добавление слова в словарь с именем name\n";
+  out << " 4. delete_word <word, name> - удаление слова из словар€ с именем name\n";
+  out << " 5. reset - очищает весь словарь name полностью\n";
+  out << " 6. print - вывод всего словар€ name в алфавитном пор€дке\n";
+  out << " 7. add_line <word, name, line> - в случае, если слово уже есть в "
+      "словаре c названием name, "
+ "добавить номера строк, в которых это слово присутствует, если она не равна последнему "
+      "лежащему значению\n";
+  out << " 8. get_print <name, line> - вывод всех слов из словар€ name, "
+      "содержащихс€ на строке line\n";
+  out << " 9. get_intersection <new_name, name> - создание словар€ new_name со"
+      "словами из словар€ name\n";
+  out << " 10. search_letter <letter, name> вывод слов, которые начинаютс€ "
+      "на букву letter в словаре name\n";
+}
+
+void litsinger::creatDict(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string name = "";
+  in >> name;
+  std::map< std::string, std::vector< size_t > > dictionary;
+  mapDictionaries.emplace(name, dictionary);
+  out << "словарь добавлен" << "\n";
+}
+
+void litsinger::addWord(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string word = "";
+  std::string name = "";
+
+  in >> word >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    auto wordInDict = dictIter->second.find(word);
+    if (wordInDict == dictIter->second.end())
+    {
+      dictIter->second.emplace(word, 0);
+      out << " —лово '" << word << "' успешно добавлено в словарь '" << name << "'\n";
+    }
+    else
+    {
+      out << " —лово '" << word << "' уже существует в словаре '" << name << "'\n";
+    }
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не существует" << "\n";
+  }
+}
+
+void litsinger::deleteWord(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string word = "";
+  std::string name = "";
+
+  in >> word >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    if (dictIter->second.erase(word))
+    {
+      out << " —лово '" << word << "' успешно удалено" << "\n";
+    }
+    else
+    {
+      out << " —лова '" << word << "' не существует" << "\n";
+    }
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не существует" << "\n";
+  }
+}
+
+void litsinger::resetDict(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string name = "";
+
+  in >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    dictIter->second.clear();
+    out << " —ловарь '" << name << "' успешно очищен" << "\n";
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не найден" << "\n";
+  }
+}
+
+void litsinger::printDict(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string name = "";
+
+  in >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    size_t count = 0;
+    bool firstLine = false;
+    for (auto it = dictIter->second.begin(); it != dictIter->second.end(); ++it) {
+      out << ++count << ". " << it->first << " {";
+      for (auto iter = it->second.begin(); iter != it->second.end(); ++iter)
+      {
+        if (firstLine)
+        {
+          out << ",";
+        }
+        else
+        {
+          firstLine = true;
+        }
+        out << *iter;
+      }
+      firstLine = false;
+      out << "}\n";
+    }
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не найден" << "\n";
+  }
+}
+
+void litsinger::addLine(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string word = "";
+  std::string name = "";
+  std::size_t line = 0;
+
+  in >> word >> name >> line;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    auto wordInDict = dictIter->second.find(word);
+    if (wordInDict != dictIter->second.end())
+    {
+      auto it = wordInDict->second.begin();
+      for (it = wordInDict->second.begin(); it != wordInDict->second.end(); ++it)
+      {
+        if (*it == line)
+        {
+          break;
+        }
+      }
+      if (it == wordInDict->second.end())
+      {
+        wordInDict->second.push_back(line);
+        out << " Ќомер строки успешно добавлен к слову '" << word << "'\n";
+      }
+      else
+      {
+        out << " ƒанный номер строки уже существует в слове '" << word << "'\n";
+      }
+    }
+    else
+    {
+      out << " —лова '" << word << "' не существует в словаре '" << name << "'\n";
+    }
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не существует" << "\n";
+  }
+}
+
+void litsinger::getPrint(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string name = "";
+  std::size_t line = 0;
+  std::map< std::string, size_t > listOfWords;
+
+  in >> name >> line;
+
+  auto dictIter = mapDictionaries.find(name);
+  if (dictIter != mapDictionaries.end())
+  {
+    for (auto iterWords = dictIter->second.begin(); iterWords != dictIter->second.end(); ++iterWords)
+    {
+      for (auto iterLines = iterWords->second.begin(); iterLines != iterWords->second.end(); ++iterLines)
+      {
+        if (*iterLines == line)
+        {
+          listOfWords.emplace(iterWords->first, 0);
+        }
+      }
+    }
+    size_t count = 0;
+    for (auto it = listOfWords.begin(); it != listOfWords.end(); ++it)
+    {
+      out << ++count << ". " << it->first << "\n";
+    }
+  }
+  else
+  {
+    out << " —ловар€ с названием '" << name << "' не существует" << "\n";
+  }
+}
+
+void litsinger::getIntersection(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  std::string newname = "";
+  std::string name = "";
+
+  in >> newname >> name;
+
+  if (newname != name)
+  {
+    auto newDictionaryIter = mapDictionaries.find(newname);
+    auto existDictionaryIter = mapDictionaries.find(name);
+
+    if (newDictionaryIter == mapDictionaries.end() && existDictionaryIter != mapDictionaries.end())
+    {
+      std::map< std::string, std::vector< size_t > > newDict = existDictionaryIter->second;
+      for (auto it = existDictionaryIter->second.begin(); it != existDictionaryIter->second.end(); ++it) {
+        newDict.emplace(it->first, it->second);
+      }
+      mapDictionaries.emplace(newname, newDict);
+      out << " —ловарь '" << name << "' успешно скопирован в словарь '" << newname << "'\n";
+    }
+    else
+    {
+      out << " ќшибка: словарь '" << name << "' не существует, либо'" << newname << "'зан€т\n";
+    }
+  }
+  else
+  {
+    out << "Ќазвани€ старого и нового словар€ одинаковы, введите другое название"
+        "нового словар€\n";
+  }
+}
+
+void litsinger::searchLetter(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
+{
+  char letter;
+  std::string name = "";
+
+  in >> letter >> name;
+
+  auto dictIter = mapDictionaries.find(name);
+
+  if (dictIter != mapDictionaries.end())
+  {
+    std::map< std::string, std::vector< size_t > > newDict;
+
+    for (auto it = dictIter->second.begin(); it != dictIter->second.end(); ++it) {
+      if (letter == it->first.at(0))
+      {
+        newDict.emplace(it->first, it->second);
+      }
+    }
+
+    if (!newDict.empty())
+    {
+      size_t count = 0;
+      bool firstLine = false;
+      for (auto it = newDict.begin(); it != newDict.end(); ++it) {
+        out << ++count << ". " << it->first << " {";
+        for (auto iter = it->second.begin(); iter != it->second.end(); ++iter)
+        {
+          if (firstLine)
+          {
+            out << ",";
+          }
+          else
+          {
+            firstLine = true;
+          }
+          out << *iter;
+        }
+        firstLine = false;
+        out << "}\n";
+      }
+    }
+    else
+    {
+      out << " —ловарь '" << name << "' не имеет слов с первой буквой '" << letter << "'\n";
+    }
+  }
+  else
+  {
+    out << " —ловарь '" << name << "' не найден\n";
+  }
+}
