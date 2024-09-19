@@ -1,6 +1,7 @@
 #include "DataStruct.h"
 #include <cmath>
 #include <iomanip>
+#include <string>
 
 namespace batunov
 {
@@ -39,15 +40,19 @@ namespace batunov
   std::istream &operator>>(std::istream &in, DblSciIO &&dest)
   {
     std::istream::sentry sentry(in);
-    if (!sentry)
-    {
+    if (!sentry) {
       return in;
-    };
-    in >> dest.ref;
-    if (!in)
-    {
+    }
+    std::string temp = "";
+    std::getline(in, temp, ':');
+    std::istringstream iss(temp);
+    bool findE = (temp.find('E') != std::string::npos  || temp.find('e') != std::string::npos );
+    if (findE && iss >> dest.ref && iss.eof()) {
+    }
+    else {
       in.setstate(std::ios::failbit);
     }
+
     return in;
   }
   std::istream &operator>>(std::istream &in, StringIO &&dest)
@@ -96,20 +101,21 @@ namespace batunov
         if (keyNumber == 1)
         {
           in >> dblLit{ input.key1 };
+          in >> sep{ ':'};
         }
         else if (keyNumber == 2)
         {
-          in >> dblSci {input.key2};
+          in >> std::scientific >> dblSci {input.key2};
         }
         else if (keyNumber == 3)
         {
           in >> str{input.key3};
+          in >> sep{ ':'};
         }
         else
         {
           in.setstate(std::ios::failbit);
         }
-        in >> sep{ ':'};
       }
       in >> sep{ ')'};
     }
@@ -119,6 +125,24 @@ namespace batunov
     }
     return in;
   }
+
+  std::string expForm(double number) {
+    std::stringstream ss;
+    ss << std::setprecision(1) << std::scientific << number;
+    std::string str = "";
+    ss >> str;
+    bool extraZeros = true;
+    std::string temp = "";
+    for (size_t i = str.find('e') + 2; i < str.length() && extraZeros; i++) {
+      if (str[i] != '0') {
+        temp = str.substr(i);
+        extraZeros = false;
+      }
+    }
+
+    return str.substr(0, str.find('e')+2) + temp;
+  }
+
   std::ostream &operator<<(std::ostream &out, const DataStruct &src)
   {
     std::ostream::sentry sentry(out);
@@ -127,8 +151,8 @@ namespace batunov
       return out;
     }
     iofmtguard fmtguard(out);
-    out << "(:key1 "  << std::fixed << std::setprecision(2) << src.key1 << "d";
-    out << ":key2 "  << std::scientific << src.key2 ;
+    out << "(:key1 "  << std::fixed << std::setprecision(1) << src.key1 << "d";
+    out << ":key2 "  << expForm(src.key2) ;
     out << ":key3 \"" << src.key3 << "\":)";
     return out;
   }
