@@ -1,7 +1,7 @@
 #ifndef DATA_STRUCT_HPP
 #define DATA_STRUCT_HPP
 
-#include <istream>
+#include <iostream>
 #include <string>
 #include <utility>
 
@@ -14,7 +14,10 @@ namespace smolyakov
     std::string key3;
   };
 
-  std::istream& operator >> (std::istream& inputStream, smolyakov::DataStruct& data);
+  bool operator < (const DataStruct& first, const DataStruct& second);
+
+  std::istream& operator >> (std::istream& inputStream, DataStruct& data);
+  std::ostream& operator << (std::ostream& outputStream, const DataStruct& data);
 }
 
 #endif
