@@ -37,11 +37,15 @@ void proselkov::helpCmd(std::istream& in, std::ostream& out)
   out << "5. clear <name> - очистка содержимого словаря с именем name.\n";
   out << "6. delete <name> <word> - удаление слова word из словаря с именем name.\n";
   out << "7. insert <name> <word> - добавление слова word в словарь с именем name.\n";
-  out << "8. search <name> <word> - поиск слова word в словаре с именем name с выводом его перевода.\n";
+  out << "8. search <name> <word> - поиск слова word в словаре\n"
+      " с именем name с выводом его перевода.\n";
   out << "9. size <name> - вывод размера (количества слов) словаря name.\n";
-  out << "10. edit <name> <key> <translation> - присвоить значение (перевод) translation слову key.\n";
-  out << "11. combine <name1> <name2> <new_name> - создание нового словаря new_name с объединением всех слов.\n";
-  out << "12. save <name> <название_файла> - сохранить словарь с именем name в файл с расширением txt.\n";
+  out << "10. edit <name> <key> <translation> - присвоить значение (перевод)\n"
+      " translation слову key.\n";
+  out << "11. combine <name1> <name2> <new_name> - создание нового словаря\n"
+      " new_name с объединением всех слов.\n";
+  out << "12. save <name> <название_файла> - сохранить словарь с\n"
+      "именем name в файл с расширением txt.\n";
 }
 
 void proselkov::createCmd(majorDictionary& major, std::istream& in, std::ostream& out)
