@@ -23,8 +23,8 @@ namespace kaseev
                      std::vector< Polygon > & shapes);
   std::ostream & count(std::istream& in, std::ostream& out,
                        std::vector< Polygon > & shapes);
-  std::ostream & lessArea(std::istream& in, std::ostream& out,
-                          std::vector< Polygon > & shapes);
+  std::ostream & perms(std::istream& in, std::ostream& out,
+                       std::vector< Polygon > & shapes);
   std::ostream & intersections(std::istream& in, std::ostream& out,
                                std::vector< Polygon > & shapes);
 }

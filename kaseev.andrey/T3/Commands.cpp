@@ -164,20 +164,31 @@ namespace kaseev
     }
   }
 
-  std::ostream & lessArea(std::istream& in, std::ostream& out,
-                          std::vector< Polygon > & shapes)
+  bool isPermutation(const Polygon& shape1, const Polygon& shape2)
   {
+    if (shape1.points.size() != shape2.points.size())
+    {
+      return false;
+    }
+    return std::is_permutation(shape1.points.begin(),shape1.points.end(),
+                               shape2.points.begin(), shape2.points.end());
+  }
+  std::ostream & perms(std::istream& in, std::ostream& out,
+                       std::vector< Polygon > & shapes) {
     Polygon arg;
     in >> arg;
-    if (in.fail() || shapes.size() == 0)
+    Iofmtguard fmtguard(out);
+    if (in.fail())
     {
-      throw;
+      throw std::invalid_argument("");
     }
-    double argArea = getArea(arg);
-    auto functor1 = std::bind(getArea, _1);
-    auto functor2 = std::bind(std::less<>(), functor1, argArea);
-    return out << std::count_if(shapes.begin(), shapes.end(), functor2) << '\n';
+    else
+    {
+      auto functor = std::bind(isPermutation, _1, arg);
+      return out << std::count_if(shapes.begin(), shapes.end(),functor) << '\n';
+    }
   }
+
   bool isIntersection(const Polygon& firstObject, const Polygon& secondObject)
   {
     Point minfirstObject = *std::min_element(firstObject.points.cbegin(), firstObject.points.cend());

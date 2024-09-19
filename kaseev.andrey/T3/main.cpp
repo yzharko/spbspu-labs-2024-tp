@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
   command["MAX"] = max;
   command["MIN"] = min;
   command["COUNT"] = count;
-  command["LESSAREA"] = lessArea;
+  command["PERMS"] = perms;
   command["INTERSECTIONS"] = intersections;
   while (!input.eof())
   {
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
       }
       func->second(std::cin, std::cout, polygons);
     }
-    catch (...)
+    catch (const char* erorr)
     {
       std::cout << "<INVALID COMMAND>" << '\n';
     }
