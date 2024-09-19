@@ -1,32 +1,30 @@
 #include <iostream>
+#include <limits>
 #include <vector>
 #include <algorithm>
 #include <iterator>
-#include "DataStruct.h"
+#include "data_struct.hpp"
 
 int main()
 {
   using namespace panov;
-  std::vector<DataStruct> dataVec;
+  using input_it = std::istream_iterator< DataStruct >;
+  std::vector< DataStruct > data;
 
-  std::copy(std::istream_iterator<DataStruct>(std::cin),
-    std::istream_iterator<DataStruct>(),
-    std::back_inserter(dataVec));
-
-  std::sort(dataVec.begin(), dataVec.end(), [](const DataStruct& lhs, const DataStruct& rhs)
+  while (!std::cin.eof())
+  {
+    std::copy(input_it{ std::cin }, input_it{}, std::back_inserter(data));
+    if (std::cin.fail())
     {
-      if (lhs.key1 != rhs.key1)
-      {
-        return std::abs(lhs.key1) < std::abs(rhs.key1);
-      }
-      if (lhs.key2 != rhs.key2)
-      {
-        return lhs.key2 < rhs.key2;
-      }
-      return lhs.key3.size() < rhs.key3.size();
-    });
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+    }
+  }
 
-  std::copy(dataVec.begin(), dataVec.end(), std::ostream_iterator<DataStruct>(std::cout, "\n"));
+  std::sort(data.begin(), data.end());
+
+  using output_it = std::ostream_iterator< DataStruct >;
+  std::copy(data.cbegin(), data.cend(), output_it{ std::cout, "\n" });
 
   return 0;
 }
