@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <iterator>
 #include "DataStruct.hpp"
+
 int main()
 {
   using namespace jirkov;
