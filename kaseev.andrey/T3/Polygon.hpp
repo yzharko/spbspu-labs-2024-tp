@@ -20,6 +20,7 @@ namespace kaseev
       return ((p1.x == this->x) && (p1.y == this->y));
     }
   };
+  extern bool flag;
   struct Polygon
   {
     std::vector< Point > points;

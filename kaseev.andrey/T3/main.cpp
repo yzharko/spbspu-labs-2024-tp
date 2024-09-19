@@ -36,6 +36,7 @@ int main(int argc, char** argv) {
       input.clear();
     }
   }
+  flag = true;
 
   std::string cmd;
   while (!std::cin.eof())

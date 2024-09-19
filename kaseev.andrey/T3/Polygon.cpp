@@ -3,6 +3,7 @@
 
 namespace kaseev
 {
+  bool flag = false;
   std::istream &operator>>(std::istream &in, DelimiterIO &&dest)
   {
     std::istream::sentry sentry(in);
@@ -39,6 +40,8 @@ namespace kaseev
     dest.points.clear();
     size_t size = 0;
     in >> size;
+    if (!size && flag)
+      throw std::invalid_argument(""); // check if delete
 
     std::string str;
     std::getline(in, str , '\n');
@@ -46,7 +49,10 @@ namespace kaseev
     if (!input || size < 3)
     {
       in.setstate(std::ios::failbit);
-      throw std::invalid_argument("");
+      if (flag)
+        throw std::invalid_argument("");
+      else
+        return in;
     }
 
     std::vector < Point > temp{};
@@ -59,7 +65,8 @@ namespace kaseev
     else
     {
       in.setstate(std::ios::failbit);
-      throw std::invalid_argument("");
+      if (flag)
+        throw std::invalid_argument("");
     }
     return in;
   }
