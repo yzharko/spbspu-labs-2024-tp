@@ -1,21 +1,16 @@
 #include <iostream>
 #include "DictionaryManager.h"
 #include <iterator>
-#include <time.h>
 #include <ctime>
 #include <sstream>
-#include <locale.h>
 
 int main() {
   std::srand(static_cast<unsigned int>(std::time(nullptr)));
   DictionaryManager manager;
   std::string command;
-
-  while (true) {
-    std::cout << "> ";
-    std::getline(std::cin, command);
-    if (command == "exit") break;
-
+  std::cout << "> ";
+  std::getline(std::cin, command);
+  while (command != "exit" && !std::cin.eof()) {
     try {
       std::istringstream iss(command);
       std::vector<std::string> args((std::istream_iterator<std::string>(iss)),
@@ -52,5 +47,7 @@ int main() {
     } catch (const std::runtime_error& e) {
       std::cout << e.what() << std::endl;
     }
+    std::cout << "> ";
+    std::getline(std::cin, command);
   }
 }
