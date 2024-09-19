@@ -1,4 +1,3 @@
-#include <iostream>
 #include <functional>
 #include "Commands.hpp"
 
