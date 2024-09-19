@@ -12,11 +12,11 @@ std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::RatL
 
   inputStream >> smolyakov::StructInputSeparator{'('} >> smolyakov::StructInputSeparator{':'}
               >> smolyakov::StructInputSeparator{'N'}
-	      >> data.value.first
-	      >> smolyakov::StructInputSeparator{':'}
-	      >> smolyakov::StructInputSeparator{'D'}
-	      >> data.value.second
-	      >> smolyakov::StructInputSeparator{':'} >> smolyakov::StructInputSeparator{')'};
+              >> data.value.first
+              >> smolyakov::StructInputSeparator{':'}
+              >> smolyakov::StructInputSeparator{'D'}
+              >> data.value.second
+              >> smolyakov::StructInputSeparator{':'} >> smolyakov::StructInputSeparator{')'};
 
   return inputStream;
 }
