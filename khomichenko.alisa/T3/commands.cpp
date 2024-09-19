@@ -367,7 +367,8 @@ void khomichenko::getLessArea(const std::vector< Polygon > & allData, std::istre
   Polygon basePolygon;
   std::vector< Polygon > current;
   is >> basePolygon;
-  if(!is)
+  char c = is.peek();
+  if(c != '\n' || is.fail())
   {
     throw std::out_of_range("");
   }
