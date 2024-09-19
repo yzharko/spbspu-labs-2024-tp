@@ -1,38 +1,46 @@
-#include <functional>
-#include <limits>
+#include <map>
 #include <iostream>
-#include "commands.hpp"
+#include <functional>
+#include <string>
+#include <vector>
+#include <limits>
+#include "Comands.hpp"
+
 int main()
 {
-  using dictionary = std::multimap< std::string, std::string >;
-  std::map< std::string, dictionary > dicts;
-  std::map< std::string, std::function< void(std::map< std::string, dictionary >&, std::istream&, std::ostream&) > > commands;
+  using namespace jirkov;
+  std::map< std::string, std::map< std::string, std::vector< std::string > > > dictionaries = {};
+  using cmd_func = std::function< void(std::istream&, std::map< std::string, std::map< std::string, std::vector< std::string > > >&) >;
+  std::map< std::string, cmd_func > cmds = {};
   {
     using namespace std::placeholders;
-    commands["help"] = std::bind(jirkov::help, _2, _3);
-    commands["create"] = std::bind(jirkov::createDict, _1, _2, _3);
-    commands["remove"] = std::bind(jirkov::removeDict, _1, _2, _3);
-    commands["print"] = std::bind(jirkov::printDict, _1, _2, _3);
-    commands["sort"] = std::bind(jirkov::sortDict, _1, _2, _3);
-    commands["delete"] = std::bind(jirkov::deleteFile, _1, _2, _3);
-    commands["find"] = std::bind(jirkov::findFile, _1, _2, _3);
+    cmds["new"] = addDictionary;
+    cmds["delete"] = deleteDictionary;
+    cmds["add"] = addWord;
+    cmds["translate"] = std::bind(translate, std::ref(std::cout), _1, _2);
+    cmds["remove"] = removeWord;
+    cmds["merge"] = mergeDictionaries;
+    cmds["intersection"] = getIntersection;
+    cmds["combining"] = getCombining;
+    cmds["difference"] = getDifference;
   }
-  while (std::cin >> cmd && cmd != "save")
+  while (!std::cin.eof())
   {
     try
     {
-      commands.at(cmd)(dicts, std::cin, std::cout);
-    }
-    catch (const std::invalid_argument& e)
-    {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      std::string cmd_name = "";
+      std::cin >> cmd_name;
+      cmds.at(cmd_name)(std::cin, dictionaries);
     }
     catch (const std::out_of_range& e)
     {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+      std::cerr << "<INVALID COMMAND>\n";
     }
+    catch(const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+    }
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
   }
-  return 0;
 }
