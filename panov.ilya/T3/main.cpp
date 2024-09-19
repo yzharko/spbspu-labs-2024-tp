@@ -1,130 +1,72 @@
+#include "Polygon.hpp"
+#include "Commands.hpp"
+#include <fstream>
+#include <functional>
 #include <iostream>
-#include <vector>
+#include <iterator>
+#include <limits>
+#include <map>
 #include <string>
-#include "polygon.hpp"
-#include "parser.hpp"
-#include "commands.hpp"
-#include <iomanip>
-
-namespace panov
-{
-    void handleCommands(std::vector<Polygon>& polygons)
-    {
-        std::string command;
-        while (std::cin >> command)
-        {
-            if (command == "PERMS")
-            {
-                Polygon polygon;
-                int n;
-                std::cin >> n;
-                char ch;
-                for (int i = 0; i < n; ++i)
-                {
-                    Point p;
-                    std::cin >> ch >> p.x >> ch >> p.y >> ch;
-                    polygon.points.push_back(p);
-                }
-                std::cout << countPermutations(polygons, polygon) << std::endl;
-            }
-            else if (command == "ECHO")
-            {
-                Polygon polygon;
-                int n;
-                std::cin >> n;
-                char ch;
-                for (int i = 0; i < n; ++i)
-                {
-                    Point p;
-                    std::cin >> ch >> p.x >> ch >> p.y >> ch;
-                    polygon.points.push_back(p);
-                }
-                std::cout << echoPolygon(polygons, polygon) << std::endl;
-            }
-            else if (command == "AREA")
-            {
-                std::string type;
-                std::cin >> type;
-
-                if (type == "EVEN" || type == "ODD")
-                {
-                    bool even = (type != "EVEN");
-                    std::cout << std::fixed << std::setprecision(1) << areaSum(polygons, even) << std::endl;
-                }
-                else if (type == "MEAN")
-                {
-                    std::cout << std::fixed << std::setprecision(1) << areaMean(polygons) << std::endl;
-                }
-                else
-                {
-                    size_t vertexCount = std::stoi(type);
-                    std::cout << std::fixed << std::setprecision(1) << areaByVertexCount(polygons, vertexCount) << std::endl;
-                }
-            }
-            else if (command == "MAX")
-            {
-                std::string type;
-                std::cin >> type;
-
-                if (type == "AREA")
-                {
-                    std::cout << std::fixed << std::setprecision(1) << maxArea(polygons) << std::endl;
-                }
-                else if (type == "VERTEXES")
-                {
-                    std::cout << maxVertexes(polygons) << std::endl;
-                }
-            }
-            else if (command == "MIN")
-            {
-                std::string type;
-                std::cin >> type;
-
-                if (type == "AREA")
-                {
-                    std::cout << std::fixed << std::setprecision(1) << minArea(polygons) << std::endl;
-                }
-                else if (type == "VERTEXES")
-                {
-                    std::cout << minVertexes(polygons) << std::endl;
-                }
-            }
-            else if (command == "COUNT")
-            {
-                std::string type;
-                std::cin >> type;
-
-                if (type == "EVEN" || type == "ODD")
-                {
-                    bool even = (type == "EVEN");
-                    std::cout << countByVertexes(polygons, even) << std::endl;
-                }
-                else
-                {
-                    int vertexCount = std::stoi(type);
-                    std::cout << countByVertexes(polygons, false, vertexCount) << std::endl;
-                }
-            }
-            else
-            {
-                std::cout << "<INVALID COMMAND>" << std::endl;
-            }
-        }
-    }
-}
+#include <vector>
+#include <numeric>
 
 int main(int argc, char* argv[])
 {
-    if (argc != 2)
+  if (argc < 2)
+  {
+    std::cout << "Required filename argument\n";
+    return 1;
+  }
+  std::ifstream file(argv[1]);
+  if (!file.is_open())
+  {
+    std::cout << "File cannot be opened\n";
+    return 2;
+  }
+
+  using namespace panov;
+  using namespace std::placeholders;
+
+  if (!file.is_open())
+  {
+    throw std::invalid_argument("File is not open\n");
+  }
+
+  std::vector< Polygon > polygons;
+  using input_it_it = std::istream_iterator< Polygon >;
+  while (!file.eof())
+  {
+    std::copy(input_it_it{ file }, input_it_it{}, std::back_inserter(polygons));
+    file.clear();
+    file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+  }
+
+  std::map< std::string, std::function< void(std::istream& in, std::ostream& out) > > commands;
+  commands["AREA"] = std::bind(makeArea, std::cref(polygons), _1, _2);
+  commands["MAX"] = std::bind(makeMax, std::cref(polygons), _1, _2);
+  commands["MIN"] = std::bind(makeMin, std::cref(polygons), _1, _2);
+  commands["COUNT"] = std::bind(makeCount, std::cref(polygons), _1, _2);
+  commands["PERMS"] = std::bind(makePerms, std::cref(polygons), _1, _2);
+  commands["RMECHO"] = std::bind(makeRmecho, std::ref(polygons), _1, _2);
+
+  std::string cmd;
+  while (std::cin >> cmd)
+  {
+    try
     {
-        std::cerr << "Error: Filename not provided." << std::endl;
-        return 1;
+      commands.at(cmd)(std::cin, std::cout);
+      std::cout << '\n';
     }
-
-    std::string filename = argv[1];
-    std::vector<panov::Polygon> polygons = panov::parsePolygonsFromFile(filename);
-
-    panov::handleCommands(polygons);
-
-    return 0;
+    catch (const std::out_of_range&)
+    {
+      std::cout << "<INVALID COMMAND>" << '\n';
+    }
+    catch (const std::logic_error& e)
+    {
+      std::cout << e.what() << '\n';
+    }
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
+  }
+  return 0;
 }
