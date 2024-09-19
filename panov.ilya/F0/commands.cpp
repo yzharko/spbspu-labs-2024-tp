@@ -281,7 +281,7 @@ std::ostream & panov::addline(std::istream & in, std::ostream & out)
   std::transform(
     words.begin(),
     words.end(),
-    std::back_inserter(indices), 
+    std::back_inserter(indices),
     [&](const std::string & w)
     {
       return (w == word) ? &w - &words[0] : -1;
@@ -292,4 +292,3 @@ std::ostream & panov::addline(std::istream & in, std::ostream & out)
   out << '\n';
   return out;
 }
-
