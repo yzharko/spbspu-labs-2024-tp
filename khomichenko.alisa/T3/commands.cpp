@@ -86,6 +86,38 @@ void khomichenko::meanArea(const std::vector< Polygon >& polygons, std::ostream&
   }
 }
 
+void khomichenko::cmdRmecho(std::vector< Polygon >& polygons, std::istream& input, std::ostream& output)
+{
+  size_t currentSize = polygons.size();
+  if (currentSize == 0)
+  {
+    output << currentSize << "\n";
+    return;
+  }
+
+  Polygon toRemove;
+  input >> toRemove;
+
+  bool lastRemoved = false;
+  auto it = std::remove_if
+  (
+    polygons.begin(),
+    polygons.end(),
+    [&toRemove, &lastRemoved](const Polygon& p)
+    {
+      if (p == toRemove && lastRemoved)
+      {
+        return true;
+      }
+      lastRemoved = (p == toRemove);
+      return false;
+     }
+  );
+  polygons.erase(it, polygons.end());
+  size_t removedCount = currentSize - polygons.size();
+  output << removedCount << '\n';
+}
+
 void khomichenko::vertexArea(size_t num, const std::vector< Polygon >& polygons, std::ostream& output)
 {
   std::vector< Polygon > needPolygons;

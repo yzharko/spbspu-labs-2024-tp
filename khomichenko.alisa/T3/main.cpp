@@ -39,6 +39,7 @@ int main(int argc, char* argv[])
     commands["COUNT"] = std::bind(khomichenko::cmdCount, _1, _2, _3);
     commands["LESSAREA"] = std::bind(khomichenko::getLessArea, _1, _2, _3);
     commands["RECTS"] = std::bind(khomichenko::commandRects, _1,_3);
+    commands["RMECHO"] = std::bind(khomichenko::cmdRmecho, _1, _2, _3);
   }
   auto warningInvCom = std::bind(warning, std::placeholders::_1, "<INVALID COMMAND>\n");
 
