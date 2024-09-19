@@ -3,6 +3,7 @@
 #include <functional>
 #include <iterator>
 #include <vector>
+#include "Delimiters.hpp"
 
 struct PolygonArea
 {
