@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     return 1;
   }
   std::map < std::string, std::function <
-    void(std::istream&, std::ostream&, std::vector < Polygon >&)>> command;
+  void (std::ostream &, std::vector < Polygon > &)>> command;
   command["AREA"] = area;
   command["MAX"] = max;
   command["MIN"] = min;
@@ -27,9 +27,9 @@ int main(int argc, char** argv) {
   while (!input.eof())
   {
     std::copy(
-      std::istream_iterator< Polygon >(input),
-      std::istream_iterator< Polygon >(),
-      std::back_inserter(polygons)
+        std::istream_iterator< Polygon >(input),
+        std::istream_iterator< Polygon >(),
+        std::back_inserter(polygons)
     );
     if (input.fail() && !input.eof())
     {
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         throw std::invalid_argument("");
       }
-      func->second(std::cin, std::cout, polygons);
+      func->second(std::cout, polygons);
     }
     catch (...)
     {
