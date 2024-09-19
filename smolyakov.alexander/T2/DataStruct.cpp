@@ -3,6 +3,8 @@
 #include <string>
 #include "StructInputSeparator.hpp"
 #include "UllOct.hpp"
+#include "RatLsp.hpp"
+#include "StringWrapper.hpp"
 
 std::istream& operator >> (std::istream& inputStream, smolyakov::DataStruct& data)
 {
@@ -22,16 +24,15 @@ std::istream& operator >> (std::istream& inputStream, smolyakov::DataStruct& dat
     inputStream >> smolyakov::StructInputSeparator{':'} >> fieldName;
     if (fieldName == "key1")
     {
-      // TODO: input std::pair
+      inputStream >> smolyakov::RatLsp{tmpDataHolder.key1};
     }
     else if (fieldName == "key2")
     {
-      smolyakov::UllOct ullOct = smolyakov::UllOct{tmpDataHolder.key2};
-      inputStream >> ullOct;
+      inputStream >> smolyakov::UllOct{tmpDataHolder.key2};
     }
     else if (fieldName == "key3")
     {
-      // TODO: input string
+      inputStream >> smolyakov::StringWrapper{tmpDataHolder.key3};
     }
   }
 

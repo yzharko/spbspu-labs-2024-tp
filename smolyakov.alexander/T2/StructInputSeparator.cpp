@@ -9,7 +9,7 @@ std::istream& operator >> (std::istream& inputStream, smolyakov::StructInputSepa
     return inputStream;
   }
 
-  char c;
+  char c = 0;
   inputStream >> c;
   if (c != separator.separatorCharacter)
   {
