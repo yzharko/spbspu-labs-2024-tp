@@ -20,7 +20,8 @@ int main()
     }
   }
 
-  std::cout << data[0].key3 << '\n';
+  std::sort(data.begin(), data.end());
+  std::copy(std::begin(data), std::end(data), std::ostream_iterator<smolyakov::DataStruct>(std::cout, "\n"));
 
   return 0;
 }
