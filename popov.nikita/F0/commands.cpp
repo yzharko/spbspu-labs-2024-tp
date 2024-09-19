@@ -15,16 +15,16 @@ void popov::helpCmd(std::ostream& out)
   out << "create<name> - create a dictionary named name" << "\n";
   out << "add_word<word, name> - adds a word to the frequency dictionary named name" << "\n";
   out << "remove_word<word, name> - removes a word from the frequency dictionary, if it is present" << "\n";
-  out << "get_frequency<word, name> - returns the frequency (number of times) the specified word appears in the dictionary" << "\n";
+  out << "get_frequency<word, name> - returns the frequency the specified word appears in the dictionary" << "\n";
   out << "top_words<name> - displays all words from the most common to the least common" << "\n";
   out << "reset<name> - clears the entire frequency dictionary with the name name" << "\n";
   out << "delete<name> - deletes a dictionary named name" << "\n";
-  out << "add_word_frequency<word, amount, name> - adding a word to the dictionary with the specified frequency amount" << "\n";
-  out << "increase_frequency<word, amount, name> - increases the frequency of the specified word by a specified amount" << "\n";
-  out << "decrease_frequency<word, amount, name> - reduces the frequency of the specified word by a specified amount" << "\n";
-  out << "get_words_with_frequency<frequency, name> - returns a list of words with the specified frequency of occurrence in the name dictionary" << "\n";
+  out << "add_word_frequency<word, amount, name> - adding a word to the dictionary with the frequency amount" << "\n";
+  out << "increase_frequency<word, amount, name> - increases the frequency of the specified word" << "\n";
+  out << "decrease_frequency<word, amount, name> - reduces the frequency of the specified word" << "\n";
+  out << "get_words_with_frequency<frequency, name> - returns a list of words with the frequency of dictionary" << "\n";
   out << "print<name> - output of the entire dictionary" << "\n";
-  out << "create_same<name1, name2> - create a name2 dictionary with the same words and frequency as in the name1 dictionary" << "\n";
+  out << "create_same<name1, name2> - create a name2 dictionary with the same name1 dictionary" << "\n";
 }
 
 void popov::createCmd(outdictionary& dictionaries, std::istream& in, std::ostream& out)
@@ -238,11 +238,11 @@ void popov::decreasFrequencyCmd(outdictionary& dictionaries, std::istream& in, s
   if (it->second >= amount)
   {
     it->second -= amount;
-    out << "Frequency of word '" << word << "' in dictionary '" << name << "' decreased by " << amount << "." << "\n";
+    out << "Frequency of word '" << name << "' decreased by " << amount << "." << "\n";
   }
   else
   {
-    out << "Frequency of word '" << word << "' in dictionary '" << name << "' is less than " << amount << "." << "\n";
+    out << "Frequency of word '" << "' in dictionary '" << name << "' is less than " << amount << "." << "\n";
   }
 }
 
