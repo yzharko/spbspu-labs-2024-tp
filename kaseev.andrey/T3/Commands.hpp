@@ -25,7 +25,7 @@ namespace kaseev
                        std::vector< Polygon > & shapes);
   std::ostream & perms(std::istream& in, std::ostream& out,
                        std::vector< Polygon > & shapes);
-  std::ostream & intersections(std::istream& in, std::ostream& out,
-                               std::vector< Polygon > & shapes);
+  std::ostream &echoCommand(std::istream &in, std::ostream &out,
+                            std::vector< Polygon > & shapes);
 }
 #endif

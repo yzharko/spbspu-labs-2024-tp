@@ -189,26 +189,27 @@ namespace kaseev
     }
   }
 
-  bool isIntersection(const Polygon& firstObject, const Polygon& secondObject)
+  std::ostream &echoCommand(std::istream &in, std::ostream &out, std::vector< Polygon > & shapes)
   {
-    Point minfirstObject = *std::min_element(firstObject.points.cbegin(), firstObject.points.cend());
-    Point maxfirstObject = *std::max_element(firstObject.points.cbegin(), firstObject.points.cend());
-    Point minsecondObject = *std::min_element(secondObject.points.cbegin(), secondObject.points.cend());
-    Point maxsecondObject = *std::max_element(secondObject.points.cbegin(), secondObject.points.cend());
-    return ((maxfirstObject >= minsecondObject) and (minfirstObject <= maxsecondObject)) or
-           ((minsecondObject <= maxfirstObject) and (maxsecondObject >= minfirstObject));
-  }
-  std::ostream & intersections(std::istream& in, std::ostream& out,
-                               std::vector< Polygon > & shapes)
-  {
-    Polygon arg;
-    in >> arg;
-    if (in.fail() || shapes.size() == 0)
+    try
     {
-      throw;
+      Polygon arg;
+      in >> arg;
+      size_t count = 0;
+      Iofmtguard fmtguard(out);
+      auto it = shapes.begin();
+      while ((it = std::find(it, shapes.end(), arg)) != shapes.end())
+      {
+        it = shapes.insert(it + 1, arg);
+        ++count;
+        ++it;
+      }
+      out << count << std::endl;
     }
-    auto functor = std::bind(isIntersection, arg, _1);
-    return out << std::count_if(shapes.begin(), shapes.end(), functor) << '\n';
+    catch (const std::exception &e)
+    {
+      out << "<INVALID COMMAND>" << std::endl;
+    }
+    return out;
   }
-
 }

@@ -15,7 +15,6 @@ namespace kaseev
     if (in && c != dest.exp)
     {
       in.setstate(std::ios::failbit);
-      //std::cout << "DELIM EXP: " << dest.exp << " GOT : " << c << '\n';
     }
     return in;
   }
@@ -55,7 +54,6 @@ namespace kaseev
     if (temp.size() == size && temp.size() >= 3)
     {
       dest.points = temp;
-      //std::cout << temp.size() << " " << dest.points.size() << " DONE \n";
     }
     else
     {

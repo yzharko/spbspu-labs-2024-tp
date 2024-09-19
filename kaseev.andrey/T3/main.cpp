@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
   command["MIN"] = min;
   command["COUNT"] = count;
   command["PERMS"] = perms;
-  command["INTERSECTIONS"] = intersections;
+  command["ECHO"] = echoCommand;
   while (!input.eof())
   {
     std::copy(
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
       }
       func->second(std::cin, std::cout, polygons);
     }
-    catch (const char* erorr)
+    catch (...)
     {
       std::cout << "<INVALID COMMAND>" << '\n';
     }
