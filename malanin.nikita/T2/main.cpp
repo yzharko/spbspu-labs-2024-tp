@@ -1,35 +1,26 @@
-#include <algorithm>
+#include <iostream>
+#include <list>
 #include <iterator>
-#include <vector>
 #include <limits>
-#include "dataStruct.hpp"
+#include "DataStruct.hpp"
 
 int main()
 {
-  using malanin::yaDataStruct;
-  std::vector< yaDataStruct > data;
+  using namespace malanin;
+  using input_it_t = std::istream_iterator< DataStruct >;
+  std::list< DataStruct > data(input_it_t{ std::cin }, input_it_t{});
+  using output_it_t = std::ostream_iterator< DataStruct >;
+
   while (!std::cin.eof())
   {
-    std::copy(
-      std::istream_iterator< yaDataStruct >(std::cin),
-      std::istream_iterator< yaDataStruct >(),
-      std::back_inserter(data)
-    );
-    if (std::cin.fail() && !std::cin.eof())
+    if (std::cin.fail())
     {
       std::cin.clear();
       std::cin.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
+    std::copy(input_it_t{ std::cin }, input_it_t{}, std::back_inserter(data));
   }
-  std::sort(data.begin(), data.end());
-  std::copy(
-    std::begin(data),
-    std::end(data),
-    std::ostream_iterator< yaDataStruct >(std::cout, "\n")
-  );
-  return 0;
+
+  data.sort();
+  std::copy(data.cbegin(), data.cend(), output_it_t{ std::cout, "\n" });
 }
-<<<<<<< HEAD
-\0
-=======
->>>>>>> a80273334fd880fef12e816c277381891be3ad29
