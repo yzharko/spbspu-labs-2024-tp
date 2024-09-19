@@ -27,6 +27,7 @@ void litsinger::creatDict(mapDictionaries_t& mapDictionaries, std::istream& in, 
   in >> name;
   std::map< std::string, std::vector< size_t > > dictionary;
   mapDictionaries.emplace(name, dictionary);
+  out << "словарь добавлен" << "\n";
 }
 
 void litsinger::addWord(mapDictionaries_t& mapDictionaries, std::istream& in, std::ostream& out)
