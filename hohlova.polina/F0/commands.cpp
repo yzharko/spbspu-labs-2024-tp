@@ -106,7 +106,7 @@ namespace hohlova
     if (currDictionary != dictOfdict.end())
     {
       int count = 0;
-      for (auto& it : (*currDictionary).second)
+      for (auto it : (*currDictionary).second)
       {
         count++;
       }
@@ -308,7 +308,7 @@ namespace hohlova
         printError("Empty name");
         return;
       }
-      auto rWord = (*it).second.find(word);
+      //auto rWord = (*it).second.find(word);
       if ((*it).second.find(word) != (*it).second.end())
       {
         (*it).second.erase(word);
