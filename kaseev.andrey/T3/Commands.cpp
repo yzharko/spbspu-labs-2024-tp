@@ -206,7 +206,7 @@ namespace kaseev
       }
       out << count << std::endl;
     }
-    catch (const std::exception &e)
+    catch (...)
     {
       out << "<INVALID COMMAND>" << std::endl;
     }
