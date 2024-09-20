@@ -20,7 +20,7 @@ int main()
   std::map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;
 
   using namespace std::placeholders;
-  commands.insert(std::make_pair("help", std::bind(helpCmd, _1, _2)));
+  commands.insert(std::make_pair("help", std::bind(helpCmd, _2)));
   commands.insert(std::make_pair("create", std::bind(createCmd, std::ref(engRusDict), _1, _2)));
   commands.insert(std::make_pair("remove", std::bind(removeCmd, std::ref(engRusDict), _1, _2)));
   commands.insert(std::make_pair("print", std::bind(printCmd, std::ref(engRusDict), _1, _2)));
