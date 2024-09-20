@@ -28,7 +28,7 @@ namespace proselkov
     }
 }
 
-void proselkov::helpCmd(std::istream& in, std::ostream& out)
+void proselkov::helpCmd(std::ostream& out)
 {
     out << "Список команд:\n"
         << "1. help - вывод списка всех доступных команд и их описание.\n"

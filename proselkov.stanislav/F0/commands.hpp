@@ -9,7 +9,7 @@ namespace proselkov
   using langDictionary = std::map< std::string, std::string >;
   using majorDictionary = std::map< std::string, langDictionary >;
 
-  void helpCmd(std::istream& in, std::ostream& out);
+  void helpCmd(std::ostream& out);
   void createCmd(majorDictionary& major, std::istream& in, std::ostream& out);
   void removeCmd(majorDictionary& major, std::istream& in, std::ostream& out);
   void printCmd(majorDictionary& major, std::istream& in, std::ostream& out);
