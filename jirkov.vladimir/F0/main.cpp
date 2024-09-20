@@ -5,7 +5,6 @@
 #include <vector>
 #include <limits>
 #include "Comands.hpp"
-
 int main()
 {
   using namespace jirkov;
