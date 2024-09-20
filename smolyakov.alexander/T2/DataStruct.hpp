@@ -9,8 +9,8 @@ namespace smolyakov
 {
   struct DataStruct
   {
-    std::pair<long long, unsigned long long> key1;
-    unsigned long long key2;
+    unsigned long long key1;
+    std::pair<long long, unsigned long long> key2;
     std::string key3;
   };
 

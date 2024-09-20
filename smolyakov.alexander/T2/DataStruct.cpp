@@ -27,11 +27,11 @@ std::istream& smolyakov::operator >> (std::istream& inputStream, smolyakov::Data
     inputStream >> smolyakov::StructInputSeparator{':'} >> fieldName;
     if (fieldName == "key1")
     {
-      inputStream >> smolyakov::RatLsp{tmpDataHolder.key1};
+      inputStream >> smolyakov::UllOct{tmpDataHolder.key1};
     }
     else if (fieldName == "key2")
     {
-      inputStream >> smolyakov::UllOct{tmpDataHolder.key2};
+      inputStream >> smolyakov::RatLsp{tmpDataHolder.key2};
     }
     else if (fieldName == "key3")
     {
@@ -59,8 +59,8 @@ std::ostream& smolyakov::operator << (std::ostream& outputStream, const smolyako
 
   iofmtguard fmtguard(outputStream);
   outputStream << "(:";
-  outputStream << "key1 (:N " << data.key1.first << ":D " << data.key1.second << ":)";
-  outputStream << ":key2 0" << std::oct << std::uppercase << data.key2;
+  outputStream << "key1 0" << std::oct << std::uppercase << data.key1;
+  outputStream << ":key2 (:N " << data.key2.first << ":D " << data.key2.second << ":)";
   outputStream << ":key3 \"" << data.key3 << "\":)";
   return outputStream;
 }
