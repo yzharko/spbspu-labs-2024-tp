@@ -11,7 +11,7 @@ namespace proselkov
 
   void helpCmd(std::ostream& out);
   void createCmd(majorDictionary& major, std::istream& in);
-  void removeCmd(majorDictionary& major, std::istream& in, std::ostream& out);
+  void removeCmd(majorDictionary& major, std::istream& in);
   void printCmd(majorDictionary& major, std::istream& in, std::ostream& out);
   void clearCmd(majorDictionary& major, std::istream& in, std::ostream& out);
   void deleteCmd(majorDictionary& major, std::istream& in, std::ostream& out);

@@ -68,7 +68,7 @@ void proselkov::createCmd(majorDictionary& major, std::istream& in)
     major.insert(std::make_pair(dictName, newDict));
 }
 
-void proselkov::removeCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::removeCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     in >> dictName;
