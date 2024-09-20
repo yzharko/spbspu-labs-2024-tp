@@ -5,17 +5,20 @@
 #include <functional>
 #include "workspace.hpp"
 
-const std::string& getName(std::pair< const std::string&, const malanin::Graph& > pair)
+const std::string& getName(std::pair< const std::string&, 
+const malanin::Graph& > pair)
 {
   return pair.first;
 }
 
-bool compareNames(const std::string& rhs, const std::string& lhs)
+bool compareNames(const std::string& rhs, 
+const std::string& lhs)
 {
   return lhs == rhs;
 }
 
-bool nameIsNotUnique(const std::string& name, const malanin::Workspace& workspace)
+bool nameIsNotUnique(const std::string& name, 
+const malanin::Workspace& workspace)
 {
   std::vector< std::string > names;
   malanin::getGraphsNames(workspace, names);
@@ -30,22 +33,28 @@ bool nameIsNotUnique(const std::string& name, const malanin::Workspace& workspac
   }
 }
 
-void malanin::getGraphsNames(const malanin::Workspace& workspace, std::vector< std::string >& accumulator)
+void malanin::getGraphsNames(const malanin::Workspace& workspace, 
+std::vector< std::string >& accumulator)
 {
-  std::transform(workspace.graphs.cbegin(), workspace.graphs.cend(), std::back_inserter(accumulator), getName);
+  std::transform(workspace.graphs.cbegin(), 
+workspace.graphs.cend(), 
+std::back_inserter(accumulator), getName);
 }
 
-void insertGraph(const malanin::Graph& graph, malanin::Workspace& workspace)
+void insertGraph(const malanin::Graph& graph, 
+malanin::Workspace& workspace)
 {
   const std::string& name = graph.name;
   if (nameIsNotUnique(name, workspace))
   {
-    throw std::logic_error("[ERROR](insertion): graph, named \"" + name + "\" already exists");
+    throw std::logic_error("[ERROR](insertion): graph, named \"" + 
+name + "\" already exists");
   }
   workspace.graphs.insert({name, graph});
 }
 
-void malanin::initWorkspace(int argc, char* argv[], malanin::Workspace& workspace)
+void malanin::initWorkspace(int argc, char* argv[], 
+malanin::Workspace& workspace)
 {
   if (argc == 1)
   {
@@ -72,12 +81,14 @@ void malanin::initWorkspace(int argc, char* argv[], malanin::Workspace& workspac
   }
 }
 
-void malanin::readGraph(const std::string& filename, malanin::Graph& container)
+void malanin::readGraph(const std::string& filename, 
+malanin::Graph& container)
 {
   std::ifstream in(filename);
   if(!in)
   {
-    throw std::runtime_error("[ERROR](input): error while opening file " + filename);
+    throw std::runtime_error("[ERROR](input): error while\n"
+"opening file " + filename);
   }
   std::string name = "";
   std::getline(in, name);
@@ -89,7 +100,8 @@ void malanin::readGraph(const std::string& filename, malanin::Graph& container)
   in.close();
 }
 
-std::ostream& malanin::sendMessage(std::ostream& out, const std::string& message)
+std::ostream& malanin::sendMessage(std::ostream& out, 
+const std::string& message)
 {
   return out << message << '\n';
 }
