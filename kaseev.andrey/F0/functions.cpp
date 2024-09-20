@@ -1,5 +1,6 @@
 #include "functions.hpp"
 #include <iostream>
+#include <algorithm>
 
 namespace kaseev {
 
@@ -64,4 +65,29 @@ namespace kaseev {
     }
     std::cout << std::endl;
   }
+
+  void pop(std::vector<par>& lines, const std::string& name) {
+    auto it = std::remove_if(lines.begin(), lines.end(), [&name](const par& pair) {
+      return pair.first == name;
+    });
+    if (it != lines.end()) {
+      lines.erase(it, lines.end());
+      std::cout << name << " removed successfully." << std::endl;
+    } else {
+      std::cout << "No entry found with name: " << name << std::endl;
+    }
+  }
+
+  void change(std::vector<par>& lines, const std::string& old_name, const std::string& new_value) {
+    auto it = std::find_if(lines.begin(), lines.end(), [&old_name](const par& pair) {
+      return pair.first == old_name;
+    });
+    if (it != lines.end()) {
+      it->first = new_value;
+      std::cout << old_name << " changed to " << new_value << " successfully." << std::endl;
+    } else {
+      std::cout << "No entry found with name: " << old_name << std::endl;
+    }
+  }
+
 }
