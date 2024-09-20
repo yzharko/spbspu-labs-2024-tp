@@ -1,6 +1,6 @@
 #include "commands.hpp"
 #include "scopeguard.hpp"
-#include "IOFunctions.hpp"
+#include "IOFunction.hpp"
 #include <iterator>
 #include <algorithm>
 #include <iostream>
