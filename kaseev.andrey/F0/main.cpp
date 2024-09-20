@@ -11,11 +11,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
   std::string vector_filename = argv[1];
-  std::ofstream vector_file(vector_filename, std::ios::app);
-  if (!vector_file.is_open()) {
-    std::cerr << "Error: Could not open file " << vector_filename << " for writing." << std::endl;
-    return 1;
-  }
   std::string history_filename = argv[2];
   std::ofstream history_file(history_filename, std::ios::app);
   if (!history_file.is_open()) {
@@ -76,14 +71,14 @@ int main(int argc, char* argv[]) {
       history_file << "EXIT command executed\n";
       break;
     }
-    if (auto it = m.find(command); it != m.end()) {
+    auto it = m.find(command);
+    if (it != m.end()) {
       it->second(data);
     } else {
       std::cout << "Unknown command!" << std::endl;
       history_file << "Unknown command entered: " << command << "\n";
     }
   }
-  vector_file.close();
   history_file.close();
 
   return 0;

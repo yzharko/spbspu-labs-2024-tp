@@ -1,14 +1,12 @@
 #include "functions.hpp"
 #include <iostream>
-#include <algorithm>
 #include <fstream>
+#include <algorithm>
 #include <limits>
-
 
 namespace kaseev {
 
-  void help()
-  {
+  void help() {
     std::cout << "help - shows a list of commands\n"
                  "multiply - multiplies numbers by column\n"
                  "sum - sums numbers in a column\n"
@@ -76,7 +74,8 @@ namespace kaseev {
     if (it != lines.end()) {
       lines.erase(it, lines.end());
       std::cout << name << " removed successfully." << std::endl;
-    } else {
+    } else
+    {
       std::cout << "No entry found with name: " << name << std::endl;
     }
   }
@@ -88,7 +87,8 @@ namespace kaseev {
     if (it != lines.end()) {
       it->first = new_value;
       std::cout << old_name << " changed to " << new_value << " successfully." << std::endl;
-    } else {
+    } else
+    {
       std::cout << "No entry found with name: " << old_name << std::endl;
     }
   }
@@ -100,12 +100,12 @@ namespace kaseev {
 
   void readfile(std::vector<par>& vec) {
     size_t max_len = 0;
-    for (const auto& [name, data] : vec) {
-      std::cout << name << ' ';
-      max_len = std::max(max_len, data.size());
+    for (const auto& pair : vec) {
+      std::cout << pair.first << ' ';
+      max_len = std::max(max_len, pair.second.size());
     }
-    for (int i = 0; i < max_len; ++i) {
-      for (int j = 0; j < vec.size(); ++j) {
+    for (size_t i = 0; i < max_len; ++i) {
+      for (size_t j = 0; j < vec.size(); ++j) {
         if (i < vec[j].second.size())
           std::cout << vec[j].second[i] << ' ';
       }
@@ -140,13 +140,13 @@ namespace kaseev {
       return;
     }
     size_t max_len = 0;
-    for (const auto& [name, data] : vec) {
-      file << name << ' ';
-      max_len = std::max(max_len, data.size());
+    for (const auto& pair : vec) {
+      file << pair.first << ' ';
+      max_len = std::max(max_len, pair.second.size());
     }
     file << '\n';
-    for (int i = 0; i < max_len; ++i) {
-      for (int j = 0; j < vec.size(); ++j) {
+    for (size_t i = 0; i < max_len; ++i) {
+      for (size_t j = 0; j < vec.size(); ++j) {
         if (i < vec[j].second.size())
           file << vec[j].second[i] << ' ';
       }
