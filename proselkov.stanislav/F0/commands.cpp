@@ -50,7 +50,7 @@ void proselkov::helpCmd(std::ostream& out)
         "с именем name в файл с расширением txt.\n";
 }
 
-void proselkov::createCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::createCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     in >> dictName;
