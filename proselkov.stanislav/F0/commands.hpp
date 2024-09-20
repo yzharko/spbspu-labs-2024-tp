@@ -13,14 +13,14 @@ namespace proselkov
   void createCmd(majorDictionary& major, std::istream& in);
   void removeCmd(majorDictionary& major, std::istream& in);
   void printCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void clearCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void deleteCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void insertCmd(majorDictionary& major, std::istream& in, std::ostream& out);
+  void clearCmd(majorDictionary& major, std::istream& in);
+  void deleteCmd(majorDictionary& major, std::istream& in);
+  void insertCmd(majorDictionary& major, std::istream& in);
   void searchCmd(majorDictionary& major, std::istream& in, std::ostream& out);
   void sizeCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void editCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void combineCmd(majorDictionary& major, std::istream& in, std::ostream& out);
-  void saveCmd(majorDictionary& major, std::istream& in, std::ostream& out);
+  void editCmd(majorDictionary& major, std::istream& in);
+  void combineCmd(majorDictionary& major, std::istream& in);
+  void saveCmd(majorDictionary& major, std::istream& in);
 }
 
 #endif

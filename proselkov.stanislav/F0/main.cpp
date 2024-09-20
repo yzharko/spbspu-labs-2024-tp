@@ -24,14 +24,14 @@ int main()
   commands.insert(std::make_pair("create", std::bind(createCmd, std::ref(engRusDict), _1)));
   commands.insert(std::make_pair("remove", std::bind(removeCmd, std::ref(engRusDict), _1)));
   commands.insert(std::make_pair("print", std::bind(printCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("clear", std::bind(clearCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("delete", std::bind(deleteCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("insert", std::bind(insertCmd, std::ref(engRusDict), _1, _2)));
+  commands.insert(std::make_pair("clear", std::bind(clearCmd, std::ref(engRusDict), _1)));
+  commands.insert(std::make_pair("delete", std::bind(deleteCmd, std::ref(engRusDict), _1)));
+  commands.insert(std::make_pair("insert", std::bind(insertCmd, std::ref(engRusDict), _1)));
   commands.insert(std::make_pair("search", std::bind(searchCmd, std::ref(engRusDict), _1, _2)));
   commands.insert(std::make_pair("size", std::bind(sizeCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("edit", std::bind(editCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("combine", std::bind(combineCmd, std::ref(engRusDict), _1, _2)));
-  commands.insert(std::make_pair("save", std::bind(saveCmd, std::ref(engRusDict), _1, _2)));
+  commands.insert(std::make_pair("edit", std::bind(editCmd, std::ref(engRusDict), _1)));
+  commands.insert(std::make_pair("combine", std::bind(combineCmd, std::ref(engRusDict), _1)));
+  commands.insert(std::make_pair("save", std::bind(saveCmd, std::ref(engRusDict), _1)));
 
   std::string command;
   while (std::cin >> command)

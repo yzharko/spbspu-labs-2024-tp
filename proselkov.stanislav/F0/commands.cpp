@@ -97,7 +97,7 @@ void proselkov::printCmd(majorDictionary& major, std::istream& in, std::ostream&
     print(majIt->second, out);
 }
 
-void proselkov::clearCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::clearCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     in >> dictName;
@@ -114,7 +114,7 @@ void proselkov::clearCmd(majorDictionary& major, std::istream& in, std::ostream&
     majIt->second.clear();
 }
 
-void proselkov::deleteCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::deleteCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     std::string word;
@@ -132,7 +132,7 @@ void proselkov::deleteCmd(majorDictionary& major, std::istream& in, std::ostream
     majIt->second.erase(word);
 }
 
-void proselkov::insertCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::insertCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     std::string word;
@@ -194,7 +194,7 @@ void proselkov::sizeCmd(majorDictionary& major, std::istream& in, std::ostream& 
     out << majIt->second.size() << '\n';
 }
 
-void proselkov::editCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::editCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     std::string wordEng;
@@ -218,7 +218,7 @@ void proselkov::editCmd(majorDictionary& major, std::istream& in, std::ostream& 
     minIt->second = wordRus;
 }
 
-void proselkov::combineCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::combineCmd(majorDictionary& major, std::istream& in)
 {
     std::string firstName;
     std::string secondname;
@@ -249,7 +249,7 @@ void proselkov::combineCmd(majorDictionary& major, std::istream& in, std::ostrea
     major.insert(std::make_pair(newName, newDict));
 }
 
-void proselkov::saveCmd(majorDictionary& major, std::istream& in, std::ostream& out)
+void proselkov::saveCmd(majorDictionary& major, std::istream& in)
 {
     std::string dictName;
     std::string fileName;
