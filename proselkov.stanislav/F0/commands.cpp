@@ -34,15 +34,20 @@ void proselkov::helpCmd(std::istream& in, std::ostream& out)
         << "1. help - вывод списка всех доступных команд и их описание.\n"
         << "2. create <name> - создание словаря с именем name.\n"
         << "3. remove <name> - удаление словаря с именем name.\n"
-        << "4. print <name> - вывод содержимого словаря с именем name. Если словарь пуст, то команда выводит сообщение <EMPTY>.\n"
+        << "4. print <name> - вывод содержимого словаря с именем name."
+        "Если словарь пуст, то команда выводит сообщение <EMPTY>.\n"
         << "5. clear <name> - очистка содержимого словаря с именем name.\n"
         << "6. delete <name> <word> - удаление слова word из словаря с именем name.\n"
         << "7. insert <name> <word> - добавление слова word в словарь с именем name.\n"
-        << "8. search <name> <word> - поиск слова word в словаре с именем name с выводом его перевода.\n"
+        << "8. search <name> <word> - поиск слова word в словаре"
+        "с именем name с выводом его перевода.\n"
         << "9. size <name> - вывод размера (количества слов) словаря name.\n"
-        << "10. edit <name> <key> <translation> - присвоить значение (перевод) translation слову key.\n"
-        << "11. combine <name1> <name2> <new_name> - создание нового словаря new_name с объединением всех слов из словарей name1 и name2.\n"
-        << "12. save <name> <название_файла> - сохранить словарь с именем name в файл с расширением txt.\n";
+        << "10. edit <name> <key> <translation> - присвоить"
+        "значение (перевод) translation слову key.\n"
+        << "11. combine <name1> <name2> <new_name> - создание нового словаря "
+        "new_name с объединением всех слов из словарей name1 и name2.\n"
+        << "12. save <name> <название_файла> - сохранить словарь"
+        "с именем name в файл с расширением txt.\n";
 }
 
 void proselkov::createCmd(majorDictionary& major, std::istream& in, std::ostream& out)
