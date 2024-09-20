@@ -90,4 +90,24 @@ namespace kaseev {
     }
   }
 
+  void clear(std::vector<par>& vec) {
+    vec.clear();
+    std::cout << "All entries cleared." << std::endl;
+  }
+
+  void readfile(std::vector<par>& vec) {
+    size_t max_len = 0;
+    for (const auto& [name, data] : vec) {
+      std::cout << name << ' ';
+      max_len = std::max(max_len, data.size());
+    }
+    for (int i = 0; i < max_len; ++i) {
+      for (int j = 0; j < vec.size(); ++j) {
+        if (i < vec[j].second.size())
+          std::cout << vec[j].second[i] << ' ';
+      }
+      std::cout << '\n';
+    }
+  }
+
 }

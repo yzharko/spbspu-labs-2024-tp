@@ -12,6 +12,8 @@ namespace kaseev {
   void sum(const std::vector<par>& vec);
   void pop(std::vector<par>& lines, const std::string& name);
   void change(std::vector<par>& lines, const std::string& old_name, const std::string& new_value);
+  void clear(std::vector<par>& vec);
+  void readfile(std::vector<par>& vec);
 }
 
 #endif
