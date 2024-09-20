@@ -16,4 +16,52 @@ namespace kaseev {
                  "save - saves the list to a file\n"
                  "exit - stop program";
   }
+
+  void multiply(const std::vector<par>& vec) {
+    if (vec.empty()) {
+      std::cout << "Vector is empty." << std::endl;
+      return;
+    }
+    size_t max_size = 0;
+    for (const auto& pair : vec) {
+      if (pair.second.size() > max_size) {
+        max_size = pair.second.size();
+      }
+    }
+    std::vector<long long> result(max_size, 1);
+    for (const auto& pair : vec) {
+      for (size_t i = 0; i < pair.second.size(); ++i) {
+        result[i] *= pair.second[i];
+      }
+    }
+    std::cout << "Result of multiplying vectors by positions: ";
+    for (const auto& val : result) {
+      std::cout << val << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  void sum(const std::vector<par>& vec) {
+    if (vec.empty()) {
+      std::cout << "Vector is empty." << std::endl;
+      return;
+    }
+    size_t max_size = 0;
+    for (const auto& pair : vec) {
+      if (pair.second.size() > max_size) {
+        max_size = pair.second.size();
+      }
+    }
+    std::vector<long long> result(max_size, 0);
+    for (const auto& pair : vec) {
+      for (size_t i = 0; i < pair.second.size(); ++i) {
+        result[i] += pair.second[i];
+      }
+    }
+    std::cout << "Result of summing vectors by positions: ";
+    for (const auto& val : result) {
+      std::cout << val << " ";
+    }
+    std::cout << std::endl;
+  }
 }
