@@ -1,12 +1,12 @@
 #include "commands.hpp"
+#include "scopeguard.hpp"
+#include "IOFunctions.hpp"
 #include <iterator>
 #include <algorithm>
 #include <iostream>
 #include <limits>
 #include <fstream>
 #include <sstream>
-#include <scopeguard.hpp>
-#include "IOFunctions.hpp"
 
 std::ostream& malanin::commands::node(std::ostream& out, std::istream& in, malanin::Workspace& workspace)
 {

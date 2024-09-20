@@ -4,7 +4,7 @@
 #include <limits>
 #include "workspace.hpp"
 #include "commands.hpp"
-#include "IOFunctions.hpp"
+#include "IOFunction.hpp"
 
 #include <sstream>
 

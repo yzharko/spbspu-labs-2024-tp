@@ -1,4 +1,4 @@
-#include "IOFunctions.hpp"
+#include "IOFunction.hpp"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
