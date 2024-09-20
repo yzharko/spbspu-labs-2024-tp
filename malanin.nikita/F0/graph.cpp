@@ -12,7 +12,8 @@ void malanin::Graph::addNode(int name)
 {
   if (contains(name))
   {
-    throw std::invalid_argument("[ERROR](insertion): the node you want to add already exists");
+    throw std::invalid_argument("[ERROR](insertion): the node \n you want to "
+    "add already exists");
   }
   nodes_.insert({name, Node{name}});
 }
