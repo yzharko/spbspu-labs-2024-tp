@@ -36,19 +36,19 @@ int main()
   std::string command;
   while (std::cin >> command)
   {
-  try
-  {
-    commands.at(command)(std::cin, std::cout);
-  }
-  catch (const std::out_of_range& e)
-  {
-    std::cerr << "command doesn't exist\n";
-    clearStream(std::cin);
-  }
-  catch (const std::exception& e)
-  {
-    std::cerr << e.what() << '\n';
-    clearStream(std::cin);
-  }
+    try
+    {
+      commands.at(command)(std::cin, std::cout);
+    }
+    catch (const std::out_of_range& e)
+    {
+      std::cerr << "command doesn't exist\n";
+      clearStream(std::cin);
+    }
+    catch (const std::exception& e)
+    {
+      std::cerr << e.what() << '\n';
+      clearStream(std::cin);
+    }
   }
 }
