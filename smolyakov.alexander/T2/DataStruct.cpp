@@ -60,7 +60,7 @@ std::ostream& smolyakov::operator << (std::ostream& outputStream, const smolyako
   iofmtguard fmtguard(outputStream);
   outputStream << "(:";
   outputStream << "key1 0" << std::oct << std::uppercase << data.key1;
-  outputStream << ":key2 (:N " << data.key2.first << ":D " << data.key2.second << ":)";
+  outputStream << ":key2 (:N " << std::dec << data.key2.first << ":D " << data.key2.second << ":)";
   outputStream << ":key3 \"" << data.key3 << "\":)";
   return outputStream;
 }
