@@ -14,6 +14,8 @@ namespace kaseev {
   void change(std::vector<par>& lines, const std::string& old_name, const std::string& new_value);
   void clear(std::vector<par>& vec);
   void readfile(std::vector<par>& vec);
+  void input(std::vector<par>& vec);
+  void save(std::vector<par>& vec, const std::string& filename);
 }
 
 #endif

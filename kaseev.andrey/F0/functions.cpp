@@ -1,6 +1,9 @@
 #include "functions.hpp"
 #include <iostream>
 #include <algorithm>
+#include <fstream>
+#include <limits>
+
 
 namespace kaseev {
 
@@ -110,4 +113,44 @@ namespace kaseev {
     }
   }
 
+  void input(std::vector<par>& vec) {
+    std::string name;
+    std::vector<long long> numbers;
+    std::cout << "Enter a name: ";
+    std::cin >> name;
+    std::cout << "Enter numbers (end with non-number): ";
+    long long num;
+    while (std::cin >> num) {
+      numbers.push_back(num);
+    }
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    vec.push_back({name, numbers});
+    std::cout << "Added entry - Name: " << name << " Numbers: ";
+    for (const auto& n : numbers) {
+      std::cout << n << " ";
+    }
+    std::cout << std::endl;
+  }
+
+  void save(std::vector<par>& vec, const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+      std::cerr << "Error: Could not open file " << filename << std::endl;
+      return;
+    }
+    size_t max_len = 0;
+    for (const auto& [name, data] : vec) {
+      file << name << ' ';
+      max_len = std::max(max_len, data.size());
+    }
+    file << '\n';
+    for (int i = 0; i < max_len; ++i) {
+      for (int j = 0; j < vec.size(); ++j) {
+        if (i < vec[j].second.size())
+          file << vec[j].second[i] << ' ';
+      }
+      file << '\n';
+    }
+  }
 }
