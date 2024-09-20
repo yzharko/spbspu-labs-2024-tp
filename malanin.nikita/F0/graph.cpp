@@ -86,10 +86,12 @@ size_t malanin::Graph::countPaths(int start, int finish) const
   return dd.countPaths(start, finish);
 }
 
-size_t malanin::Graph::calcPathLength(const std::deque< int >& path) const
+size_t malanin::Graph::calcPathLength(const std::
+deque< int >& path) const
 {
   size_t length = 0;
-  for (auto iter(next(path.begin())); iter != path.end(); ++iter)
+  for (auto iter(next(path.begin()));
+ iter != path.end(); ++iter)
   {
     auto& backlinks = nodes_.at(*iter).backLinks;
     length += backlinks.at(*std::prev(iter)).weight;
@@ -97,7 +99,8 @@ size_t malanin::Graph::calcPathLength(const std::deque< int >& path) const
   return length;
 }
 
-std::forward_list< int > dequeToForward(std::deque < int > dq)
+std::forward_list< int >
+ dequeToForward(std::deque < int > dq)
 {
   return std::forward_list< int >(dq.begin(), dq.end());
 }
@@ -134,7 +137,7 @@ std::forward_list< malanin::Graph::Path >
 {
   DeepDetourer dd(*this);
   std::forward_list< Path > result;
-  std::forward_list< std::deque< int > > paths = 
+  std::forward_list< std::deque< int > > paths =
 dd.findAllPaths(start, finish);
   for (std::deque< int > rawPath : paths)
   {

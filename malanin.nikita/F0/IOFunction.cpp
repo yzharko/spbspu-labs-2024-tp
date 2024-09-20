@@ -5,19 +5,19 @@
 #include <functional>
 #include "workspace.hpp"
 
-const std::string& getName(std::pair< const std::string&, 
+const std::string& getName(std::pair< const std::string&,
 const malanin::Graph& > pair)
 {
   return pair.first;
 }
 
-bool compareNames(const std::string& rhs, 
+bool compareNames(const std::string& rhs,
 const std::string& lhs)
 {
   return lhs == rhs;
 }
 
-bool nameIsNotUnique(const std::string& name, 
+bool nameIsNotUnique(const std::string& name,
 const malanin::Workspace& workspace)
 {
   std::vector< std::string > names;
@@ -33,27 +33,27 @@ const malanin::Workspace& workspace)
   }
 }
 
-void malanin::getGraphsNames(const malanin::Workspace& workspace, 
+void malanin::getGraphsNames(const malanin::Workspace& workspace,
 std::vector< std::string >& accumulator)
 {
-  std::transform(workspace.graphs.cbegin(), 
-workspace.graphs.cend(), 
+  std::transform(workspace.graphs.cbegin(),
+workspace.graphs.cend(),
 std::back_inserter(accumulator), getName);
 }
 
-void insertGraph(const malanin::Graph& graph, 
+void insertGraph(const malanin::Graph& graph,
 malanin::Workspace& workspace)
 {
   const std::string& name = graph.name;
   if (nameIsNotUnique(name, workspace))
   {
-    throw std::logic_error("[ERROR](insertion): graph, named \"" + 
+    throw std::logic_error("[ERROR](insertion): graph, named \"" +
 name + "\" already exists");
   }
   workspace.graphs.insert({name, graph});
 }
 
-void malanin::initWorkspace(int argc, char* argv[], 
+void malanin::initWorkspace(int argc, char* argv[],
 malanin::Workspace& workspace)
 {
   if (argc == 1)
@@ -81,7 +81,7 @@ malanin::Workspace& workspace)
   }
 }
 
-void malanin::readGraph(const std::string& filename, 
+void malanin::readGraph(const std::string& filename,
 malanin::Graph& container)
 {
   std::ifstream in(filename);
@@ -100,7 +100,7 @@ malanin::Graph& container)
   in.close();
 }
 
-std::ostream& malanin::sendMessage(std::ostream& out, 
+std::ostream& malanin::sendMessage(std::ostream& out,
 const std::string& message)
 {
   return out << message << '\n';
