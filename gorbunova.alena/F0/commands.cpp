@@ -11,36 +11,36 @@ namespace gorbunova
 
   void help()
   {
-    std::cout << "Доступные команды:\n"
-      << "help - вывод списка доступных команд\n"
-      << "create < name > - создание словаря с названием name\n"
-      << "remove < name > - удаление словаря с названием name\n"
-      << "clear < name > - очищение словаря с именем name\n"
-      << "print < name > - вывод словаря name\n"
-      << "size < name > - подсчет слов в словаре с именем name\n"
-      << "list - вывод списка всех словарей\n"
-      << "unite < newName > < name1 > < name2 > - объединение словарей name1 и name2"
-      << "в новый словарь newName\n"
-      << "add < name1 > < name2 > - добавление словаря name1 в словарь name2\n"
-      << "intersection < newName > < name1 > < name2 > - пересечение словарей name1 и name2"
-      << "в новый словарь newName\n"
-      << "insert < name > < key > < translation > - вставка элемента в словарь name\n"
-      << "find < name > < key > - поиск перевода по ключу в словаре name\n"
-      << "change < name > < key > < translation > - изменение перевода элемента в словаре name\n"
-      << "findLetter < name > < letter > - поиск слов по первой букве в словаре name\n"
-      << "delete < name > < key > - удаление элемента из словаря name\n";
+    std::cout << "Available commands:\n"
+      << "help - display the list of available commands\n"
+      << "create <name> - create a dictionary with the name <name>\n"
+      << "remove <name> - delete the dictionary with the name <name>\n"
+      << "clear <name> - clear the dictionary with the name <name>\n"
+      << "print <name> - display the contents of the dictionary <name>\n"
+      << "size <name> - count the number of words in the dictionary <name>\n"
+      << "list - display the list of all dictionaries\n"
+      << "unite <newName> <name1> <name2> - merge dictionaries <name1> and <name2>"
+      << "into a new dictionary <newName>\n"
+      << "add <name1> <name2> - add dictionary <name1> to dictionary <name2>\n"
+      << "intersection <newName> <name1> <name2> - intersect dictionaries <name1> and <name2>"
+      << "into a new dictionary <newName>\n"
+      << "insert <name> <key> <translation> - insert an element into dictionary <name>\n"
+      << "find <name> <key> - find the translation of the key in dictionary <name>\n"
+      << "change <name> <key> <translation> - modify the translation of an element in dictionary <name>\n"
+      << "findLetter <name> <letter> - find words by the first letter in dictionary <name>\n"
+      << "delete <name> <key> - remove the element with the key from dictionary <name>\n";
   }
 
   void create(const std::string &name)
   {
     if (dictionaries.count(name))
     {
-      std::cout << "словарь с таким именем уже существует. Выберите другое имя\n";
+      std::cout << "A dictionary with this name already exists. Choose another name\n";
     }
     else
     {
       dictionaries[name] = Dictionary();
-      std::cout << "словарь " << name << " создан\n";
+      std::cout << "Dictionary " << name << " created\n";
     }
   }
 
@@ -48,24 +48,24 @@ namespace gorbunova
   {
     if (dictionaries.erase(name))
     {
-      std::cout << "словарь " << name << " удален\n";
+      std::cout << "Dictionary " << name << " removed\n";
     }
     else
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
   }
 
   void clear(const std::string &name)
   {
-    if (dictionaries.count(name))
+    if (dictionaries.count(namсловарьe))
     {
       dictionaries[name].clear();
-      std::cout << "словарь " << name << " очищен\n";
+      std::cout << "Dictionary " << name << " cleared\n";
     }
     else
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
   }
 
@@ -81,7 +81,7 @@ namespace gorbunova
     }
     else
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
   }
 
@@ -89,12 +89,12 @@ namespace gorbunova
   {
     if (dictionaries.count(name))
     {
-      std::cout << "размер словаря " << name
+      std::cout << "Size of dictionary " << name
         << ": " << dictionaries[name].size() << '\n';
     }
     else
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
   }
 
@@ -112,15 +112,15 @@ namespace gorbunova
   {
     if (!dictionaries.count(name1) || !dictionaries.count(name2))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else
     {
       Dictionary newDict = dictionaries[name1];
       newDict.insert(dictionaries[name2].begin(), dictionaries[name2].end());
       dictionaries[newName] = newDict;
-      std::cout << "словарь " << newName
-        << " создан путем объединения " << name1 << " и " << name2 << '\n';
+      std::cout << "Dictionary " << newName
+        << " created by merging " << name1 << " and " << name2 << '\n';
     }
   }
 
@@ -128,13 +128,13 @@ namespace gorbunova
   {
     if (!dictionaries.count(name1) || !dictionaries.count(name2))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else
     {
       dictionaries[name2].insert(dictionaries[name1].begin(),
         dictionaries[name1].end());
-      std::cout << "словарь " << name1 << " добавлен в словарь " << name2 << '\n';
+      std::cout << "Dictionary " << name1 << " added to dictionary " << name2 << '\n';
     }
   }
 
@@ -143,7 +143,7 @@ namespace gorbunova
   {
     if (!dictionaries.count(name1) || !dictionaries.count(name2))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else
     {
@@ -155,8 +155,8 @@ namespace gorbunova
           return dictionaries[name2].count(pair.first);
         });
         dictionaries[newName] = newDict;
-        std::cout << "словарь " << newName
-          << " создан путем пересечения " << name1 << " и " << name2 << '\n';
+        std::cout << "Dictionary " << newName
+          << " created by intersecting " << name1 << " and " << name2 << '\n';
     }
   }
 
@@ -165,17 +165,17 @@ namespace gorbunova
   {
     if (!dictionaries.count(name))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else if (dictionaries[name].count(key))
     {
-      std::cout << "элемент с введенным ключом в словаре " << name
-        << " уже существует, введите другой ключ для пополнения словаря\n";
+      std::cout << "An element with the entered key already exists in dictionary " << name
+        << ", enter another key to add to the dictionary\n";
     }
     else
     {
       dictionaries[name][key] = translation;
-      std::cout << "элемент " << key << " добавлен в словарь " << name << '\n';
+      std::cout << "Element " << key << " added to dictionary " << name << '\n';
     }
   }
 
@@ -183,12 +183,11 @@ namespace gorbunova
   {
     if (!dictionaries.count(name))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name
-        << " не существует элемента с введенным ключом " << key << '\n';
+      std::cout << "There is no element with the entered key in dictionary " << name << '\n';
     }
     else
     {
@@ -201,18 +200,17 @@ namespace gorbunova
   {
     if (!dictionaries.count(name))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name
-        << " не существует элемента с введенным ключом " << key << '\n';
+      std::cout << "There is no element with the entered key in dictionary " << name << '\n';
     }
     else
     {
       dictionaries[name][key] = translation;
-      std::cout << "элемент " << key << " в словаре "
-        << name << " изменен на " << translation << '\n';
+      std::cout << "Element " << key << " in dictionary "
+        << name << " changed to " << translation << '\n';
     }
   }
 
@@ -220,7 +218,7 @@ namespace gorbunova
   {
     if (!dictionaries.count(name))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else
     {
@@ -239,18 +237,16 @@ namespace gorbunova
   {
     if (!dictionaries.count(name))
     {
-      std::cout << "словаря с таким именем не существует\n";
+      std::cout << "No dictionary with this name exists\n";
     }
     else if (!dictionaries[name].count(key))
     {
-      std::cout << "в словаре " << name
-        << " не существует элемента с введенным ключом "
-        << key << '\n';
+      std::cout << "There is no element with the entered key in dictionary " << name << '\n';
     }
     else
     {
       dictionaries[name].erase(key);
-      std::cout << "элемент " << key << " удален из словаря "
+      std::cout << "Element " << key << " removed from dictionary "
         << name << '\n';
     }
   }
