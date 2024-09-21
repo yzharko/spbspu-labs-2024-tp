@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include "figures.hpp"
+#include "figure.hpp"
 #include "io.hpp"
 namespace std
 {
