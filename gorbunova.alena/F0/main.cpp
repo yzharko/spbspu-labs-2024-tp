@@ -65,7 +65,7 @@ int main()
     }
     else
     {
-      std::cout << "Неверная команда или количество параметров\n";
+      std::cout << "Invalid command or number of parameters\n";
     }
   }
 
