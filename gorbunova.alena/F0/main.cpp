@@ -58,6 +58,11 @@ int main()
       continue;
 
     const std::string &cmd = tokens[0];
+    if (cmd == "exit")
+    {
+      std::cout << "Exiting program\n";
+      break;
+    }
     auto it = commands.find(cmd);
     if (it != commands.end())
     {
