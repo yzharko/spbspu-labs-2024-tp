@@ -35,7 +35,13 @@ std::istream & susidko::operator>>(std::istream & in, susidko::UnsignedLLBin_ &&
   {
     return in;
   }
-  in >> exp.key2_;
+  char temp;
+  in >> temp;
+  while (temp != ':')
+  {
+    exp.key2_.push_back(temp);
+    in >> temp;
+  }
   return in;
 }
 

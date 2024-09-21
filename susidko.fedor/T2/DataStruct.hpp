@@ -9,12 +9,12 @@ namespace susidko
   struct DataStruct
   {
     long long getKey1() const;
-    unsigned long long getKey2() const;
+    std::string getKey2() const;
     std::string getKey3() const;
 
     //private:
     long long key1_;
-    unsigned long long key2_;
+    std::string key2_;
     std::string key3_;
   };
 

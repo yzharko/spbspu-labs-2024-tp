@@ -18,7 +18,7 @@ namespace susidko
 
   struct UnsignedLLBin_
   {
-    unsigned long long &key2_;
+    std::string &key2_;
   };
 
   struct String_

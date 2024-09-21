@@ -9,7 +9,7 @@ namespace susidko
   {
     return key1_;
   }
-  unsigned long long DataStruct::getKey2() const
+  std::string DataStruct::getKey2() const
   {
     return key2_;
   }
@@ -26,13 +26,22 @@ namespace susidko
       return in;
     }
     using del = DelimiterI;
+    bool flag = 0;
     DataStruct data;
     {
       in >> del{'('};
       std::string keyX;
       for (int i = 0; i < 3; i++)
       {
-        in >> del{':'} >> keyX;
+        if (flag == 0)
+        {
+          in >> del{':'} >> keyX;
+        }
+        else
+        {
+          in >> keyX;
+          flag = 0;
+        }
         if (keyX == "key1")
         {
           in >> LongLong_{data.key1_} >> del{'l'} >> del{'l'};
@@ -40,6 +49,7 @@ namespace susidko
         else if (keyX == "key2")
         {
           in >> del{'0'} >> del{'b'} >> UnsignedLLBin_{data.key2_};
+          flag = 1;
         }
         else if (keyX == "key3")
         {
