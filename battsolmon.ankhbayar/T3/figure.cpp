@@ -1,4 +1,4 @@
-#include "figures.hpp"
+#include "figure.hpp"
 
 bool std::Point::operator<(const Point& right)
 {

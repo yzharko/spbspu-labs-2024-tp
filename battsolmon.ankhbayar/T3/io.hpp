@@ -5,7 +5,7 @@
 #include <regex>
 #include <sstream>
 #include <string>
-#include "figures.hpp"
+#include "figure.hpp"
 
 namespace std
 {
