@@ -1,5 +1,5 @@
-#ifndef COMMANDS_H
-#define COMMANDS_H
+#ifndef COMMANDS_HPP
+#define COMMANDS_HPP
 #include <functional>
 #include <iostream>
 #include <limits>
@@ -7,8 +7,8 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
-#include "figures.h"
-#include "io.h"
+#include "figures.hpp"
+#include "io.hpp"
 namespace std
 {
   void area(const std::vector< std::Polygon >& vector, std::istream& in, std::ostream& out);

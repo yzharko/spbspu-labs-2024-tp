@@ -1,11 +1,11 @@
-#ifndef IO_H
-#define IO_H
+#ifndef IO_HPP
+#define IO_HPP
 
 #include <iostream>
 #include <regex>
 #include <sstream>
 #include <string>
-#include "figures.h"
+#include "figures.hpp"
 
 namespace std
 {

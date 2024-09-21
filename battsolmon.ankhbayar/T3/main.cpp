@@ -7,9 +7,9 @@
 #include <map>
 #include <stdexcept>
 
-#include "commands.h"
-#include "figures.h"
-#include "io.h"
+#include "commands.hpp"
+#include "figures.hpp"
+#include "io.hpp"
 
 using namespace std;
 

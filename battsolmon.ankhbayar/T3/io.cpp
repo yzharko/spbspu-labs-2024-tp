@@ -1,4 +1,4 @@
-#include "io.h"
+#include "io.hpp"
 
 std::istream& std::operator>>(std::istream& in, std::Point& point)
 {

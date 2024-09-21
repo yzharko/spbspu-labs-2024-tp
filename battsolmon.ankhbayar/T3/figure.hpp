@@ -1,5 +1,5 @@
-#ifndef FIGURES_H
-#define FIGURES_H
+#ifndef FIGURES_HPP
+#define FIGURES_HPP
 
 #include <algorithm>
 #include <cmath>
