@@ -45,7 +45,7 @@ int main()
   std::string input;
   while (true)
   {
-    std::cout << "Введите команду: ";
+    std::cout << "Enter command: ";
     std::getline(std::cin, input);
     std::istringstream iss(input);
     std::vector< std::string > tokens;
