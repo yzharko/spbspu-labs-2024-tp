@@ -29,6 +29,7 @@ namespace gorbunova
       << "change <name> <key> <translation> - modify the translation of an element in dictionary <name>\n"
       << "findLetter <name> <letter> - find words by the first letter in dictionary <name>\n"
       << "delete <name> <key> - remove the element with the key from dictionary <name>\n";
+      << "exit - exit the program\n";
   }
 
   void create(const std::string &name)
