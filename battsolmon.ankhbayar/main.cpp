@@ -95,6 +95,7 @@ int main(int argc, char* argv[]) {
             std::cout << "<INVALID COMMAND>" << std::endl;
         }
     }
+    
 
     return 0;
 }
