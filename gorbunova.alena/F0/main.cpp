@@ -43,10 +43,10 @@ int main()
   { if (args.size() == 3) deleteElem(args[1], args[2]); };
 
   std::string input;
-  while (true)
+  std::cout << Enter command: ";
+  std::getline(std::cin, input);
+  while (input != "exit" && !std::cin.eof())
   {
-//    std::cout << "Enter command: ";
-    std::getline(std::cin, input);
     std::istringstream iss(input);
     std::vector< std::string > tokens;
     std::string token;
@@ -58,11 +58,6 @@ int main()
       continue;
 
     const std::string &cmd = tokens[0];
-    if (cmd == "exit")
-    {
-      std::cout << "Exiting program\n";
-      break;
-    }
     auto it = commands.find(cmd);
     if (it != commands.end())
     {
@@ -72,6 +67,8 @@ int main()
     {
       std::cout << "Invalid command or number of parameters\n";
     }
+    std::cout << "Enter command: ";
+    std::getline(std::cin, input);
   }
 
   return 0;
