@@ -60,7 +60,15 @@ namespace susidko
           in.setstate(std::ios::failbit);
         }
       }
-      in >> del{':'} >> del{')'};
+      if (flag == 0)
+      {
+        in >> del{':'} >> del{')'};
+      }
+      else
+      {
+        in >> del{')'};
+        flag = 0;
+      }
     }
     if (in)
     {
