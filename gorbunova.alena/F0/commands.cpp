@@ -58,7 +58,7 @@ namespace gorbunova
 
   void clear(const std::string &name)
   {
-    if (dictionaries.count(namсловарьe))
+    if (dictionaries.count(name))
     {
       dictionaries[name].clear();
       std::cout << "Dictionary " << name << " cleared\n";
