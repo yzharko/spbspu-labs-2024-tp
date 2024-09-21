@@ -43,7 +43,7 @@ int main()
   { if (args.size() == 3) deleteElem(args[1], args[2]); };
 
   std::string input;
-  std::cout << Enter command: ";
+  std::cout << "Enter command: ";
   std::getline(std::cin, input);
   while (input != "exit" && !std::cin.eof())
   {
