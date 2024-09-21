@@ -10,6 +10,10 @@ std::istream & susidko::operator>>(std::istream & in, susidko::DelimiterI && exp
   }
   char c = 0;
   in >> c;
+  if (c != exp.expected)
+  {
+    in.setstate(std::ios::failbit);
+  }
   return in;
 }
 
