@@ -8,7 +8,7 @@
 #include <stdexcept>
 
 #include "commands.hpp"
-#include "figures.hpp"
+#include "figure.hpp"
 #include "io.hpp"
 
 using namespace std;
