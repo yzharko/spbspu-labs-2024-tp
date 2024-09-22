@@ -1,100 +1,80 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <sstream>
 #include <algorithm>
+#include <climits>
+#include <fstream>
 #include <functional>
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <stdexcept>
 
-struct Point {
-    int x, y;
-    bool operator==(const Point& other) const {
-        return x == other.x && y == other.y;
+#include "commands.hpp"
+#include "figures.hpp"
+#include "io.hpp"
+
+using namespace std;
+
+int main(int argc, char* argv[])
+{
+  if (argc != 2)
+  {
+    std::cerr << "Error: Expected 1 command-line argument, but got " << argc - 1 << ".\n";
+    return EXIT_FAILURE;
+  }
+  std::string fileName = argv[1];
+  std::ifstream file(fileName);
+  if (!file)
+  {
+    std::cerr << "Error: file didn't open\n";
+    return EXIT_FAILURE;
+  }
+
+  std::cout << std::setprecision(1) << std::fixed;
+  std::vector< std::Polygon > polygons;
+  while (!file.eof())
+  {
+    (
+      std::istream_iterator< std::Point >(file), std::istream_iterator< std::Polygon >(),
+      std::back_inserter(polygons)
+    );
+    if (!file.eof() && file.fail())
+    {
+      file.clear();
+      file.ignore(std::numeric_limits< std::streamsize >::max(), '\n');
     }
-
-};
-
-struct Polygon {
-    std::vector<Point> points;
-
-    bool operator==(const Polygon& other) const {
-        return points == other.points;
+  }
+  std::map< std::string, std::function< void(std::istream&, std::ostream&) > > commands;
+  {
+    using namespace std::placeholders;
+    commands["AREA"] = std::bind(std::area, std::cref(polygons), _1, _2);
+    commands["MAX"] = std::bind(std::max, std::cref(polygons), _1, _2);
+    commands["MIN"] = std::bind(std::min, std::cref(polygons), _1, _2);
+    commands["COUNT"] = std::bind(std::count, std::cref(polygons), _1, _2);
+    commands["RECTS"] = std::bind(std::inRects, std::cref(polygons), _1, _2);
+    commands["RMECHO"] = std::bind(std::rmecho, std::ref(polygons), _1, _2);
+  }
+  std::string cmd;
+  while (std::cin >> cmd)
+  {
+    if (std::cin.eof())
+    {
+      break;
     }
-};
-
-std::vector<Polygon> readPolygonsFromFile(const std::string& filename) {
-    std::ifstream file(filename);
-    std::vector<Polygon> polygons;
-    std::string line;
-
-    while (std::getline(file, line)) {
-        std::istringstream iss(line);
-        int numPoints;
-        if (iss >> numPoints) {
-            Polygon polygon;
-            for (int i = 0; i < numPoints; ++i) {
-                Point p;
-                char delimiter;
-                if (iss >> delimiter >> p.x >> delimiter >> p.y >> delimiter) {
-                    polygon.points.push_back(p);
-                }
-            }
-            polygons.push_back(polygon);
-        }
-    }
-    return polygons;
-}
-
-int removeConsecutiveDuplicates(std::vector<Polygon>& polygons, const Polygon& target) {
-    auto it = std::unique(polygons.begin(), polygons.end(),
-        [&target](const Polygon& a, const Polygon& b) {
-            return a == target && b == target;
-        });
-    int removedCount = std::distance(it, polygons.end());
-    polygons.erase(it, polygons.end());
-    return removedCount;
-}
-
-int countRectangles(const std::vector<Polygon>& polygons) {
-    return std::count_if(polygons.begin(), polygons.end(), [](const Polygon& p) {
-        return p.points.size() == 4; // Простой критерий для прямоугольника
-        });
-}
-
-int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        std::cerr << "Ошибка: имя файла не задано." << std::endl;
-        return 1;
-    }
-
-    std::string filename = argv[1];
-    std::vector<Polygon> polygons = readPolygonsFromFile(filename);
-    std::string command;
-
-    while (std::getline(std::cin, command)) {
-        if (command.find("RMECHO") == 0) {
-            std::istringstream iss(command);
-            std::string cmd;
-            int numPoints;
-            Polygon target;
-            iss >> cmd >> numPoints;
-            for (int i = 0; i < numPoints; ++i) {
-                Point p;
-                char delimiter;
-                iss >> delimiter >> p.x >> delimiter >> p.y >> delimiter;
-                target.points.push_back(p);
-            }
-            int removed = removeConsecutiveDuplicates(polygons, target);
-            std::cout << removed << std::endl;
-        }
-        else if (command == "RECTS") {
-            int rectangleCount = countRectangles(polygons);
-            std::cout << rectangleCount << std::endl;
-        }
-        else {
-            std::cout << "<INVALID COMMAND>" << std::endl;
-        }
-    }
-
-    return 0;
+    try
+     {
+       commands.at(cmd)(std::cin, std::cout);
+     }
+     catch (const std::out_of_range&)
+     {
+       std::cout << "<INVALID COMMAND>\n";
+       std::cin.clear();
+       std::cin.ignore(INT_MAX, '\n');
+     }
+     catch (const std::invalid_argument& e)
+     {
+       std::cout << e.what() << '\n';
+       std::cin.clear();
+       std::cin.ignore(INT_MAX, '\n');
+     }
+  }
+  return 0;
 }
