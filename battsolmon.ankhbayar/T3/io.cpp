@@ -25,7 +25,6 @@ std::istream& operator>>(std::istream& in, Point& point) {
         in.setstate(std::ios_base::failbit);
         return in;
     }
-    
     char ch;
     std::stringstream ss(str);
     ss >> ch >> point.x >> ch >> point.y >> ch;
@@ -54,11 +53,9 @@ std::istream& operator>>(std::istream& in, Polygon& poly) {
         }
         in >> p;
     }
-    
     if (in.peek() != '\n') {
         in.setstate(std::ios_base::failbit);
     }
-    
     return in;
 }
 
@@ -70,4 +67,3 @@ bool isPoint(const std::string& str) {
     std::regex pattern("\\(-?[0-9]+;-?[0-9]+\\)");
     return std::regex_match(str, pattern);
 }
-
