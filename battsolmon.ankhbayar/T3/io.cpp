@@ -70,3 +70,4 @@ bool isPoint(const std::string& str) {
     std::regex pattern("\\(-?[0-9]+;-?[0-9]+\\)");
     return std::regex_match(str, pattern);
 }
+
