@@ -19,44 +19,6 @@ std::istream& std::operator>>(std::istream& in, std::Point& point)
     ss >> ch >> point.x >> ch >> point.y >> ch;
     return in;
 }
-class Polygon {
-};
-
-std::istream& operator>>(std::istream& in, Polygon& poly) {
-    bool sentry = true; 
-
-    try {
-        if (!sentry) {
-            throw std::runtime_error("Sentry condition failed.");
-        }
-
-        std::string str;
-        if (!(in >> str)) {
-            throw std::runtime_error("Failed to read string from input.");
-        }
-
-        if (in.peek() != '\n') {
-            throw std::runtime_error("Input not terminated correctly.");
-        }
-
-        return in; // Return the input stream
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        in.setstate(std::ios::failbit); // Set the failbit on the stream
-        return in; // Return the input stream in a failed state
-    }
-}
-
-int main() {
-    Polygon poly;
-    std::cout << "Enter polygon data: ";
-    
-    if (!(std::cin >> poly)) {
-        std::cerr << "Failed to read polygon data." << std::endl;
-    }
-
-    return 0;
-}
 std::istream& std::operator>>(std::istream& in, Polygon& poly)
 {
   std::istream::sentry sentry(in);
