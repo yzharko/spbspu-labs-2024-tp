@@ -1,77 +1,72 @@
-#include "io.hpp"
-#include <string>
-#include <stdexcept>
+#include <iostream>
+#include <sstream>
+#include <regex>
+#include <vector>
 
-std::istream& operator>>(std::istream& in, Polygon& poly) {
-  bool sentry = true;
-  
-  try {
-        if (!sentry) {
-            throw std::runtime_error("Sentry condition failed.");
-        }
+class Point {
+public:
+    int x, y;
+};
 
-        std::string str;
-        if (!(in >> str)) {
-            throw std::runtime_error("Failed to read string from input.");
-        }
+class Polygon {
+public:
+    std::vector<Point> points;
+};
 
-std::istream& std::operator>>(std::istream& in, std::Point& point)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry)
-    return in;
+std::istream& operator>>(std::istream& in, Point& point) {
+    std::istream::sentry sentry(in);
+    if (!sentry) {
+        return in; // Stream is in a bad state
+    }
+    
     std::string str;
     in >> str;
-    if (!std::isPoint(str))
-    {
-      in.setstate(std::ios_base::failbit);
-      return in;
+    if (!isPoint(str)) {
+        in.setstate(std::ios_base::failbit);
+        return in;
     }
+    
     char ch;
     std::stringstream ss(str);
     ss >> ch >> point.x >> ch >> point.y >> ch;
     return in;
 }
-std::istream& std::operator>>(std::istream& in, Polygon& poly)
-{
-  std::istream::sentry sentry(in);
-  if (!sentry)
-     return in;
-  poly.points.clear();
-  std::size_t n;
-  in >> n;
-  if (in.fail() || n < 3)
-  {
-    in.setstate(std::ios_base::failbit);
-    return in;
-  }
-  poly.points.resize(n);
 
-  if (in.peek() != '\n') {
-            throw std::runtime_error("Input not terminated correctly.");
-        }
-
+std::istream& operator>>(std::istream& in, Polygon& poly) {
+    std::istream::sentry sentry(in);
+    if (!sentry) {
+        return in; // Stream is in a bad state
+    }
+    
+    poly.points.clear();
+    std::size_t n;
+    in >> n;
+    if (in.fail() || n < 3) {
+        in.setstate(std::ios_base::failbit);
         return in;
-} catch (const std::exception& e) {
-    std::cerr << "Error: " << e.what() << std::endl;
-    in.setstate(std::ios::failbit);
+    }
+    
+    poly.points.resize(n);
+    for (auto& p : poly.points) {
+        if (in.peek() == '\n') {
+            in.setstate(std::ios_base::failbit);
+            return in;
+        }
+        in >> p;
+    }
+    
+    if (in.peek() != '\n') {
+        in.setstate(std::ios_base::failbit);
+    }
+    
     return in;
-  }
 }
-for (auto& p : poly.points)
-  {
-    in >> p;
-  }
-  if (in.peek() != '\n')
-     in.setstate(std::ios_base::failbit);
-     return in;
+
+std::ostream& operator<<(std::ostream& out, const Point& point) {
+    return (out << '(' << point.x << ';' << point.y << ')');
 }
-std::ostream& std::operator<<(std::ostream& out, const std::Point& point)
-{
-  return (out << '(' << point.x << ';' << point.y << ')');
-}
-bool std::isPoint(std::string& str)
-{
-  std::regex pattern("\\(-?[0-9]+;-?[0-9]+\\)");
-  return std::regex_match(str, pattern);
+
+bool isPoint(const std::string& str) {
+    std::regex pattern("\\(-?[0-9]+;-?[0-9]+\\)");
+    return std::regex_match(str, pattern);
 }
