@@ -21,7 +21,7 @@ std::istream& std::operator>>(std::istream& in, Polygon& poly)
 {
   std::istream::sentry sentry(in);
   if (!sentry)
-     return in;
+     return if;
   poly.points.clear();
   std::size_t n;
   in >> n;
