@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 #include "figures.hpp"
-#include "io.hpp"
 namespace std
 {
   void area(const std::vector< std::Polygon >& vector, std::istream& in, std::ostream& out);
